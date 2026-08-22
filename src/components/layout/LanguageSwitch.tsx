@@ -26,14 +26,14 @@ export function LanguageSwitch({ locale, slugs }: { locale: Locale; slugs?: { ro
   };
 
   return (
-    <div className="flex items-center rounded-[var(--r-sm)] border border-[var(--line)] p-[2px]" role="group" aria-label="Limba">
+    <div className="flex items-center rounded-[var(--radius-sm)] border border-[var(--line)] p-[2px]" role="group" aria-label="Limba">
       {(["ro", "ru"] as const).map((l) => (
         <button
           key={l}
           type="button"
           onClick={() => go(l)}
           aria-current={locale === l ? "true" : undefined}
-          className={`min-w-[34px] rounded-[calc(var(--r-sm)-2px)] px-[var(--sp-2)] py-[2px] text-[var(--fs-100)] font-medium uppercase transition-colors duration-[var(--d-fast)] ${
+          className={`min-w-[34px] rounded-[calc(var(--radius-sm)-2px)] px-[var(--sp-2)] py-[2px] text-[var(--fs-100)] font-medium uppercase transition-colors duration-[var(--dur-1)] ${
             locale === l ? "bg-[var(--ink-strong)] text-[var(--surface)]" : "text-[var(--ink-muted)] hover:text-[var(--ink-strong)]"
           }`}
         >

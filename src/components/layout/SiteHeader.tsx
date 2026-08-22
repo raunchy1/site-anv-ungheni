@@ -15,7 +15,7 @@ export function SiteHeader({ settings, locale }: { settings: Settings; locale: L
   return (
     <header className="sticky top-0 z-40 border-b border-[var(--line)] bg-[var(--surface)]/95 backdrop-blur-[2px]">
       <div className="shell flex h-[60px] items-center gap-[var(--sp-5)]">
-        <Link href="/" className="shrink-0 font-semibold tracking-[var(--tr-tight)] text-[var(--ink-strong)]">
+        <Link href="/" className="shrink-0 font-semibold tracking-[var(--tr-title)] text-[var(--ink-strong)]">
           ANVELOPE UNGHENI
         </Link>
 

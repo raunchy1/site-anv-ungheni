@@ -136,7 +136,7 @@
   .nav-link {
     color: var(--ink-muted);
     text-decoration: none;
-    transition: color var(--d-fast) var(--e-out);
+    transition: color var(--dur-1) var(--e-out);
   }
   .nav-link:hover,
   .nav-link:focus-visible {
@@ -150,9 +150,9 @@
     justify-content: center;
     min-width: 36px;
     min-height: 36px;
-    border-radius: var(--r-sm);
+    border-radius: var(--radius-sm);
     color: var(--ink-muted);
-    transition: color var(--d-fast) var(--e-out), background-color var(--d-fast) var(--e-out);
+    transition: color var(--dur-1) var(--e-out), background-color var(--dur-1) var(--e-out);
   }
   .icon-button:hover,
   .icon-button:focus-visible {
@@ -172,8 +172,8 @@
     padding: var(--sp-2) var(--sp-4);
     background: var(--ink-strong);
     color: var(--surface);
-    border-radius: var(--r-sm);
-    transition: top var(--d-fast) var(--e-out);
+    border-radius: var(--radius-sm);
+    transition: top var(--dur-1) var(--e-out);
   }
   .skip-link:focus {
     top: var(--sp-4);
@@ -200,4 +200,10 @@
     border-color: var(--ink-strong);
     color: var(--surface);
   }
+}
+
+@layer base {
+  /* Documentul nu are voie sa scroleze orizontal. Continutul lat (grile de
+     filtre, tabele) isi rezolva depasirea in propriul container cu overflow. */
+  html, body { max-width: 100%; overflow-x: clip; }
 }

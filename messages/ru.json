@@ -1,5 +1,8 @@
 {
-  "brand": { "name": "anvelope-ungheni.md", "city": "Унгены" },
+  "brand": {
+    "name": "anvelope-ungheni.md",
+    "city": "Унгены"
+  },
   "nav": {
     "catalog": "Каталог шин",
     "services": "Услуги",
@@ -13,7 +16,8 @@
     "call": "Позвонить",
     "whatsapp": "WhatsApp",
     "home": "Главная",
-    "language": "Язык"
+    "language": "Язык",
+    "catalogShort": "Каталог"
   },
   "home": {
     "title": "Шины в Унгенах — доставка по всей Молдове",
@@ -87,8 +91,15 @@
     "in_stockNote": "в магазине",
     "out_of_stock": "Нет в наличии"
   },
-  "season": { "vara": "Лето", "iarna": "Зима", "all_season": "Всесезонные" },
-  "brandPage": { "title": "Шины {brand}", "count": "{count} товаров" },
+  "season": {
+    "vara": "Лето",
+    "iarna": "Зима",
+    "all_season": "Всесезонные"
+  },
+  "brandPage": {
+    "title": "Шины {brand}",
+    "count": "{count} товаров"
+  },
   "services": {
     "title": "Наши услуги",
     "book": "Записаться",
@@ -111,8 +122,17 @@
     "hoursValue": "Понедельник–суббота, 9:00–20:00",
     "map": "Карта"
   },
-  "trust": { "warranty": "Гарантия 2 года", "mounting": "Шиномонтаж на месте", "delivery": "Доставка по всей Молдове" },
-  "errors": { "notFoundTitle": "Страница не найдена", "notFoundBody": "Найдите шину по размеру:", "serverTitle": "Что-то пошло не так", "serverBody": "Попробуйте ещё раз или позвоните: {phone}." },
+  "trust": {
+    "warranty": "Гарантия 2 года",
+    "mounting": "Шиномонтаж на месте",
+    "delivery": "Доставка по всей Молдове"
+  },
+  "errors": {
+    "notFoundTitle": "Страница не найдена",
+    "notFoundBody": "Найдите шину по размеру:",
+    "serverTitle": "Что-то пошло не так",
+    "serverBody": "Попробуйте ещё раз или позвоните: {phone}."
+  },
   "wa": {
     "product": "Здравствуйте! Меня интересует:\n{title}\nКод: {code}\nКоличество: {qty}\n{url}",
     "unavailable": "Здравствуйте! Меня интересует {title}.\nВижу, что сейчас нет в наличии — можно заказать?\n{url}",

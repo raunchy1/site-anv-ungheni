@@ -14,7 +14,7 @@ export default async function NotFound() {
       <h1 className="optical-left text-700 font-semibold tracking-[var(--tr-title)] text-[var(--ink-strong)]">{t("notFoundTitle")}</h1>
       <TreadRule variant="mark" width={128} className="mt-[var(--sp-3)] text-[var(--accent)]" />
       <p className="measure mt-[var(--sp-5)] text-300 text-[var(--ink-muted)]">{t("notFoundBody")}</p>
-      <div className="mt-[var(--sp-7)]"><SizeSelector locale={locale} /></div>
+      <div className="mt-[var(--sp-8)]"><SizeSelector locale={locale} /></div>
     </div>
   );
 }

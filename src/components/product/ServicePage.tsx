@@ -51,7 +51,7 @@ export async function ServicePage({ service, locale }: { service: Service; local
           <TreadRule variant="mark" width={128} className="mt-[var(--sp-3)] text-[var(--accent)]" />
 
           {img && (
-            <div className="relative mt-[var(--sp-6)] aspect-[4/3] overflow-hidden rounded-[var(--radius-sm)] border border-[var(--line)] bg-[var(--plate)]">
+            <div className="relative mt-[var(--sp-6)] aspect-[4/3] overflow-hidden rounded-[var(--radius-sm)] border border-[var(--line)] bg-[var(--img-plate)]">
               <Image src={img} alt={title} fill sizes="(min-width: 1024px) 640px, 92vw" className="object-cover" />
             </div>
           )}
@@ -59,7 +59,7 @@ export async function ServicePage({ service, locale }: { service: Service; local
           {/* Se randează doar dacă există. Nu punem tab gol. */}
           {body && <div className="measure mt-[var(--sp-6)] text-300 leading-relaxed" dangerouslySetInnerHTML={{ __html: body }} />}
 
-          <div className="mt-[var(--sp-7)] flex flex-wrap items-center gap-[var(--sp-3)]">
+          <div className="mt-[var(--sp-8)] flex flex-wrap items-center gap-[var(--sp-3)]">
             <a href={telLink(settings.phone_e164)} className="inline-flex min-h-11 items-center gap-[var(--sp-2)] rounded-[var(--radius-sm)] bg-[var(--accent)] px-[var(--sp-5)] text-300 font-medium text-[var(--accent-ink)]">
               <IconPhone size={17} />
               <span className="num">{settings.phone_display}</span>

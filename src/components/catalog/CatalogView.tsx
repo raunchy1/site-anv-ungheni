@@ -63,7 +63,7 @@ export async function CatalogView({
       />
 
       <div className="mt-[var(--sp-4)] flex flex-wrap items-baseline justify-between gap-[var(--sp-4)]">
-        <h1 className="text-700 font-semibold tracking-[var(--tr-tight)] text-[var(--ink-strong)]">{heading}</h1>
+        <h1 className="text-700 font-semibold tracking-[var(--tr-title)] text-[var(--ink-strong)]">{heading}</h1>
         <p className="num text-300 text-[var(--ink-muted)]" aria-live="polite">
           {t("catalog.results", { count: result.total })}
         </p>

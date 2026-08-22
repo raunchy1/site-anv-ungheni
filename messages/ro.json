@@ -1,5 +1,8 @@
 {
-  "brand": { "name": "anvelope-ungheni.md", "city": "Ungheni" },
+  "brand": {
+    "name": "anvelope-ungheni.md",
+    "city": "Ungheni"
+  },
   "nav": {
     "catalog": "Catalog anvelope",
     "services": "Servicii",
@@ -13,7 +16,8 @@
     "call": "Sună",
     "whatsapp": "WhatsApp",
     "home": "Acasă",
-    "language": "Limba"
+    "language": "Limba",
+    "catalogShort": "Catalog"
   },
   "home": {
     "title": "Anvelope în Ungheni — livrare în toată Moldova",
@@ -87,8 +91,15 @@
     "in_stockNote": "la magazin",
     "out_of_stock": "Indisponibil"
   },
-  "season": { "vara": "Vară", "iarna": "Iarnă", "all_season": "All season" },
-  "brandPage": { "title": "Anvelope {brand}", "count": "{count} produse" },
+  "season": {
+    "vara": "Vară",
+    "iarna": "Iarnă",
+    "all_season": "All season"
+  },
+  "brandPage": {
+    "title": "Anvelope {brand}",
+    "count": "{count} produse"
+  },
   "services": {
     "title": "Serviciile noastre",
     "book": "Programează-te",
@@ -111,8 +122,17 @@
     "hoursValue": "Luni–Sâmbătă, 9:00–20:00",
     "map": "Hartă"
   },
-  "trust": { "warranty": "Garanție 2 ani", "mounting": "Montaj la magazin", "delivery": "Livrare în toată Moldova" },
-  "errors": { "notFoundTitle": "Pagina nu există", "notFoundBody": "Caută anvelopa după dimensiune:", "serverTitle": "Ceva n-a mers", "serverBody": "Reîncearcă sau sună-ne la {phone}." },
+  "trust": {
+    "warranty": "Garanție 2 ani",
+    "mounting": "Montaj la magazin",
+    "delivery": "Livrare în toată Moldova"
+  },
+  "errors": {
+    "notFoundTitle": "Pagina nu există",
+    "notFoundBody": "Caută anvelopa după dimensiune:",
+    "serverTitle": "Ceva n-a mers",
+    "serverBody": "Reîncearcă sau sună-ne la {phone}."
+  },
   "wa": {
     "product": "Bună ziua! Sunt interesat de:\n{title}\nCod: {code}\nCantitate: {qty}\n{url}",
     "unavailable": "Bună ziua! Mă interesează {title}.\nVăd că nu e disponibil — se poate comanda?\n{url}",

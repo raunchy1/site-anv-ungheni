@@ -78,12 +78,12 @@ export async function ProductPage({ product, locale }: { product: Product; local
           </h1>
           <TreadRule variant="mark" width={128} className="mt-[var(--sp-3)] text-[var(--accent)]" />
 
-          <section className="mt-[var(--sp-7)]">
+          <section className="mt-[var(--sp-8)]">
             <h2 className="label">{t("product.specs")}</h2>
             <SpecTable rows={buildSpecRows(ui, locale)} className="mt-[var(--sp-3)]" />
           </section>
 
-          <div className="mt-[var(--sp-7)] border-t border-[var(--line)] pt-[var(--sp-5)]">
+          <div className="mt-[var(--sp-8)] border-t border-[var(--line)] pt-[var(--sp-5)]">
             <div className="mb-[var(--sp-4)] flex flex-wrap items-center gap-[var(--sp-3)]">
               <StockIndicator status={product.stock_status} locale={locale} />
               {settings.credit_badge_ro && !unavailable && (

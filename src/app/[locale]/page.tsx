@@ -34,7 +34,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   const [settings, services, showcase] = await Promise.all([getSettings(), getServices(), getShowcase(8)]);
 
   return (
-    <div className="shell flex flex-col gap-[var(--sp-14)] py-[var(--sp-8)]">
+    <div className="shell flex flex-col gap-[var(--sp-16)] py-[var(--sp-8)]">
       {/* Piesa centrală, deasupra pliului, fără concurență vizuală.
           Fără hero, fără slogan, fără carousel: homepage-ul e un instrument de
           căutare cu context, nu o broșură. */}
@@ -55,7 +55,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               <li key={s}>
                 <Link
                   href={{ pathname: "/catalog/[...filtre]", params: { filtre: [`sezon_${s === "all_season" ? "all-season" : s}`] } }}
-                  className="flex items-center gap-[var(--sp-3)] rounded-[var(--r-md)] border border-[var(--line)] px-[var(--sp-5)] py-[var(--sp-4)] transition-colors duration-[var(--dur-1)] hover:border-[var(--line-strong)]"
+                  className="flex items-center gap-[var(--sp-3)] rounded-[var(--radius-md)] border border-[var(--line)] px-[var(--sp-5)] py-[var(--sp-4)] transition-colors duration-[var(--dur-1)] hover:border-[var(--line-strong)]"
                 >
                   <Icon size={22} className="text-[var(--ink-muted)]" />
                   <span className="font-medium text-[var(--ink-strong)]">{t(`season.${s}`)}</span>
@@ -75,7 +75,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             <li key={`${s.width}-${s.aspect}-${s.diameter}`}>
               <Link
                 href={{ pathname: "/catalog/[...filtre]", params: { filtre: [`latime_${s.width}`, `inaltime_${s.aspect}`, `diametru_${s.diameter.toLowerCase()}`] } }}
-                className="num inline-flex items-baseline gap-[var(--sp-2)] rounded-[var(--r-sm)] border border-[var(--line)] px-[var(--sp-3)] py-[var(--sp-2)] text-300 transition-colors duration-[var(--dur-1)] hover:border-[var(--line-strong)]"
+                className="num inline-flex items-baseline gap-[var(--sp-2)] rounded-[var(--radius-sm)] border border-[var(--line)] px-[var(--sp-3)] py-[var(--sp-2)] text-300 transition-colors duration-[var(--dur-1)] hover:border-[var(--line-strong)]"
               >
                 <span className="text-[var(--ink-strong)]">{s.width}/{s.aspect} {s.diameter}</span>
                 <span className="text-100 text-[var(--ink-muted)]">{s.available}</span>
@@ -106,7 +106,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             <li key={s.id}>
               <Link
                 href={{ pathname: "/[slug]", params: { slug: (l === "ru" ? s.slug_ru : s.slug_ro) ?? s.slug_ro } }}
-                className="flex h-full items-center gap-[var(--sp-3)] rounded-[var(--r-md)] border border-[var(--line)] px-[var(--sp-4)] py-[var(--sp-4)] transition-colors duration-[var(--dur-1)] hover:border-[var(--line-strong)]"
+                className="flex h-full items-center gap-[var(--sp-3)] rounded-[var(--radius-md)] border border-[var(--line)] px-[var(--sp-4)] py-[var(--sp-4)] transition-colors duration-[var(--dur-1)] hover:border-[var(--line-strong)]"
               >
                 <span className="text-300 text-[var(--ink-strong)]">{(l === "ru" ? s.title_ru : s.title_ro) ?? s.title_ro}</span>
                 <IconArrowRight size={16} className="ml-auto shrink-0 text-[var(--ink-muted)]" />
@@ -134,7 +134,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               <span className="text-[var(--ink-strong)]">{t("contact.hoursValue")}</span>
             </li>
           </ul>
-          <div className="overflow-hidden rounded-[var(--r-md)] border border-[var(--line)]">
+          <div className="overflow-hidden rounded-[var(--radius-md)] border border-[var(--line)]">
             <iframe
               title={t("contact.map")}
               loading="lazy"

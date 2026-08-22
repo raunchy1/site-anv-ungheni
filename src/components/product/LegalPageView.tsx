@@ -37,10 +37,10 @@ export async function LegalPageView({ page, locale }: { page: LegalPage; locale:
       <TreadRule variant="mark" width={128} className="mt-[var(--sp-3)] text-[var(--accent)]" />
 
       {body ? (
-        <div className="measure mt-[var(--sp-7)] text-300 leading-relaxed" dangerouslySetInnerHTML={{ __html: body }} />
+        <div className="measure mt-[var(--sp-8)] text-300 leading-relaxed" dangerouslySetInnerHTML={{ __html: body }} />
       ) : (
         <EmptyState
-          className="mt-[var(--sp-7)]"
+          className="mt-[var(--sp-8)]"
           title={locale === "ru" ? "Текст готовится" : "Textul este în pregătire"}
           body={locale === "ru"
             ? "Пока документ не опубликован, позвоните нам — ответим на любой вопрос."

@@ -43,7 +43,7 @@ export default async function ServicesIndex({ params }: { params: Promise<{ loca
                 href={{ pathname: "/[slug]", params: { slug: (l === "ru" ? s.slug_ru : s.slug_ro) ?? s.slug_ro } }}
                 className="group flex h-full flex-col overflow-hidden rounded-[var(--radius-sm)] border border-[var(--line)] transition-colors duration-[var(--dur-1)] hover:border-[var(--line-strong)]"
               >
-                <div className="relative aspect-[4/3] bg-[var(--plate)]">
+                <div className="relative aspect-[4/3] bg-[var(--img-plate)]">
                   {img && <Image src={img} alt="" fill sizes="(min-width: 1024px) 360px, 92vw" className="object-cover" />}
                 </div>
                 <div className="flex flex-1 items-center gap-[var(--sp-3)] px-[var(--sp-4)] py-[var(--sp-4)]">

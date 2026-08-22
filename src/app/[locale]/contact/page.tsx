@@ -60,7 +60,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
             </div>
           </dl>
 
-          <div className="mt-[var(--sp-7)]">
+          <div className="mt-[var(--sp-8)]">
             <WhatsAppButton
               variant="primary"
               message={l === "ru" ? "Здравствуйте!" : "Bună ziua!"}
