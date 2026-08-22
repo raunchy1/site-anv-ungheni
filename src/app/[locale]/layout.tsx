@@ -3,7 +3,7 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import type { Metadata } from "next";
 import { routing } from "@/i18n/routing";
-import { fontVars } from "../fonts";
+import { fontVarsFor } from "../fonts";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { MobileBar } from "@/components/layout/MobileBar";
@@ -44,7 +44,7 @@ export default async function LocaleLayout({
   // jumătate din suprafața de QA pentru un beneficiu pe care un magazin de
   // anvelope nu-l cere. Se pornește schimbând `data-theme`.
   return (
-    <html lang={locale} data-theme="light" className={`${fontVars} h-full`} suppressHydrationWarning>
+    <html lang={locale} data-theme="light" className={`${fontVarsFor(locale)} h-full`} suppressHydrationWarning>
       <body className="min-h-full bg-[var(--surface)] text-[var(--ink)] antialiased">
         <NextIntlClientProvider>
           <a href="#continut" className="skip-link">

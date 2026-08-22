@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { ProductCard } from "@/components/ui/ProductCard";
@@ -84,7 +85,12 @@ export async function CatalogView({
 
         <div className="min-w-0">
           <div className="mb-[var(--sp-4)] flex items-center justify-end">
-            <SortSelect locale={locale} value={sort} />
+            {/* `useSearchParams` cere o graniță Suspense ca pagina să poată fi
+                pre-generată. Rezerva are exact înălțimea controlului, ca să nu
+                producă salt de layout. */}
+            <Suspense fallback={<div className="h-11 w-[200px] rounded-[var(--radius-sm)] border border-[var(--line)]" aria-hidden />}>
+              <SortSelect locale={locale} value={sort} />
+            </Suspense>
           </div>
 
           {result.items.length === 0 ? (
@@ -94,7 +100,7 @@ export async function CatalogView({
               <h2 className="sr-only-abs">{t("catalog.results", { count: result.total })}</h2>
               <ul className="grid grid-cols-2 gap-[var(--sp-4)] sm:grid-cols-3 xl:grid-cols-4">
                 {result.items.map((p: Product, i: number) => (
-                  <li key={p.id}><ProductCard product={toUiProduct(p)} locale={locale} priority={i < 4} /></li>
+                  <li key={p.id}><ProductCard product={toUiProduct(p)} locale={locale} priority={i < 2} /></li>
                 ))}
               </ul>
 

@@ -2,9 +2,27 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { CatalogView } from "@/components/catalog/CatalogView";
 import { parseFilterSegments, buildFilterSegments, activeFilterCount } from "@/lib/catalog-filters";
+import { sizeTree } from "@/lib/size-tree";
 import type { Locale } from "@/lib/types";
 
 export const revalidate = 900;
+export const dynamicParams = true;
+
+/**
+ * Cele 190 de rute de filtru indexate de ani de zile pe site-ul vechi se
+ * pre-generează la build, în ambele limbi. Segmentele sunt identice în RO și RU;
+ * doar prefixul categoriei diferă.
+ */
+export async function generateStaticParams() {
+  const segments: string[][] = [
+    ...Object.keys(sizeTree).map((w) => [`latime_${w}`]),
+    ...[...new Set(Object.values(sizeTree).flatMap(([, , asp]) => Object.keys(asp)))].map((a) => [`inaltime_${a}`]),
+    ...[...new Set(Object.values(sizeTree).flatMap(([, , asp]) =>
+      Object.values(asp).flatMap(([, , dia]) => Object.keys(dia))))].map((d) => [`diametru_${d.toLowerCase()}`]),
+    ["sezon_vara"], ["sezon_iarna"], ["sezon_all-season"], ["nalichie"],
+  ];
+  return segments.flatMap((filtre) => [{ locale: "ro", filtre }, { locale: "ru", filtre }]);
+}
 
 /**
  * Strategia de indexare (ARCHITECTURE.md §5): se indexează dimensiunea completă,

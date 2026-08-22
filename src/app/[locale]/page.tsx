@@ -7,6 +7,7 @@ import { getServices, getSettings, getShowcase } from "@/lib/db/queries";
 import { toUiProduct } from "@/lib/adapt";
 import { telLink } from "@/lib/format";
 import { sizeTree } from "@/lib/size-tree";
+import { MapEmbed } from "@/components/layout/MapEmbed";
 import type { Locale } from "@/lib/types";
 
 export const revalidate = 3600;
@@ -134,15 +135,15 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
               <span className="text-[var(--ink-strong)]">{t("contact.hoursValue")}</span>
             </li>
           </ul>
-          <div className="overflow-hidden rounded-[var(--radius-md)] border border-[var(--line)]">
-            <iframe
-              title={t("contact.map")}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              className="h-[320px] w-full"
-              src={`https://www.google.com/maps?q=${settings.lat},${settings.lng}&hl=${l}&z=17&output=embed`}
-            />
-          </div>
+          <MapEmbed
+            lat={Number(settings.lat)}
+            lng={Number(settings.lng)}
+            locale={l}
+            title={t("contact.map")}
+            address={settings.address}
+            height={320}
+            className="overflow-hidden rounded-[var(--radius-sm)] border border-[var(--line)]"
+          />
         </div>
       </section>
     </div>

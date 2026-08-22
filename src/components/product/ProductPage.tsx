@@ -12,6 +12,7 @@ import { getAlternatives, getNearAlternatives, getRelated, getSettings } from "@
 import { toUiProduct } from "@/lib/adapt";
 import { absoluteUrl, telLink } from "@/lib/format";
 import { t as dict } from "@/lib/i18n";
+import { MapEmbed } from "@/components/layout/MapEmbed";
 import type { Locale, Product } from "@/lib/types";
 import { BuyBox } from "./BuyBox";
 import { WhatsAppButton } from "./WhatsAppButton";
@@ -158,10 +159,15 @@ export async function ProductPage({ product, locale }: { product: Product; local
             <li className="flex gap-[var(--sp-3)]"><IconPin size={18} className="mt-[2px] shrink-0 text-[var(--ink-muted)]" /><span>{settings.address}</span></li>
             <li className="flex gap-[var(--sp-3)]"><IconPhone size={18} className="mt-[2px] shrink-0 text-[var(--ink-muted)]" /><a href={telLink(settings.phone_e164)} className="num text-[var(--ink-strong)]">{settings.phone_display}</a></li>
           </ul>
-          <div className="overflow-hidden rounded-[var(--radius-sm)] border border-[var(--line)]">
-            <iframe title={t("contact.map")} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="h-[260px] w-full"
-              src={`https://www.google.com/maps?q=${settings.lat},${settings.lng}&hl=${locale}&z=17&output=embed`} />
-          </div>
+          <MapEmbed
+            lat={Number(settings.lat)}
+            lng={Number(settings.lng)}
+            locale={locale}
+            title={t("contact.map")}
+            address={settings.address}
+            height={260}
+            className="overflow-hidden rounded-[var(--radius-sm)] border border-[var(--line)]"
+          />
         </div>
       </section>
 

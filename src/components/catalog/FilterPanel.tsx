@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { buildFilterSegments, type ParsedFilters } from "@/lib/catalog-filters";
@@ -43,11 +44,13 @@ export async function FilterPanel({
 
   const body = (
     <div className="flex flex-col gap-[var(--sp-6)]">
-      <UnavailableToggle
-        checked={includeUnavailable}
-        label={t("catalog.showUnavailable")}
-        count={unavailableTotal}
-      />
+      <Suspense fallback={<div className="h-6" aria-hidden />}>
+        <UnavailableToggle
+          checked={includeUnavailable}
+          label={t("catalog.showUnavailable")}
+          count={unavailableTotal}
+        />
+      </Suspense>
 
 
       {activeCount > 0 && (

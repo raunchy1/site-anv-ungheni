@@ -20,19 +20,13 @@ export function brandMetadata(b: Brand | null, locale: Locale): Metadata {
  * nici alta. Identitatea e tipografică: numele mare, contorul, apoi catalogul
  * filtrat. Pagina trebuie să arate intenționat, nu neterminată.
  */
-export async function BrandPage({
-  brand, locale, search,
-}: {
-  brand: Brand;
-  locale: Locale;
-  search: { pagina?: string; sortare?: string; indisponibile?: string };
-}) {
+export async function BrandPage({ brand, locale }: { brand: Brand; locale: Locale }) {
   const t = await getTranslations();
   return (
     <CatalogView
       locale={locale}
       filters={{ brand: locale === "ru" ? (brand.slug_ru ?? brand.slug_ro) : brand.slug_ro, unknown: [] }}
-      search={search}
+      search={{}}
       title={t("brandPage.title", { brand: brand.name })}
     />
   );

@@ -5,6 +5,7 @@ import { TreadRule, IconPin, IconPhone, IconClock } from "@/components/icons";
 import { getSettings } from "@/lib/db/queries";
 import { telLink } from "@/lib/format";
 import { WhatsAppButton } from "@/components/product/WhatsAppButton";
+import { MapEmbed } from "@/components/layout/MapEmbed";
 import type { Locale } from "@/lib/types";
 
 export const revalidate = 3600;
@@ -69,10 +70,15 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
           </div>
         </div>
 
-        <div className="overflow-hidden rounded-[var(--radius-sm)] border border-[var(--line)]">
-          <iframe title={t("contact.map")} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="h-[420px] w-full"
-            src={`https://www.google.com/maps?q=${s.lat},${s.lng}&hl=${l}&z=17&output=embed`} />
-        </div>
+        <MapEmbed
+            lat={Number(s.lat)}
+            lng={Number(s.lng)}
+            locale={l}
+            title={t("contact.map")}
+            address={s.address}
+            height={420}
+            className="overflow-hidden rounded-[var(--radius-sm)] border border-[var(--line)]"
+          />
       </div>
 
       <script type="application/ld+json" dangerouslySetInnerHTML={{
