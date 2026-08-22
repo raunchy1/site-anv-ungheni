@@ -1,0 +1,967 @@
+{
+  "catalog-anvelope": {
+    "Latime": [
+      {
+        "label": "135",
+        "count": 5,
+        "url": "/catalog-anvelope/latime_135"
+      },
+      {
+        "label": "145",
+        "count": 23,
+        "url": "/catalog-anvelope/latime_145"
+      },
+      {
+        "label": "155",
+        "count": 149,
+        "url": "/catalog-anvelope/latime_155"
+      },
+      {
+        "label": "165",
+        "count": 183,
+        "url": "/catalog-anvelope/latime_165"
+      },
+      {
+        "label": "175",
+        "count": 424,
+        "url": "/catalog-anvelope/latime_175"
+      },
+      {
+        "label": "185",
+        "count": 820,
+        "url": "/catalog-anvelope/latime_185"
+      },
+      {
+        "label": "195",
+        "count": 1157,
+        "url": "/catalog-anvelope/latime_195"
+      },
+      {
+        "label": "205",
+        "count": 1329,
+        "url": "/catalog-anvelope/latime_205"
+      },
+      {
+        "label": "215",
+        "count": 1965,
+        "url": "/catalog-anvelope/latime_215"
+      },
+      {
+        "label": "225",
+        "count": 2246,
+        "url": "/catalog-anvelope/latime_225"
+      },
+      {
+        "label": "235",
+        "count": 2053,
+        "url": "/catalog-anvelope/latime_235"
+      },
+      {
+        "label": "245",
+        "count": 1240,
+        "url": "/catalog-anvelope/latime_245"
+      },
+      {
+        "label": "255",
+        "count": 1135,
+        "url": "/catalog-anvelope/latime_255"
+      },
+      {
+        "label": "265",
+        "count": 629,
+        "url": "/catalog-anvelope/latime_265"
+      },
+      {
+        "label": "275",
+        "count": 811,
+        "url": "/catalog-anvelope/latime_275"
+      },
+      {
+        "label": "285",
+        "count": 414,
+        "url": "/catalog-anvelope/latime_285"
+      },
+      {
+        "label": "295",
+        "count": 132,
+        "url": "/catalog-anvelope/latime_295"
+      },
+      {
+        "label": "305",
+        "count": 46,
+        "url": "/catalog-anvelope/latime_305"
+      },
+      {
+        "label": "315",
+        "count": 187,
+        "url": "/catalog-anvelope/latime_315"
+      },
+      {
+        "label": "325",
+        "count": 34,
+        "url": "/catalog-anvelope/latime_325"
+      }
+    ],
+    "Inaltime": [
+      {
+        "label": "/25",
+        "count": 3,
+        "url": "/catalog-anvelope/inaltime_25"
+      },
+      {
+        "label": "/30",
+        "count": 172,
+        "url": "/catalog-anvelope/inaltime_30"
+      },
+      {
+        "label": "/35",
+        "count": 838,
+        "url": "/catalog-anvelope/inaltime_35"
+      },
+      {
+        "label": "/40",
+        "count": 1467,
+        "url": "/catalog-anvelope/inaltime_40"
+      },
+      {
+        "label": "/45",
+        "count": 2151,
+        "url": "/catalog-anvelope/inaltime_45"
+      },
+      {
+        "label": "/50",
+        "count": 1515,
+        "url": "/catalog-anvelope/inaltime_50"
+      },
+      {
+        "label": "/55",
+        "count": 2747,
+        "url": "/catalog-anvelope/inaltime_55"
+      },
+      {
+        "label": "/60",
+        "count": 1966,
+        "url": "/catalog-anvelope/inaltime_60"
+      },
+      {
+        "label": "/65",
+        "count": 2311,
+        "url": "/catalog-anvelope/inaltime_65"
+      },
+      {
+        "label": "/70",
+        "count": 1150,
+        "url": "/catalog-anvelope/inaltime_70"
+      },
+      {
+        "label": "/75",
+        "count": 443,
+        "url": "/catalog-anvelope/inaltime_75"
+      },
+      {
+        "label": "/80",
+        "count": 67,
+        "url": "/catalog-anvelope/inaltime_80"
+      },
+      {
+        "label": "/85",
+        "count": 12,
+        "url": "/catalog-anvelope/inaltime_85"
+      }
+    ],
+    "Diametru": [
+      {
+        "label": "R10",
+        "count": 4,
+        "url": "/catalog-anvelope/diametru_r10"
+      },
+      {
+        "label": "R12",
+        "count": 13,
+        "url": "/catalog-anvelope/diametru_r12"
+      },
+      {
+        "label": "R12C",
+        "count": 1,
+        "url": "/catalog-anvelope/diametru_r12c"
+      },
+      {
+        "label": "R13",
+        "count": 254,
+        "url": "/catalog-anvelope/diametru_r13"
+      },
+      {
+        "label": "R13C",
+        "count": 4,
+        "url": "/catalog-anvelope/diametru_r13c"
+      },
+      {
+        "label": "R14",
+        "count": 777,
+        "url": "/catalog-anvelope/diametru_r14"
+      },
+      {
+        "label": "R14C",
+        "count": 12,
+        "url": "/catalog-anvelope/diametru_r14c"
+      },
+      {
+        "label": "R15",
+        "count": 1631,
+        "url": "/catalog-anvelope/diametru_r15"
+      },
+      {
+        "label": "R15C",
+        "count": 32,
+        "url": "/catalog-anvelope/diametru_r15c"
+      },
+      {
+        "label": "R16",
+        "count": 2705,
+        "url": "/catalog-anvelope/diametru_r16"
+      },
+      {
+        "label": "R16C",
+        "count": 61,
+        "url": "/catalog-anvelope/diametru_r16c"
+      },
+      {
+        "label": "R17",
+        "count": 2817,
+        "url": "/catalog-anvelope/diametru_r17"
+      },
+      {
+        "label": "R17C",
+        "count": 3,
+        "url": "/catalog-anvelope/diametru_r17c"
+      },
+      {
+        "label": "R18",
+        "count": 2500,
+        "url": "/catalog-anvelope/diametru_r18"
+      },
+      {
+        "label": "R19",
+        "count": 1831,
+        "url": "/catalog-anvelope/diametru_r19"
+      },
+      {
+        "label": "R20",
+        "count": 1456,
+        "url": "/catalog-anvelope/diametru_r20"
+      },
+      {
+        "label": "R21",
+        "count": 592,
+        "url": "/catalog-anvelope/diametru_r21"
+      },
+      {
+        "label": "R22",
+        "count": 284,
+        "url": "/catalog-anvelope/diametru_r22"
+      },
+      {
+        "label": "R23",
+        "count": 25,
+        "url": "/catalog-anvelope/diametru_r23"
+      }
+    ],
+    "Sezon": [
+      {
+        "label": "All season",
+        "count": 1858,
+        "url": "/catalog-anvelope/sezon_all-season"
+      },
+      {
+        "label": "Iarna",
+        "count": 5805,
+        "url": "/catalog-anvelope/sezon_iarna"
+      },
+      {
+        "label": "Vara",
+        "count": 7339,
+        "url": "/catalog-anvelope/sezon_vara"
+      }
+    ],
+    "Producator": [
+      {
+        "label": "ACCELERA",
+        "count": 118,
+        "url": "/catalog-anvelope/marca_accelera"
+      },
+      {
+        "label": "Achilles",
+        "count": 1,
+        "url": "/catalog-anvelope/marca_achilles"
+      },
+      {
+        "label": "Anchee",
+        "count": 6,
+        "url": "/catalog-anvelope/marca_anchee"
+      },
+      {
+        "label": "Annaite",
+        "count": 32,
+        "url": "/catalog-anvelope/marca_annaite"
+      },
+      {
+        "label": "Aoteli",
+        "count": 1,
+        "url": "/catalog-anvelope/marca_aoteli"
+      },
+      {
+        "label": "Aplus",
+        "count": 204,
+        "url": "/catalog-anvelope/marca_aplus"
+      },
+      {
+        "label": "Aptany",
+        "count": 3,
+        "url": "/catalog-anvelope/marca_aptany"
+      },
+      {
+        "label": "Ardent",
+        "count": 1,
+        "url": "/catalog-anvelope/marca_ardent"
+      },
+      {
+        "label": "Arivo",
+        "count": 331,
+        "url": "/catalog-anvelope/marca_arivo"
+      },
+      {
+        "label": "Atlas",
+        "count": 2,
+        "url": "/catalog-anvelope/marca_atlas"
+      },
+      {
+        "label": "Atturo",
+        "count": 3,
+        "url": "/catalog-anvelope/marca_atturo"
+      },
+      {
+        "label": "Austone",
+        "count": 6,
+        "url": "/catalog-anvelope/marca_austone"
+      },
+      {
+        "label": "Avon",
+        "count": 25,
+        "url": "/catalog-anvelope/marca_avon"
+      },
+      {
+        "label": "Barum",
+        "count": 166,
+        "url": "/catalog-anvelope/marca_barum"
+      },
+      {
+        "label": "Bearway",
+        "count": 2,
+        "url": "/catalog-anvelope/marca_bearway"
+      },
+      {
+        "label": "BELSHINA",
+        "count": 1,
+        "url": "/catalog-anvelope/marca_belshina"
+      },
+      {
+        "label": "BFGoodrich",
+        "count": 23,
+        "url": "/catalog-anvelope/marca_bfgoodrich"
+      },
+      {
+        "label": "Brics",
+        "count": 1,
+        "url": "/catalog-anvelope/marca_brics"
+      },
+      {
+        "label": "Bridgestone",
+        "count": 237,
+        "url": "/catalog-anvelope/marca_bridgestone"
+      },
+      {
+        "label": "Ceat",
+        "count": 70,
+        "url": "/catalog-anvelope/marca_ceat"
+      },
+      {
+        "label": "Centara",
+        "count": 146,
+        "url": "/catalog-anvelope/marca_centara"
+      },
+      {
+        "label": "Charmhoo",
+        "count": 32,
+        "url": "/catalog-anvelope/marca_charmhoo"
+      },
+      {
+        "label": "Comfoser",
+        "count": 38,
+        "url": "/catalog-anvelope/marca_comfoser"
+      },
+      {
+        "label": "Compasal",
+        "count": 8,
+        "url": "/catalog-anvelope/marca_compasal"
+      },
+      {
+        "label": "Continental",
+        "count": 410,
+        "url": "/catalog-anvelope/marca_continental"
+      },
+      {
+        "label": "Cooper",
+        "count": 66,
+        "url": "/catalog-anvelope/marca_cooper"
+      },
+      {
+        "label": "Crosswind",
+        "count": 220,
+        "url": "/catalog-anvelope/marca_crosswind"
+      },
+      {
+        "label": "Davanti",
+        "count": 100,
+        "url": "/catalog-anvelope/marca_davanti"
+      },
+      {
+        "label": "Debica",
+        "count": 61,
+        "url": "/catalog-anvelope/marca_debica"
+      },
+      {
+        "label": "Delinte",
+        "count": 1,
+        "url": "/catalog-anvelope/marca_delinte"
+      },
+      {
+        "label": "Diplomat",
+        "count": 12,
+        "url": "/catalog-anvelope/marca_diplomat"
+      },
+      {
+        "label": "Doublestar",
+        "count": 2,
+        "url": "/catalog-anvelope/marca_doublestar"
+      },
+      {
+        "label": "Dovroad",
+        "count": 2,
+        "url": "/catalog-anvelope/marca_dovroad"
+      },
+      {
+        "label": "Dunlop",
+        "count": 112,
+        "url": "/catalog-anvelope/marca_dunlop"
+      },
+      {
+        "label": "Duraturn",
+        "count": 73,
+        "url": "/catalog-anvelope/marca_duraturn"
+      },
+      {
+        "label": "Falken",
+        "count": 30,
+        "url": "/catalog-anvelope/marca_falken"
+      },
+      {
+        "label": "Federal",
+        "count": 1,
+        "url": "/catalog-anvelope/marca_federal"
+      },
+      {
+        "label": "Firemax",
+        "count": 159,
+        "url": "/catalog-anvelope/marca_firemax"
+      },
+      {
+        "label": "Firestone",
+        "count": 16,
+        "url": "/catalog-anvelope/marca_firestone"
+      },
+      {
+        "label": "Fortuna",
+        "count": 5,
+        "url": "/catalog-anvelope/marca_fortuna"
+      },
+      {
+        "label": "Fortune",
+        "count": 132,
+        "url": "/catalog-anvelope/marca_fortune"
+      },
+      {
+        "label": "Fronway",
+        "count": 271,
+        "url": "/catalog-anvelope/marca_fronway"
+      },
+      {
+        "label": "Fulda",
+        "count": 55,
+        "url": "/catalog-anvelope/marca_fulda"
+      },
+      {
+        "label": "Gislaved",
+        "count": 17,
+        "url": "/catalog-anvelope/marca_gislaved"
+      },
+      {
+        "label": "GiTi",
+        "count": 5,
+        "url": "/catalog-anvelope/marca_giti"
+      },
+      {
+        "label": "Goodride-WestLake",
+        "count": 1,
+        "url": "/catalog-anvelope/marca_goodride-westlake"
+      },
+      {
+        "label": "Goodyear",
+        "count": 399,
+        "url": "/catalog-anvelope/marca_goodyear"
+      },
+      {
+        "label": "Greentrac",
+        "count": 15,
+        "url": "/catalog-anvelope/marca_greentrac"
+      },
+      {
+        "label": "Grenlander",
+        "count": 456,
+        "url": "/catalog-anvelope/marca_grenlander"
+      },
+      {
+        "label": "Gripmax",
+        "count": 17,
+        "url": "/catalog-anvelope/marca_gripmax"
+      },
+      {
+        "label": "GT Radial",
+        "count": 99,
+        "url": "/catalog-anvelope/marca_gt-radial"
+      },
+      {
+        "label": "Habilead",
+        "count": 152,
+        "url": "/catalog-anvelope/marca_habilead"
+      },
+      {
+        "label": "Haida",
+        "count": 278,
+        "url": "/catalog-anvelope/marca_haida"
+      },
+      {
+        "label": "Hankook",
+        "count": 635,
+        "url": "/catalog-anvelope/marca_hankook"
+      },
+      {
+        "label": "Hilo",
+        "count": 177,
+        "url": "/catalog-anvelope/marca_hilo"
+      },
+      {
+        "label": "ILINK",
+        "count": 91,
+        "url": "/catalog-anvelope/marca_ilink"
+      },
+      {
+        "label": "Imperial",
+        "count": 9,
+        "url": "/catalog-anvelope/marca_imperial"
+      },
+      {
+        "label": "Joyroad",
+        "count": 328,
+        "url": "/catalog-anvelope/marca_joyroad"
+      },
+      {
+        "label": "Kapsen",
+        "count": 197,
+        "url": "/catalog-anvelope/marca_kapsen"
+      },
+      {
+        "label": "Kelly",
+        "count": 21,
+        "url": "/catalog-anvelope/marca_kelly"
+      },
+      {
+        "label": "Kinforest",
+        "count": 13,
+        "url": "/catalog-anvelope/marca_kinforest"
+      },
+      {
+        "label": "Kleber",
+        "count": 127,
+        "url": "/catalog-anvelope/marca_kleber"
+      },
+      {
+        "label": "Kormoran",
+        "count": 18,
+        "url": "/catalog-anvelope/marca_kormoran"
+      },
+      {
+        "label": "Kpatos",
+        "count": 126,
+        "url": "/catalog-anvelope/marca_kpatos"
+      },
+      {
+        "label": "Kumho",
+        "count": 357,
+        "url": "/catalog-anvelope/marca_kumho"
+      },
+      {
+        "label": "Kustone",
+        "count": 14,
+        "url": "/catalog-anvelope/marca_kustone"
+      },
+      {
+        "label": "Landspider",
+        "count": 200,
+        "url": "/catalog-anvelope/marca_landspider"
+      },
+      {
+        "label": "Lanvigator",
+        "count": 102,
+        "url": "/catalog-anvelope/marca_lanvigator"
+      },
+      {
+        "label": "Lassa",
+        "count": 365,
+        "url": "/catalog-anvelope/marca_lassa"
+      },
+      {
+        "label": "Laufenn",
+        "count": 107,
+        "url": "/catalog-anvelope/marca_laufenn"
+      },
+      {
+        "label": "Leao",
+        "count": 113,
+        "url": "/catalog-anvelope/marca_leao"
+      },
+      {
+        "label": "LingLong",
+        "count": 486,
+        "url": "/catalog-anvelope/marca_linglong"
+      },
+      {
+        "label": "Marshal",
+        "count": 36,
+        "url": "/catalog-anvelope/marca_marshal"
+      },
+      {
+        "label": "Matador",
+        "count": 173,
+        "url": "/catalog-anvelope/marca_matador"
+      },
+      {
+        "label": "Maxxis",
+        "count": 358,
+        "url": "/catalog-anvelope/marca_maxxis"
+      },
+      {
+        "label": "Michelin",
+        "count": 483,
+        "url": "/catalog-anvelope/marca_michelin"
+      },
+      {
+        "label": "Mileking",
+        "count": 34,
+        "url": "/catalog-anvelope/marca_mileking"
+      },
+      {
+        "label": "Minerva",
+        "count": 18,
+        "url": "/catalog-anvelope/marca_minerva"
+      },
+      {
+        "label": "Motrio",
+        "count": 8,
+        "url": "/catalog-anvelope/marca_motrio"
+      },
+      {
+        "label": "Nankang",
+        "count": 66,
+        "url": "/catalog-anvelope/marca_nankang"
+      },
+      {
+        "label": "Neolin",
+        "count": 20,
+        "url": "/catalog-anvelope/marca_neolin"
+      },
+      {
+        "label": "Nereus",
+        "count": 60,
+        "url": "/catalog-anvelope/marca_nereus"
+      },
+      {
+        "label": "Nexen",
+        "count": 624,
+        "url": "/catalog-anvelope/marca_nexen"
+      },
+      {
+        "label": "Nokian",
+        "count": 39,
+        "url": "/catalog-anvelope/marca_nokian"
+      },
+      {
+        "label": "Nordexx",
+        "count": 69,
+        "url": "/catalog-anvelope/marca_nordexx"
+      },
+      {
+        "label": "ONYX",
+        "count": 27,
+        "url": "/catalog-anvelope/marca_onyx"
+      },
+      {
+        "label": "Orium",
+        "count": 4,
+        "url": "/catalog-anvelope/marca_orium"
+      },
+      {
+        "label": "Otani",
+        "count": 108,
+        "url": "/catalog-anvelope/marca_otani"
+      },
+      {
+        "label": "Ovation",
+        "count": 114,
+        "url": "/catalog-anvelope/marca_ovation"
+      },
+      {
+        "label": "Petlas",
+        "count": 348,
+        "url": "/catalog-anvelope/marca_petlas"
+      },
+      {
+        "label": "Pirelli",
+        "count": 207,
+        "url": "/catalog-anvelope/marca_pirelli"
+      },
+      {
+        "label": "Platin",
+        "count": 273,
+        "url": "/catalog-anvelope/marca_platin"
+      },
+      {
+        "label": "Point S",
+        "count": 94,
+        "url": "/catalog-anvelope/marca_point-s"
+      },
+      {
+        "label": "POWERTRAC",
+        "count": 1,
+        "url": "/catalog-anvelope/marca_powertrac"
+      },
+      {
+        "label": "Premiorri",
+        "count": 1,
+        "url": "/catalog-anvelope/marca_premiorri"
+      },
+      {
+        "label": "Prinx",
+        "count": 59,
+        "url": "/catalog-anvelope/marca_prinx"
+      },
+      {
+        "label": "Rapid",
+        "count": 2,
+        "url": "/catalog-anvelope/marca_rapid"
+      },
+      {
+        "label": "Riken",
+        "count": 149,
+        "url": "/catalog-anvelope/marca_riken"
+      },
+      {
+        "label": "Roadboss",
+        "count": 4,
+        "url": "/catalog-anvelope/marca_roadboss"
+      },
+      {
+        "label": "Roadstone",
+        "count": 51,
+        "url": "/catalog-anvelope/marca_roadstone"
+      },
+      {
+        "label": "Roadx",
+        "count": 302,
+        "url": "/catalog-anvelope/marca_roadx"
+      },
+      {
+        "label": "Rockblade",
+        "count": 35,
+        "url": "/catalog-anvelope/marca_rockblade"
+      },
+      {
+        "label": "Rosava",
+        "count": 166,
+        "url": "/catalog-anvelope/marca_rosava"
+      },
+      {
+        "label": "Rotex",
+        "count": 19,
+        "url": "/catalog-anvelope/marca_rotex"
+      },
+      {
+        "label": "Rovelo",
+        "count": 73,
+        "url": "/catalog-anvelope/marca_rovelo"
+      },
+      {
+        "label": "Royal Black",
+        "count": 22,
+        "url": "/catalog-anvelope/marca_royal-black"
+      },
+      {
+        "label": "Rydanz",
+        "count": 60,
+        "url": "/catalog-anvelope/marca_rydanz"
+      },
+      {
+        "label": "Sailun",
+        "count": 284,
+        "url": "/catalog-anvelope/marca_sailun"
+      },
+      {
+        "label": "Sava",
+        "count": 27,
+        "url": "/catalog-anvelope/marca_sava"
+      },
+      {
+        "label": "Semperit",
+        "count": 13,
+        "url": "/catalog-anvelope/marca_semperit"
+      },
+      {
+        "label": "Starmaxx",
+        "count": 154,
+        "url": "/catalog-anvelope/marca_starmaxx"
+      },
+      {
+        "label": "Strial",
+        "count": 1,
+        "url": "/catalog-anvelope/marca_strial"
+      },
+      {
+        "label": "Sunny",
+        "count": 98,
+        "url": "/catalog-anvelope/marca_sunny"
+      },
+      {
+        "label": "Superia",
+        "count": 40,
+        "url": "/catalog-anvelope/marca_superia"
+      },
+      {
+        "label": "Three-A",
+        "count": 11,
+        "url": "/catalog-anvelope/marca_three-a"
+      },
+      {
+        "label": "Tigar",
+        "count": 84,
+        "url": "/catalog-anvelope/marca_tigar"
+      },
+      {
+        "label": "Toledo",
+        "count": 2,
+        "url": "/catalog-anvelope/marca_toledo"
+      },
+      {
+        "label": "Torque",
+        "count": 243,
+        "url": "/catalog-anvelope/marca_torque"
+      },
+      {
+        "label": "Tourador",
+        "count": 128,
+        "url": "/catalog-anvelope/marca_tourador"
+      },
+      {
+        "label": "Toyo",
+        "count": 7,
+        "url": "/catalog-anvelope/marca_toyo"
+      },
+      {
+        "label": "TRACMAX",
+        "count": 713,
+        "url": "/catalog-anvelope/marca_tracmax"
+      },
+      {
+        "label": "TRIANGLE",
+        "count": 200,
+        "url": "/catalog-anvelope/marca_triangle"
+      },
+      {
+        "label": "TRISTAR",
+        "count": 42,
+        "url": "/catalog-anvelope/marca_tristar"
+      },
+      {
+        "label": "Unigrip",
+        "count": 10,
+        "url": "/catalog-anvelope/marca_unigrip"
+      },
+      {
+        "label": "Uniroyal",
+        "count": 114,
+        "url": "/catalog-anvelope/marca_uniroyal"
+      },
+      {
+        "label": "Viking",
+        "count": 93,
+        "url": "/catalog-anvelope/marca_viking"
+      },
+      {
+        "label": "Voyager",
+        "count": 4,
+        "url": "/catalog-anvelope/marca_voyager"
+      },
+      {
+        "label": "Vredestein",
+        "count": 191,
+        "url": "/catalog-anvelope/marca_vredestein"
+      },
+      {
+        "label": "Waterfall",
+        "count": 9,
+        "url": "/catalog-anvelope/marca_waterfall"
+      },
+      {
+        "label": "West Lake",
+        "count": 4,
+        "url": "/catalog-anvelope/marca_west-lake"
+      },
+      {
+        "label": "Westlake",
+        "count": 22,
+        "url": "/catalog-anvelope/marca_westlake"
+      },
+      {
+        "label": "Yokohama",
+        "count": 201,
+        "url": "/catalog-anvelope/marca_yokohama"
+      },
+      {
+        "label": "ZETA",
+        "count": 7,
+        "url": "/catalog-anvelope/marca_zeta"
+      },
+      {
+        "label": "Zmax",
+        "count": 86,
+        "url": "/catalog-anvelope/marca_zmax"
+      }
+    ],
+    "Disponibilitate": [
+      {
+        "label": "In stoc",
+        "count": 8060,
+        "url": "/catalog-anvelope/nalichie"
+      }
+    ]
+  },
+  "senzori-presiune-anvelope": {}
+}
