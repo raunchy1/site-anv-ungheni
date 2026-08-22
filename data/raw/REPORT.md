@@ -1,6 +1,6 @@
 # REPORT — Faza 0, achiziția datelor de pe anvelope-ungheni.md
 
-Generat: **2026-08-22T01:07:15.294Z**
+Generat: **2026-08-22T21:00:10.132Z**
 Sursă: scraping propriu (nu a existat export OpenCart în `data/source/`).
 Crawl complet: **DA**
 
@@ -70,7 +70,7 @@ Contor live „In stoc" în catalog: **8060** · extras `in_stock`: **0** · Δ 
 | fără slug_ru | **0** | 0.00% | — |
 | fără meta description RO | **0** | 0.00% | — |
 | fără meta description RU | **0** | 0.00% | — |
-| cu descriere proprie (description_html) | **8** | 0.05% | `anvelope-accelera-badak-x-treme-lt-35x10-50-r16119l`, `anvelope-firemax-fm523-m-t-31x10-5-r15-109q`, `anvelope-roadx-rx-quest-m-t-35x12-50-r15-113q-6pr` |
+| cu descriere proprie (description_html) | **1** | 0.01% | `michelin-latitude-sport-3-255-60-r17-106v` |
 
 Sursa dimensiunii: `attribute`=14980 · `title`=28 · `none`=2
 
@@ -649,7 +649,7 @@ Total: **190** rute RO.
   "lang": "ru"
  },
  "crawled_at": null,
- "reparsed_at": "2026-08-22T01:06:54.556Z"
+ "reparsed_at": "2026-08-22T20:59:45.005Z"
 }
 ```
 
@@ -770,7 +770,7 @@ Total: **190** rute RO.
   "lang": "ru"
  },
  "crawled_at": null,
- "reparsed_at": "2026-08-22T01:06:54.558Z"
+ "reparsed_at": "2026-08-22T20:59:45.008Z"
 }
 ```
 
@@ -889,7 +889,7 @@ Total: **190** rute RO.
   "lang": "ru"
  },
  "crawled_at": null,
- "reparsed_at": "2026-08-22T01:06:54.560Z"
+ "reparsed_at": "2026-08-22T20:59:45.010Z"
 }
 ```
 
@@ -1008,7 +1008,7 @@ Total: **190** rute RO.
   "lang": "ru"
  },
  "crawled_at": null,
- "reparsed_at": "2026-08-22T01:06:54.562Z"
+ "reparsed_at": "2026-08-22T20:59:45.012Z"
 }
 ```
 
@@ -1127,7 +1127,7 @@ Total: **190** rute RO.
   "lang": "ru"
  },
  "crawled_at": null,
- "reparsed_at": "2026-08-22T01:06:54.564Z"
+ "reparsed_at": "2026-08-22T20:59:45.014Z"
 }
 ```
 

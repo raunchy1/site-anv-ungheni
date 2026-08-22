@@ -193,7 +193,12 @@ export function parseProduct(html, sourceUrl) {
     attributes: attrs,
     images: images(block),
     related_slugs: relatedSlugs(block, html),
-    description_html: (one(block, /<div class="description-p">([\s\S]*?)<\/div>/) ?? '').trim() || null,
+    // OpenCart lasă adesea `<p><br></p>` în loc de câmp gol. Un înveliș HTML fără
+    // text util nu e o descriere; altfel raportăm conținut care nu există.
+    description_html: (() => {
+      const raw = (one(block, /<div class="description-p">([\s\S]*?)<\/div>/) ?? '').trim();
+      return text(raw).length > 2 ? raw : null;
+    })(),
     meta_title: one(html, /<title>([\s\S]*?)<\/title>/),
     meta_description: one(html, /<meta name="description" content="([^"]*)"/),
     reviews_count: Number(one(block, /Recenzii\s*<sup>(\d+)<\/sup>/) ?? one(block, /Отзывы\s*<sup>(\d+)<\/sup>/) ?? 0),
