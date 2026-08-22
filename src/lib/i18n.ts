@@ -38,6 +38,9 @@ export type Dict = {
   callToOrder: string;
   inStock: string;
   supplierStock: string;
+  /** Termenul de livrare, sub eticheta de stoc. Marfa vine de la furnizor in 1-3 zile. */
+  supplierNote: string;
+  inStockNote: string;
   outOfStock: string;
   alternatives: string;
   exactSize: string;
@@ -102,7 +105,9 @@ const ro: Dict = {
   priceOnRequest: "Preț la cerere",
   callToOrder: "068 263 644",
   inStock: "În stoc",
-  supplierStock: "Stoc furnizor",
+  supplierStock: "Disponibil",
+  supplierNote: "livrare 1–3 zile",
+  inStockNote: "la magazin",
   outOfStock: "Indisponibil",
   alternatives: "Alternative disponibile",
   exactSize: "aceeași dimensiune",
@@ -165,7 +170,9 @@ const ru: Dict = {
   priceOnRequest: "Цена по запросу",
   callToOrder: "068 263 644",
   inStock: "В наличии",
-  supplierStock: "Склад поставщика",
+  supplierStock: "Доступно",
+  supplierNote: "доставка 1–3 дня",
+  inStockNote: "в магазине",
   outOfStock: "Нет в наличии",
   alternatives: "Доступные альтернативы",
   exactSize: "тот же размер",

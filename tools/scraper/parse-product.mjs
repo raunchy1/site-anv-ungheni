@@ -74,9 +74,10 @@ export function parseSize(raw) {
       size_raw: `${num(m2[1])} R${m2[2].toUpperCase()}`,
     };
   }
-  // Fără potrivire: păstrăm textul doar dacă seamănă a dimensiune. Altfel (senzori TPMS)
-  // am copia titlul întreg într-un câmp de dimensiune, ceea ce ar induce în eroare.
-  return { ...empty, size_raw: /r\s*\d{2}/i.test(s) ? s : null };
+  // Fără potrivire, `size_raw` rămâne NULL. Textul original se păstrează oricum în
+  // `attributes`. Un câmp de dimensiune care conține „R15" sau titlul unui senzor
+  // TPMS induce în eroare orice cod care îl citește ca dimensiune.
+  return empty;
 }
 
 // Indicii de viteză sunt uneori tastați cu litere chirilice care arată identic cu cele latine.

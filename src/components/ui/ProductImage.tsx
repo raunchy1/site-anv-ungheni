@@ -45,7 +45,9 @@ export function ProductImage({
     >
       {src ? (
         <Image
-          src={`${IMAGE_HOST}${src}`}
+          // Imaginile din Supabase Storage vin cu URL absolut; cele din
+          // `sample-products` sunt cai relative pe host-ul vechi.
+          src={/^https?:\/\//.test(src) ? src : `${IMAGE_HOST}${src}`}
           alt={alt}
           fill
           sizes={sizes}

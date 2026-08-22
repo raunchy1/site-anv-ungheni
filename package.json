@@ -8,27 +8,35 @@
     "start": "next start",
     "lint": "eslint",
     "db:reset": "supabase db reset",
-    "db:seed": "node tools/seed/seed.mjs",
+    "db:seed": "node --env-file=.env.local tools/seed/seed.mjs",
     "crawl": "node tools/scraper/crawl-products.mjs",
     "validate": "node tools/scraper/validate.mjs",
-    "inspector": "node tools/preview/server.mjs"
+    "inspector": "node tools/preview/server.mjs",
+    "test": "node --test tools/parse/*.test.mjs"
   },
   "dependencies": {
+    "@hookform/resolvers": "5.9.1",
+    "@supabase/ssr": "0.12.4",
+    "@supabase/supabase-js": "2.112.3",
     "next": "16.3.2",
+    "next-intl": "4.13.7",
     "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "react-dom": "19.2.8",
+    "react-hook-form": "7.85.0",
+    "resend": "6.21.0",
+    "zod": "4.4.3"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/pg": "^8.23.1",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "eslint": "^9",
+    "@tailwindcss/postcss": "4",
+    "@types/node": "20",
+    "@types/pg": "8.23.1",
+    "@types/react": "19",
+    "@types/react-dom": "19",
+    "eslint": "9",
     "eslint-config-next": "16.3.2",
-    "pg": "^8.23.0",
-    "tailwindcss": "^4",
-    "typescript": "^5"
+    "pg": "8.23.0",
+    "tailwindcss": "4",
+    "typescript": "5"
   },
   "packageManager": "pnpm@11.22.0"
 }

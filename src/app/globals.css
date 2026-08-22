@@ -125,3 +125,79 @@
     white-space: nowrap;
   }
 }
+
+/* ==========================================================================
+   Utilitare de navigație. Stau aici pentru ca sunt folosite de header, footer
+   si bara mobila deopotriva — o componenta proprie ar fi mai mult ceremonie
+   decat cod.
+   ========================================================================== */
+
+@layer components {
+  .nav-link {
+    color: var(--ink-muted);
+    text-decoration: none;
+    transition: color var(--d-fast) var(--e-out);
+  }
+  .nav-link:hover,
+  .nav-link:focus-visible {
+    color: var(--ink-strong);
+  }
+
+  /* Tinta de 44px pe mobil, chiar daca iconita are 18. */
+  .icon-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    min-height: 36px;
+    border-radius: var(--r-sm);
+    color: var(--ink-muted);
+    transition: color var(--d-fast) var(--e-out), background-color var(--d-fast) var(--e-out);
+  }
+  .icon-button:hover,
+  .icon-button:focus-visible {
+    color: var(--ink-strong);
+    background: var(--surface-2);
+  }
+  @media (pointer: coarse) {
+    .icon-button { min-width: 44px; min-height: 44px; }
+  }
+
+  /* Vizibil doar la focus din tastatura — primul stop pe orice pagina. */
+  .skip-link {
+    position: absolute;
+    left: var(--sp-4);
+    top: calc(-1 * var(--sp-16));
+    z-index: 100;
+    padding: var(--sp-2) var(--sp-4);
+    background: var(--ink-strong);
+    color: var(--surface);
+    border-radius: var(--r-sm);
+    transition: top var(--d-fast) var(--e-out);
+  }
+  .skip-link:focus {
+    top: var(--sp-4);
+  }
+}
+
+@layer components {
+  .pagination-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 40px;
+    min-height: 40px;
+    padding-inline: var(--sp-3);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    color: var(--ink-strong);
+    font-size: var(--fs-200, 0.875rem);
+    transition: border-color var(--dur-1) var(--ease-out);
+  }
+  .pagination-link:hover { border-color: var(--line-strong); }
+  .pagination-link.is-current {
+    background: var(--ink-strong);
+    border-color: var(--ink-strong);
+    color: var(--surface);
+  }
+}

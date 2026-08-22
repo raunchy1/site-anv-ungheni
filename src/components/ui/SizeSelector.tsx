@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import { cn } from "@/lib/cn";
 import { Button } from "./Button";
 import { IconArrowRight, IconClose } from "@/components/icons";
@@ -45,9 +46,43 @@ export function SizeSelector({
   compact?: boolean;
 }) {
   const d = t(locale);
+  const router = useRouter();
   const [width, setWidth] = useState<string | null>(null);
   const [aspect, setAspect] = useState<string | null>(null);
   const [diameter, setDiameter] = useState<string | null>(null);
+
+  /**
+   * La a doua vizita selectorul e precompletat: soferul are aceeasi masina.
+   * Resetarea e vizibila, nu ascunsa — vezi butonul de sus.
+   */
+  useEffect(() => {
+    try {
+      const saved = JSON.parse(localStorage.getItem("au:size") ?? "null");
+      if (saved?.width) { setWidth(saved.width); setAspect(saved.aspect ?? null); setDiameter(saved.diameter ?? null); }
+    } catch { /* localStorage indisponibil sau continut invalid */ }
+  }, []);
+
+  useEffect(() => {
+    try {
+      if (width) localStorage.setItem("au:size", JSON.stringify({ width, aspect, diameter }));
+      else localStorage.removeItem("au:size");
+    } catch { /* modul privat */ }
+  }, [width, aspect, diameter]);
+
+  /**
+   * Filtrele merg in cale, nu in query: sunt rute indexate de ani de zile.
+   * Calea se compune din `locale`, nu din contextul de rutare, ca sa functioneze
+   * si in `/design-system`, care sta in afara segmentului de limba.
+   */
+  const resultsHref =
+    width && aspect && diameter
+      ? (locale === "ru" ? "/ru/katalog-shin" : "/catalog-anvelope") +
+        `/latime_${width}/inaltime_${aspect}/diametru_${diameter.toLowerCase()}`
+      : null;
+
+  function showResults() {
+    if (resultsHref) router.push(resultsHref);
+  }
 
   const aspects = useMemo(() => aspectsFor(width), [width]);
   const diameters = useMemo(() => diametersFor(width, aspect), [width, aspect]);
@@ -230,6 +265,7 @@ export function SizeSelector({
         <Button
           variant="primary"
           size="md"
+          onClick={showResults}
           disabled={!width || !aspect || !diameter || avail === 0}
           iconEnd={<IconArrowRight size={17} />}
           className="max-sm:w-full"

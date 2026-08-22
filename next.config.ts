@@ -1,4 +1,7 @@
 import type { NextConfig } from "next";
+import createNextIntlPlugin from "next-intl/plugin";
+
+const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
   /** Indicatorul de dev acopera coltul din stanga-jos in capturile de ecran. */
@@ -17,6 +20,11 @@ const nextConfig: NextConfig = {
         hostname: "anvelope-ungheni.md",
         pathname: "/image/**",
       },
+      {
+        protocol: "https",
+        hostname: "tzzycvsbnlurypfstisc.supabase.co",
+        pathname: "/storage/v1/object/public/**",
+      },
     ],
     formats: ["image/avif", "image/webp"],
     /**
@@ -28,4 +36,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default withNextIntl(nextConfig);

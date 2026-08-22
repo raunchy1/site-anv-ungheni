@@ -28,6 +28,8 @@ export function StockIndicator({
   const d = t(locale);
   const label =
     status === "in_stock" ? d.inStock : status === "supplier" ? d.supplierStock : d.outOfStock;
+  // „Disponibil" fara termen ar fi vag, „In stoc" ar fi neadevarat: marfa e la furnizor.
+  const note = status === "supplier" ? d.supplierNote : status === "in_stock" ? d.inStockNote : null;
 
   const mark =
     status === "out_of_stock"
@@ -43,7 +45,14 @@ export function StockIndicator({
       )}
     >
       <span className={cn("size-2 shrink-0 rounded-[1px]", mark)} aria-hidden="true" />
-      {variant === "full" ? <span>{label}</span> : <span className="sr-only-abs">{label}</span>}
+      {variant === "full" ? (
+        <span>
+          {label}
+          {note ? <span className="text-[var(--ink-faint)]"> · {note}</span> : null}
+        </span>
+      ) : (
+        <span className="sr-only-abs">{label}</span>
+      )}
     </span>
   );
 }

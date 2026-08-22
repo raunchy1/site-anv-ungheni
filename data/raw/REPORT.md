@@ -1,6 +1,6 @@
 # REPORT — Faza 0, achiziția datelor de pe anvelope-ungheni.md
 
-Generat: **2026-08-22T21:00:10.132Z**
+Generat: **2026-08-22T21:20:47.469Z**
 Sursă: scraping propriu (nu a existat export OpenCart în `data/source/`).
 Crawl complet: **DA**
 
@@ -649,7 +649,7 @@ Total: **190** rute RO.
   "lang": "ru"
  },
  "crawled_at": null,
- "reparsed_at": "2026-08-22T20:59:45.005Z"
+ "reparsed_at": "2026-08-22T21:20:23.768Z"
 }
 ```
 
@@ -770,7 +770,7 @@ Total: **190** rute RO.
   "lang": "ru"
  },
  "crawled_at": null,
- "reparsed_at": "2026-08-22T20:59:45.008Z"
+ "reparsed_at": "2026-08-22T21:20:23.771Z"
 }
 ```
 
@@ -889,7 +889,7 @@ Total: **190** rute RO.
   "lang": "ru"
  },
  "crawled_at": null,
- "reparsed_at": "2026-08-22T20:59:45.010Z"
+ "reparsed_at": "2026-08-22T21:20:23.772Z"
 }
 ```
 
@@ -1008,7 +1008,7 @@ Total: **190** rute RO.
   "lang": "ru"
  },
  "crawled_at": null,
- "reparsed_at": "2026-08-22T20:59:45.012Z"
+ "reparsed_at": "2026-08-22T21:20:23.775Z"
 }
 ```
 
@@ -1127,7 +1127,7 @@ Total: **190** rute RO.
   "lang": "ru"
  },
  "crawled_at": null,
- "reparsed_at": "2026-08-22T20:59:45.014Z"
+ "reparsed_at": "2026-08-22T21:20:23.777Z"
 }
 ```
 

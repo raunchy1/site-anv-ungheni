@@ -231,7 +231,9 @@ export function TreadRule({
       height={12}
       aria-hidden="true"
       focusable="false"
-      style={variant === "full" ? { width: "100%" } : { width, flex: "0 0 auto" }}
+      // `block`: ca SVG inline, marcajul sta pe linia de baza si inghesuie
+      // titlul urmator. Nu e o preferinta, e o corectie de layout.
+      style={variant === "full" ? { display: "block", width: "100%" } : { display: "block", width, flex: "0 0 auto" }}
     >
       <defs>
         <pattern
@@ -252,3 +254,31 @@ export function TreadRule({
     </svg>
   );
 }
+
+/* --------------------------------------------------------------- WhatsApp --
+   În Moldova WhatsApp e canal de comandă, nu rețea socială, deci iconița stă
+   lângă telefon și coș — nu într-un grup de „social media". Desenată pe aceeași
+   grilă și cu același contur ca restul setului: receptorul din `IconPhone`
+   într-o bulă de mesaj, nu logotipul oficial. */
+export const IconWhatsApp = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M3.5 20.5l1.4-4.2a8.2 8.2 0 112.9 2.9L3.5 20.5z" />
+    <path d="M9.1 8.6l1 2-1.1 1.2a5.4 5.4 0 002.9 2.9l1.2-1.1 2 1-.4 1.7a1 1 0 01-1.1.7 8 8 0 01-6.9-6.9 1 1 0 01.7-1.1l1.7-.4z" />
+  </Icon>
+);
+
+/** Locație — pentru blocul „unde poți cumpăra" și pentru pagina de contact. */
+export const IconPin = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M12 21.5l-5.4-6.9a6.9 6.9 0 1110.8 0L12 21.5z" />
+    <circle cx="12" cy="10.2" r="2.6" />
+  </Icon>
+);
+
+/** Ceas — programul de lucru. */
+export const IconClock = (p: IconProps) => (
+  <Icon {...p}>
+    <circle cx="12" cy="12" r="9.25" />
+    <path d="M12 6.6V12l3.6 2.4" />
+  </Icon>
+);
