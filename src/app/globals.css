@@ -136,7 +136,7 @@
   .nav-link {
     color: var(--ink-muted);
     text-decoration: none;
-    transition: color var(--dur-1) var(--e-out);
+    transition: color var(--dur-1) var(--ease-out);
   }
   .nav-link:hover,
   .nav-link:focus-visible {
@@ -152,7 +152,7 @@
     min-height: 36px;
     border-radius: var(--radius-sm);
     color: var(--ink-muted);
-    transition: color var(--dur-1) var(--e-out), background-color var(--dur-1) var(--e-out);
+    transition: color var(--dur-1) var(--ease-out), background-color var(--dur-1) var(--ease-out);
   }
   .icon-button:hover,
   .icon-button:focus-visible {
@@ -173,7 +173,7 @@
     background: var(--ink-strong);
     color: var(--surface);
     border-radius: var(--radius-sm);
-    transition: top var(--dur-1) var(--e-out);
+    transition: top var(--dur-1) var(--ease-out);
   }
   .skip-link:focus {
     top: var(--sp-4);

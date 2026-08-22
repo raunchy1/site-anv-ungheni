@@ -12,7 +12,10 @@
     "crawl": "node tools/scraper/crawl-products.mjs",
     "validate": "node tools/scraper/validate.mjs",
     "inspector": "node tools/preview/server.mjs",
-    "test": "node --test tools/parse/*.test.mjs"
+    "test": "node --test tools/parse/*.test.mjs",
+    "check:routes": "node --env-file=.env.local --experimental-strip-types tools/route-map/check-collisions.ts",
+    "check:tokens": "node tools/check/tokens.mjs",
+    "verify:redirects": "node --env-file=.env.local tools/verify-redirects.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "5.9.1",

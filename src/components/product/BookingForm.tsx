@@ -63,7 +63,7 @@ export function BookingForm({ serviceId, locale, phone }: { serviceId: number; l
         <input id="website" name="website" tabIndex={-1} autoComplete="off" />
       </div>
 
-      {error && <p role="alert" className="text-200 text-[var(--danger,var(--accent))]">{error}</p>}
+      {error && <p role="alert" className="text-200 text-[var(--accent)]">{error}</p>}
 
       <Button type="submit" variant="primary" size="md" disabled={state === "sending"}>
         {t("submit")}
