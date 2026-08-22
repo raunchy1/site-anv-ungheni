@@ -1,10 +1,13 @@
 # Datele de migrare nu sunt necesare la runtime: arborele de dimensiuni și
 # produsele de mockup sunt deja generate în `src/lib/`. Fără asta, deploy-ul
 # încearcă să urce cele ~32.000 de fișiere de cache și imagini.
-data/
-tools/
-reports/
-docs/
-supabase/
-.next/cache/
+#
+# Tiparele sunt ancorate la rădăcină cu `/`. Fără ancoră, `supabase/` exclude
+# și `src/lib/supabase/`, iar build-ul cade cu „Module not found".
+/data
+/tools
+/reports
+/docs
+/supabase
+/.next/cache
 *.docx
