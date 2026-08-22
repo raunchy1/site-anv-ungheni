@@ -1,36 +1,38 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# anvelope-ungheni.md
 
-## Getting Started
+Reconstrucția magazinului OpenCart 3.x pe Next.js 16 + Supabase.
+Documente: [`ARCHITECTURE.md`](ARCHITECTURE.md) · [`DESIGN.md`](DESIGN.md) · [`DECISIONS.md`](DECISIONS.md) · [`data/raw/REPORT.md`](data/raw/REPORT.md)
 
-First, run the development server:
+## Rulare locală
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
+cp .env.example .env.local     # completează cheile Supabase
+pnpm dev                       # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+`/design-system` arată tokenii și cele 23 de componente, în ambele limbi.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Comenzi
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Comandă | Ce face |
+|---|---|
+| `pnpm dev` · `pnpm build` · `pnpm start` | Next.js |
+| `pnpm test` | teste pe parserul de dimensiuni + determinismul reparsării |
+| `pnpm db:seed` | seed idempotent în Supabase din `data/raw/` |
+| `pnpm inspector` | inspector local al datelor migrate (port 4321) |
+| `node --env-file=.env.local tools/seed/upload-images.mjs` | urcă imaginile în Storage |
+| `node --env-file=.env.local tools/build/size-tree.mjs` | regenerează arborele de dimensiuni **după fiecare import** |
+| `node tools/db/apply-local.mjs --twice` | verifică migrațiile pe Postgres local (docker, port 55432) |
+| `node tools/db/test-constraints.mjs` | cele 8 teste de constrângeri |
 
-## Learn More
+## Unelte de migrare
 
-To learn more about Next.js, take a look at the following resources:
+`tools/scraper/` conține crawler-ul care a extras cele 15.010 produse (RO + RU) de pe
+site-ul vechi, cu rezolvarea provocării proof-of-work, cache de HTML brut și validator.
+Cache-ul (`data/raw/html-cache/`, ~590 MB) **nu se șterge până la lansare**: orice
+corecție de parser costă 20 de secunde de reparsare locală în loc de 2,5 ore de crawl.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Stare
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Fazele 0–3 parțial. Ce lipsește e listat în `ARCHITECTURE.md` §12 și în auditul din `docs/`.

@@ -91,6 +91,7 @@ export async function CatalogView({
             <EmptyStateWithWhatsApp locale={locale} filters={filters} unavailableTotal={result.unavailableTotal} />
           ) : (
             <>
+              <h2 className="sr-only-abs">{t("catalog.results", { count: result.total })}</h2>
               <ul className="grid grid-cols-2 gap-[var(--sp-4)] sm:grid-cols-3 xl:grid-cols-4">
                 {result.items.map((p: Product, i: number) => (
                   <li key={p.id}><ProductCard product={toUiProduct(p)} locale={locale} priority={i < 4} /></li>

@@ -24,6 +24,7 @@ export async function generateMetadata({
 }: { params: Promise<{ locale: string; filtre: string[] }> }): Promise<Metadata> {
   const { locale, filtre } = await params;
   const t = await getTranslations({ locale, namespace: "catalog" });
+  const tAll = await getTranslations({ locale });
   const f = parseFilterSegments(filtre);
   const canonicalSegments = buildFilterSegments(f);
   const roPath = `/catalog-anvelope/${canonicalSegments.join("/")}`;
@@ -31,7 +32,7 @@ export async function generateMetadata({
 
   const bits = [
     f.width && f.aspect && f.diameter ? `${f.width}/${f.aspect} ${f.diameter}` : null,
-    f.season ? t(`../season.${f.season}` as never) : null,
+    f.season ? tAll(`season.${f.season}`) : null,
   ].filter(Boolean);
 
   return {

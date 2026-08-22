@@ -48,7 +48,7 @@ export function StockIndicator({
       {variant === "full" ? (
         <span>
           {label}
-          {note ? <span className="text-[var(--ink-faint)]"> · {note}</span> : null}
+          {note ? <span className="text-[var(--ink-muted)]"> · {note}</span> : null}
         </span>
       ) : (
         <span className="sr-only-abs">{label}</span>

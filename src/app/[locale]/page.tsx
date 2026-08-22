@@ -59,7 +59,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                 >
                   <Icon size={22} className="text-[var(--ink-muted)]" />
                   <span className="font-medium text-[var(--ink-strong)]">{t(`season.${s}`)}</span>
-                  <IconArrowRight size={16} className="ml-auto text-[var(--ink-faint)]" />
+                  <IconArrowRight size={16} className="ml-auto text-[var(--ink-muted)]" />
                 </Link>
               </li>
             );
@@ -78,7 +78,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                 className="num inline-flex items-baseline gap-[var(--sp-2)] rounded-[var(--r-sm)] border border-[var(--line)] px-[var(--sp-3)] py-[var(--sp-2)] text-300 transition-colors duration-[var(--dur-1)] hover:border-[var(--line-strong)]"
               >
                 <span className="text-[var(--ink-strong)]">{s.width}/{s.aspect} {s.diameter}</span>
-                <span className="text-100 text-[var(--ink-faint)]">{s.available}</span>
+                <span className="text-100 text-[var(--ink-muted)]">{s.available}</span>
               </Link>
             </li>
           ))}
@@ -109,7 +109,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                 className="flex h-full items-center gap-[var(--sp-3)] rounded-[var(--r-md)] border border-[var(--line)] px-[var(--sp-4)] py-[var(--sp-4)] transition-colors duration-[var(--dur-1)] hover:border-[var(--line-strong)]"
               >
                 <span className="text-300 text-[var(--ink-strong)]">{(l === "ru" ? s.title_ru : s.title_ro) ?? s.title_ro}</span>
-                <IconArrowRight size={16} className="ml-auto shrink-0 text-[var(--ink-faint)]" />
+                <IconArrowRight size={16} className="ml-auto shrink-0 text-[var(--ink-muted)]" />
               </Link>
             </li>
           ))}
@@ -122,15 +122,15 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         <div className="mt-[var(--sp-5)] grid gap-[var(--sp-6)] lg:grid-cols-[minmax(0,320px)_1fr]">
           <ul className="space-y-[var(--sp-4)] text-300">
             <li className="flex gap-[var(--sp-3)]">
-              <IconPin size={18} className="mt-[2px] shrink-0 text-[var(--ink-faint)]" />
+              <IconPin size={18} className="mt-[2px] shrink-0 text-[var(--ink-muted)]" />
               <span className="text-[var(--ink-strong)]">{settings.address}</span>
             </li>
             <li className="flex gap-[var(--sp-3)]">
-              <IconPhone size={18} className="mt-[2px] shrink-0 text-[var(--ink-faint)]" />
+              <IconPhone size={18} className="mt-[2px] shrink-0 text-[var(--ink-muted)]" />
               <a href={telLink(settings.phone_e164)} className="num text-[var(--ink-strong)]">{settings.phone_display}</a>
             </li>
             <li className="flex gap-[var(--sp-3)]">
-              <IconClock size={18} className="mt-[2px] shrink-0 text-[var(--ink-faint)]" />
+              <IconClock size={18} className="mt-[2px] shrink-0 text-[var(--ink-muted)]" />
               <span className="text-[var(--ink-strong)]">{t("contact.hoursValue")}</span>
             </li>
           </ul>

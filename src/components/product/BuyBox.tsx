@@ -40,12 +40,12 @@ export function BuyBox({
             {formatPrice(price)}
           </span>
           <span className="text-200 font-medium uppercase tracking-[var(--tr-label)] text-[var(--ink-muted)]">MDL</span>
-          <span className="text-200 text-[var(--ink-faint)]">{t("product.each")}</span>
+          <span className="text-200 text-[var(--ink-muted)]">{t("product.each")}</span>
         </p>
         <p className="flex items-baseline gap-[var(--sp-2)]">
           <span className="num text-500 font-medium text-[var(--ink)]">{formatPrice(price * 4)}</span>
-          <span className="text-100 font-medium uppercase tracking-[var(--tr-label)] text-[var(--ink-faint)]">MDL</span>
-          <span className="text-200 text-[var(--ink-faint)]">{t("product.setOfFour")}</span>
+          <span className="text-100 font-medium uppercase tracking-[var(--tr-label)] text-[var(--ink-muted)]">MDL</span>
+          <span className="text-200 text-[var(--ink-muted)]">{t("product.setOfFour")}</span>
         </p>
       </div>
 

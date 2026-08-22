@@ -37,11 +37,11 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
         <div>
           <dl className="space-y-[var(--sp-5)]">
             <div className="flex gap-[var(--sp-3)]">
-              <IconPin size={18} className="mt-[3px] shrink-0 text-[var(--ink-faint)]" />
+              <IconPin size={18} className="mt-[3px] shrink-0 text-[var(--ink-muted)]" />
               <div><dt className="label">{t("contact.address")}</dt><dd className="mt-[var(--sp-1)] text-300 text-[var(--ink-strong)]">{s.address}</dd></div>
             </div>
             <div className="flex gap-[var(--sp-3)]">
-              <IconPhone size={18} className="mt-[3px] shrink-0 text-[var(--ink-faint)]" />
+              <IconPhone size={18} className="mt-[3px] shrink-0 text-[var(--ink-muted)]" />
               <div>
                 <dt className="label">{t("contact.phone")}</dt>
                 <dd className="mt-[var(--sp-1)]"><a href={telLink(s.phone_e164)} className="num text-400 font-medium text-[var(--ink-strong)]">{s.phone_display}</a></dd>
@@ -49,12 +49,12 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
               </div>
             </div>
             <div className="flex gap-[var(--sp-3)]">
-              <IconClock size={18} className="mt-[3px] shrink-0 text-[var(--ink-faint)]" />
+              <IconClock size={18} className="mt-[3px] shrink-0 text-[var(--ink-muted)]" />
               <div>
                 <dt className="label">{t("contact.hours")}</dt>
                 <dd className="mt-[var(--sp-1)] text-300 text-[var(--ink-strong)]">{t("contact.hoursValue")}</dd>
                 {!s.opening_hours.sun && (
-                  <dd className="mt-[var(--sp-1)] text-100 text-[var(--ink-faint)]">TODO(cristian): program duminică</dd>
+                  <dd className="mt-[var(--sp-1)] text-100 text-[var(--ink-muted)]">TODO(cristian): program duminică</dd>
                 )}
               </div>
             </div>

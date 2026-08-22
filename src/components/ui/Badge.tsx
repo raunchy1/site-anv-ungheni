@@ -57,11 +57,13 @@ export function SeasonBadge({
   locale,
   className,
 }: {
-  season: Season;
+  /** 7 produse din 15.010 n-au sezon in sursa. Fara insigna, nu cu una goala. */
+  season: Season | null;
   locale: Locale;
   className?: string;
 }) {
-  const cfg = seasonMap[season];
+  const cfg = season ? seasonMap[season] : undefined;
+  if (!cfg) return null;
   const d = t(locale);
   const label =
     cfg.key === "summer" ? d.summer : cfg.key === "winter" ? d.winter : d.allSeason;

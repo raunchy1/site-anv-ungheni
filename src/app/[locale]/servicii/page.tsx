@@ -48,7 +48,7 @@ export default async function ServicesIndex({ params }: { params: Promise<{ loca
                 </div>
                 <div className="flex flex-1 items-center gap-[var(--sp-3)] px-[var(--sp-4)] py-[var(--sp-4)]">
                   <span className="text-300 font-medium text-[var(--ink-strong)]">{title}</span>
-                  <IconArrowRight size={16} className="ml-auto shrink-0 text-[var(--ink-faint)]" />
+                  <IconArrowRight size={16} className="ml-auto shrink-0 text-[var(--ink-muted)]" />
                 </div>
               </Link>
             </li>

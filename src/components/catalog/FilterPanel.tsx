@@ -146,7 +146,7 @@ function FilterChip({ href, active, label, count }: { href: React.ComponentProps
       }`}
     >
       {label}
-      {count != null && <span className={`text-100 ${active ? "opacity-70" : "text-[var(--ink-faint)]"}`}>{count}</span>}
+      {count != null && <span className={`text-100 ${active ? "opacity-70" : "text-[var(--ink-muted)]"}`}>{count}</span>}
     </Link>
   );
 }

@@ -155,8 +155,8 @@ export async function ProductPage({ product, locale }: { product: Product; local
         <h2 className="text-500 font-semibold text-[var(--ink-strong)]">{t("product.whereToBuy")}</h2>
         <div className="mt-[var(--sp-4)] grid gap-[var(--sp-5)] lg:grid-cols-[minmax(0,300px)_1fr]">
           <ul className="space-y-[var(--sp-3)] text-300">
-            <li className="flex gap-[var(--sp-3)]"><IconPin size={18} className="mt-[2px] shrink-0 text-[var(--ink-faint)]" /><span>{settings.address}</span></li>
-            <li className="flex gap-[var(--sp-3)]"><IconPhone size={18} className="mt-[2px] shrink-0 text-[var(--ink-faint)]" /><a href={telLink(settings.phone_e164)} className="num text-[var(--ink-strong)]">{settings.phone_display}</a></li>
+            <li className="flex gap-[var(--sp-3)]"><IconPin size={18} className="mt-[2px] shrink-0 text-[var(--ink-muted)]" /><span>{settings.address}</span></li>
+            <li className="flex gap-[var(--sp-3)]"><IconPhone size={18} className="mt-[2px] shrink-0 text-[var(--ink-muted)]" /><a href={telLink(settings.phone_e164)} className="num text-[var(--ink-strong)]">{settings.phone_display}</a></li>
           </ul>
           <div className="overflow-hidden rounded-[var(--radius-sm)] border border-[var(--line)]">
             <iframe title={t("contact.map")} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="h-[260px] w-full"
