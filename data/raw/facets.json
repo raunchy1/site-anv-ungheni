@@ -963,5 +963,970 @@
       }
     ]
   },
-  "senzori-presiune-anvelope": {}
+  "senzori-presiune-anvelope": {},
+  "ru/katalog-shin": {
+    "Ширина": [
+      {
+        "label": "135",
+        "count": 5,
+        "url": "/ru/katalog-shin/latime_135"
+      },
+      {
+        "label": "145",
+        "count": 23,
+        "url": "/ru/katalog-shin/latime_145"
+      },
+      {
+        "label": "155",
+        "count": 149,
+        "url": "/ru/katalog-shin/latime_155"
+      },
+      {
+        "label": "165",
+        "count": 183,
+        "url": "/ru/katalog-shin/latime_165"
+      },
+      {
+        "label": "175",
+        "count": 424,
+        "url": "/ru/katalog-shin/latime_175"
+      },
+      {
+        "label": "185",
+        "count": 820,
+        "url": "/ru/katalog-shin/latime_185"
+      },
+      {
+        "label": "195",
+        "count": 1157,
+        "url": "/ru/katalog-shin/latime_195"
+      },
+      {
+        "label": "205",
+        "count": 1329,
+        "url": "/ru/katalog-shin/latime_205"
+      },
+      {
+        "label": "215",
+        "count": 1965,
+        "url": "/ru/katalog-shin/latime_215"
+      },
+      {
+        "label": "225",
+        "count": 2246,
+        "url": "/ru/katalog-shin/latime_225"
+      },
+      {
+        "label": "235",
+        "count": 2053,
+        "url": "/ru/katalog-shin/latime_235"
+      },
+      {
+        "label": "245",
+        "count": 1240,
+        "url": "/ru/katalog-shin/latime_245"
+      },
+      {
+        "label": "255",
+        "count": 1135,
+        "url": "/ru/katalog-shin/latime_255"
+      },
+      {
+        "label": "265",
+        "count": 629,
+        "url": "/ru/katalog-shin/latime_265"
+      },
+      {
+        "label": "275",
+        "count": 811,
+        "url": "/ru/katalog-shin/latime_275"
+      },
+      {
+        "label": "285",
+        "count": 414,
+        "url": "/ru/katalog-shin/latime_285"
+      },
+      {
+        "label": "295",
+        "count": 132,
+        "url": "/ru/katalog-shin/latime_295"
+      },
+      {
+        "label": "305",
+        "count": 46,
+        "url": "/ru/katalog-shin/latime_305"
+      },
+      {
+        "label": "315",
+        "count": 187,
+        "url": "/ru/katalog-shin/latime_315"
+      },
+      {
+        "label": "325",
+        "count": 34,
+        "url": "/ru/katalog-shin/latime_325"
+      }
+    ],
+    "Высота": [
+      {
+        "label": "/25",
+        "count": 3,
+        "url": "/ru/katalog-shin/inaltime_25"
+      },
+      {
+        "label": "/30",
+        "count": 172,
+        "url": "/ru/katalog-shin/inaltime_30"
+      },
+      {
+        "label": "/35",
+        "count": 838,
+        "url": "/ru/katalog-shin/inaltime_35"
+      },
+      {
+        "label": "/40",
+        "count": 1467,
+        "url": "/ru/katalog-shin/inaltime_40"
+      },
+      {
+        "label": "/45",
+        "count": 2151,
+        "url": "/ru/katalog-shin/inaltime_45"
+      },
+      {
+        "label": "/50",
+        "count": 1515,
+        "url": "/ru/katalog-shin/inaltime_50"
+      },
+      {
+        "label": "/55",
+        "count": 2747,
+        "url": "/ru/katalog-shin/inaltime_55"
+      },
+      {
+        "label": "/60",
+        "count": 1966,
+        "url": "/ru/katalog-shin/inaltime_60"
+      },
+      {
+        "label": "/65",
+        "count": 2311,
+        "url": "/ru/katalog-shin/inaltime_65"
+      },
+      {
+        "label": "/70",
+        "count": 1150,
+        "url": "/ru/katalog-shin/inaltime_70"
+      },
+      {
+        "label": "/75",
+        "count": 443,
+        "url": "/ru/katalog-shin/inaltime_75"
+      },
+      {
+        "label": "/80",
+        "count": 67,
+        "url": "/ru/katalog-shin/inaltime_80"
+      },
+      {
+        "label": "/85",
+        "count": 12,
+        "url": "/ru/katalog-shin/inaltime_85"
+      }
+    ],
+    "Диаметр": [
+      {
+        "label": "R10",
+        "count": 4,
+        "url": "/ru/katalog-shin/diametru_r10"
+      },
+      {
+        "label": "R12",
+        "count": 13,
+        "url": "/ru/katalog-shin/diametru_r12"
+      },
+      {
+        "label": "R12C",
+        "count": 1,
+        "url": "/ru/katalog-shin/diametru_r12c"
+      },
+      {
+        "label": "R13",
+        "count": 254,
+        "url": "/ru/katalog-shin/diametru_r13"
+      },
+      {
+        "label": "R13C",
+        "count": 4,
+        "url": "/ru/katalog-shin/diametru_r13c"
+      },
+      {
+        "label": "R14",
+        "count": 777,
+        "url": "/ru/katalog-shin/diametru_r14"
+      },
+      {
+        "label": "R14C",
+        "count": 12,
+        "url": "/ru/katalog-shin/diametru_r14c"
+      },
+      {
+        "label": "R15",
+        "count": 1631,
+        "url": "/ru/katalog-shin/diametru_r15"
+      },
+      {
+        "label": "R15C",
+        "count": 32,
+        "url": "/ru/katalog-shin/diametru_r15c"
+      },
+      {
+        "label": "R16",
+        "count": 2705,
+        "url": "/ru/katalog-shin/diametru_r16"
+      },
+      {
+        "label": "R16C",
+        "count": 61,
+        "url": "/ru/katalog-shin/diametru_r16c"
+      },
+      {
+        "label": "R17",
+        "count": 2817,
+        "url": "/ru/katalog-shin/diametru_r17"
+      },
+      {
+        "label": "R17C",
+        "count": 3,
+        "url": "/ru/katalog-shin/diametru_r17c"
+      },
+      {
+        "label": "R18",
+        "count": 2500,
+        "url": "/ru/katalog-shin/diametru_r18"
+      },
+      {
+        "label": "R19",
+        "count": 1831,
+        "url": "/ru/katalog-shin/diametru_r19"
+      },
+      {
+        "label": "R20",
+        "count": 1456,
+        "url": "/ru/katalog-shin/diametru_r20"
+      },
+      {
+        "label": "R21",
+        "count": 592,
+        "url": "/ru/katalog-shin/diametru_r21"
+      },
+      {
+        "label": "R22",
+        "count": 284,
+        "url": "/ru/katalog-shin/diametru_r22"
+      },
+      {
+        "label": "R23",
+        "count": 25,
+        "url": "/ru/katalog-shin/diametru_r23"
+      }
+    ],
+    "Сезон": [
+      {
+        "label": "Всесезонные",
+        "count": 1858,
+        "url": "/ru/katalog-shin/sezon_all-season"
+      },
+      {
+        "label": "Зима",
+        "count": 5805,
+        "url": "/ru/katalog-shin/sezon_iarna"
+      },
+      {
+        "label": "Лето",
+        "count": 7339,
+        "url": "/ru/katalog-shin/sezon_vara"
+      }
+    ],
+    "Производитель": [
+      {
+        "label": "ACCELERA",
+        "count": 118,
+        "url": "/ru/katalog-shin/marca_accelera"
+      },
+      {
+        "label": "Achilles",
+        "count": 1,
+        "url": "/ru/katalog-shin/marca_achilles"
+      },
+      {
+        "label": "Anchee",
+        "count": 6,
+        "url": "/ru/katalog-shin/marca_anchee"
+      },
+      {
+        "label": "Annaite",
+        "count": 32,
+        "url": "/ru/katalog-shin/marca_annaite"
+      },
+      {
+        "label": "Aoteli",
+        "count": 1,
+        "url": "/ru/katalog-shin/marca_aoteli"
+      },
+      {
+        "label": "Aplus",
+        "count": 204,
+        "url": "/ru/katalog-shin/marca_aplus"
+      },
+      {
+        "label": "Aptany",
+        "count": 3,
+        "url": "/ru/katalog-shin/marca_aptany"
+      },
+      {
+        "label": "Ardent",
+        "count": 1,
+        "url": "/ru/katalog-shin/marca_ardent"
+      },
+      {
+        "label": "Arivo",
+        "count": 331,
+        "url": "/ru/katalog-shin/marca_arivo"
+      },
+      {
+        "label": "Atlas",
+        "count": 2,
+        "url": "/ru/katalog-shin/marca_atlas"
+      },
+      {
+        "label": "Atturo",
+        "count": 3,
+        "url": "/ru/katalog-shin/marca_atturo"
+      },
+      {
+        "label": "Austone",
+        "count": 6,
+        "url": "/ru/katalog-shin/marca_austone"
+      },
+      {
+        "label": "Avon",
+        "count": 25,
+        "url": "/ru/katalog-shin/marca_avon"
+      },
+      {
+        "label": "Barum",
+        "count": 166,
+        "url": "/ru/katalog-shin/marca_barum"
+      },
+      {
+        "label": "Bearway",
+        "count": 2,
+        "url": "/ru/katalog-shin/marca_bearway"
+      },
+      {
+        "label": "BELSHINA",
+        "count": 1,
+        "url": "/ru/katalog-shin/marca_belshina"
+      },
+      {
+        "label": "BFGoodrich",
+        "count": 23,
+        "url": "/ru/katalog-shin/marca_bfgoodrich"
+      },
+      {
+        "label": "Brics",
+        "count": 1,
+        "url": "/ru/katalog-shin/marca_brics"
+      },
+      {
+        "label": "Bridgestone",
+        "count": 237,
+        "url": "/ru/katalog-shin/marca_bridgestone"
+      },
+      {
+        "label": "Ceat",
+        "count": 70,
+        "url": "/ru/katalog-shin/marca_ceat"
+      },
+      {
+        "label": "Centara",
+        "count": 146,
+        "url": "/ru/katalog-shin/marca_centara"
+      },
+      {
+        "label": "Charmhoo",
+        "count": 32,
+        "url": "/ru/katalog-shin/marca_charmhoo"
+      },
+      {
+        "label": "Comfoser",
+        "count": 38,
+        "url": "/ru/katalog-shin/marca_comfoser"
+      },
+      {
+        "label": "Compasal",
+        "count": 8,
+        "url": "/ru/katalog-shin/marca_compasal"
+      },
+      {
+        "label": "Continental",
+        "count": 410,
+        "url": "/ru/katalog-shin/marca_continental"
+      },
+      {
+        "label": "Cooper",
+        "count": 66,
+        "url": "/ru/katalog-shin/marca_cooper"
+      },
+      {
+        "label": "Crosswind",
+        "count": 220,
+        "url": "/ru/katalog-shin/marca_crosswind"
+      },
+      {
+        "label": "Davanti",
+        "count": 100,
+        "url": "/ru/katalog-shin/marca_davanti"
+      },
+      {
+        "label": "Debica",
+        "count": 61,
+        "url": "/ru/katalog-shin/marca_debica"
+      },
+      {
+        "label": "Delinte",
+        "count": 1,
+        "url": "/ru/katalog-shin/marca_delinte"
+      },
+      {
+        "label": "Diplomat",
+        "count": 12,
+        "url": "/ru/katalog-shin/marca_diplomat"
+      },
+      {
+        "label": "Doublestar",
+        "count": 2,
+        "url": "/ru/katalog-shin/marca_doublestar"
+      },
+      {
+        "label": "Dovroad",
+        "count": 2,
+        "url": "/ru/katalog-shin/marca_dovroad"
+      },
+      {
+        "label": "Dunlop",
+        "count": 112,
+        "url": "/ru/katalog-shin/marca_dunlop"
+      },
+      {
+        "label": "Duraturn",
+        "count": 73,
+        "url": "/ru/katalog-shin/marca_duraturn"
+      },
+      {
+        "label": "Falken",
+        "count": 30,
+        "url": "/ru/katalog-shin/marca_falken"
+      },
+      {
+        "label": "Federal",
+        "count": 1,
+        "url": "/ru/katalog-shin/marca_federal"
+      },
+      {
+        "label": "Firemax",
+        "count": 159,
+        "url": "/ru/katalog-shin/marca_firemax"
+      },
+      {
+        "label": "Firestone",
+        "count": 16,
+        "url": "/ru/katalog-shin/marca_firestone"
+      },
+      {
+        "label": "Fortuna",
+        "count": 5,
+        "url": "/ru/katalog-shin/marca_fortuna"
+      },
+      {
+        "label": "Fortune",
+        "count": 132,
+        "url": "/ru/katalog-shin/marca_fortune"
+      },
+      {
+        "label": "Fronway",
+        "count": 271,
+        "url": "/ru/katalog-shin/marca_fronway"
+      },
+      {
+        "label": "Fulda",
+        "count": 55,
+        "url": "/ru/katalog-shin/marca_fulda"
+      },
+      {
+        "label": "Gislaved",
+        "count": 17,
+        "url": "/ru/katalog-shin/marca_gislaved"
+      },
+      {
+        "label": "GiTi",
+        "count": 5,
+        "url": "/ru/katalog-shin/marca_giti"
+      },
+      {
+        "label": "Goodride-WestLake",
+        "count": 1,
+        "url": "/ru/katalog-shin/marca_goodride-westlake"
+      },
+      {
+        "label": "Goodyear",
+        "count": 399,
+        "url": "/ru/katalog-shin/marca_goodyear"
+      },
+      {
+        "label": "Greentrac",
+        "count": 15,
+        "url": "/ru/katalog-shin/marca_greentrac"
+      },
+      {
+        "label": "Grenlander",
+        "count": 456,
+        "url": "/ru/katalog-shin/marca_grenlander"
+      },
+      {
+        "label": "Gripmax",
+        "count": 17,
+        "url": "/ru/katalog-shin/marca_gripmax"
+      },
+      {
+        "label": "GT Radial",
+        "count": 99,
+        "url": "/ru/katalog-shin/marca_gt-radial"
+      },
+      {
+        "label": "Habilead",
+        "count": 152,
+        "url": "/ru/katalog-shin/marca_habilead"
+      },
+      {
+        "label": "Haida",
+        "count": 278,
+        "url": "/ru/katalog-shin/marca_haida"
+      },
+      {
+        "label": "Hankook",
+        "count": 635,
+        "url": "/ru/katalog-shin/marca_hankook"
+      },
+      {
+        "label": "Hilo",
+        "count": 177,
+        "url": "/ru/katalog-shin/marca_hilo"
+      },
+      {
+        "label": "ILINK",
+        "count": 91,
+        "url": "/ru/katalog-shin/marca_ilink"
+      },
+      {
+        "label": "Imperial",
+        "count": 9,
+        "url": "/ru/katalog-shin/marca_imperial"
+      },
+      {
+        "label": "Joyroad",
+        "count": 328,
+        "url": "/ru/katalog-shin/marca_joyroad"
+      },
+      {
+        "label": "Kapsen",
+        "count": 197,
+        "url": "/ru/katalog-shin/marca_kapsen"
+      },
+      {
+        "label": "Kelly",
+        "count": 21,
+        "url": "/ru/katalog-shin/marca_kelly"
+      },
+      {
+        "label": "Kinforest",
+        "count": 13,
+        "url": "/ru/katalog-shin/marca_kinforest"
+      },
+      {
+        "label": "Kleber",
+        "count": 127,
+        "url": "/ru/katalog-shin/marca_kleber"
+      },
+      {
+        "label": "Kormoran",
+        "count": 18,
+        "url": "/ru/katalog-shin/marca_kormoran"
+      },
+      {
+        "label": "Kpatos",
+        "count": 126,
+        "url": "/ru/katalog-shin/marca_kpatos"
+      },
+      {
+        "label": "Kumho",
+        "count": 357,
+        "url": "/ru/katalog-shin/marca_kumho"
+      },
+      {
+        "label": "Kustone",
+        "count": 14,
+        "url": "/ru/katalog-shin/marca_kustone"
+      },
+      {
+        "label": "Landspider",
+        "count": 200,
+        "url": "/ru/katalog-shin/marca_landspider"
+      },
+      {
+        "label": "Lanvigator",
+        "count": 102,
+        "url": "/ru/katalog-shin/marca_lanvigator"
+      },
+      {
+        "label": "Lassa",
+        "count": 365,
+        "url": "/ru/katalog-shin/marca_lassa"
+      },
+      {
+        "label": "Laufenn",
+        "count": 107,
+        "url": "/ru/katalog-shin/marca_laufenn"
+      },
+      {
+        "label": "Leao",
+        "count": 113,
+        "url": "/ru/katalog-shin/marca_leao"
+      },
+      {
+        "label": "LingLong",
+        "count": 486,
+        "url": "/ru/katalog-shin/marca_linglong"
+      },
+      {
+        "label": "Marshal",
+        "count": 36,
+        "url": "/ru/katalog-shin/marca_marshal"
+      },
+      {
+        "label": "Matador",
+        "count": 173,
+        "url": "/ru/katalog-shin/marca_matador"
+      },
+      {
+        "label": "Maxxis",
+        "count": 358,
+        "url": "/ru/katalog-shin/marca_maxxis"
+      },
+      {
+        "label": "Michelin",
+        "count": 483,
+        "url": "/ru/katalog-shin/marca_michelin"
+      },
+      {
+        "label": "Mileking",
+        "count": 34,
+        "url": "/ru/katalog-shin/marca_mileking"
+      },
+      {
+        "label": "Minerva",
+        "count": 18,
+        "url": "/ru/katalog-shin/marca_minerva"
+      },
+      {
+        "label": "Motrio",
+        "count": 8,
+        "url": "/ru/katalog-shin/marca_motrio"
+      },
+      {
+        "label": "Nankang",
+        "count": 66,
+        "url": "/ru/katalog-shin/marca_nankang"
+      },
+      {
+        "label": "Neolin",
+        "count": 20,
+        "url": "/ru/katalog-shin/marca_neolin"
+      },
+      {
+        "label": "Nereus",
+        "count": 60,
+        "url": "/ru/katalog-shin/marca_nereus"
+      },
+      {
+        "label": "Nexen",
+        "count": 624,
+        "url": "/ru/katalog-shin/marca_nexen"
+      },
+      {
+        "label": "Nokian",
+        "count": 39,
+        "url": "/ru/katalog-shin/marca_nokian"
+      },
+      {
+        "label": "Nordexx",
+        "count": 69,
+        "url": "/ru/katalog-shin/marca_nordexx"
+      },
+      {
+        "label": "ONYX",
+        "count": 27,
+        "url": "/ru/katalog-shin/marca_onyx"
+      },
+      {
+        "label": "Orium",
+        "count": 4,
+        "url": "/ru/katalog-shin/marca_orium"
+      },
+      {
+        "label": "Otani",
+        "count": 108,
+        "url": "/ru/katalog-shin/marca_otani"
+      },
+      {
+        "label": "Ovation",
+        "count": 114,
+        "url": "/ru/katalog-shin/marca_ovation"
+      },
+      {
+        "label": "Petlas",
+        "count": 348,
+        "url": "/ru/katalog-shin/marca_petlas"
+      },
+      {
+        "label": "Pirelli",
+        "count": 207,
+        "url": "/ru/katalog-shin/marca_pirelli"
+      },
+      {
+        "label": "Platin",
+        "count": 273,
+        "url": "/ru/katalog-shin/marca_platin"
+      },
+      {
+        "label": "Point S",
+        "count": 94,
+        "url": "/ru/katalog-shin/marca_point-s"
+      },
+      {
+        "label": "POWERTRAC",
+        "count": 1,
+        "url": "/ru/katalog-shin/marca_powertrac"
+      },
+      {
+        "label": "Premiorri",
+        "count": 1,
+        "url": "/ru/katalog-shin/marca_premiorri"
+      },
+      {
+        "label": "Prinx",
+        "count": 59,
+        "url": "/ru/katalog-shin/marca_prinx"
+      },
+      {
+        "label": "Rapid",
+        "count": 2,
+        "url": "/ru/katalog-shin/marca_rapid"
+      },
+      {
+        "label": "Riken",
+        "count": 149,
+        "url": "/ru/katalog-shin/marca_riken"
+      },
+      {
+        "label": "Roadboss",
+        "count": 4,
+        "url": "/ru/katalog-shin/marca_roadboss"
+      },
+      {
+        "label": "Roadstone",
+        "count": 51,
+        "url": "/ru/katalog-shin/marca_roadstone"
+      },
+      {
+        "label": "Roadx",
+        "count": 302,
+        "url": "/ru/katalog-shin/marca_roadx"
+      },
+      {
+        "label": "Rockblade",
+        "count": 35,
+        "url": "/ru/katalog-shin/marca_rockblade"
+      },
+      {
+        "label": "Rosava",
+        "count": 166,
+        "url": "/ru/katalog-shin/marca_rosava"
+      },
+      {
+        "label": "Rotex",
+        "count": 19,
+        "url": "/ru/katalog-shin/marca_rotex"
+      },
+      {
+        "label": "Rovelo",
+        "count": 73,
+        "url": "/ru/katalog-shin/marca_rovelo"
+      },
+      {
+        "label": "Royal Black",
+        "count": 22,
+        "url": "/ru/katalog-shin/marca_royal-black"
+      },
+      {
+        "label": "Rydanz",
+        "count": 60,
+        "url": "/ru/katalog-shin/marca_rydanz"
+      },
+      {
+        "label": "Sailun",
+        "count": 284,
+        "url": "/ru/katalog-shin/marca_sailun"
+      },
+      {
+        "label": "Sava",
+        "count": 27,
+        "url": "/ru/katalog-shin/marca_sava"
+      },
+      {
+        "label": "Semperit",
+        "count": 13,
+        "url": "/ru/katalog-shin/marca_semperit"
+      },
+      {
+        "label": "Starmaxx",
+        "count": 154,
+        "url": "/ru/katalog-shin/marca_starmaxx"
+      },
+      {
+        "label": "Strial",
+        "count": 1,
+        "url": "/ru/katalog-shin/marca_strial"
+      },
+      {
+        "label": "Sunny",
+        "count": 98,
+        "url": "/ru/katalog-shin/marca_sunny"
+      },
+      {
+        "label": "Superia",
+        "count": 40,
+        "url": "/ru/katalog-shin/marca_superia"
+      },
+      {
+        "label": "Three-A",
+        "count": 11,
+        "url": "/ru/katalog-shin/marca_three-a"
+      },
+      {
+        "label": "Tigar",
+        "count": 84,
+        "url": "/ru/katalog-shin/marca_tigar"
+      },
+      {
+        "label": "Toledo",
+        "count": 2,
+        "url": "/ru/katalog-shin/marca_toledo"
+      },
+      {
+        "label": "Torque",
+        "count": 243,
+        "url": "/ru/katalog-shin/marca_torque"
+      },
+      {
+        "label": "Tourador",
+        "count": 128,
+        "url": "/ru/katalog-shin/marca_tourador"
+      },
+      {
+        "label": "Toyo",
+        "count": 7,
+        "url": "/ru/katalog-shin/marca_toyo"
+      },
+      {
+        "label": "TRACMAX",
+        "count": 713,
+        "url": "/ru/katalog-shin/marca_tracmax"
+      },
+      {
+        "label": "TRIANGLE",
+        "count": 200,
+        "url": "/ru/katalog-shin/marca_triangle"
+      },
+      {
+        "label": "TRISTAR",
+        "count": 42,
+        "url": "/ru/katalog-shin/marca_tristar"
+      },
+      {
+        "label": "Unigrip",
+        "count": 10,
+        "url": "/ru/katalog-shin/marca_unigrip"
+      },
+      {
+        "label": "Uniroyal",
+        "count": 114,
+        "url": "/ru/katalog-shin/marca_uniroyal"
+      },
+      {
+        "label": "Viking",
+        "count": 93,
+        "url": "/ru/katalog-shin/marca_viking"
+      },
+      {
+        "label": "Voyager",
+        "count": 4,
+        "url": "/ru/katalog-shin/marca_voyager"
+      },
+      {
+        "label": "Vredestein",
+        "count": 191,
+        "url": "/ru/katalog-shin/marca_vredestein"
+      },
+      {
+        "label": "Waterfall",
+        "count": 9,
+        "url": "/ru/katalog-shin/marca_waterfall"
+      },
+      {
+        "label": "West Lake",
+        "count": 4,
+        "url": "/ru/katalog-shin/marca_west-lake"
+      },
+      {
+        "label": "Westlake",
+        "count": 22,
+        "url": "/ru/katalog-shin/marca_westlake"
+      },
+      {
+        "label": "Yokohama",
+        "count": 201,
+        "url": "/ru/katalog-shin/marca_yokohama"
+      },
+      {
+        "label": "ZETA",
+        "count": 7,
+        "url": "/ru/katalog-shin/marca_zeta"
+      },
+      {
+        "label": "Zmax",
+        "count": 86,
+        "url": "/ru/katalog-shin/marca_zmax"
+      }
+    ],
+    "Disponibilitate": [
+      {
+        "label": "В наличии",
+        "count": 8060,
+        "url": "/ru/katalog-shin/nalichie"
+      }
+    ]
+  },
+  "ru/datchiki-davleniya-v-shinah": {}
 }

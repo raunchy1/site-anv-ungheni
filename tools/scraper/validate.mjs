@@ -64,8 +64,10 @@ const missing = {
   'fără preț': rows.filter((r) => r.ro.price == null),
   'fără imagine': rows.filter((r) => !r.ro.images?.length),
   'fără brand': rows.filter((r) => !r.ro.brand),
-  'fără dimensiune parsabilă': rows.filter((r) => r.ro.width == null || r.ro.diameter == null),
-  'fără înălțime (profil)': rows.filter((r) => r.ro.aspect == null),
+  // imperialele n-au lățime metrică prin definiție — nu sunt „fără dimensiune"
+  'fără dimensiune parsabilă': rows.filter((r) => r.ro.size_source === 'none'),
+  'dimensiuni imperiale (31x10.50 R15)': rows.filter((r) => r.ro.size_system === 'imperial'),
+  'fără înălțime (profil) — anvelope C și imperiale': rows.filter((r) => r.ro.aspect == null),
   'fără sezon': rows.filter((r) => !r.ro.season),
   'fără indice de sarcină': rows.filter((r) => !r.ro.load_index),
   'fără indice de viteză': rows.filter((r) => !r.ro.speed_index),
@@ -84,7 +86,8 @@ const badSpeed = rows.filter((r) => r.ro.speed_index && !SPEED_INDICES.includes(
 const sizeSources = tally((r) => r.ro.size_source);
 
 const MAPPED_ATTRS = new Set(['Dimensiune', 'Sezon', 'Indice de sarcina', 'Indice de viteza', 'Producator',
-  'Размер', 'Сезон', 'Индекс нагрузки', 'Индекс скорости', 'Производитель']);
+  'Размер', 'Сезон', 'Индекс нагрузки', 'Индекс скорости', 'Производитель',
+  'RunFlat (самонесущие)', 'RunFlat']);
 const attrCounts = {};
 for (const r of rows) for (const k of Object.keys(r.ro.attributes ?? {})) attrCounts[k] = (attrCounts[k] ?? 0) + 1;
 const unmappedAttrs = Object.entries(attrCounts).filter(([k]) => !MAPPED_ATTRS.has(k));
@@ -244,6 +247,8 @@ Contor live „In stoc" în catalog: **${inStockFacet}** · extras \`in_stock\`:
 ${Object.entries(missing).map(([k, v]) => `| ${k} | **${v.length}** | ${pct(v.length, rows.length)}% | ${v.slice(0, 3).map((r) => `\`${r.slug}\``).join(', ') || '—'} |`).join('\n')}
 
 Sursa dimensiunii: ${Object.entries(sizeSources).map(([k, v]) => `\`${k}\`=${v}`).join(' · ')}
+
+Marcaje derivate: XL **${rows.filter((r) => r.ro.is_xl).length}** · run-flat **${rows.filter((r) => r.ro.is_runflat).length}** · cu cuie **${rows.filter((r) => r.ro.is_studded).length}** · comercial (C) **${rows.filter((r) => r.ro.is_commercial).length}**
 
 ### 4.1 Prețuri suspecte (< 200 MDL sau > 30.000 MDL)
 

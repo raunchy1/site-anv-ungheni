@@ -74,8 +74,16 @@ export function parseSize(raw) {
       size_raw: `${num(m2[1])} R${m2[2].toUpperCase()}`,
     };
   }
-  return { ...empty, size_raw: s };
+  // Fără potrivire: păstrăm textul doar dacă seamănă a dimensiune. Altfel (senzori TPMS)
+  // am copia titlul întreg într-un câmp de dimensiune, ceea ce ar induce în eroare.
+  return { ...empty, size_raw: /r\s*\d{2}/i.test(s) ? s : null };
 }
+
+// Indicii de viteză sunt uneori tastați cu litere chirilice care arată identic cu cele latine.
+// 3 produse au „Н" (U+041D) în loc de „H". Normalizăm la import, nu la randare.
+const CYRILLIC_LOOKALIKE = { 'А': 'A', 'В': 'B', 'С': 'C', 'Е': 'E', 'Н': 'H', 'К': 'K', 'М': 'M',
+  'О': 'O', 'Р': 'P', 'Т': 'T', 'У': 'Y', 'Х': 'X', 'Ј': 'J' };
+const deCyrillic = (v) => (v ? [...v].map((ch) => CYRILLIC_LOOKALIKE[ch] ?? ch).join('') : v);
 
 const SEASON_MAP = {
   vara: 'vara', 'vară': 'vara', 'лето': 'vara', 'летние': 'vara',
@@ -175,7 +183,13 @@ export function parseProduct(html, sourceUrl) {
     ...size,
     size_source: size === fromAttr ? 'attribute' : (size.diameter ? 'title' : 'none'),
     load_index: attrs['Indice de sarcina'] ?? attrs['Индекс нагрузки'] ?? null,
-    speed_index: attrs['Indice de viteza'] ?? attrs['Индекс скорости'] ?? null,
+    speed_index: deCyrillic(attrs['Indice de viteza'] ?? attrs['Индекс скорости'] ?? null),
+    // marcaje derivate din titlu și atribute
+    is_xl: /\bXL\b/.test(title),
+    is_runflat: Object.keys(attrs).some((k) => /runflat/i.test(k))
+      || /\bRun[\s-]?Flat\b|\bRFT\b|\bROF\b|\bSSR\b|\bZP\b/i.test(title),
+    is_studded: /\bstud/i.test(title),
+    is_commercial: /C$/.test(size.diameter ?? '') || /\bC\b/.test(attrs['Dimensiune'] ?? ''),
     attributes: attrs,
     images: images(block),
     related_slugs: relatedSlugs(block, html),
