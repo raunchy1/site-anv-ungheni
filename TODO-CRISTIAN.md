@@ -44,12 +44,12 @@ Nu există în sursă la niciunul dintre cele 134 de branduri. `brands.descripti
 
 ## 7. Logo-urile de marcă — 42 din 132, restul lipsesc
 
-Urcate la 28 august 2026: **42 de mărci**, care acoperă **6.917 din 15.005 produse (46,1%)**.
-Sursele: Wikimedia Commons (37) și site-urile oficiale ale producătorilor (5).
+Urcate la 28 august 2026: **43 de mărci**, care acoperă **7.316 din 15.005 produse (48,8%)**.
+Sursele: Wikimedia Commons (37) și site-urile oficiale ale producătorilor (6).
 
-Cele 90 rămase n-au logo găsibil din surse acceptabile — sunt aproape toate mărci
+Cele 89 rămase n-au logo găsibil din surse acceptabile — sunt aproape toate mărci
 chinezești fără site oficial funcțional. Lista completă, în ordinea importanței, e în
-`tools/logos/marci-checklist.csv`; primele cinci: TRACMAX (713), Goodyear (399),
+`tools/logos/marci-checklist.csv`; primele cinci: TRACMAX (713), Grenlander (456),
 Petlas (348), Arivo (331), Joyroad (328).
 
 Dacă obții fișierul oficial al vreuneia, pune-l în `logos-sursa/` cu numele slug-ului

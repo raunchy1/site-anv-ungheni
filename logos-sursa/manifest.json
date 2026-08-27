@@ -93,8 +93,13 @@
   ]
  },
  "goodyear": {
-  "file": null,
-  "cautat": true
+  "file": "goodyear.png",
+  "marca": "Goodyear",
+  "produse": 399,
+  "sursa": "site oficial al producătorului",
+  "pagina": "https://www.goodyear.eu/",
+  "url": "https://www.goodyear.eu/content/experience-fragments/goodyear/ecommerce/header/header/en_gb/_jcr_content/root/container/header/logo.coreimg.png/1764318717192/goodyear-logo-tg-2025.png",
+  "verificat": "logo din antetul goodyear.eu, PNG transparent 336×61, versiunea 2025"
  },
  "lassa": {
   "file": "lassa.png",
