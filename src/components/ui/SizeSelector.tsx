@@ -72,6 +72,10 @@ export function SizeSelector({
   useEffect(() => {
     try {
       const saved = JSON.parse(localStorage.getItem("au:size") ?? "null");
+      // `localStorage` nu exista la randarea pe server, deci citirea DUPA montare
+      // e singura varianta care nu produce nepotrivire de hidratare. Costa o
+      // randare in plus, o singura data, la vizitele cu dimensiune salvata.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       if (saved?.width) { setWidth(saved.width); setAspect(saved.aspect ?? null); setDiameter(saved.diameter ?? null); }
     } catch { /* localStorage indisponibil sau continut invalid */ }
   }, []);

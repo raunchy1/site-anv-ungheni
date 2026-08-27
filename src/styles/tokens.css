@@ -110,6 +110,16 @@
   --img-plate-ink: var(--n-500);
   --img-blend: multiply;
 
+  /* PANOUL DE CĂUTARE — singura suprafață închisă din pagină, în ambele teme.
+     Instrumentul cu care începe vizita trebuie să se vadă ca un aparat așezat
+     peste pagină, nu ca încă o secțiune. În dark nu poate fi mai închis decât
+     fundalul, deci acolo urcă, nu coboară. */
+  --panel:      var(--n-900);
+  --panel-2:    var(--n-700);
+  --panel-ink:  var(--n-0);
+  --panel-muted: var(--n-300);
+  --panel-line: var(--n-600);
+
   --field-bg:      var(--pure-white);
   --field-line:    var(--n-200);
   --field-line-hover: var(--n-300);
@@ -163,6 +173,12 @@
     --img-plate-ink: var(--n-500);
     --img-blend: multiply;
 
+    --panel:      var(--n-700);
+    --panel-2:    var(--n-600);
+    --panel-ink:  var(--n-0);
+    --panel-muted: var(--n-300);
+    --panel-line: var(--n-500);
+
     --field-bg:      var(--n-800);
     --field-line:    #383530;
     --field-line-hover: var(--n-500);
@@ -208,6 +224,12 @@
   --img-plate: var(--n-100);
   --img-plate-ink: var(--n-500);
   --img-blend: multiply;
+
+  --panel:      var(--n-700);
+  --panel-2:    var(--n-600);
+  --panel-ink:  var(--n-0);
+  --panel-muted: var(--n-300);
+  --panel-line: var(--n-500);
 
   --field-bg:      var(--n-800);
   --field-line:    #383530;

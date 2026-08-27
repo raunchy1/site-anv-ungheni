@@ -1,9 +1,9 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { SizeSelector } from "@/components/ui/SizeSelector";
+import { TireFinder } from "@/components/ui/TireFinder";
 import { ProductCard } from "@/components/ui/ProductCard";
-import { TreadRule, TyreSeasonMark, IconArrowRight, IconPin, IconClock, IconPhone } from "@/components/icons";
-import { getSeasonCounts, getServices, getSettings, getShowcase } from "@/lib/db/queries";
+import { TreadRule, IconArrowRight, IconPin, IconClock, IconPhone } from "@/components/icons";
+import { getBrandOptions, getSeasonCounts, getServices, getSettings, getShowcase } from "@/lib/db/queries";
 import { toUiProduct } from "@/lib/adapt";
 import { formatCount, telLink } from "@/lib/format";
 import { sizeTree } from "@/lib/size-tree";
@@ -30,45 +30,34 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   setRequestLocale(locale);
   const l = locale as Locale;
   const t = await getTranslations();
-  const [settings, services, showcase, seasonCounts] = await Promise.all([
-    getSettings(), getServices(), getShowcase(8), getSeasonCounts(),
+  const [settings, services, showcase, seasonCounts, brands] = await Promise.all([
+    getSettings(), getServices(), getShowcase(6), getSeasonCounts(), getBrandOptions(),
   ]);
 
   return (
     <div className="shell flex flex-col gap-[var(--sp-16)] py-[var(--sp-8)]">
-      {/* Piesa centrală, deasupra pliului, fără concurență vizuală.
-          Fără hero, fără slogan, fără carousel: homepage-ul e un instrument de
-          căutare cu context, nu o broșură. */}
+      {/* CAPUL PAGINII. Stânga: instrumentul — cinci liste și cele trei sezoane.
+          Dreapta: patru anvelope disponibile, cele mai ieftine din catalog, ca
+          să se vadă marfă și preț fără nicio atingere. Fără slogan și fără
+          carusel: pagina principală e un instrument de căutare cu context. */}
       <section>
         <h1 className="sr-only">{t("home.title")}</h1>
-        <SizeSelector locale={l} />
-      </section>
+        <div className="grid gap-[var(--sp-6)] lg:grid-cols-[minmax(0,360px)_1fr]">
+          <TireFinder locale={l} brands={brands} seasonCounts={seasonCounts} />
 
-      <section>
-        <div className="flex items-baseline justify-between">
-          <h2 className="text-500 font-semibold text-[var(--ink-strong)]">{t("home.seasonsTitle")}</h2>
+          <div className="min-w-0">
+            <div className="flex items-baseline justify-between gap-[var(--sp-4)]">
+              <h2 className="text-500 font-semibold text-[var(--ink-strong)]">{t("home.inStockNow")}</h2>
+              <Link href="/catalog" className="nav-link text-200">{t("catalog.title")} →</Link>
+            </div>
+            <TreadRule variant="full" className="mt-[var(--sp-3)] text-[var(--line)]" />
+            <ul className="mt-[var(--sp-5)] grid grid-cols-2 gap-[var(--sp-4)] xl:grid-cols-3">
+              {showcase.map((p, i) => (
+                <li key={p.id}><ProductCard product={toUiProduct(p)} locale={l} priority={i < 3} /></li>
+              ))}
+            </ul>
+          </div>
         </div>
-        <TreadRule variant="full" className="mt-[var(--sp-3)] text-[var(--line)]" />
-        {/* Trei plăci, nu trei rânduri de listă: sezonul e prima întrebare pe
-            care și-o pune un șofer care nu știe încă ce dimensiune are, deci
-            merită suprafață de atins, nu o linie de meniu. Contorul de sub
-            etichetă e numărul real de anvelope disponibile pe sezon. */}
-        <ul className="mt-[var(--sp-5)] grid gap-[var(--sp-3)] sm:grid-cols-3">
-          {(["iarna", "all_season", "vara"] as const).map((s) => (
-            <li key={s}>
-              <Link
-                href={{ pathname: "/catalog/[...filtre]", params: { filtre: [`sezon_${s === "all_season" ? "all-season" : s}`] } }}
-                className="flex h-full flex-col items-center gap-[var(--sp-3)] rounded-[var(--radius-md)] border border-[var(--line)] px-[var(--sp-5)] py-[var(--sp-6)] text-center transition-colors duration-[var(--dur-1)] hover:border-[var(--line-strong)] hover:bg-[var(--surface-2)]"
-              >
-                <TyreSeasonMark season={s} size={44} className="text-[var(--ink-strong)]" />
-                <span className="font-medium text-[var(--ink-strong)]">{t(`season.${s}`)}</span>
-                <span className="num text-200 text-[var(--ink-muted)]">
-                  {formatCount(seasonCounts[s])} {t("size.available")}
-                </span>
-              </Link>
-            </li>
-          ))}
-        </ul>
       </section>
 
       <section>
@@ -85,19 +74,6 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
                 <span className="text-100 text-[var(--ink-muted)]">{s.available}</span>
               </Link>
             </li>
-          ))}
-        </ul>
-      </section>
-
-      <section>
-        <div className="flex items-baseline justify-between gap-[var(--sp-4)]">
-          <h2 className="text-500 font-semibold text-[var(--ink-strong)]">{t("home.inStockNow")}</h2>
-          <Link href="/catalog" className="nav-link text-200">{t("catalog.title")} →</Link>
-        </div>
-        <TreadRule variant="full" className="mt-[var(--sp-3)] text-[var(--line)]" />
-        <ul className="mt-[var(--sp-5)] grid grid-cols-2 gap-[var(--sp-4)] md:grid-cols-4">
-          {showcase.map((p, i) => (
-            <li key={p.id}><ProductCard product={toUiProduct(p)} locale={l} priority={i < 4} /></li>
           ))}
         </ul>
       </section>

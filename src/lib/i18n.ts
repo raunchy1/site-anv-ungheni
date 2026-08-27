@@ -31,6 +31,7 @@ export type Dict = {
   anySeason: string;
   anyBrand: string;
   advancedSearch: string;
+  findBySpecs: string;
   optional: string;
   loadingOptions: string;
   // produs
@@ -106,6 +107,7 @@ const ro: Dict = {
   anySeason: "Orice sezon",
   anyBrand: "Orice marcă",
   advancedSearch: "Căutare avansată",
+  findBySpecs: "Caută după specificații",
   optional: "opțional",
   loadingOptions: "Se încarcă opțiunile",
   specifications: "Specificații",
@@ -177,6 +179,7 @@ const ru: Dict = {
   anySeason: "Любой сезон",
   anyBrand: "Любая марка",
   advancedSearch: "Расширенный поиск",
+  findBySpecs: "Поиск по характеристикам",
   optional: "необязательно",
   loadingOptions: "Загрузка вариантов",
   specifications: "Характеристики",

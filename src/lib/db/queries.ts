@@ -366,3 +366,26 @@ export const getSeasonCounts = cache(async (): Promise<Record<Season, number>> =
   );
   return Object.fromEntries(seasons.map((s, i) => [s, counts[i]])) as Record<Season, number>;
 });
+
+/**
+ * Mărcile pentru pasul 5 al panoului, cât timp nu s-a ales o dimensiune:
+ * numărul de anvelope DISPONIBILE per marcă, din vederea materializată
+ * `facet_counts`, nu din `brands.product_count` (care numără și indisponibilele).
+ */
+export const getBrandOptions = cache(async (): Promise<{ slug: string; name: string; count: number }[]> => {
+  const [{ data }, brands] = await Promise.all([
+    db.from("facet_counts").select("value, stock_status, n").eq("facet", "brand").in("stock_status", AVAILABLE),
+    getBrands(),
+  ]);
+
+  const slugByName = new Map(brands.map((b) => [b.name, b.slug_ro]));
+  const totals = new Map<string, number>();
+  for (const r of (data as { value: string; n: number }[]) ?? []) {
+    totals.set(r.value, (totals.get(r.value) ?? 0) + Number(r.n));
+  }
+
+  return [...totals.entries()]
+    .filter(([name, count]) => count > 0 && slugByName.has(name))
+    .map(([name, count]) => ({ slug: slugByName.get(name)!, name, count }))
+    .sort((a, b) => a.name.localeCompare(b.name, "ro"));
+});
