@@ -16,7 +16,9 @@
     "check:routes": "node --env-file=.env.local --experimental-strip-types tools/route-map/check-collisions.ts",
     "check:tokens": "node tools/check/tokens.mjs",
     "verify:redirects": "node --env-file=.env.local tools/verify-redirects.mjs",
-    "logos": "node --env-file=.env.local tools/seed/upload-brand-logos.mjs"
+    "logos": "node --env-file=.env.local tools/logos/import-logos.mjs --dir ./logos-sursa",
+    "logos:checklist": "node --env-file=.env.local tools/logos/build-checklist.mjs",
+    "logos:sheet": "node --env-file=.env.local tools/logos/build-contact-sheet.mjs --live"
   },
   "dependencies": {
     "@hookform/resolvers": "5.9.1",

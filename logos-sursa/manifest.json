@@ -1,0 +1,1471 @@
+{
+ "tracmax": {
+  "file": null,
+  "cautat": true
+ },
+ "hankook": {
+  "file": "hankook.svg",
+  "marca": "Hankook",
+  "produse": 635,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Logo Hankook Tire 2025.svg",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3ALogo%20Hankook%20Tire%202025.svg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/7/74/Logo_Hankook_Tire_2025.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/svg+xml",
+  "latime": 600,
+  "inaltime": 140,
+  "licenta": "Public domain",
+  "scor": 90,
+  "alternative": [
+   "File:Hankook Logo 2024.svg",
+   "File:Hankook Tire logo.svg",
+   "File:Hankook logo.png"
+  ]
+ },
+ "nexen": {
+  "file": "nexen.png",
+  "marca": "Nexen",
+  "produse": 624,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Nexen Tire Logo.png",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3ANexen%20Tire%20Logo.png",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/c/cd/Nexen_Tire_Logo.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/png",
+  "latime": 1250,
+  "inaltime": 900,
+  "licenta": "CC BY-SA 4.0",
+  "scor": 45,
+  "alternative": []
+ },
+ "linglong": {
+  "file": "linglong.png",
+  "marca": "LingLong",
+  "produse": 486,
+  "sursa": "site oficial al producătorului",
+  "pagina": "https://www.linglong.cn/",
+  "url": "https://www.linglong.cn/images/logo.png",
+  "verificat": "logo din antetul site-ului oficial, PNG transparent 2654×252"
+ },
+ "michelin": {
+  "file": "michelin.svg",
+  "marca": "Michelin",
+  "produse": 483,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Michelin Wordmark.svg",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3AMichelin%20Wordmark.svg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/8/8c/Michelin_Wordmark.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/svg+xml",
+  "latime": 1000,
+  "inaltime": 101,
+  "licenta": "Public domain",
+  "scor": 60,
+  "alternative": [
+   "File:Clefs Michelin.svg"
+  ]
+ },
+ "grenlander": {
+  "file": null,
+  "marca": "Grenlander",
+  "produse": 456,
+  "sursa": "site oficial al producătorului",
+  "pagina": "https://grenlander.com/",
+  "url": "https://grenlander.com/local/templates/grenlander/images/logo.svg",
+  "verificat": "SVG din antetul site-ului oficial — ATENȚIE: desenat în alb, pentru antet închis",
+  "respins": "logo desenat în alb, invizibil pe placa deschisă a cardului",
+  "titlu_respins": "logo.svg de pe grenlander.com"
+ },
+ "continental": {
+  "file": "continental.svg",
+  "marca": "Continental",
+  "produse": 410,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Continental logo.svg",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3AContinental%20logo.svg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/3/3f/Continental_logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/svg+xml",
+  "latime": 512,
+  "inaltime": 95,
+  "licenta": "Public domain",
+  "scor": 80,
+  "alternative": [
+   "File:Continental wordmark.svg",
+   "File:Continental Edison logo.svg"
+  ]
+ },
+ "goodyear": {
+  "file": null,
+  "cautat": true
+ },
+ "lassa": {
+  "file": "lassa.png",
+  "marca": "Lassa",
+  "produse": 365,
+  "sursa": "site oficial al producătorului",
+  "pagina": "https://www.lassa.com/",
+  "url": "https://admin.lassa.com/Uploads/Cms/lassa-global-cati-soylem-2022_ing_440x65px-1.png",
+  "verificat": "logo din antetul site-ului oficial, 440×65, include semnătura „Together in every mile\""
+ },
+ "maxxis": {
+  "file": "maxxis.svg",
+  "marca": "Maxxis",
+  "produse": 358,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:MAXXIS logo.svg",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3AMAXXIS%20logo.svg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/b/b3/MAXXIS_logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/svg+xml",
+  "latime": 573,
+  "inaltime": 99,
+  "licenta": "Public domain",
+  "scor": 80,
+  "alternative": [
+   "File:Maxxis logo.png",
+   "File:MAXXISロゴ透明.png"
+  ],
+  "verificat": "titlu și categorii confirmă marca de anvelope"
+ },
+ "kumho": {
+  "file": "kumho.svg",
+  "marca": "Kumho",
+  "produse": 357,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Kumho Tire logo (2023).svg",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3AKumho%20Tire%20logo%20(2023).svg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/6/67/Kumho_Tire_logo_%282023%29.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/svg+xml",
+  "latime": 179,
+  "inaltime": 47,
+  "licenta": "Public domain",
+  "scor": 90,
+  "alternative": [
+   "File:Kumho Resort logo(2021).svg",
+   "File:KUMHO TIRE logo.png",
+   "File:Kumho Asiana logo.svg"
+  ]
+ },
+ "petlas": {
+  "file": null,
+  "cautat": true
+ },
+ "arivo": {
+  "file": null,
+  "cautat": true
+ },
+ "joyroad": {
+  "file": null,
+  "cautat": true
+ },
+ "roadx": {
+  "file": null,
+  "cautat": true
+ },
+ "sailun": {
+  "file": "sailun.png",
+  "marca": "Sailun",
+  "produse": 284,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Sailun-Tires-logo.png",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3ASailun-Tires-logo.png",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/8/82/Sailun-Tires-logo.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/png",
+  "latime": 1838,
+  "inaltime": 318,
+  "licenta": "Public domain",
+  "scor": 45,
+  "alternative": []
+ },
+ "haida": {
+  "file": null,
+  "cautat": true
+ },
+ "platin": {
+  "file": null,
+  "cautat": true
+ },
+ "fronway": {
+  "file": null,
+  "cautat": true
+ },
+ "torque": {
+  "file": null,
+  "marca": "Torque",
+  "produse": 243,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Torque Pharmaceuticals.svg",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3ATorque%20Pharmaceuticals.svg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/c/cc/Torque_Pharmaceuticals.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/svg+xml",
+  "latime": 512,
+  "inaltime": 146,
+  "licenta": "Public domain",
+  "scor": 15,
+  "alternative": [
+   "File:Torque GE.svg"
+  ],
+  "suspect": true,
+  "motiv": "nicio urmă de anvelope în categorii sau descriere",
+  "respins": "alt subiect decât marca de anvelope",
+  "titlu_respins": "File:Torque Pharmaceuticals.svg"
+ },
+ "bridgestone": {
+  "file": "bridgestone.svg",
+  "marca": "Bridgestone",
+  "produse": 237,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Bridgestone logo.svg",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3ABridgestone%20logo.svg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/6/6d/Bridgestone_logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/svg+xml",
+  "latime": 1000,
+  "inaltime": 123,
+  "licenta": "Public domain",
+  "scor": 80,
+  "alternative": [
+   "File:Logo-bridgestone.png",
+   "File:Bridgestone Logo.png",
+   "File:Bridgestone 201x logo.svg"
+  ],
+  "verificat": "titlu și categorii confirmă marca de anvelope"
+ },
+ "crosswind": {
+  "file": null,
+  "cautat": true
+ },
+ "pirelli": {
+  "file": "pirelli.svg",
+  "marca": "Pirelli",
+  "produse": 207,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Pirelli - logo full (Italy, 1997).svg",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3APirelli%20-%20logo%20full%20(Italy%2C%201997).svg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/b/b9/Pirelli_-_logo_full_%28Italy%2C_1997%29.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/svg+xml",
+  "latime": 800,
+  "inaltime": 209,
+  "licenta": "Public domain",
+  "scor": 80,
+  "alternative": [
+   "File:Pirelli Stadium logo.svg",
+   "File:Pirelli F1 I Blue.svg"
+  ],
+  "motiv": "nicio urmă de anvelope în categorii sau descriere",
+  "titlu_respins": "File:Pirelli RE logo.svg",
+  "verificat": "ales manual, după verificarea paginii de pe Commons"
+ },
+ "aplus": {
+  "file": null,
+  "cautat": true
+ },
+ "yokohama": {
+  "file": "yokohama.svg",
+  "marca": "Yokohama",
+  "produse": 201,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Yokohama (Unternehmen) logo.svg",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3AYokohama%20(Unternehmen)%20logo.svg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/5/57/Yokohama_%28Unternehmen%29_logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/svg+xml",
+  "latime": 1024,
+  "inaltime": 146,
+  "licenta": "Public domain",
+  "scor": 80,
+  "alternative": [
+   "File:Yokohama Tire new logo.svg",
+   "File:Yokohama (Unternehmen) logo.svg"
+  ],
+  "verificat": "ales manual, după verificarea paginii de pe Commons"
+ },
+ "landspider": {
+  "file": null,
+  "cautat": true
+ },
+ "triangle": {
+  "file": "triangle.svg",
+  "marca": "TRIANGLE",
+  "produse": 200,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Triangle Tire logo.svg",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3ATriangle%20Tire%20logo.svg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Triangle_Tire_logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/svg+xml",
+  "latime": 512,
+  "inaltime": 38,
+  "licenta": "Public domain",
+  "scor": 80,
+  "alternative": [
+   "File:Troyca triangle logo (2021).svg",
+   "File:Triangle Logo.png",
+   "File:Blue Triangle logo.PNG"
+  ]
+ },
+ "kapsen": {
+  "file": "kapsen.png",
+  "marca": "Kapsen",
+  "produse": 197,
+  "sursa": "site oficial al producătorului",
+  "pagina": "https://kapsentyre.com/",
+  "url": "https://kapsentyre.com/img/logo_KAPSEN.png",
+  "verificat": "site oficial Kapsen/Habilead, PNG transparent 600×109"
+ },
+ "vredestein": {
+  "file": "vredestein.svg",
+  "marca": "Vredestein",
+  "produse": 191,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Vredestein-logo.svg",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3AVredestein-logo.svg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/9/93/Vredestein-logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/svg+xml",
+  "latime": 903,
+  "inaltime": 402,
+  "licenta": "Public domain",
+  "scor": 80,
+  "alternative": [
+   "File:Vredestein tyres logo.png",
+   "File:Vredestein Tyres Logo.png"
+  ],
+  "verificat": "titlu și categorii confirmă marca de anvelope"
+ },
+ "hilo": {
+  "file": null,
+  "cautat": true
+ },
+ "matador": {
+  "file": "matador.svg",
+  "marca": "Matador",
+  "produse": 173,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Matador tire manufacturer logo.svg",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3AMatador%20tire%20manufacturer%20logo.svg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/4/42/Matador_tire_manufacturer_logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/svg+xml",
+  "latime": 512,
+  "inaltime": 76,
+  "licenta": "Public domain",
+  "scor": 35,
+  "alternative": [
+   "File:Matador Network logo.svg",
+   "File:Matador text logo.svg"
+  ]
+ },
+ "rosava": {
+  "file": "rosava.png",
+  "marca": "Rosava",
+  "produse": 167,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Logo-rosava.png",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3ALogo-rosava.png",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/2/28/Logo-rosava.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/png",
+  "latime": 1024,
+  "inaltime": 322,
+  "licenta": "Public domain",
+  "scor": 45,
+  "alternative": [],
+  "verificat": "titlu și categorii confirmă marca de anvelope"
+ },
+ "barum": {
+  "file": "barum.svg",
+  "marca": "Barum",
+  "produse": 166,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Barum company logo.svg",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3ABarum%20company%20logo.svg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/4/40/Barum_company_logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/svg+xml",
+  "latime": 512,
+  "inaltime": 69,
+  "licenta": "Public domain",
+  "scor": 80,
+  "alternative": []
+ },
+ "firemax": {
+  "file": null,
+  "cautat": true
+ },
+ "starmaxx": {
+  "file": null,
+  "cautat": true
+ },
+ "habilead": {
+  "file": "habilead.png",
+  "marca": "Habilead",
+  "produse": 152,
+  "sursa": "site oficial al producătorului",
+  "pagina": "https://kapsentyre.com/",
+  "url": "https://kapsentyre.com/img/logo_habilead.png",
+  "verificat": "același producător, PNG transparent 600×200"
+ },
+ "riken": {
+  "file": null,
+  "marca": "Riken",
+  "produse": 149,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:RIKEN logo.png",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3ARIKEN%20logo.png",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/0/00/RIKEN_logo.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/png",
+  "latime": 1300,
+  "inaltime": 2208,
+  "licenta": "Public domain",
+  "scor": 45,
+  "alternative": [],
+  "suspect": true,
+  "motiv": "nicio urmă de anvelope în categorii sau descriere",
+  "respins": "alt subiect decât marca de anvelope",
+  "titlu_respins": "File:RIKEN logo.png"
+ },
+ "centara": {
+  "file": null,
+  "cautat": true
+ },
+ "fortune": {
+  "file": null,
+  "marca": "Fortune",
+  "produse": 132,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Fortune Systems logo.svg",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3AFortune%20Systems%20logo.svg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/1/14/Fortune_Systems_logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/svg+xml",
+  "latime": 10471,
+  "inaltime": 3201,
+  "licenta": "Public domain",
+  "scor": 35,
+  "alternative": [
+   "File:Fortune Brands Logo.svg",
+   "File:Fortune Entertainment logo.svg"
+  ],
+  "suspect": true,
+  "motiv": "nicio urmă de anvelope în categorii sau descriere",
+  "respins": "alt subiect decât marca de anvelope",
+  "titlu_respins": "File:Fortune Systems logo.svg"
+ },
+ "tourador": {
+  "file": null,
+  "cautat": true
+ },
+ "kleber": {
+  "file": "kleber.svg",
+  "marca": "Kleber",
+  "produse": 127,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Kleber-logo.svg",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3AKleber-logo.svg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/9/93/Kleber-logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/svg+xml",
+  "latime": 2242,
+  "inaltime": 539,
+  "licenta": "Public domain",
+  "scor": 80,
+  "alternative": []
+ },
+ "kpatos": {
+  "file": null,
+  "cautat": true
+ },
+ "accelera": {
+  "file": null,
+  "cautat": true
+ },
+ "ovation": {
+  "file": null,
+  "marca": "Ovation",
+  "produse": 114,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Ovation Logo.png",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3AOvation%20Logo.png",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/d/d3/Ovation_Logo.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/png",
+  "latime": 1581,
+  "inaltime": 1600,
+  "licenta": "CC BY-SA 4.0",
+  "scor": 45,
+  "alternative": [],
+  "suspect": true,
+  "motiv": "nicio urmă de anvelope în categorii sau descriere",
+  "respins": "alt subiect decât marca de anvelope",
+  "titlu_respins": "File:Ovation Logo.png"
+ },
+ "uniroyal": {
+  "file": "uniroyal.svg",
+  "marca": "Uniroyal",
+  "produse": 114,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Uniroyal Logo 2020.svg",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3AUniroyal%20Logo%202020.svg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/6/60/Uniroyal_Logo_2020.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/svg+xml",
+  "latime": 400,
+  "inaltime": 258,
+  "licenta": "Public domain",
+  "scor": 90,
+  "alternative": [
+   "File:Uniroyal Logo vector.svg"
+  ]
+ },
+ "leao": {
+  "file": null,
+  "cautat": true
+ },
+ "dunlop": {
+  "file": "dunlop.svg",
+  "marca": "Dunlop",
+  "produse": 112,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Logo-dunlop.svg",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3ALogo-dunlop.svg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/7/71/Logo-dunlop.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/svg+xml",
+  "latime": 512,
+  "inaltime": 110,
+  "licenta": "Public domain",
+  "scor": 80,
+  "alternative": [
+   "File:Dunlop brand logo.svg",
+   "File:Dunlop tires logo.png",
+   "File:Logo Dunlop Tire.png"
+  ],
+  "verificat": "titlu și categorii confirmă marca de anvelope"
+ },
+ "otani": {
+  "file": null,
+  "marca": "Otani",
+  "produse": 108,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Otani Logo.png",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3AOtani%20Logo.png",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/e/e4/Otani_Logo.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/png",
+  "latime": 272,
+  "inaltime": 248,
+  "licenta": "Public domain",
+  "scor": 45,
+  "alternative": [
+   "File:Otani University Logo.svg"
+  ],
+  "suspect": true,
+  "motiv": "nicio urmă de anvelope în categorii sau descriere",
+  "respins": "alt subiect decât marca de anvelope",
+  "titlu_respins": "File:Otani Logo.png"
+ },
+ "laufenn": {
+  "file": null,
+  "cautat": true
+ },
+ "lanvigator": {
+  "file": null,
+  "cautat": true
+ },
+ "davanti": {
+  "file": null,
+  "cautat": true
+ },
+ "gt-radial": {
+  "file": "gt-radial.svg",
+  "marca": "GT Radial",
+  "produse": 99,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:GT-Radial-logo.svg",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3AGT-Radial-logo.svg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/3/3f/GT-Radial-logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/svg+xml",
+  "latime": 263,
+  "inaltime": 40,
+  "licenta": "Public domain",
+  "scor": 80,
+  "alternative": []
+ },
+ "sunny": {
+  "file": null,
+  "marca": "Sunny",
+  "produse": 98,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Sunny Logo.png",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3ASunny%20Logo.png",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/5/5e/Sunny_Logo.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/png",
+  "latime": 500,
+  "inaltime": 83,
+  "licenta": "Public domain",
+  "scor": 45,
+  "alternative": [
+   "File:NISSAN SUNNY logo.svg"
+  ],
+  "suspect": true,
+  "motiv": "nicio urmă de anvelope în categorii sau descriere",
+  "respins": "alt subiect decât marca de anvelope",
+  "titlu_respins": "File:Sunny Logo.png"
+ },
+ "point-s": {
+  "file": null,
+  "cautat": true
+ },
+ "viking": {
+  "file": "viking.svg",
+  "marca": "Viking",
+  "produse": 93,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Viking tyres logo.svg",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3AViking%20tyres%20logo.svg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/6/60/Viking_tyres_logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/svg+xml",
+  "latime": 412,
+  "inaltime": 134,
+  "licenta": "Public domain",
+  "scor": 80,
+  "alternative": [
+   "File:Viking-Logo.png",
+   "File:Viking-freight-logo-svg-vector.svg",
+   "File:Viking (Reifenmarke) logo.svg"
+  ]
+ },
+ "ilink": {
+  "file": null,
+  "cautat": true
+ },
+ "zmax": {
+  "file": null,
+  "cautat": true
+ },
+ "tigar": {
+  "file": null,
+  "cautat": true
+ },
+ "rovelo": {
+  "file": null,
+  "cautat": true
+ },
+ "duraturn": {
+  "file": null,
+  "cautat": true
+ },
+ "ceat": {
+  "file": "ceat.svg",
+  "marca": "Ceat",
+  "produse": 70,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:CEAT Logo.svg",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3ACEAT%20Logo.svg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/b/ba/CEAT_Logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/svg+xml",
+  "latime": 548,
+  "inaltime": 189,
+  "licenta": "Public domain",
+  "scor": 80,
+  "alternative": [],
+  "verificat": "titlu și categorii confirmă marca de anvelope"
+ },
+ "nordexx": {
+  "file": null,
+  "cautat": true
+ },
+ "cooper": {
+  "file": null,
+  "marca": "Cooper",
+  "produse": 66,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Cooper Wheelock logo.svg",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3ACooper%20Wheelock%20logo.svg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/6/60/Cooper_Wheelock_logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/svg+xml",
+  "latime": 600,
+  "inaltime": 141,
+  "licenta": "Public domain",
+  "scor": 35,
+  "alternative": [
+   "File:Cooper-hewitt-logo.svg",
+   "File:Cooper Industries.svg"
+  ],
+  "respins": "alt subiect decât marca de anvelope",
+  "titlu_respins": "File:Cooper Wheelock logo.svg"
+ },
+ "nankang": {
+  "file": "nankang.svg",
+  "marca": "Nankang",
+  "produse": 66,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Nankang Rubber Tire logo.svg",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3ANankang%20Rubber%20Tire%20logo.svg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/d/d7/Nankang_Rubber_Tire_logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/svg+xml",
+  "latime": 262,
+  "inaltime": 130,
+  "licenta": "Public domain",
+  "scor": 80,
+  "alternative": [
+   "File:Nankang-logo.png"
+  ]
+ },
+ "debica": {
+  "file": "debica.png",
+  "marca": "Debica",
+  "produse": 61,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Dębica logo.png",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3AD%C4%99bica%20logo.png",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/8/86/D%C4%99bica_logo.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/png",
+  "latime": 339,
+  "inaltime": 80,
+  "licenta": "Public domain",
+  "scor": 45,
+  "alternative": []
+ },
+ "nereus": {
+  "file": null,
+  "cautat": true
+ },
+ "rydanz": {
+  "file": null,
+  "cautat": true
+ },
+ "prinx": {
+  "file": null,
+  "cautat": true
+ },
+ "fulda": {
+  "file": "fulda.svg",
+  "marca": "Fulda",
+  "produse": 55,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Fulda logo.svg",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3AFulda%20logo.svg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/c/c4/Fulda_logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/svg+xml",
+  "latime": 994,
+  "inaltime": 135,
+  "licenta": "Public domain",
+  "scor": 80,
+  "alternative": [
+   "File:Fulda logo.png",
+   "File:VWI-Fulda-Logo.svg"
+  ]
+ },
+ "roadstone": {
+  "file": null,
+  "cautat": true
+ },
+ "tristar": {
+  "file": null,
+  "marca": "TRISTAR",
+  "produse": 42,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Tristar-logo.svg",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3ATristar-logo.svg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/d/d6/Tristar-logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/svg+xml",
+  "latime": 129,
+  "inaltime": 95,
+  "licenta": "Public domain",
+  "scor": 80,
+  "alternative": [],
+  "suspect": true,
+  "motiv": "nicio urmă de anvelope în categorii sau descriere",
+  "respins": "alt subiect decât marca de anvelope",
+  "titlu_respins": "File:Tristar-logo.svg"
+ },
+ "superia": {
+  "file": null,
+  "marca": "Superia",
+  "produse": 40,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Superia.png",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3ASuperia.png",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/3/3b/Superia.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/png",
+  "latime": 229,
+  "inaltime": 134,
+  "licenta": "Public domain",
+  "scor": 25,
+  "alternative": [],
+  "verificat": "titlu și categorii confirmă marca de anvelope",
+  "titlu_respins": "File:Superia.png",
+  "respins": "PNG de 209 px — sub pragul de calitate"
+ },
+ "nokian": {
+  "file": "nokian.svg",
+  "marca": "Nokian",
+  "produse": 39,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Nokian logo (2023).svg",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3ANokian%20logo%20(2023).svg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/8/86/Nokian_logo_%282023%29.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/svg+xml",
+  "latime": 818,
+  "inaltime": 194,
+  "licenta": "Public domain",
+  "scor": 90,
+  "alternative": [
+   "File:Nokian logo (1865).svg",
+   "File:Nokian-Renkaat-Logo.svg",
+   "File:Nokian logo (1965).svg"
+  ],
+  "verificat": "titlu și categorii confirmă marca de anvelope"
+ },
+ "comfoser": {
+  "file": null,
+  "cautat": true
+ },
+ "marshal": {
+  "file": null,
+  "marca": "Marshal",
+  "produse": 36,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Red Marshal.png",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3ARed%20Marshal.png",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/4/47/Red_Marshal.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/png",
+  "latime": 798,
+  "inaltime": 658,
+  "licenta": "CC BY-SA 4.0",
+  "scor": 25,
+  "alternative": [],
+  "suspect": true,
+  "motiv": "nicio urmă de anvelope în categorii sau descriere",
+  "respins": "alt subiect decât marca de anvelope",
+  "titlu_respins": "File:Red Marshal.png"
+ },
+ "rockblade": {
+  "file": null,
+  "cautat": true
+ },
+ "mileking": {
+  "file": null,
+  "cautat": true
+ },
+ "charmhoo": {
+  "file": null,
+  "cautat": true
+ },
+ "annaite": {
+  "file": null,
+  "cautat": true
+ },
+ "falken": {
+  "file": "falken.svg",
+  "marca": "Falken",
+  "produse": 30,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Falken Tire logo.svg",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3AFalken%20Tire%20logo.svg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/1/1d/Falken_Tire_logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/svg+xml",
+  "latime": 512,
+  "inaltime": 56,
+  "licenta": "Public domain",
+  "scor": 80,
+  "alternative": [
+   "File:FALKEN Logo Blue.png"
+  ]
+ },
+ "sava": {
+  "file": "sava.svg",
+  "marca": "Sava",
+  "produse": 27,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Sava Reifen logo.svg",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3ASava%20Reifen%20logo.svg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/1/1d/Sava_Reifen_logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/svg+xml",
+  "latime": 1024,
+  "inaltime": 540,
+  "licenta": "Public domain",
+  "scor": 35,
+  "alternative": [
+   "File:Sava Centar Logo.svg"
+  ]
+ },
+ "onyx": {
+  "file": null,
+  "marca": "ONYX",
+  "produse": 27,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Onyx logo.png",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3AOnyx%20logo.png",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/a/ab/Onyx_logo.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/png",
+  "latime": 733,
+  "inaltime": 428,
+  "licenta": "CC BY-SA 4.0",
+  "scor": 45,
+  "alternative": [
+   "File:Onyx.tv-Logo.svg",
+   "File:Onyx-Collective-Logo.svg",
+   "File:Onyx Systems wordmark.svg"
+  ],
+  "suspect": true,
+  "motiv": "nicio urmă de anvelope în categorii sau descriere",
+  "respins": "alt subiect decât marca de anvelope",
+  "titlu_respins": "File:Onyx logo.png"
+ },
+ "avon": {
+  "file": null,
+  "marca": "Avon",
+  "produse": 25,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Avon-Tyres-Logo.png",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3AAvon-Tyres-Logo.png",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/b/b1/Avon-Tyres-Logo.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/png",
+  "latime": 357,
+  "inaltime": 99,
+  "licenta": "Public domain",
+  "scor": 80,
+  "alternative": [
+   "File:Avon Rubber logo.svg",
+   "File:Avon company logo.svg",
+   "File:Avon-logo.svg"
+  ],
+  "motiv": "nicio urmă de anvelope în categorii sau descriere",
+  "titlu_respins": "File:Avon-Tyres-Logo.png",
+  "verificat": "ales manual, după verificarea paginii de pe Commons",
+  "respins": "PNG de 285 px — sub pragul de calitate"
+ },
+ "bfgoodrich": {
+  "file": "bfgoodrich.svg",
+  "marca": "BFGoodrich",
+  "produse": 23,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:BFGoodrich logo.svg",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3ABFGoodrich%20logo.svg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/9/90/BFGoodrich_logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/svg+xml",
+  "latime": 512,
+  "inaltime": 78,
+  "licenta": "Public domain",
+  "scor": 80,
+  "alternative": [],
+  "verificat": "titlu și categorii confirmă marca de anvelope"
+ },
+ "westlake": {
+  "file": "westlake.png",
+  "marca": "Westlake",
+  "produse": 22,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Westlake-Tires-logo.png",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3AWestlake-Tires-logo.png",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/f/f4/Westlake-Tires-logo.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/png",
+  "latime": 2310,
+  "inaltime": 332,
+  "licenta": "Public domain",
+  "scor": 45,
+  "alternative": [
+   "File:Westlake chem logo.svg",
+   "File:Westlake Center logo.svg"
+  ]
+ },
+ "royal-black": {
+  "file": null,
+  "cautat": true
+ },
+ "kelly": {
+  "file": null,
+  "marca": "Kelly",
+  "produse": 21,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Kelly Services logo.svg",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3AKelly%20Services%20logo.svg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/a/a6/Kelly_Services_logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/svg+xml",
+  "latime": 71,
+  "inaltime": 35,
+  "licenta": "Public domain",
+  "scor": 35,
+  "alternative": [
+   "File:Kelly 356.svg",
+   "File:John Kelly 2027 Logo.png"
+  ],
+  "suspect": true,
+  "motiv": "nicio urmă de anvelope în categorii sau descriere",
+  "respins": "alt subiect decât marca de anvelope",
+  "titlu_respins": "File:Kelly Services logo.svg"
+ },
+ "neolin": {
+  "file": null,
+  "cautat": true
+ },
+ "rotex": {
+  "file": null,
+  "cautat": true
+ },
+ "kormoran": {
+  "file": "kormoran.svg",
+  "marca": "KORMORAN",
+  "produse": 18,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Kormoran logo.svg",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3AKormoran%20logo.svg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/a/a3/Kormoran_logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/svg+xml",
+  "latime": 1638,
+  "inaltime": 201,
+  "licenta": "Public domain",
+  "scor": 80,
+  "alternative": []
+ },
+ "minerva": {
+  "file": null,
+  "marca": "Minerva",
+  "produse": 18,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Minerva logo.png",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3AMinerva%20logo.png",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/1/15/Minerva_logo.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/png",
+  "latime": 141,
+  "inaltime": 139,
+  "licenta": "Public domain",
+  "scor": 45,
+  "alternative": [
+   "File:Minerva (Fernseher) logo.svg"
+  ],
+  "suspect": true,
+  "motiv": "nicio urmă de anvelope în categorii sau descriere",
+  "respins": "alt subiect decât marca de anvelope",
+  "titlu_respins": "File:Minerva logo.png"
+ },
+ "gislaved": {
+  "file": "gislaved.svg",
+  "marca": "Gislaved",
+  "produse": 17,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Gislaved logo.svg",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3AGislaved%20logo.svg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/a/ad/Gislaved_logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/svg+xml",
+  "latime": 242,
+  "inaltime": 71,
+  "licenta": "Public domain",
+  "scor": 80,
+  "alternative": []
+ },
+ "gripmax": {
+  "file": null,
+  "cautat": true
+ },
+ "firestone": {
+  "file": "firestone.svg",
+  "marca": "Firestone",
+  "produse": 16,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Firestone.svg",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3AFirestone.svg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/4/41/Firestone.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/svg+xml",
+  "latime": 512,
+  "inaltime": 73,
+  "licenta": "Public domain",
+  "scor": 60,
+  "alternative": [],
+  "verificat": "titlu și categorii confirmă marca de anvelope"
+ },
+ "greentrac": {
+  "file": null,
+  "cautat": true
+ },
+ "kustone": {
+  "file": null,
+  "cautat": true
+ },
+ "kinforest": {
+  "file": null,
+  "cautat": true
+ },
+ "semperit": {
+  "file": "semperit.svg",
+  "marca": "Semperit",
+  "produse": 13,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Semperit.svg",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3ASemperit.svg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/2/23/Semperit.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/svg+xml",
+  "latime": 656,
+  "inaltime": 75,
+  "licenta": "Public domain",
+  "scor": 60,
+  "alternative": [],
+  "verificat": "titlu și categorii confirmă marca de anvelope"
+ },
+ "diplomat": {
+  "file": null,
+  "marca": "Diplomat",
+  "produse": 12,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Diplomat-logo.png",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3ADiplomat-logo.png",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/1/1c/Diplomat-logo.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/png",
+  "latime": 260,
+  "inaltime": 40,
+  "licenta": "Public domain",
+  "scor": 45,
+  "alternative": [
+   "File:The Diplomat logo.svg"
+  ],
+  "suspect": true,
+  "motiv": "nicio urmă de anvelope în categorii sau descriere",
+  "respins": "alt subiect decât marca de anvelope",
+  "titlu_respins": "File:Diplomat-logo.png"
+ },
+ "three-a": {
+  "file": null,
+  "cautat": true
+ },
+ "unigrip": {
+  "file": null,
+  "cautat": true
+ },
+ "waterfall": {
+  "file": null,
+  "cautat": true
+ },
+ "imperial": {
+  "file": null,
+  "marca": "Imperial",
+  "produse": 9,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Imperial logo.svg",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3AImperial%20logo.svg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/d/de/Imperial_logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/svg+xml",
+  "latime": 800,
+  "inaltime": 220,
+  "licenta": "Public domain",
+  "scor": 80,
+  "alternative": [
+   "File:Imperial tobacco logo.svg",
+   "File:Imperial hotel logo.svg"
+  ],
+  "suspect": true,
+  "motiv": "nicio urmă de anvelope în categorii sau descriere",
+  "respins": "alt subiect decât marca de anvelope",
+  "titlu_respins": "File:Imperial logo.svg"
+ },
+ "compasal": {
+  "file": null,
+  "cautat": true
+ },
+ "motrio": {
+  "file": "motrio.png",
+  "marca": "Motrio",
+  "produse": 8,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Logo motrio.png",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3ALogo%20motrio.png",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/9/98/Logo_motrio.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/png",
+  "latime": 934,
+  "inaltime": 369,
+  "licenta": "CC BY-SA 4.0",
+  "scor": 45,
+  "alternative": [],
+  "verificat": "titlu și categorii confirmă marca de anvelope"
+ },
+ "toyo": {
+  "file": "toyo.svg",
+  "marca": "Toyo",
+  "produse": 7,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Toyo Tire logo.svg",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3AToyo%20Tire%20logo.svg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/b/b7/Toyo_Tire_logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/svg+xml",
+  "latime": 1016,
+  "inaltime": 109,
+  "licenta": "Public domain",
+  "scor": 80,
+  "alternative": [
+   "File:Toyo Engineering company logo.svg",
+   "File:Toyo Piano logo.svg",
+   "File:TOYO LOGO COMPANY OFFICIAL FILE.svg"
+  ]
+ },
+ "zeta": {
+  "file": null,
+  "marca": "ZETA",
+  "produse": 7,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Zeta Logo.svg",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3AZeta%20Logo.svg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/8/82/Zeta_Logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/svg+xml",
+  "latime": 816,
+  "inaltime": 199,
+  "licenta": "Public domain",
+  "scor": 80,
+  "alternative": [
+   "File:Zeta (company).svg",
+   "File:Zeta logo.png",
+   "File:Radio Zeta - Logo 2020.svg"
+  ],
+  "suspect": true,
+  "motiv": "nicio urmă de anvelope în categorii sau descriere",
+  "respins": "alt subiect decât marca de anvelope",
+  "titlu_respins": "File:Zeta Logo.svg"
+ },
+ "anchee": {
+  "file": null,
+  "cautat": true
+ },
+ "austone": {
+  "file": null,
+  "cautat": true
+ },
+ "giti": {
+  "file": null,
+  "cautat": true
+ },
+ "fortuna": {
+  "file": null,
+  "marca": "Fortuna",
+  "produse": 5,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Fortuna-Fehrzeugbau logo.svg",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3AFortuna-Fehrzeugbau%20logo.svg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/3/32/Fortuna-Fehrzeugbau_logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/svg+xml",
+  "latime": 512,
+  "inaltime": 88,
+  "licenta": "Public domain",
+  "scor": 35,
+  "alternative": [
+   "File:Fortuna Düsseldorf.svg"
+  ],
+  "suspect": true,
+  "motiv": "nicio urmă de anvelope în categorii sau descriere",
+  "respins": "alt subiect decât marca de anvelope",
+  "titlu_respins": "File:Fortuna-Fehrzeugbau logo.svg"
+ },
+ "goodride": {
+  "file": "goodride.png",
+  "marca": "Goodride",
+  "produse": 5,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Goodride-logo.png",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3AGoodride-logo.png",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/5/5f/Goodride-logo.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/png",
+  "latime": 999,
+  "inaltime": 137,
+  "licenta": "Public domain",
+  "scor": 45,
+  "alternative": []
+ },
+ "roadboss": {
+  "file": null,
+  "cautat": true
+ },
+ "orium": {
+  "file": null,
+  "cautat": true
+ },
+ "voyager": {
+  "file": null,
+  "marca": "Voyager",
+  "produse": 4,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Voyager Technologies logo (white).svg",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3AVoyager%20Technologies%20logo%20(white).svg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/c/c4/Voyager_Technologies_logo_%28white%29.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/svg+xml",
+  "latime": 3800,
+  "inaltime": 610,
+  "licenta": "Public domain",
+  "scor": 35,
+  "alternative": [
+   "File:Voyager Space logo.svg",
+   "File:Voyager Technologies logo.svg"
+  ],
+  "suspect": true,
+  "motiv": "nicio urmă de anvelope în categorii sau descriere",
+  "respins": "alt subiect decât marca de anvelope",
+  "titlu_respins": "File:Voyager Technologies logo (white).svg"
+ },
+ "aptany": {
+  "file": null,
+  "cautat": true
+ },
+ "atturo": {
+  "file": null,
+  "cautat": true
+ },
+ "rapid": {
+  "file": null,
+  "marca": "Rapid",
+  "produse": 2,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Rapid Penang Logo.svg",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3ARapid%20Penang%20Logo.svg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/9/90/Rapid_Penang_Logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/svg+xml",
+  "latime": 746,
+  "inaltime": 97,
+  "licenta": "Public domain",
+  "scor": 35,
+  "alternative": [
+   "File:Rapid KL Logo.svg",
+   "File:Rapid Holding Logo.svg",
+   "File:Breeze Rapid logo.svg"
+  ],
+  "suspect": true,
+  "motiv": "nicio urmă de anvelope în categorii sau descriere",
+  "respins": "alt subiect decât marca de anvelope",
+  "titlu_respins": "File:Rapid Penang Logo.svg"
+ },
+ "dovroad": {
+  "file": null,
+  "cautat": true
+ },
+ "doublestar": {
+  "file": null,
+  "cautat": true
+ },
+ "bearway": {
+  "file": null,
+  "cautat": true
+ },
+ "toledo": {
+  "file": null,
+  "marca": "Toledo",
+  "produse": 2,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Universidad Toledo Logo.svg",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3AUniversidad%20Toledo%20Logo.svg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/b/b7/Universidad_Toledo_Logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/svg+xml",
+  "latime": 2775,
+  "inaltime": 628,
+  "licenta": "Public domain",
+  "scor": 35,
+  "alternative": [
+   "File:Toledo Rockets wordmark.svg"
+  ],
+  "suspect": true,
+  "motiv": "nicio urmă de anvelope în categorii sau descriere",
+  "respins": "alt subiect decât marca de anvelope",
+  "titlu_respins": "File:Universidad Toledo Logo.svg"
+ },
+ "atlas": {
+  "file": null,
+  "marca": "Atlas",
+  "produse": 2,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:New Atlas logo.svg",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3ANew%20Atlas%20logo.svg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/8/82/New_Atlas_logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/svg+xml",
+  "latime": 512,
+  "inaltime": 74,
+  "licenta": "CC0",
+  "scor": 80,
+  "alternative": [
+   "File:Atlas Elektronik logo.svg",
+   "File:Atlas University logo.svg",
+   "File:Atlas-Copco-Logo.svg"
+  ],
+  "suspect": true,
+  "motiv": "nicio urmă de anvelope în categorii sau descriere",
+  "respins": "alt subiect decât marca de anvelope",
+  "titlu_respins": "File:New Atlas logo.svg"
+ },
+ "belshina": {
+  "file": "belshina.svg",
+  "marca": "BELSHINA",
+  "produse": 1,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Belshina logo.svg",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3ABelshina%20logo.svg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/7/73/Belshina_logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/svg+xml",
+  "latime": 512,
+  "inaltime": 56,
+  "licenta": "Public domain",
+  "scor": 80,
+  "alternative": [],
+  "verificat": "titlu și categorii confirmă marca de anvelope"
+ },
+ "strial": {
+  "file": null,
+  "cautat": true
+ },
+ "delinte": {
+  "file": "delinte.svg",
+  "marca": "Delinte",
+  "produse": 1,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Delintebanden.svg",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3ADelintebanden.svg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/6/65/Delintebanden.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/svg+xml",
+  "latime": 249,
+  "inaltime": 40,
+  "licenta": "Public domain",
+  "scor": 15,
+  "alternative": [],
+  "verificat": "titlu și categorii confirmă marca de anvelope"
+ },
+ "achilles": {
+  "file": null,
+  "cautat": true
+ },
+ "federal": {
+  "file": null,
+  "marca": "Federal",
+  "produse": 1,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:Federal-Mogul Logo.svg",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3AFederal-Mogul%20Logo.svg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/8/8b/Federal-Mogul_Logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/svg+xml",
+  "latime": 300,
+  "inaltime": 71,
+  "licenta": "Public domain",
+  "scor": 35,
+  "alternative": [
+   "File:DE Federal Foreign Logo.svg",
+   "File:Federal-signal.svg"
+  ],
+  "suspect": true,
+  "motiv": "nicio urmă de anvelope în categorii sau descriere",
+  "respins": "alt subiect decât marca de anvelope",
+  "titlu_respins": "File:Federal-Mogul Logo.svg"
+ },
+ "ardent": {
+  "file": null,
+  "cautat": true
+ },
+ "brics": {
+  "file": null,
+  "marca": "Brics",
+  "produse": 1,
+  "sursa": "Wikimedia Commons",
+  "titlu": "File:BRICS 2023 Logo.svg",
+  "pagina": "https://commons.wikimedia.org/wiki/File%3ABRICS%202023%20Logo.svg",
+  "url": "https://upload.wikimedia.org/wikipedia/commons/0/04/BRICS_2023_Logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+  "mime": "image/svg+xml",
+  "latime": 512,
+  "inaltime": 341,
+  "licenta": "CC BY-SA 4.0",
+  "scor": 90,
+  "alternative": [
+   "File:BRICS Games 2024 logo.svg",
+   "File:Brics-logo.png",
+   "File:BRICS 2022.png"
+  ],
+  "suspect": true,
+  "motiv": "nicio urmă de anvelope în categorii sau descriere",
+  "respins": "alt subiect decât marca de anvelope",
+  "titlu_respins": "File:BRICS 2023 Logo.svg"
+ },
+ "aoteli": {
+  "file": null,
+  "cautat": true
+ },
+ "powertrac": {
+  "file": null,
+  "cautat": true
+ }
+}

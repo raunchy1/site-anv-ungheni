@@ -30,9 +30,13 @@ Actualizat: 21 august 2026 (promptul nr. 3).
 - Referința cerută: `tireo.ro`, unde fiecare card are logo-ul mărcii sub fotografie.
 - Site-ul **afișează logo-ul când există**, cu rezervă tipografică când nu.
   Grila nu se mișcă între cele două stări (`BrandLogo`, bandă de înălțime fixă).
-- Fișierele se pun manual în `data/brand-logos/`, **din media kit-ul producătorului**,
-  și se urcă cu `pnpm logos --apply` în bucket-ul `branduri`. Nimic automat, nimic
-  luat de la concurență.
+- Fișierele se pun în `logos-sursa/`, **din surse oficiale sau din Wikimedia Commons**,
+  și se urcă cu `pnpm logos --apply` în bucket-ul `marci`. Nimic de pe agregatoare
+  (seeklogo, brandsoftheworld, worldvectorlogo) și nimic de la concurență.
+- Fiecare fișier are proveniența scrisă în `logos-sursa/manifest.json` și se verifică
+  pe planșa de contact (`pnpm logos:sheet`), pe fundal alb și pe fundal închis.
+- Un logo desenat în alb, pentru antet închis, **se respinge**: pe placa deschisă a
+  cardului ar fi invizibil (cazul Grenlander).
 - `brands.logo_url` ține URL-ul public complet, nu o cale de Storage.
 
 ## A.4 — rutare bilingvă

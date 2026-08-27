@@ -48,6 +48,7 @@ data/raw/html-cache/
 data/raw/*.bak
 data/raw/*.log
 
-# logo-urile de marca: sursa de adevar e Supabase Storage, nu repo-ul
-data/brand-logos/*
-!data/brand-logos/README.md
+# logo-urile de marca: sursa de adevar e Supabase Storage, nu repo-ul.
+# Manifestul ramane in git — el spune de unde vine fiecare fisier.
+logos-sursa/*
+!logos-sursa/manifest.json

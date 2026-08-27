@@ -42,19 +42,27 @@ Schelete create, `body` `NULL`, pagini pe `noindex` până se completează.
 
 Nu există în sursă la niciunul dintre cele 134 de branduri. `brands.description_ro/ru` NULL.
 
-## 7. Logo-urile celor 134 de mărci
+## 7. Logo-urile de marcă — 42 din 132, restul lipsesc
 
-Lanțul e gata: coloană, bucket, încărcător, afișare pe card, pe fișă și pe pagina de marcă.
-Lipsesc **fișierele**. Le iei din media kit-ul fiecărui producător, le pui în
-`data/brand-logos/` cu numele mărcii (`michelin.svg`, `nokian-tyres.png`) și rulezi:
+Urcate la 28 august 2026: **42 de mărci**, care acoperă **6.917 din 15.005 produse (46,1%)**.
+Sursele: Wikimedia Commons (37) și site-urile oficiale ale producătorilor (5).
+
+Cele 90 rămase n-au logo găsibil din surse acceptabile — sunt aproape toate mărci
+chinezești fără site oficial funcțional. Lista completă, în ordinea importanței, e în
+`tools/logos/marci-checklist.csv`; primele cinci: TRACMAX (713), Goodyear (399),
+Petlas (348), Arivo (331), Joyroad (328).
+
+Dacă obții fișierul oficial al vreuneia, pune-l în `logos-sursa/` cu numele slug-ului
+și rulează:
 
 ```bash
-pnpm logos            # rulare seacă: ce s-ar urca, ce fișier n-are marcă
-pnpm logos --apply    # urcă și scrie brands.logo_url
+pnpm logos                 # rulare seacă
+pnpm logos --apply         # urcă în bucketul `marci` și scrie brands.logo_url
+pnpm logos:sheet           # planșa de verificare, din ce e urcat
 ```
 
-Nu se iau de pe site-urile concurenței. Până atunci, cardurile arată numele în versale —
-nu rămâne spațiu gol.
+Nu se iau de pe agregatoare și nici de la concurență. Mărcile fără logo arată numele
+în versale — nu rămâne spațiu gol.
 
 ## 8. Fotografia Lassa Greenways
 
