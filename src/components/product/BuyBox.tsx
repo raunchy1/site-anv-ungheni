@@ -82,7 +82,9 @@ export function BuyBox({
           {t("product.addToCart")}
         </Button>
         <WhatsAppButton message={t("wa.product", { title, code, qty, url })} label="WhatsApp" />
-        <a href={phoneHref} className="inline-flex min-h-11 items-center gap-[var(--sp-2)] rounded-[var(--radius-sm)] border border-[var(--line-strong)] px-[var(--sp-4)] text-300 text-[var(--ink-strong)] transition-colors duration-[var(--dur-1)] hover:border-[var(--ink-strong)]">
+        {/* Sub 640px numărul e ascuns și rămâne doar iconița: fără `aria-label`,
+            legătura n-ar avea nume accesibil (WCAG 2.4.4). */}
+        <a href={phoneHref} aria-label={phone} className="inline-flex min-h-11 items-center gap-[var(--sp-2)] rounded-[var(--radius-sm)] border border-[var(--line-strong)] px-[var(--sp-4)] text-300 text-[var(--ink-strong)] transition-colors duration-[var(--dur-1)] hover:border-[var(--ink-strong)]">
           <IconPhone size={16} />
           <span className="num hidden sm:inline">{phone}</span>
         </a>

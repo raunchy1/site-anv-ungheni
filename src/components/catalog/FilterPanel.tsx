@@ -102,7 +102,13 @@ export async function FilterPanel({
                     }`}
                   >
                     <span className="truncate">{b.name}</span>
-                    <span className="num shrink-0 text-100 opacity-70">{b.product_count}</span>
+                    {/* Contorul păstrează `opacity` doar pe fundal închis, unde
+                        raportul rămâne peste 4,5:1. Pe fundal deschis, 70% din
+                        `--ink-muted` cădea la 2,98:1 — sub pragul AA (verificat
+                        cu Lighthouse pe catalog). */}
+                    <span className={`num shrink-0 text-100 ${active ? "opacity-70" : "text-[var(--ink)]"}`}>
+                      {b.product_count}
+                    </span>
                   </Link>
                 </li>
               );

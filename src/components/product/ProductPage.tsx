@@ -55,6 +55,7 @@ export async function ProductPage({ product, locale }: { product: Product; local
   ]);
 
   const title = (locale === "ru" ? product.title_ru : product.title_ro) ?? product.title_ro;
+  const brandSlug = locale === "ru" ? (product.brand_slug_ru ?? product.brand_slug) : product.brand_slug;
   const productUrl = absoluteUrl(locale === "ru" ? `/${product.slug_ru ?? product.slug_ro}` : `/${product.slug_ro}`, locale);
   const showAlternatives = unavailable && (alternatives.length > 0 || near.length > 0);
 
@@ -64,7 +65,14 @@ export async function ProductPage({ product, locale }: { product: Product; local
         items={[
           { label: t("nav.home"), href: locale === "ru" ? "/ru" : "/" },
           { label: t("catalog.title"), href: locale === "ru" ? "/ru/katalog-shin" : "/catalog-anvelope" },
-          ...(product.brand_name ? [{ label: product.brand_name, href: `${locale === "ru" ? "/ru" : ""}/${product.slug_ro.split("-")[0]}` }] : []),
+          /* Slug-ul mărcii vine din `brands`, nu din primul cuvânt al slug-ului
+             de produs: 2.370 de fișe încep cu „anvelope-" sau cu o formă a
+             mărcii care nu e slug de rută, iar acelea trimiteau în 404. */
+          ...(product.brand_name && brandSlug
+            ? [{ label: product.brand_name, href: `${locale === "ru" ? "/ru" : ""}/${brandSlug}` }]
+            : product.brand_name
+              ? [{ label: product.brand_name }]
+              : []),
           { label: title },
         ]}
       />

@@ -39,6 +39,7 @@ export type Product = {
   /** Completate din `brands` la citire, nu coloane pe `products`. */
   brand_logo_url?: string | null;
   brand_slug?: string | null;
+  brand_slug_ru?: string | null;
 };
 
 /** [disponibile, total] pe sezon, ca să se poată încrucișa sezonul cu marca. */

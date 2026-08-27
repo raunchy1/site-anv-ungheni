@@ -33,6 +33,7 @@ const withImage = (r: Row): Product => {
     // încarcă o singură dată, manual, iar bucket-ul lor nu e cel al produselor.
     brand_logo_url: brand?.logo_url ?? null,
     brand_slug: brand?.slug_ro ?? null,
+    brand_slug_ru: brand?.slug_ru ?? null,
   };
 };
 
