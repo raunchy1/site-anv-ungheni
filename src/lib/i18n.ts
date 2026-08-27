@@ -26,6 +26,13 @@ export type Dict = {
   reset: string;
   pickWidthFirst: string;
   pickAspectFirst: string;
+  /** Pasii 4 si 5 ai selectorului: optionali, dar dependenti de dimensiune. */
+  pickDiameterFirst: string;
+  anySeason: string;
+  anyBrand: string;
+  advancedSearch: string;
+  optional: string;
+  loadingOptions: string;
   // produs
   specifications: string;
   size: string;
@@ -95,6 +102,12 @@ const ro: Dict = {
   reset: "Șterge",
   pickWidthFirst: "Alege întâi lățimea",
   pickAspectFirst: "Alege întâi înălțimea",
+  pickDiameterFirst: "Alege întâi diametrul",
+  anySeason: "Orice sezon",
+  anyBrand: "Orice marcă",
+  advancedSearch: "Căutare avansată",
+  optional: "opțional",
+  loadingOptions: "Se încarcă opțiunile",
   specifications: "Specificații",
   size: "Dimensiune",
   season: "Sezon",
@@ -160,6 +173,12 @@ const ru: Dict = {
   reset: "Сбросить",
   pickWidthFirst: "Сначала выберите ширину",
   pickAspectFirst: "Сначала выберите высоту",
+  pickDiameterFirst: "Сначала выберите диаметр",
+  anySeason: "Любой сезон",
+  anyBrand: "Любая марка",
+  advancedSearch: "Расширенный поиск",
+  optional: "необязательно",
+  loadingOptions: "Загрузка вариантов",
   specifications: "Характеристики",
   size: "Размер",
   season: "Сезон",

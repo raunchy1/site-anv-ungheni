@@ -89,6 +89,91 @@ export const IconAllSeason = (p: IconProps) => (
   </Icon>
 );
 
+/* ------------------------------------------------- anvelopa cu sezon ------
+   Cele trei placi de sezon de pe pagina principala cer altceva decat iconitele
+   de 20px de mai sus: la 40px, un simbol abstract pluteste singur in patrat.
+   Aici anvelopa e desenata din fata — flanc rotunjit, trei canale de banda —
+   iar simbolul sezonului sta langa ea, la aceeasi inaltime optica. Geometria
+   simbolurilor e IDENTICA cu a iconitelor mici (disc r=2.6, marcaje pana la
+   8.4 scalate), ca placile si insignele sa citeasca drept acelasi set.
+   -------------------------------------------------------------------------- */
+
+export const TyreSeasonMark = ({
+  season,
+  ...p
+}: IconProps & { season: "vara" | "iarna" | "all_season" }) => (
+  <Icon {...p}>
+    {/* anvelopa, vazuta din fata: flanc + trei canale longitudinale */}
+    <rect x="2.75" y="3.25" width="7.5" height="17.5" rx="3.5" />
+    <path d="M4.6 3.6v16.8M6.5 3.3v17.4M8.4 3.6v16.8" />
+
+    {season === "vara" ? (
+      <>
+        <circle cx="17" cy="12" r="2.9" />
+        <path d="M17 5.6v2.1M17 16.3v2.1M10.6 12h2.1M21.3 12h2.1" />
+        <path d="M12.7 7.7l1.5 1.5M19.8 14.8l1.5 1.5M21.3 7.7l-1.5 1.5M14.2 14.8l-1.5 1.5" />
+      </>
+    ) : null}
+
+    {season === "iarna" ? (
+      <>
+        <path d="M17 5.2v13.6M11.1 8.6l11.8 6.8M22.9 8.6L11.1 15.4" />
+        <path d="M15.4 6.6L17 8.2l1.6-1.6M15.4 17.4L17 15.8l1.6 1.6" />
+        <path d="M12.3 11l.6-2.2 2.2.6M21.7 13l-.6 2.2-2.2-.6" />
+        <path d="M21.7 11l-.6-2.2-2.2.6M12.3 13l.6 2.2 2.2-.6" />
+      </>
+    ) : null}
+
+    {season === "all_season" ? (
+      <>
+        {/* jumatate soare, jumatate fulg — aceeasi impartire ca la IconAllSeason */}
+        <circle cx="17" cy="12" r="2.9" />
+        <path d="M12.6 12h-1.9M14.9 9.9l-1.6-1.6M14.9 14.1l-1.6 1.6" />
+        <path d="M20.2 12h3.2M23.4 12l-1.3-1.1M23.4 12l-1.3 1.1" />
+        <path d="M18.6 8.3l1.9-2.7M20.5 5.6l-1.3.2M20.5 5.6l-.2 1.3" />
+        <path d="M18.6 15.7l1.9 2.7M20.5 18.4l-1.3-.2M20.5 18.4l-.2-1.3" />
+      </>
+    ) : null}
+  </Icon>
+);
+
+/* ------------------------------------------------ marcaje de constructie --
+   Trei proprietati care se citesc de pe flancul anvelopei si care exista ca
+   date reale in catalog: sarcina intarita (XL), rularea pe pana (Run Flat) si
+   constructia comerciala (C). Sunt desenate ca ANVELOPA + un singur semn
+   suplimentar, pe aceeasi silueta ca `TyreSeasonMark`, ca sa se vada ca vorbesc
+   despre acelasi obiect. Eticheta UE — consum, aderenta, zgomot — nu are
+   iconita aici pentru ca datele ei nu exista in sursa (DECISIONS.md).
+   -------------------------------------------------------------------------- */
+
+/** XL / sarcina intarita: sageata care apasa pe anvelopa. */
+export const IconExtraLoad = (p: IconProps) => (
+  <Icon {...p}>
+    <rect x="8.25" y="8.25" width="7.5" height="12.5" rx="3.5" />
+    <path d="M10.1 8.6v11.8M12 8.3v12.4M13.9 8.6v11.8" />
+    <path d="M12 2.5v4M9.8 4.6L12 2.4l2.2 2.2" />
+  </Icon>
+);
+
+/** Run Flat: flanc dublu, adica peretele care tine masina fara aer. */
+export const IconRunFlat = (p: IconProps) => (
+  <Icon {...p}>
+    <rect x="4.25" y="3.25" width="7.5" height="17.5" rx="3.5" />
+    <path d="M6.1 3.6v16.8M8 3.3v17.4M9.9 3.6v16.8" />
+    <path d="M14.5 7.5v9M17 5.5v13" />
+  </Icon>
+);
+
+/** C — anvelopa comerciala, adica pentru furgonete. */
+export const IconCommercial = (p: IconProps) => (
+  <Icon {...p}>
+    <path d="M2.75 6.25h11v9.5h-11z" />
+    <path d="M13.75 9.25h4l3.5 3.5v3h-7.5z" />
+    <circle cx="7" cy="18" r="2.25" />
+    <circle cx="17" cy="18" r="2.25" />
+  </Icon>
+);
+
 /* -------------------------------------------------------------- comert ---- */
 
 export const IconStock = (p: IconProps) => (

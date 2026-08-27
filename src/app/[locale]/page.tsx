@@ -2,17 +2,15 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { SizeSelector } from "@/components/ui/SizeSelector";
 import { ProductCard } from "@/components/ui/ProductCard";
-import { TreadRule, IconSummer, IconWinter, IconAllSeason, IconArrowRight, IconPin, IconClock, IconPhone } from "@/components/icons";
-import { getServices, getSettings, getShowcase } from "@/lib/db/queries";
+import { TreadRule, TyreSeasonMark, IconArrowRight, IconPin, IconClock, IconPhone } from "@/components/icons";
+import { getSeasonCounts, getServices, getSettings, getShowcase } from "@/lib/db/queries";
 import { toUiProduct } from "@/lib/adapt";
-import { telLink } from "@/lib/format";
+import { formatCount, telLink } from "@/lib/format";
 import { sizeTree } from "@/lib/size-tree";
 import { MapEmbed } from "@/components/layout/MapEmbed";
 import type { Locale } from "@/lib/types";
 
 export const revalidate = 3600;
-
-const SEASON_ICON = { vara: IconSummer, iarna: IconWinter, all_season: IconAllSeason } as const;
 
 /** Cele mai bine acoperite dimensiuni din catalog — calculate, nu alese pe gust. */
 function topSizes(limit = 8) {
@@ -32,7 +30,9 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
   setRequestLocale(locale);
   const l = locale as Locale;
   const t = await getTranslations();
-  const [settings, services, showcase] = await Promise.all([getSettings(), getServices(), getShowcase(8)]);
+  const [settings, services, showcase, seasonCounts] = await Promise.all([
+    getSettings(), getServices(), getShowcase(8), getSeasonCounts(),
+  ]);
 
   return (
     <div className="shell flex flex-col gap-[var(--sp-16)] py-[var(--sp-8)]">
@@ -49,22 +49,25 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
           <h2 className="text-500 font-semibold text-[var(--ink-strong)]">{t("home.seasonsTitle")}</h2>
         </div>
         <TreadRule variant="full" className="mt-[var(--sp-3)] text-[var(--line)]" />
+        {/* Trei plăci, nu trei rânduri de listă: sezonul e prima întrebare pe
+            care și-o pune un șofer care nu știe încă ce dimensiune are, deci
+            merită suprafață de atins, nu o linie de meniu. Contorul de sub
+            etichetă e numărul real de anvelope disponibile pe sezon. */}
         <ul className="mt-[var(--sp-5)] grid gap-[var(--sp-3)] sm:grid-cols-3">
-          {(["vara", "iarna", "all_season"] as const).map((s) => {
-            const Icon = SEASON_ICON[s];
-            return (
-              <li key={s}>
-                <Link
-                  href={{ pathname: "/catalog/[...filtre]", params: { filtre: [`sezon_${s === "all_season" ? "all-season" : s}`] } }}
-                  className="flex items-center gap-[var(--sp-3)] rounded-[var(--radius-md)] border border-[var(--line)] px-[var(--sp-5)] py-[var(--sp-4)] transition-colors duration-[var(--dur-1)] hover:border-[var(--line-strong)]"
-                >
-                  <Icon size={22} className="text-[var(--ink-muted)]" />
-                  <span className="font-medium text-[var(--ink-strong)]">{t(`season.${s}`)}</span>
-                  <IconArrowRight size={16} className="ml-auto text-[var(--ink-muted)]" />
-                </Link>
-              </li>
-            );
-          })}
+          {(["iarna", "all_season", "vara"] as const).map((s) => (
+            <li key={s}>
+              <Link
+                href={{ pathname: "/catalog/[...filtre]", params: { filtre: [`sezon_${s === "all_season" ? "all-season" : s}`] } }}
+                className="flex h-full flex-col items-center gap-[var(--sp-3)] rounded-[var(--radius-md)] border border-[var(--line)] px-[var(--sp-5)] py-[var(--sp-6)] text-center transition-colors duration-[var(--dur-1)] hover:border-[var(--line-strong)] hover:bg-[var(--surface-2)]"
+              >
+                <TyreSeasonMark season={s} size={44} className="text-[var(--ink-strong)]" />
+                <span className="font-medium text-[var(--ink-strong)]">{t(`season.${s}`)}</span>
+                <span className="num text-200 text-[var(--ink-muted)]">
+                  {formatCount(seasonCounts[s])} {t("size.available")}
+                </span>
+              </Link>
+            </li>
+          ))}
         </ul>
       </section>
 

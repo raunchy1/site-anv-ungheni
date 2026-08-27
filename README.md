@@ -22,6 +22,7 @@ pnpm dev                       # http://localhost:3000
 | `pnpm db:seed` | seed idempotent în Supabase din `data/raw/` |
 | `pnpm inspector` | inspector local al datelor migrate (port 4321) |
 | `node --env-file=.env.local tools/seed/upload-images.mjs` | urcă imaginile în Storage |
+| `pnpm logos [--apply]` | urcă logo-urile de marcă din `data/brand-logos/` și scrie `brands.logo_url` |
 | `node --env-file=.env.local tools/build/size-tree.mjs` | regenerează arborele de dimensiuni **după fiecare import** |
 | `node tools/db/apply-local.mjs --twice` | verifică migrațiile pe Postgres local (docker, port 55432) |
 | `node tools/db/test-constraints.mjs` | cele 8 teste de constrângeri |

@@ -47,3 +47,7 @@ data/raw/images/
 data/raw/html-cache/
 data/raw/*.bak
 data/raw/*.log
+
+# logo-urile de marca: sursa de adevar e Supabase Storage, nu repo-ul
+data/brand-logos/*
+!data/brand-logos/README.md

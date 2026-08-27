@@ -3,7 +3,8 @@ import { Card } from "./Card";
 import { ProductImage } from "./ProductImage";
 import { Price, PriceOnRequest } from "./PriceOnRequest";
 import { StockIndicator } from "./StockIndicator";
-import { SeasonBadge } from "./Badge";
+import { SeasonBadge, SpecBadges } from "./Badge";
+import { BrandLogo } from "./BrandLogo";
 import type { Product } from "@/lib/sample-products";
 import type { Locale } from "@/lib/i18n";
 import { formatSize, formatIndex, normalizeSpeedIndex } from "@/lib/format";
@@ -12,9 +13,10 @@ import { formatSize, formatIndex, normalizeSpeedIndex } from "@/lib/format";
  * Cardul de produs, ordinea deliberata: marca (eticheta) -> model (titlu) ->
  * dimensiune + indici (mono) -> pret -> stoc.
  *
- * Marca e sus si mica, nu jos si mare: brandurile n-au logo, deci singura lor
- * identitate e tipografica, iar un cuvant in versale la 11px cu tracking
- * larg citeste ca un cap de fisa, nu ca o eticheta de pret.
+ * Marca sta imediat sub fotografie, ca logo: e primul lucru pe care il cauta
+ * soferul cand compara zece carduri deodata. Cat timp o marca n-are logo
+ * incarcat, `BrandLogo` cade pe numele in versale la 11px — aceeasi banda
+ * verticala, deci grila nu se misca intre marcile cu si fara logo.
  *
  * Randul cu dimensiunea e in mono si pe fundal coborat: e singura informatie
  * pe care soferul o compara intre carduri, deci trebuie sa cada exact in
@@ -53,7 +55,7 @@ export function ProductCard({
       />
 
       <div className="mt-[var(--sp-4)] flex flex-1 flex-col">
-        <p className="label optical-left">{product.brand}</p>
+        <BrandLogo name={product.brand} src={product.brandLogo} />
 
         <h3 className="mt-[var(--sp-1)] text-300 font-medium leading-snug text-[var(--ink-strong)]">
           <a
@@ -79,9 +81,10 @@ export function ProductCard({
           </p>
         ) : null}
 
-        {product.season ? (
-          <div className="mt-[var(--sp-3)]">
+        {product.season || product.isXl || product.isRunflat || product.isCommercial ? (
+          <div className="mt-[var(--sp-3)] flex flex-wrap items-center gap-[var(--sp-1)]">
             <SeasonBadge season={product.season} locale={locale} />
+            <SpecBadges product={product} />
           </div>
         ) : null}
 

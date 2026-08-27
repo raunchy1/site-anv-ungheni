@@ -36,13 +36,33 @@ export type Product = {
   meta_desc_ro: string | null;
   meta_desc_ru: string | null;
   image_url?: string | null;
+  /** Completate din `brands` la citire, nu coloane pe `products`. */
+  brand_logo_url?: string | null;
+  brand_slug?: string | null;
 };
+
+/** [disponibile, total] pe sezon, ca să se poată încrucișa sezonul cu marca. */
+export type SeasonBreakdown = Partial<Record<Season, [number, number]>>;
+
+/** O opțiune din pasul 4 sau 5 al selectorului, cu contoarele ei reale. */
+export type FacetOption = {
+  value: string;
+  /** Slug-ul de rută pentru mărci; pentru sezoane, valoarea enum. */
+  slug: string;
+  available: number;
+  total: number;
+  bySeason: SeasonBreakdown;
+};
+
+export type SizeFacets = { seasons: FacetOption[]; brands: FacetOption[] };
 
 export type Brand = {
   id: number;
   slug_ro: string;
   slug_ru: string | null;
   name: string;
+  /** URL public complet către logo, sau NULL cât timp nu a fost încărcat. */
+  logo_url: string | null;
   product_count: number;
   meta_title_ro: string | null;
   meta_title_ru: string | null;

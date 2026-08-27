@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { ProductImage } from "@/components/ui/ProductImage";
+import { BrandLogo } from "@/components/ui/BrandLogo";
+import { SeasonBadge, SpecBadges } from "@/components/ui/Badge";
 import { SpecTable, buildSpecRows } from "@/components/ui/SpecTable";
 import { StockIndicator } from "@/components/ui/StockIndicator";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
@@ -73,11 +75,18 @@ export async function ProductPage({ product, locale }: { product: Product; local
         </div>
 
         <div className="min-w-0">
-          {product.brand_name && <p className="label">{product.brand_name}</p>}
+          <BrandLogo name={product.brand_name} src={product.brand_logo_url} size="md" />
           <h1 className="optical-left mt-[var(--sp-2)] text-700 font-semibold tracking-[var(--tr-title)] text-[var(--ink-strong)] sm:text-800">
             {title}
           </h1>
           <TreadRule variant="mark" width={128} className="mt-[var(--sp-3)] text-[var(--accent)]" />
+
+          {/* Sezonul si marcajele de flanc, imediat sub titlu: sunt primele
+              lucruri pe care le verifica cineva care stie ce cauta. */}
+          <div className="mt-[var(--sp-4)] flex flex-wrap items-center gap-[var(--sp-2)]">
+            <SeasonBadge season={ui.season} locale={locale} />
+            <SpecBadges product={ui} />
+          </div>
 
           <section className="mt-[var(--sp-8)]">
             <h2 className="label">{t("product.specs")}</h2>

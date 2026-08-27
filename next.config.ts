@@ -28,6 +28,16 @@ const nextConfig: NextConfig = {
     ],
     formats: ["image/avif", "image/webp"],
     /**
+     * Logo-urile de marcă vin în SVG din media kit-urile producătorilor.
+     * Riscul obișnuit al SVG-ului (script inline) nu se aplică aici: în bucket
+     * scrie exclusiv `tools/seed/upload-brand-logos.mjs`, cu service role, din
+     * fișiere puse manual — nu există încărcare de la utilizatori. Peste asta,
+     * CSP-ul de mai jos le randează fără scripturi și fără pluginuri.
+     */
+    dangerouslyAllowSVG: true,
+    contentDispositionType: "attachment",
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    /**
      * Cardurile au maximum 280px pe desktop si ~45vw pe mobil.
      * Lista implicita a Next genereaza 8 variante pe care nu le cere nimeni.
      */

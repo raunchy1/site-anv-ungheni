@@ -4,6 +4,7 @@ import { Link } from "@/i18n/navigation";
 import { ProductCard } from "@/components/ui/ProductCard";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
+import { BrandLogo } from "@/components/ui/BrandLogo";
 import { TreadRule, IconWhatsApp } from "@/components/icons";
 import { getCatalog, getBrands } from "@/lib/db/queries";
 import { toUiProduct } from "@/lib/adapt";
@@ -18,12 +19,14 @@ const PER_PAGE = 30;
 type Search = { pagina?: string; sortare?: string; indisponibile?: string };
 
 export async function CatalogView({
-  locale, filters, search, title,
+  locale, filters, search, title, brandLogo,
 }: {
   locale: Locale;
   filters: ParsedFilters;
   search: Search;
   title?: string;
+  /** Pagina de marcă își pune logo-ul deasupra titlului, dacă are unul încărcat. */
+  brandLogo?: { name: string; src: string | null };
 }) {
   const t = await getTranslations();
   const page = Math.max(1, Number(search.pagina ?? 1) || 1);
@@ -62,6 +65,10 @@ export async function CatalogView({
           ...(heading !== t("catalog.title") ? [{ label: heading }] : []),
         ]}
       />
+
+      {brandLogo?.src ? (
+        <BrandLogo name={brandLogo.name} src={brandLogo.src} size="lg" className="mt-[var(--sp-4)]" />
+      ) : null}
 
       <div className="mt-[var(--sp-4)] flex flex-wrap items-baseline justify-between gap-[var(--sp-4)]">
         <h1 className="text-700 font-semibold tracking-[var(--tr-title)] text-[var(--ink-strong)]">{heading}</h1>

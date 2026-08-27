@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
-import { IconAllSeason, IconSummer, IconWinter } from "@/components/icons";
-import type { Season } from "@/lib/sample-products";
+import { IconAllSeason, IconCommercial, IconExtraLoad, IconRunFlat, IconSummer, IconWinter } from "@/components/icons";
+import type { Product, Season } from "@/lib/sample-products";
 import type { Locale } from "@/lib/i18n";
 import { t } from "@/lib/i18n";
 
@@ -71,5 +71,27 @@ export function SeasonBadge({
     <Badge tone={cfg.tone} icon={<cfg.Icon size={13} />} className={className}>
       {label}
     </Badge>
+  );
+}
+
+/**
+ * Marcajele de pe flanc, in ordinea in care se citesc pe anvelopa: XL,
+ * Run Flat, C. Nu se traduc — sunt notatii tehnice identice in RO si RU, la
+ * fel ca `205/55 R16`. Produsele fara niciunul nu lasa rand gol.
+ */
+export function SpecBadges({ product, className }: { product: Product; className?: string }) {
+  const marks = [
+    product.isXl ? { key: "XL", Icon: IconExtraLoad } : null,
+    product.isRunflat ? { key: "Run Flat", Icon: IconRunFlat } : null,
+    product.isCommercial ? { key: "C", Icon: IconCommercial } : null,
+  ].filter((m): m is { key: string; Icon: typeof IconExtraLoad } => m !== null);
+
+  if (!marks.length) return null;
+  return (
+    <div className={cn("flex flex-wrap gap-[var(--sp-1)]", className)}>
+      {marks.map(({ key, Icon }) => (
+        <Badge key={key} tone="quiet" icon={<Icon size={13} />}>{key}</Badge>
+      ))}
+    </div>
   );
 }

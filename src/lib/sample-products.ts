@@ -14,6 +14,9 @@ export type Product = {
   legacyId: number;
   /** NULL pentru cei 2 senzori TPMS din catalog: nu au atribut de producator. */
   brand: string | null;
+  /** URL public al logo-ului de marca; NULL cat timp nu a fost incarcat. */
+  brandLogo?: string | null;
+  brandSlug?: string | null;
   title: string;
   titleRu: string;
   price: number | null;
@@ -27,6 +30,10 @@ export type Product = {
   loadIndex: string | null;
   speedIndex: string | null;
   image: string | null;
+  /** Marcaje de constructie de pe flanc; false pentru majoritatea catalogului. */
+  isXl?: boolean;
+  isRunflat?: boolean;
+  isCommercial?: boolean;
 };
 
 /** Host-ul catalogului vechi. Imaginile se refera live pana la migrarea in Storage. */

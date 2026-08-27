@@ -42,7 +42,21 @@ Schelete create, `body` `NULL`, pagini pe `noindex` până se completează.
 
 Nu există în sursă la niciunul dintre cele 134 de branduri. `brands.description_ro/ru` NULL.
 
-## 7. Fotografia Lassa Greenways
+## 7. Logo-urile celor 134 de mărci
+
+Lanțul e gata: coloană, bucket, încărcător, afișare pe card, pe fișă și pe pagina de marcă.
+Lipsesc **fișierele**. Le iei din media kit-ul fiecărui producător, le pui în
+`data/brand-logos/` cu numele mărcii (`michelin.svg`, `nokian-tyres.png`) și rulezi:
+
+```bash
+pnpm logos            # rulare seacă: ce s-ar urca, ce fișier n-are marcă
+pnpm logos --apply    # urcă și scrie brands.logo_url
+```
+
+Nu se iau de pe site-urile concurenței. Până atunci, cardurile arată numele în versale —
+nu rămâne spațiu gol.
+
+## 8. Fotografia Lassa Greenways
 
 Fișierul din catalogul furnizorului are **27614×5592 px, 21 MB** și servește 16 produse.
 E o eroare în sursă. Funcționează, dar merită înlocuită.

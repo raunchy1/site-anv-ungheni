@@ -12,6 +12,8 @@ export function toUiProduct(p: DbProduct): UiProduct {
     slugRu: p.slug_ru ?? p.slug_ro,
     legacyId: p.legacy_product_id,
     brand: p.brand_name,
+    brandLogo: p.brand_logo_url ?? null,
+    brandSlug: p.brand_slug ?? null,
     title: p.title_ro,
     titleRu: p.title_ru ?? p.title_ro,
     price: p.price_mdl == null ? null : Number(p.price_mdl),
@@ -25,5 +27,8 @@ export function toUiProduct(p: DbProduct): UiProduct {
     loadIndex: p.load_index,
     speedIndex: p.speed_index,
     image: p.image_url ?? null,
+    isXl: p.is_xl,
+    isRunflat: p.is_runflat,
+    isCommercial: p.is_commercial,
   };
 }

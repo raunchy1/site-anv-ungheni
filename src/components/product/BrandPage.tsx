@@ -28,6 +28,7 @@ export async function BrandPage({ brand, locale }: { brand: Brand; locale: Local
       filters={{ brand: locale === "ru" ? (brand.slug_ru ?? brand.slug_ro) : brand.slug_ro, unknown: [] }}
       search={{}}
       title={t("brandPage.title", { brand: brand.name })}
+      brandLogo={{ name: brand.name, src: brand.logo_url }}
     />
   );
 }

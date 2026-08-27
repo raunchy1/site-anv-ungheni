@@ -21,9 +21,19 @@ Actualizat: 21 august 2026 (promptul nr. 3).
 - **Produse:** 5 din 3.107 au descriere ⇒ **pagina de produs nu are tab „Descriere"**.
   Câmpul rămâne în DB, se randează doar dacă are conținut.
   **Tabelul de specificații devine conținutul principal al paginii.**
-- **Branduri:** fără descriere, fără logo. `description_*` și `logo_url` = NULL.
-  Nu se descarcă logo-uri de pe site-urile producătorilor (drepturi de autor).
-  Identitatea de brand pe site e **tipografică**.
+- **Branduri:** fără descriere, fără logo **în sursă**. `description_*` = NULL.
+  Nu se descarcă logo-uri de pe site-urile producătorilor și nici de pe site-uri
+  concurente (drepturi de autor).
+  Identitatea de brand pe site rămâne **tipografică** cât timp `logo_url` e NULL.
+
+### A.3.1 — logo-uri de marcă (revizuit 27 august 2026, la cererea lui Cristian)
+- Referința cerută: `tireo.ro`, unde fiecare card are logo-ul mărcii sub fotografie.
+- Site-ul **afișează logo-ul când există**, cu rezervă tipografică când nu.
+  Grila nu se mișcă între cele două stări (`BrandLogo`, bandă de înălțime fixă).
+- Fișierele se pun manual în `data/brand-logos/`, **din media kit-ul producătorului**,
+  și se urcă cu `pnpm logos --apply` în bucket-ul `branduri`. Nimic automat, nimic
+  luat de la concurență.
+- `brands.logo_url` ține URL-ul public complet, nu o cale de Storage.
 
 ## A.4 — rutare bilingvă
 - RO la `/{slug_ro}`, RU la `/ru/{slug_ru}`. **`/ru-ru` nu există** — nu se generează.
@@ -119,6 +129,6 @@ Fără coloane pentru date inexistente (eticheta EU: consum/aderență/zgomot �
 ## D — input pentru briefingul de design (Faza 2)
 - Pagina de produs n-are text: titlu, o poză, 4 specificații, preț, CTA. Specificațiile sunt eroul.
 - O singură imagine per produs, calitate variabilă, catalog extern ⇒ container cu proporție fixă.
-- Brandurile n-au logo ⇒ tratament tipografic.
+- Brandurile n-au logo în sursă ⇒ tratament tipografic, cu logo real când e încărcat (A.3.1).
 - 40% din catalog e indisponibil ⇒ starea „indisponibil" se proiectează ca ecran principal.
 - Selectorul de dimensiune rămâne piesa centrală.
