@@ -52,3 +52,7 @@ data/raw/*.log
 # Manifestul ramane in git — el spune de unde vine fiecare fisier.
 logos-sursa/*
 !logos-sursa/manifest.json
+# candidatii bruti (94 de fisiere de pe site-uri oficiale) raman locali;
+# raportul lor spune ce s-a gasit si de unde
+logos-candidate/*
+!logos-candidate/candidati.json

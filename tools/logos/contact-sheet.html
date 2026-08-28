@@ -16,6 +16,9 @@
   .pair { display: grid; grid-template-columns: 1fr 1fr; }
   .plate { display: flex; align-items: center; justify-content: center; height: 96px; padding: 12px; }
   .plate.light { background: #fff; }
+  /* Marcate: logo-uri albe, care în site primesc placă închisă. Aici rămân pe
+     alb intenționat, ca să se vadă de ce au nevoie de tratamentul special. */
+  .plate.light.flagged { background: repeating-linear-gradient(45deg,#fff,#fff 6px,#F6F3EE 6px,#F6F3EE 12px); }
   .plate.dark { background: #121211; }
   .plate.none { grid-column: 1 / -1; height: 96px; color: #9B968C; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; background: repeating-linear-gradient(45deg, #F2EFEA, #F2EFEA 8px, #EAE6DF 8px, #EAE6DF 16px); }
   .pair.missing { grid-template-columns: 1fr; }
@@ -31,9 +34,9 @@
 <header>
   <h1>Planșă de verificare — logo-uri de marcă</h1>
   <p class="stats">
-    <b>43</b> din <b>132</b> mărci au logo ·
-    acoperă <b>7316</b> din <b>15005</b> produse (<b>48.8%</b>) ·
-    generat 2026-08-27 23:42
+    <b>78</b> din <b>132</b> mărci au logo ·
+    acoperă <b>11463</b> din <b>15005</b> produse (<b>76.4%</b>) ·
+    generat 2026-08-28 00:12
   </p>
   <p class="stats">Fiecare logo apare pe fundal alb și pe fundal închis. Un dreptunghi luminos pe partea dreaptă = fundal alb nedecupat. Un logo care dispare pe dreapta = logo negru fără variantă deschisă.</p>
 </header>
@@ -45,7 +48,7 @@
     <span class="name">TRACMAX</span>
     <span class="count">713 produse</span>
     
-    
+    <span class="src">respins:  — nu are site oficial de marcă; singurele fișiere circulă pe site-uri de distribuitori (interpneu.de), iar site-ul grupului Shandong Yongsheng arată doar logo-ul companiei, nu al mărcii</span>
   </figcaption>
 </figure>
 <figure class="card">
@@ -100,14 +103,17 @@
     <span class="src"><a href="https://commons.wikimedia.org/wiki/File%3AMichelin%20Wordmark.svg" target="_blank" rel="noopener">File:Michelin Wordmark.svg</a> · Public domain</span>
   </figcaption>
 </figure>
-<figure class="card empty">
-  <div class="pair missing"><div class="plate none">fără logo</div></div>
+<figure class="card">
+  <div class="pair">
+         <div class="plate light"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/grenlander.svg" alt="Grenlander" loading="lazy"></div>
+         <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/grenlander.svg" alt="Grenlander" loading="lazy"></div>
+       </div>
   <figcaption>
     <span class="rank">6</span>
     <span class="name">Grenlander</span>
     <span class="count">456 produse</span>
-    
-    <span class="src">respins: logo.svg de pe grenlander.com — logo desenat în alb, invizibil pe placa deschisă a cardului</span>
+    <span class="ext">svg</span>
+    <span class="src"><a href="https://grenlander.com/" target="_blank" rel="noopener">site oficial al producătorului</a></span>
   </figcaption>
 </figure>
 <figure class="card">
@@ -125,7 +131,7 @@
 </figure>
 <figure class="card">
   <div class="pair">
-         <div class="plate light"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/goodyear.png" alt="Goodyear" loading="lazy"></div>
+         <div class="plate light flagged"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/goodyear.png" alt="Goodyear" loading="lazy"></div>
          <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/goodyear.png" alt="Goodyear" loading="lazy"></div>
        </div>
   <figcaption>
@@ -175,14 +181,17 @@
     <span class="src"><a href="https://commons.wikimedia.org/wiki/File%3AKumho%20Tire%20logo%20(2023).svg" target="_blank" rel="noopener">File:Kumho Tire logo (2023).svg</a> · Public domain</span>
   </figcaption>
 </figure>
-<figure class="card empty">
-  <div class="pair missing"><div class="plate none">fără logo</div></div>
+<figure class="card">
+  <div class="pair">
+         <div class="plate light"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/petlas.png" alt="Petlas" loading="lazy"></div>
+         <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/petlas.png" alt="Petlas" loading="lazy"></div>
+       </div>
   <figcaption>
     <span class="rank">12</span>
     <span class="name">Petlas</span>
     <span class="count">348 produse</span>
-    
-    
+    <span class="ext">png</span>
+    <span class="src"><a href="https://www.petlastires.com/" target="_blank" rel="noopener">site oficial al producătorului</a></span>
   </figcaption>
 </figure>
 <figure class="card empty">
@@ -195,24 +204,30 @@
     
   </figcaption>
 </figure>
-<figure class="card empty">
-  <div class="pair missing"><div class="plate none">fără logo</div></div>
+<figure class="card">
+  <div class="pair">
+         <div class="plate light flagged"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/joyroad.png" alt="Joyroad" loading="lazy"></div>
+         <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/joyroad.png" alt="Joyroad" loading="lazy"></div>
+       </div>
   <figcaption>
     <span class="rank">14</span>
     <span class="name">Joyroad</span>
     <span class="count">328 produse</span>
-    
-    
+    <span class="ext">png</span>
+    <span class="src"><a href="https://joyroad.eu/" target="_blank" rel="noopener">site oficial al producătorului</a></span>
   </figcaption>
 </figure>
-<figure class="card empty">
-  <div class="pair missing"><div class="plate none">fără logo</div></div>
+<figure class="card">
+  <div class="pair">
+         <div class="plate light"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/roadx.png" alt="Roadx" loading="lazy"></div>
+         <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/roadx.png" alt="Roadx" loading="lazy"></div>
+       </div>
   <figcaption>
     <span class="rank">15</span>
     <span class="name">Roadx</span>
     <span class="count">302 produse</span>
-    
-    
+    <span class="ext">png</span>
+    <span class="src"><a href="https://roadxtire.com/" target="_blank" rel="noopener">site oficial al producătorului</a></span>
   </figcaption>
 </figure>
 <figure class="card">
@@ -238,14 +253,17 @@
     
   </figcaption>
 </figure>
-<figure class="card empty">
-  <div class="pair missing"><div class="plate none">fără logo</div></div>
+<figure class="card">
+  <div class="pair">
+         <div class="plate light"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/platin.svg" alt="Platin" loading="lazy"></div>
+         <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/platin.svg" alt="Platin" loading="lazy"></div>
+       </div>
   <figcaption>
     <span class="rank">18</span>
     <span class="name">Platin</span>
     <span class="count">273 produse</span>
-    
-    
+    <span class="ext">svg</span>
+    <span class="src"><a href="https://www.platin-wheels.com/" target="_blank" rel="noopener">site oficial al producătorului</a></span>
   </figcaption>
 </figure>
 <figure class="card empty">
@@ -258,14 +276,17 @@
     
   </figcaption>
 </figure>
-<figure class="card empty">
-  <div class="pair missing"><div class="plate none">fără logo</div></div>
+<figure class="card">
+  <div class="pair">
+         <div class="plate light"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/torque.png" alt="Torque" loading="lazy"></div>
+         <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/torque.png" alt="Torque" loading="lazy"></div>
+       </div>
   <figcaption>
     <span class="rank">20</span>
     <span class="name">Torque</span>
     <span class="count">243 produse</span>
-    
-    <span class="src">respins: File:Torque Pharmaceuticals.svg — alt subiect decât marca de anvelope</span>
+    <span class="ext">png</span>
+    <span class="src"><a href="https://www.torquetyres.com/" target="_blank" rel="noopener">site oficial al producătorului</a></span>
   </figcaption>
 </figure>
 <figure class="card">
@@ -288,7 +309,7 @@
     <span class="name">Crosswind</span>
     <span class="count">220 produse</span>
     
-    
+    <span class="src">respins:  — singura sursă găsită e o aplicație terță (steer-ten.vercel.app), nu site oficial</span>
   </figcaption>
 </figure>
 <figure class="card">
@@ -304,14 +325,17 @@
     <span class="src"><a href="https://commons.wikimedia.org/wiki/File%3APirelli%20-%20logo%20full%20(Italy%2C%201997).svg" target="_blank" rel="noopener">File:Pirelli - logo full (Italy, 1997).svg</a> · Public domain</span>
   </figcaption>
 </figure>
-<figure class="card empty">
-  <div class="pair missing"><div class="plate none">fără logo</div></div>
+<figure class="card">
+  <div class="pair">
+         <div class="plate light flagged"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/aplus.png" alt="Aplus" loading="lazy"></div>
+         <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/aplus.png" alt="Aplus" loading="lazy"></div>
+       </div>
   <figcaption>
     <span class="rank">24</span>
     <span class="name">Aplus</span>
     <span class="count">204 produse</span>
-    
-    
+    <span class="ext">png</span>
+    <span class="src"><a href="https://www.royalblacktyre.com/" target="_blank" rel="noopener">site oficial al producătorului</a></span>
   </figcaption>
 </figure>
 <figure class="card">
@@ -327,27 +351,30 @@
     <span class="src"><a href="https://commons.wikimedia.org/wiki/File%3AYokohama%20(Unternehmen)%20logo.svg" target="_blank" rel="noopener">File:Yokohama (Unternehmen) logo.svg</a> · Public domain</span>
   </figcaption>
 </figure>
-<figure class="card empty">
-  <div class="pair missing"><div class="plate none">fără logo</div></div>
-  <figcaption>
-    <span class="rank">26</span>
-    <span class="name">Landspider</span>
-    <span class="count">200 produse</span>
-    
-    
-  </figcaption>
-</figure>
 <figure class="card">
   <div class="pair">
          <div class="plate light"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/triangle.svg" alt="TRIANGLE" loading="lazy"></div>
          <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/triangle.svg" alt="TRIANGLE" loading="lazy"></div>
        </div>
   <figcaption>
-    <span class="rank">27</span>
+    <span class="rank">26</span>
     <span class="name">TRIANGLE</span>
     <span class="count">200 produse</span>
     <span class="ext">svg</span>
     <span class="src"><a href="https://commons.wikimedia.org/wiki/File%3ATriangle%20Tire%20logo.svg" target="_blank" rel="noopener">File:Triangle Tire logo.svg</a> · Public domain</span>
+  </figcaption>
+</figure>
+<figure class="card">
+  <div class="pair">
+         <div class="plate light"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/landspider.webp" alt="Landspider" loading="lazy"></div>
+         <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/landspider.webp" alt="Landspider" loading="lazy"></div>
+       </div>
+  <figcaption>
+    <span class="rank">27</span>
+    <span class="name">Landspider</span>
+    <span class="count">200 produse</span>
+    <span class="ext">webp</span>
+    <span class="src"><a href="https://www.landspidertire.com/" target="_blank" rel="noopener">site oficial al producătorului</a></span>
   </figcaption>
 </figure>
 <figure class="card">
@@ -365,7 +392,7 @@
 </figure>
 <figure class="card">
   <div class="pair">
-         <div class="plate light"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/vredestein.svg" alt="Vredestein" loading="lazy"></div>
+         <div class="plate light flagged"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/vredestein.svg" alt="Vredestein" loading="lazy"></div>
          <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/vredestein.svg" alt="Vredestein" loading="lazy"></div>
        </div>
   <figcaption>
@@ -376,14 +403,17 @@
     <span class="src"><a href="https://commons.wikimedia.org/wiki/File%3AVredestein-logo.svg" target="_blank" rel="noopener">File:Vredestein-logo.svg</a> · Public domain</span>
   </figcaption>
 </figure>
-<figure class="card empty">
-  <div class="pair missing"><div class="plate none">fără logo</div></div>
+<figure class="card">
+  <div class="pair">
+         <div class="plate light"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/hilo.png" alt="Hilo" loading="lazy"></div>
+         <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/hilo.png" alt="Hilo" loading="lazy"></div>
+       </div>
   <figcaption>
     <span class="rank">30</span>
     <span class="name">Hilo</span>
     <span class="count">177 produse</span>
-    
-    
+    <span class="ext">png</span>
+    <span class="src"><a href="https://www.hilotyres.com/" target="_blank" rel="noopener">site oficial de marcă</a></span>
   </figcaption>
 </figure>
 <figure class="card">
@@ -425,24 +455,30 @@
     <span class="src"><a href="https://commons.wikimedia.org/wiki/File%3ABarum%20company%20logo.svg" target="_blank" rel="noopener">File:Barum company logo.svg</a> · Public domain</span>
   </figcaption>
 </figure>
-<figure class="card empty">
-  <div class="pair missing"><div class="plate none">fără logo</div></div>
+<figure class="card">
+  <div class="pair">
+         <div class="plate light"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/firemax.png" alt="Firemax" loading="lazy"></div>
+         <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/firemax.png" alt="Firemax" loading="lazy"></div>
+       </div>
   <figcaption>
     <span class="rank">34</span>
     <span class="name">Firemax</span>
     <span class="count">159 produse</span>
-    
-    
+    <span class="ext">png</span>
+    <span class="src"><a href="https://www.firemaxtyre.com/" target="_blank" rel="noopener">site oficial al producătorului</a></span>
   </figcaption>
 </figure>
-<figure class="card empty">
-  <div class="pair missing"><div class="plate none">fără logo</div></div>
+<figure class="card">
+  <div class="pair">
+         <div class="plate light"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/starmaxx.png" alt="Starmaxx" loading="lazy"></div>
+         <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/starmaxx.png" alt="Starmaxx" loading="lazy"></div>
+       </div>
   <figcaption>
     <span class="rank">35</span>
     <span class="name">Starmaxx</span>
     <span class="count">154 produse</span>
-    
-    
+    <span class="ext">png</span>
+    <span class="src"><a href="https://www.starmaxx.com.tr/" target="_blank" rel="noopener">site oficial al producătorului</a></span>
   </figcaption>
 </figure>
 <figure class="card">
@@ -458,14 +494,17 @@
     <span class="src"><a href="https://kapsentyre.com/" target="_blank" rel="noopener">site oficial al producătorului</a></span>
   </figcaption>
 </figure>
-<figure class="card empty">
-  <div class="pair missing"><div class="plate none">fără logo</div></div>
+<figure class="card">
+  <div class="pair">
+         <div class="plate light"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/riken.png" alt="Riken" loading="lazy"></div>
+         <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/riken.png" alt="Riken" loading="lazy"></div>
+       </div>
   <figcaption>
     <span class="rank">37</span>
     <span class="name">Riken</span>
     <span class="count">149 produse</span>
-    
-    <span class="src">respins: File:RIKEN logo.png — alt subiect decât marca de anvelope</span>
+    <span class="ext">png</span>
+    <span class="src"><a href="https://passenger-car.riken.com/" target="_blank" rel="noopener">site oficial al producătorului</a></span>
   </figcaption>
 </figure>
 <figure class="card empty">
@@ -521,24 +560,17 @@
     
   </figcaption>
 </figure>
-<figure class="card empty">
-  <div class="pair missing"><div class="plate none">fără logo</div></div>
+<figure class="card">
+  <div class="pair">
+         <div class="plate light flagged"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/accelera.png" alt="ACCELERA" loading="lazy"></div>
+         <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/accelera.png" alt="ACCELERA" loading="lazy"></div>
+       </div>
   <figcaption>
     <span class="rank">43</span>
     <span class="name">ACCELERA</span>
     <span class="count">118 produse</span>
-    
-    
-  </figcaption>
-</figure>
-<figure class="card empty">
-  <div class="pair missing"><div class="plate none">fără logo</div></div>
-  <figcaption>
-    <span class="rank">44</span>
-    <span class="name">Ovation</span>
-    <span class="count">114 produse</span>
-    
-    <span class="src">respins: File:Ovation Logo.png — alt subiect decât marca de anvelope</span>
+    <span class="ext">png</span>
+    <span class="src"><a href="https://www.acceleratire.com/" target="_blank" rel="noopener">site oficial al producătorului</a></span>
   </figcaption>
 </figure>
 <figure class="card">
@@ -547,11 +579,21 @@
          <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/uniroyal.svg" alt="Uniroyal" loading="lazy"></div>
        </div>
   <figcaption>
-    <span class="rank">45</span>
+    <span class="rank">44</span>
     <span class="name">Uniroyal</span>
     <span class="count">114 produse</span>
     <span class="ext">svg</span>
     <span class="src"><a href="https://commons.wikimedia.org/wiki/File%3AUniroyal%20Logo%202020.svg" target="_blank" rel="noopener">File:Uniroyal Logo 2020.svg</a> · Public domain</span>
+  </figcaption>
+</figure>
+<figure class="card empty">
+  <div class="pair missing"><div class="plate none">fără logo</div></div>
+  <figcaption>
+    <span class="rank">45</span>
+    <span class="name">Ovation</span>
+    <span class="count">114 produse</span>
+    
+    <span class="src">respins: File:Ovation Logo.png — alt subiect decât marca de anvelope</span>
   </figcaption>
 </figure>
 <figure class="card empty">
@@ -577,44 +619,56 @@
     <span class="src"><a href="https://commons.wikimedia.org/wiki/File%3ALogo-dunlop.svg" target="_blank" rel="noopener">File:Logo-dunlop.svg</a> · Public domain</span>
   </figcaption>
 </figure>
-<figure class="card empty">
-  <div class="pair missing"><div class="plate none">fără logo</div></div>
+<figure class="card">
+  <div class="pair">
+         <div class="plate light"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/otani.png" alt="Otani" loading="lazy"></div>
+         <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/otani.png" alt="Otani" loading="lazy"></div>
+       </div>
   <figcaption>
     <span class="rank">48</span>
     <span class="name">Otani</span>
     <span class="count">108 produse</span>
-    
-    <span class="src">respins: File:Otani Logo.png — alt subiect decât marca de anvelope</span>
+    <span class="ext">png</span>
+    <span class="src"><a href="https://www.otanitire.com/" target="_blank" rel="noopener">site oficial al producătorului</a></span>
   </figcaption>
 </figure>
-<figure class="card empty">
-  <div class="pair missing"><div class="plate none">fără logo</div></div>
+<figure class="card">
+  <div class="pair">
+         <div class="plate light"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/laufenn.svg" alt="Laufenn" loading="lazy"></div>
+         <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/laufenn.svg" alt="Laufenn" loading="lazy"></div>
+       </div>
   <figcaption>
     <span class="rank">49</span>
     <span class="name">Laufenn</span>
     <span class="count">107 produse</span>
-    
-    
+    <span class="ext">svg</span>
+    <span class="src"><a href="https://www.laufenn.com/it/front/it_front/index.do" target="_blank" rel="noopener">site oficial al producătorului</a></span>
   </figcaption>
 </figure>
-<figure class="card empty">
-  <div class="pair missing"><div class="plate none">fără logo</div></div>
+<figure class="card">
+  <div class="pair">
+         <div class="plate light"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/lanvigator.png" alt="Lanvigator" loading="lazy"></div>
+         <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/lanvigator.png" alt="Lanvigator" loading="lazy"></div>
+       </div>
   <figcaption>
     <span class="rank">50</span>
     <span class="name">Lanvigator</span>
     <span class="count">102 produse</span>
-    
-    
+    <span class="ext">png</span>
+    <span class="src"><a href="https://www.royalblacktyre.com/" target="_blank" rel="noopener">site oficial al producătorului</a></span>
   </figcaption>
 </figure>
-<figure class="card empty">
-  <div class="pair missing"><div class="plate none">fără logo</div></div>
+<figure class="card">
+  <div class="pair">
+         <div class="plate light"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/davanti.svg" alt="Davanti" loading="lazy"></div>
+         <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/davanti.svg" alt="Davanti" loading="lazy"></div>
+       </div>
   <figcaption>
     <span class="rank">51</span>
     <span class="name">Davanti</span>
     <span class="count">100 produse</span>
-    
-    
+    <span class="ext">svg</span>
+    <span class="src"><a href="https://davanti-tyres.com/" target="_blank" rel="noopener">site oficial al producătorului</a></span>
   </figcaption>
 </figure>
 <figure class="card">
@@ -663,14 +717,17 @@
     <span class="src"><a href="https://commons.wikimedia.org/wiki/File%3AViking%20tyres%20logo.svg" target="_blank" rel="noopener">File:Viking tyres logo.svg</a> · Public domain</span>
   </figcaption>
 </figure>
-<figure class="card empty">
-  <div class="pair missing"><div class="plate none">fără logo</div></div>
+<figure class="card">
+  <div class="pair">
+         <div class="plate light"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/ilink.svg" alt="ILINK" loading="lazy"></div>
+         <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/ilink.svg" alt="ILINK" loading="lazy"></div>
+       </div>
   <figcaption>
     <span class="rank">56</span>
     <span class="name">ILINK</span>
     <span class="count">91 produse</span>
-    
-    
+    <span class="ext">svg</span>
+    <span class="src"><a href="https://www.ilinktires.com/" target="_blank" rel="noopener">site oficial al producătorului</a></span>
   </figcaption>
 </figure>
 <figure class="card empty">
@@ -683,34 +740,43 @@
     
   </figcaption>
 </figure>
-<figure class="card empty">
-  <div class="pair missing"><div class="plate none">fără logo</div></div>
+<figure class="card">
+  <div class="pair">
+         <div class="plate light"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/tigar.png" alt="Tigar" loading="lazy"></div>
+         <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/tigar.png" alt="Tigar" loading="lazy"></div>
+       </div>
   <figcaption>
     <span class="rank">58</span>
     <span class="name">Tigar</span>
     <span class="count">84 produse</span>
-    
-    
+    <span class="ext">png</span>
+    <span class="src"><a href="https://passenger-car.tigar-tyres.com/" target="_blank" rel="noopener">site oficial al producătorului</a></span>
   </figcaption>
 </figure>
-<figure class="card empty">
-  <div class="pair missing"><div class="plate none">fără logo</div></div>
+<figure class="card">
+  <div class="pair">
+         <div class="plate light flagged"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/rovelo.png" alt="Rovelo" loading="lazy"></div>
+         <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/rovelo.png" alt="Rovelo" loading="lazy"></div>
+       </div>
   <figcaption>
     <span class="rank">59</span>
     <span class="name">Rovelo</span>
     <span class="count">73 produse</span>
-    
-    
+    <span class="ext">png</span>
+    <span class="src"><a href="https://www.rovelotire.com/" target="_blank" rel="noopener">site oficial al producătorului</a></span>
   </figcaption>
 </figure>
-<figure class="card empty">
-  <div class="pair missing"><div class="plate none">fără logo</div></div>
+<figure class="card">
+  <div class="pair">
+         <div class="plate light"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/duraturn.png" alt="Duraturn" loading="lazy"></div>
+         <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/duraturn.png" alt="Duraturn" loading="lazy"></div>
+       </div>
   <figcaption>
     <span class="rank">60</span>
     <span class="name">Duraturn</span>
     <span class="count">73 produse</span>
-    
-    
+    <span class="ext">png</span>
+    <span class="src"><a href="https://www.duraturntires.com/" target="_blank" rel="noopener">site oficial al producătorului</a></span>
   </figcaption>
 </figure>
 <figure class="card">
@@ -726,24 +792,30 @@
     <span class="src"><a href="https://commons.wikimedia.org/wiki/File%3ACEAT%20Logo.svg" target="_blank" rel="noopener">File:CEAT Logo.svg</a> · Public domain</span>
   </figcaption>
 </figure>
-<figure class="card empty">
-  <div class="pair missing"><div class="plate none">fără logo</div></div>
+<figure class="card">
+  <div class="pair">
+         <div class="plate light"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/nordexx.png" alt="Nordexx" loading="lazy"></div>
+         <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/nordexx.png" alt="Nordexx" loading="lazy"></div>
+       </div>
   <figcaption>
     <span class="rank">62</span>
     <span class="name">Nordexx</span>
     <span class="count">69 produse</span>
-    
-    
+    <span class="ext">png</span>
+    <span class="src"><a href="https://www.nordexx.com/" target="_blank" rel="noopener">site oficial al producătorului</a></span>
   </figcaption>
 </figure>
-<figure class="card empty">
-  <div class="pair missing"><div class="plate none">fără logo</div></div>
+<figure class="card">
+  <div class="pair">
+         <div class="plate light flagged"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/cooper.svg" alt="Cooper" loading="lazy"></div>
+         <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/cooper.svg" alt="Cooper" loading="lazy"></div>
+       </div>
   <figcaption>
     <span class="rank">63</span>
     <span class="name">Cooper</span>
     <span class="count">66 produse</span>
-    
-    <span class="src">respins: File:Cooper Wheelock logo.svg — alt subiect decât marca de anvelope</span>
+    <span class="ext">svg</span>
+    <span class="src"><a href="https://www.coopertire.com/" target="_blank" rel="noopener">site oficial al producătorului</a></span>
   </figcaption>
 </figure>
 <figure class="card">
@@ -792,14 +864,17 @@
     
   </figcaption>
 </figure>
-<figure class="card empty">
-  <div class="pair missing"><div class="plate none">fără logo</div></div>
+<figure class="card">
+  <div class="pair">
+         <div class="plate light flagged"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/prinx.jpg" alt="Prinx" loading="lazy"></div>
+         <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/prinx.jpg" alt="Prinx" loading="lazy"></div>
+       </div>
   <figcaption>
     <span class="rank">68</span>
     <span class="name">Prinx</span>
     <span class="count">59 produse</span>
-    
-    
+    <span class="ext">jpg</span>
+    <span class="src"><a href="https://www.prinxtire.com/" target="_blank" rel="noopener">site oficial al producătorului</a></span>
   </figcaption>
 </figure>
 <figure class="card">
@@ -902,7 +977,7 @@
   <div class="pair missing"><div class="plate none">fără logo</div></div>
   <figcaption>
     <span class="rank">78</span>
-    <span class="name">Annaite</span>
+    <span class="name">Charmhoo</span>
     <span class="count">32 produse</span>
     
     
@@ -912,7 +987,7 @@
   <div class="pair missing"><div class="plate none">fără logo</div></div>
   <figcaption>
     <span class="rank">79</span>
-    <span class="name">Charmhoo</span>
+    <span class="name">Annaite</span>
     <span class="count">32 produse</span>
     
     
@@ -931,37 +1006,40 @@
     <span class="src"><a href="https://commons.wikimedia.org/wiki/File%3AFalken%20Tire%20logo.svg" target="_blank" rel="noopener">File:Falken Tire logo.svg</a> · Public domain</span>
   </figcaption>
 </figure>
-<figure class="card">
-  <div class="pair">
-         <div class="plate light"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/sava.svg" alt="Sava" loading="lazy"></div>
-         <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/sava.svg" alt="Sava" loading="lazy"></div>
-       </div>
-  <figcaption>
-    <span class="rank">81</span>
-    <span class="name">Sava</span>
-    <span class="count">27 produse</span>
-    <span class="ext">svg</span>
-    <span class="src"><a href="https://commons.wikimedia.org/wiki/File%3ASava%20Reifen%20logo.svg" target="_blank" rel="noopener">File:Sava Reifen logo.svg</a> · Public domain</span>
-  </figcaption>
-</figure>
 <figure class="card empty">
   <div class="pair missing"><div class="plate none">fără logo</div></div>
   <figcaption>
-    <span class="rank">82</span>
+    <span class="rank">81</span>
     <span class="name">ONYX</span>
     <span class="count">27 produse</span>
     
     <span class="src">respins: File:Onyx logo.png — alt subiect decât marca de anvelope</span>
   </figcaption>
 </figure>
-<figure class="card empty">
-  <div class="pair missing"><div class="plate none">fără logo</div></div>
+<figure class="card">
+  <div class="pair">
+         <div class="plate light"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/sava.svg" alt="Sava" loading="lazy"></div>
+         <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/sava.svg" alt="Sava" loading="lazy"></div>
+       </div>
+  <figcaption>
+    <span class="rank">82</span>
+    <span class="name">Sava</span>
+    <span class="count">27 produse</span>
+    <span class="ext">svg</span>
+    <span class="src"><a href="https://commons.wikimedia.org/wiki/File%3ASava%20Reifen%20logo.svg" target="_blank" rel="noopener">File:Sava Reifen logo.svg</a> · Public domain</span>
+  </figcaption>
+</figure>
+<figure class="card">
+  <div class="pair">
+         <div class="plate light"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/avon.svg" alt="Avon" loading="lazy"></div>
+         <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/avon.svg" alt="Avon" loading="lazy"></div>
+       </div>
   <figcaption>
     <span class="rank">83</span>
     <span class="name">Avon</span>
     <span class="count">25 produse</span>
-    
-    <span class="src">respins: File:Avon-Tyres-Logo.png — PNG de 285 px — sub pragul de calitate</span>
+    <span class="ext">svg</span>
+    <span class="src"><a href="https://www.avontyres.com/it-it/" target="_blank" rel="noopener">site oficial al producătorului</a></span>
   </figcaption>
 </figure>
 <figure class="card">
@@ -979,7 +1057,7 @@
 </figure>
 <figure class="card">
   <div class="pair">
-         <div class="plate light"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/westlake.png" alt="Westlake" loading="lazy"></div>
+         <div class="plate light flagged"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/westlake.png" alt="Westlake" loading="lazy"></div>
          <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/westlake.png" alt="Westlake" loading="lazy"></div>
        </div>
   <figcaption>
@@ -1020,14 +1098,17 @@
     
   </figcaption>
 </figure>
-<figure class="card empty">
-  <div class="pair missing"><div class="plate none">fără logo</div></div>
+<figure class="card">
+  <div class="pair">
+         <div class="plate light"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/rotex.svg" alt="Rotex" loading="lazy"></div>
+         <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/rotex.svg" alt="Rotex" loading="lazy"></div>
+       </div>
   <figcaption>
     <span class="rank">89</span>
     <span class="name">Rotex</span>
     <span class="count">19 produse</span>
-    
-    
+    <span class="ext">svg</span>
+    <span class="src"><a href="https://therotexgroup.com/" target="_blank" rel="noopener">site oficial al producătorului</a></span>
   </figcaption>
 </figure>
 <figure class="card">
@@ -1066,14 +1147,17 @@
     <span class="src"><a href="https://commons.wikimedia.org/wiki/File%3AGislaved%20logo.svg" target="_blank" rel="noopener">File:Gislaved logo.svg</a> · Public domain</span>
   </figcaption>
 </figure>
-<figure class="card empty">
-  <div class="pair missing"><div class="plate none">fără logo</div></div>
+<figure class="card">
+  <div class="pair">
+         <div class="plate light flagged"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/gripmax.png" alt="Gripmax" loading="lazy"></div>
+         <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/gripmax.png" alt="Gripmax" loading="lazy"></div>
+       </div>
   <figcaption>
     <span class="rank">93</span>
     <span class="name">Gripmax</span>
     <span class="count">17 produse</span>
-    
-    
+    <span class="ext">png</span>
+    <span class="src"><a href="https://www.gripmax.com/" target="_blank" rel="noopener">site oficial al producătorului</a></span>
   </figcaption>
 </figure>
 <figure class="card">
@@ -1109,27 +1193,27 @@
     
   </figcaption>
 </figure>
-<figure class="card empty">
-  <div class="pair missing"><div class="plate none">fără logo</div></div>
-  <figcaption>
-    <span class="rank">97</span>
-    <span class="name">Kinforest</span>
-    <span class="count">13 produse</span>
-    
-    
-  </figcaption>
-</figure>
 <figure class="card">
   <div class="pair">
          <div class="plate light"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/semperit.svg" alt="Semperit" loading="lazy"></div>
          <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/semperit.svg" alt="Semperit" loading="lazy"></div>
        </div>
   <figcaption>
-    <span class="rank">98</span>
+    <span class="rank">97</span>
     <span class="name">Semperit</span>
     <span class="count">13 produse</span>
     <span class="ext">svg</span>
     <span class="src"><a href="https://commons.wikimedia.org/wiki/File%3ASemperit.svg" target="_blank" rel="noopener">File:Semperit.svg</a> · Public domain</span>
+  </figcaption>
+</figure>
+<figure class="card empty">
+  <div class="pair missing"><div class="plate none">fără logo</div></div>
+  <figcaption>
+    <span class="rank">98</span>
+    <span class="name">Kinforest</span>
+    <span class="count">13 produse</span>
+    
+    
   </figcaption>
 </figure>
 <figure class="card empty">
@@ -1152,34 +1236,50 @@
     
   </figcaption>
 </figure>
-<figure class="card empty">
-  <div class="pair missing"><div class="plate none">fără logo</div></div>
+<figure class="card">
+  <div class="pair">
+         <div class="plate light flagged"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/unigrip.png" alt="Unigrip" loading="lazy"></div>
+         <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/unigrip.png" alt="Unigrip" loading="lazy"></div>
+       </div>
   <figcaption>
     <span class="rank">101</span>
     <span class="name">Unigrip</span>
     <span class="count">10 produse</span>
-    
-    
+    <span class="ext">png</span>
+    <span class="src"><a href="https://www.unigriptyre.com/" target="_blank" rel="noopener">site oficial al producătorului</a></span>
   </figcaption>
 </figure>
 <figure class="card empty">
   <div class="pair missing"><div class="plate none">fără logo</div></div>
   <figcaption>
     <span class="rank">102</span>
-    <span class="name">Waterfall</span>
+    <span class="name">Imperial</span>
     <span class="count">9 produse</span>
     
-    
+    <span class="src">respins: File:Imperial logo.svg — alt subiect decât marca de anvelope</span>
   </figcaption>
 </figure>
 <figure class="card empty">
   <div class="pair missing"><div class="plate none">fără logo</div></div>
   <figcaption>
     <span class="rank">103</span>
-    <span class="name">Imperial</span>
+    <span class="name">Waterfall</span>
     <span class="count">9 produse</span>
     
-    <span class="src">respins: File:Imperial logo.svg — alt subiect decât marca de anvelope</span>
+    
+  </figcaption>
+</figure>
+<figure class="card">
+  <div class="pair">
+         <div class="plate light"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/compasal.png" alt="Compasal" loading="lazy"></div>
+         <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/compasal.png" alt="Compasal" loading="lazy"></div>
+       </div>
+  <figcaption>
+    <span class="rank">104</span>
+    <span class="name">Compasal</span>
+    <span class="count">8 produse</span>
+    <span class="ext">png</span>
+    <span class="src"><a href="https://www.royalblacktyre.com/" target="_blank" rel="noopener">site oficial al producătorului</a></span>
   </figcaption>
 </figure>
 <figure class="card">
@@ -1188,21 +1288,11 @@
          <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/motrio.png" alt="Motrio" loading="lazy"></div>
        </div>
   <figcaption>
-    <span class="rank">104</span>
+    <span class="rank">105</span>
     <span class="name">Motrio</span>
     <span class="count">8 produse</span>
     <span class="ext">png</span>
     <span class="src"><a href="https://commons.wikimedia.org/wiki/File%3ALogo%20motrio.png" target="_blank" rel="noopener">File:Logo motrio.png</a> · CC BY-SA 4.0</span>
-  </figcaption>
-</figure>
-<figure class="card empty">
-  <div class="pair missing"><div class="plate none">fără logo</div></div>
-  <figcaption>
-    <span class="rank">105</span>
-    <span class="name">Compasal</span>
-    <span class="count">8 produse</span>
-    
-    
   </figcaption>
 </figure>
 <figure class="card">
@@ -1228,34 +1318,43 @@
     <span class="src">respins: File:Zeta Logo.svg — alt subiect decât marca de anvelope</span>
   </figcaption>
 </figure>
-<figure class="card empty">
-  <div class="pair missing"><div class="plate none">fără logo</div></div>
+<figure class="card">
+  <div class="pair">
+         <div class="plate light flagged"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/austone.webp" alt="Austone" loading="lazy"></div>
+         <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/austone.webp" alt="Austone" loading="lazy"></div>
+       </div>
   <figcaption>
     <span class="rank">108</span>
-    <span class="name">Anchee</span>
-    <span class="count">6 produse</span>
-    
-    
-  </figcaption>
-</figure>
-<figure class="card empty">
-  <div class="pair missing"><div class="plate none">fără logo</div></div>
-  <figcaption>
-    <span class="rank">109</span>
     <span class="name">Austone</span>
     <span class="count">6 produse</span>
-    
-    
+    <span class="ext">webp</span>
+    <span class="src"><a href="https://www.austonetire.com/" target="_blank" rel="noopener">site oficial al producătorului</a></span>
   </figcaption>
 </figure>
-<figure class="card empty">
-  <div class="pair missing"><div class="plate none">fără logo</div></div>
+<figure class="card">
+  <div class="pair">
+         <div class="plate light flagged"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/anchee.png" alt="Anchee" loading="lazy"></div>
+         <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/anchee.png" alt="Anchee" loading="lazy"></div>
+       </div>
+  <figcaption>
+    <span class="rank">109</span>
+    <span class="name">Anchee</span>
+    <span class="count">6 produse</span>
+    <span class="ext">png</span>
+    <span class="src"><a href="https://www.ancheetyre.com/" target="_blank" rel="noopener">site oficial al producătorului</a></span>
+  </figcaption>
+</figure>
+<figure class="card">
+  <div class="pair">
+         <div class="plate light flagged"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/giti.svg" alt="GiTi" loading="lazy"></div>
+         <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/giti.svg" alt="GiTi" loading="lazy"></div>
+       </div>
   <figcaption>
     <span class="rank">110</span>
     <span class="name">GiTi</span>
     <span class="count">5 produse</span>
-    
-    
+    <span class="ext">svg</span>
+    <span class="src"><a href="https://www.giti.com/" target="_blank" rel="noopener">site oficial al producătorului</a></span>
   </figcaption>
 </figure>
 <figure class="card empty">
@@ -1281,14 +1380,17 @@
     <span class="src"><a href="https://commons.wikimedia.org/wiki/File%3AGoodride-logo.png" target="_blank" rel="noopener">File:Goodride-logo.png</a> · Public domain</span>
   </figcaption>
 </figure>
-<figure class="card empty">
-  <div class="pair missing"><div class="plate none">fără logo</div></div>
+<figure class="card">
+  <div class="pair">
+         <div class="plate light"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/orium.webp" alt="ORIUM" loading="lazy"></div>
+         <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/orium.webp" alt="ORIUM" loading="lazy"></div>
+       </div>
   <figcaption>
     <span class="rank">113</span>
     <span class="name">ORIUM</span>
     <span class="count">4 produse</span>
-    
-    
+    <span class="ext">webp</span>
+    <span class="src"><a href="https://passenger-car.orium-tyres.com/" target="_blank" rel="noopener">site oficial al producătorului</a></span>
   </figcaption>
 </figure>
 <figure class="card empty">
@@ -1315,56 +1417,29 @@
   <div class="pair missing"><div class="plate none">fără logo</div></div>
   <figcaption>
     <span class="rank">116</span>
-    <span class="name">Atturo</span>
-    <span class="count">3 produse</span>
-    
-    
-  </figcaption>
-</figure>
-<figure class="card empty">
-  <div class="pair missing"><div class="plate none">fără logo</div></div>
-  <figcaption>
-    <span class="rank">117</span>
     <span class="name">Aptany</span>
     <span class="count">3 produse</span>
     
     
   </figcaption>
 </figure>
+<figure class="card">
+  <div class="pair">
+         <div class="plate light"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/atturo.png" alt="Atturo" loading="lazy"></div>
+         <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/atturo.png" alt="Atturo" loading="lazy"></div>
+       </div>
+  <figcaption>
+    <span class="rank">117</span>
+    <span class="name">Atturo</span>
+    <span class="count">3 produse</span>
+    <span class="ext">png</span>
+    <span class="src"><a href="https://atturo.com/" target="_blank" rel="noopener">site oficial al producătorului</a></span>
+  </figcaption>
+</figure>
 <figure class="card empty">
   <div class="pair missing"><div class="plate none">fără logo</div></div>
   <figcaption>
     <span class="rank">118</span>
-    <span class="name">Toledo</span>
-    <span class="count">2 produse</span>
-    
-    <span class="src">respins: File:Universidad Toledo Logo.svg — alt subiect decât marca de anvelope</span>
-  </figcaption>
-</figure>
-<figure class="card empty">
-  <div class="pair missing"><div class="plate none">fără logo</div></div>
-  <figcaption>
-    <span class="rank">119</span>
-    <span class="name">Rapid</span>
-    <span class="count">2 produse</span>
-    
-    <span class="src">respins: File:Rapid Penang Logo.svg — alt subiect decât marca de anvelope</span>
-  </figcaption>
-</figure>
-<figure class="card empty">
-  <div class="pair missing"><div class="plate none">fără logo</div></div>
-  <figcaption>
-    <span class="rank">120</span>
-    <span class="name">Doublestar</span>
-    <span class="count">2 produse</span>
-    
-    
-  </figcaption>
-</figure>
-<figure class="card empty">
-  <div class="pair missing"><div class="plate none">fără logo</div></div>
-  <figcaption>
-    <span class="rank">121</span>
     <span class="name">Bearway</span>
     <span class="count">2 produse</span>
     
@@ -1374,7 +1449,7 @@
 <figure class="card empty">
   <div class="pair missing"><div class="plate none">fără logo</div></div>
   <figcaption>
-    <span class="rank">122</span>
+    <span class="rank">119</span>
     <span class="name">Atlas</span>
     <span class="count">2 produse</span>
     
@@ -1384,7 +1459,17 @@
 <figure class="card empty">
   <div class="pair missing"><div class="plate none">fără logo</div></div>
   <figcaption>
-    <span class="rank">123</span>
+    <span class="rank">120</span>
+    <span class="name">Rapid</span>
+    <span class="count">2 produse</span>
+    
+    <span class="src">respins: File:Rapid Penang Logo.svg — alt subiect decât marca de anvelope</span>
+  </figcaption>
+</figure>
+<figure class="card empty">
+  <div class="pair missing"><div class="plate none">fără logo</div></div>
+  <figcaption>
+    <span class="rank">121</span>
     <span class="name">Dovroad</span>
     <span class="count">2 produse</span>
     
@@ -1394,7 +1479,50 @@
 <figure class="card empty">
   <div class="pair missing"><div class="plate none">fără logo</div></div>
   <figcaption>
+    <span class="rank">122</span>
+    <span class="name">Toledo</span>
+    <span class="count">2 produse</span>
+    
+    <span class="src">respins: File:Universidad Toledo Logo.svg — alt subiect decât marca de anvelope</span>
+  </figcaption>
+</figure>
+<figure class="card empty">
+  <div class="pair missing"><div class="plate none">fără logo</div></div>
+  <figcaption>
+    <span class="rank">123</span>
+    <span class="name">Doublestar</span>
+    <span class="count">2 produse</span>
+    
+    
+  </figcaption>
+</figure>
+<figure class="card empty">
+  <div class="pair missing"><div class="plate none">fără logo</div></div>
+  <figcaption>
     <span class="rank">124</span>
+    <span class="name">Achilles</span>
+    <span class="count">1 produse</span>
+    
+    
+  </figcaption>
+</figure>
+<figure class="card">
+  <div class="pair">
+         <div class="plate light"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/delinte.svg" alt="Delinte" loading="lazy"></div>
+         <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/delinte.svg" alt="Delinte" loading="lazy"></div>
+       </div>
+  <figcaption>
+    <span class="rank">125</span>
+    <span class="name">Delinte</span>
+    <span class="count">1 produse</span>
+    <span class="ext">svg</span>
+    <span class="src"><a href="https://commons.wikimedia.org/wiki/File%3ADelintebanden.svg" target="_blank" rel="noopener">File:Delintebanden.svg</a> · Public domain</span>
+  </figcaption>
+</figure>
+<figure class="card empty">
+  <div class="pair missing"><div class="plate none">fără logo</div></div>
+  <figcaption>
+    <span class="rank">126</span>
     <span class="name">POWERTRAC</span>
     <span class="count">1 produse</span>
     
@@ -1404,17 +1532,7 @@
 <figure class="card empty">
   <div class="pair missing"><div class="plate none">fără logo</div></div>
   <figcaption>
-    <span class="rank">125</span>
-    <span class="name">Federal</span>
-    <span class="count">1 produse</span>
-    
-    <span class="src">respins: File:Federal-Mogul Logo.svg — alt subiect decât marca de anvelope</span>
-  </figcaption>
-</figure>
-<figure class="card empty">
-  <div class="pair missing"><div class="plate none">fără logo</div></div>
-  <figcaption>
-    <span class="rank">126</span>
+    <span class="rank">127</span>
     <span class="name">Ardent</span>
     <span class="count">1 produse</span>
     
@@ -1424,7 +1542,7 @@
 <figure class="card empty">
   <div class="pair missing"><div class="plate none">fără logo</div></div>
   <figcaption>
-    <span class="rank">127</span>
+    <span class="rank">128</span>
     <span class="name">Brics</span>
     <span class="count">1 produse</span>
     
@@ -1434,8 +1552,8 @@
 <figure class="card empty">
   <div class="pair missing"><div class="plate none">fără logo</div></div>
   <figcaption>
-    <span class="rank">128</span>
-    <span class="name">Strial</span>
+    <span class="rank">129</span>
+    <span class="name">Aoteli</span>
     <span class="count">1 produse</span>
     
     
@@ -1447,44 +1565,34 @@
          <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/belshina.svg" alt="BELSHINA" loading="lazy"></div>
        </div>
   <figcaption>
-    <span class="rank">129</span>
+    <span class="rank">130</span>
     <span class="name">BELSHINA</span>
     <span class="count">1 produse</span>
     <span class="ext">svg</span>
     <span class="src"><a href="https://commons.wikimedia.org/wiki/File%3ABelshina%20logo.svg" target="_blank" rel="noopener">File:Belshina logo.svg</a> · Public domain</span>
   </figcaption>
 </figure>
-<figure class="card">
-  <div class="pair">
-         <div class="plate light"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/delinte.svg" alt="Delinte" loading="lazy"></div>
-         <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/delinte.svg" alt="Delinte" loading="lazy"></div>
-       </div>
-  <figcaption>
-    <span class="rank">130</span>
-    <span class="name">Delinte</span>
-    <span class="count">1 produse</span>
-    <span class="ext">svg</span>
-    <span class="src"><a href="https://commons.wikimedia.org/wiki/File%3ADelintebanden.svg" target="_blank" rel="noopener">File:Delintebanden.svg</a> · Public domain</span>
-  </figcaption>
-</figure>
 <figure class="card empty">
   <div class="pair missing"><div class="plate none">fără logo</div></div>
   <figcaption>
     <span class="rank">131</span>
-    <span class="name">Achilles</span>
+    <span class="name">Strial</span>
     <span class="count">1 produse</span>
     
     
   </figcaption>
 </figure>
-<figure class="card empty">
-  <div class="pair missing"><div class="plate none">fără logo</div></div>
+<figure class="card">
+  <div class="pair">
+         <div class="plate light"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/federal.jpg" alt="Federal" loading="lazy"></div>
+         <div class="plate dark"><img src="https://tzzycvsbnlurypfstisc.supabase.co/storage/v1/object/public/marci/federal.jpg" alt="Federal" loading="lazy"></div>
+       </div>
   <figcaption>
     <span class="rank">132</span>
-    <span class="name">Aoteli</span>
+    <span class="name">Federal</span>
     <span class="count">1 produse</span>
-    
-    
+    <span class="ext">jpg</span>
+    <span class="src"><a href="https://www.federaltire.com/en/" target="_blank" rel="noopener">site oficial al producătorului</a></span>
   </figcaption>
 </figure>
 </div>

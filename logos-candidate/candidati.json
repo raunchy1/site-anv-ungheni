@@ -1,0 +1,1775 @@
+{
+ "tracmax": {
+  "gasit": true,
+  "site": "https://www.interpneu.de/reifen-und-felgen-hersteller/exklusivmarken-pkw/tracmax-pkw-reifen",
+  "marca": "TRACMAX",
+  "produse": 713,
+  "candidati": [
+   {
+    "file": "1.svg",
+    "sursa": "https://www.interpneu.de/reifen-und-felgen-hersteller/exklusivmarken-pkw/tracmax-pkw-reifen",
+    "url": "https://www.interpneu.de/fileadmin/user_upload/theme/logo-interpneu.svg",
+    "why": "img[logo]",
+    "bytes": 7579
+   },
+   {
+    "file": "2.svg",
+    "sursa": "https://www.interpneu.de/reifen-und-felgen-hersteller/exklusivmarken-pkw/tracmax-pkw-reifen",
+    "url": "https://www.interpneu.de/fileadmin/user_upload/theme/logo-interpneu-neg.svg",
+    "why": "img[logo]",
+    "bytes": 7419
+   },
+   {
+    "file": "3.svg",
+    "sursa": "https://www.interpneu.de/reifen-und-felgen-hersteller/exklusivmarken-pkw/tracmax-pkw-reifen",
+    "url": "https://www.interpneu.de/fileadmin/user_upload/theme/logo-interpneu.svg",
+    "why": "img[logo]",
+    "bytes": 7579
+   },
+   {
+    "file": "4.svg",
+    "sursa": "https://www.interpneu.de/reifen-und-felgen-hersteller/exklusivmarken-pkw/tracmax-pkw-reifen",
+    "url": "https://www.interpneu.de/fileadmin/user_upload/theme/logo-interpneu-neg.svg",
+    "why": "img[logo]",
+    "bytes": 7419
+   }
+  ]
+ },
+ "grenlander": {
+  "gasit": true,
+  "site": "https://grenlander.com/",
+  "marca": "Grenlander",
+  "produse": 456,
+  "candidati": [
+   {
+    "file": "1.svg",
+    "sursa": "https://grenlander.com/",
+    "url": "https://grenlander.com/local/templates/grenlander/images/logo.svg",
+    "why": "img[����������� �������� Habilead]",
+    "bytes": 11747
+   },
+   {
+    "file": "2.svg",
+    "sursa": "https://grenlander.com/",
+    "url": "https://grenlander.com/local/templates/grenlander/images/logo.svg",
+    "why": "img[logo]",
+    "bytes": 11747
+   }
+  ]
+ },
+ "petlas": {
+  "gasit": true,
+  "site": "https://www.petlastires.com/",
+  "marca": "Petlas",
+  "produse": 348,
+  "candidati": [
+   {
+    "file": "1.png",
+    "sursa": "https://www.petlastires.com/",
+    "url": "https://www.petlastires.com/assets/images/site/tema/petlasfooterlogo_1.png",
+    "why": "img[Petlas Track Of Trust]",
+    "bytes": 1480
+   },
+   {
+    "file": "2.png",
+    "sursa": "https://www.petlastires.com/",
+    "url": "https://www.petlastires.com/assets/images/site/tema/petlasfooterlogo_1.png",
+    "why": "img[Petlas Track Of Trust]",
+    "bytes": 1480
+   },
+   {
+    "file": "3.png",
+    "sursa": "https://www.petlastires.com/",
+    "url": "https://www.petlastires.com/assets/images/site/tema/petlasfooterlogo_1.png",
+    "why": "img[Petlas Track Of Trust]",
+    "bytes": 1480
+   },
+   {
+    "file": "4.png",
+    "sursa": "https://www.petlastires.com/",
+    "url": "https://www.petlastires.com/assets/images/site/tema/petlasfooterlogo.png",
+    "why": "img[Petlas Track Of Trust]",
+    "bytes": 1480
+   }
+  ]
+ },
+ "arivo": {
+  "gasit": true,
+  "site": "https://www.arivo.com/",
+  "marca": "Arivo",
+  "produse": 331,
+  "candidati": [
+   {
+    "file": "1.svg",
+    "sursa": "https://www.arivo.com/",
+    "url": "https://www.arivo.com/_ipx/_/images/logo-white-text.svg",
+    "why": "img[arivo logo]",
+    "bytes": 2607
+   },
+   {
+    "file": "2.webp",
+    "sursa": "https://www.arivo.com/",
+    "url": "https://www.arivo.com/_ipx/_/images/utahbusiness.webp",
+    "why": "img[Utah Business logo]",
+    "bytes": 5310
+   },
+   {
+    "file": "3.webp",
+    "sursa": "https://www.arivo.com/",
+    "url": "https://www.arivo.com/_ipx/_/images/americanbanker.webp",
+    "why": "img[American Banker logo]",
+    "bytes": 5150
+   },
+   {
+    "file": "4.webp",
+    "sursa": "https://www.arivo.com/",
+    "url": "https://www.arivo.com/_ipx/_/images/afn.webp",
+    "why": "img[Auto Finance News logo]",
+    "bytes": 1206
+   }
+  ]
+ },
+ "joyroad": {
+  "gasit": true,
+  "site": "https://joyroad.eu/",
+  "marca": "Joyroad",
+  "produse": 328,
+  "candidati": [
+   {
+    "file": "1.png",
+    "sursa": "https://joyroad.eu/",
+    "url": "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=375,fit=crop/ALp21v4M1vH0DRG5/joyroad-logo-no-bg-blanc-txt-m7VDeygEjkuVMqnk.png",
+    "why": "img[Joyroad logo]",
+    "bytes": 12782
+   },
+   {
+    "file": "2.png",
+    "sursa": "https://joyroad.eu/",
+    "url": "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=375,fit=crop/ALp21v4M1vH0DRG5/joyroad-logo-no-bg-blanc-txt-m7VDeygEjkuVMqnk.png",
+    "why": "img[Joyroad logo]",
+    "bytes": 12782
+   },
+   {
+    "file": "3.png",
+    "sursa": "https://joyroad.eu/",
+    "url": "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=375,h=371,fit=crop/ALp21v4M1vH0DRG5/joyroad-logo-no-bg-blanc-txt-m7VDeygEjkuVMqnk.png",
+    "why": "img[logo]",
+    "bytes": 12766
+   },
+   {
+    "file": "4.png",
+    "sursa": "https://joyroad.eu/",
+    "url": "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=375,h=352,fit=crop/ALp21v4M1vH0DRG5/joyroad-logo-no-bg-blanc-txt-m7VDeygEjkuVMqnk.png",
+    "why": "img[logo]",
+    "bytes": 12738
+   }
+  ]
+ },
+ "roadx": {
+  "gasit": false,
+  "site": "https://www.roadxtire.com/"
+ },
+ "haida": {
+  "gasit": true,
+  "site": "https://haidatires.com/",
+  "marca": "Haida",
+  "produse": 278,
+  "candidati": [
+   {
+    "file": "1.svg",
+    "sursa": "https://haidatires.com/",
+    "why": "svg inline din antet"
+   }
+  ]
+ },
+ "platin": {
+  "gasit": true,
+  "site": "https://www.platin-wheels.com/",
+  "marca": "Platin",
+  "produse": 273,
+  "candidati": [
+   {
+    "file": "1.svg",
+    "sursa": "https://www.platin-wheels.com/",
+    "url": "https://www.platin-wheels.com/fileadmin/user_upload/graphics/platin.svg",
+    "why": "img[Logo]",
+    "bytes": 6363
+   }
+  ]
+ },
+ "fronway": {
+  "gasit": false,
+  "incercate": [
+   "www.fronwaytyre.com",
+   "fronway-tire.com",
+   "www.fronway.com",
+   "www.fronwaytire.com",
+   "www.fronwaytires.com",
+   "www.fronwaytyres.com",
+   "www.fronway-tyres.com",
+   "www.fronway.eu",
+   "www.fronway.cn"
+  ]
+ },
+ "torque": {
+  "gasit": true,
+  "site": "https://www.torquetyres.com/",
+  "marca": "Torque",
+  "produse": 243,
+  "candidati": [
+   {
+    "file": "1.png",
+    "sursa": "https://www.torquetyres.com/",
+    "url": "https://www.torquetyres.com/wp-content/uploads/2026/03/torque-logo-medium.png",
+    "why": "img[logo]",
+    "bytes": 5760
+   },
+   {
+    "file": "2.png",
+    "sursa": "https://www.torquetyres.com/",
+    "url": "https://www.torquetyres.com/wp-content/uploads/2026/03/torque-logo-medium-dark.png",
+    "why": "img[logo]",
+    "bytes": 6108
+   },
+   {
+    "file": "3.png",
+    "sursa": "https://www.torquetyres.com/",
+    "url": "https://www.torquetyres.com/wp-content/uploads/2026/03/torque-logo-medium.png",
+    "why": "img[logo]",
+    "bytes": 5760
+   }
+  ]
+ },
+ "crosswind": {
+  "gasit": true,
+  "site": "https://steer-ten.vercel.app/brands/crosswind-tires",
+  "marca": "Crosswind",
+  "produse": 220,
+  "candidati": [
+   {
+    "file": "1.svg",
+    "sursa": "https://steer-ten.vercel.app/brands/crosswind-tires",
+    "url": "https://images.simpletire.com/image/upload/f_auto/q_auto/v1596765107/manf-logos/18b.svg",
+    "why": "img[Crosswind]",
+    "bytes": 2157
+   },
+   {
+    "file": "2.svg",
+    "sursa": "https://steer-ten.vercel.app/brands/crosswind-tires",
+    "url": "https://images.simpletire.com/image/upload/f_auto/q_auto/v1596765107/manf-logos/18b.svg",
+    "why": "img[Crosswind]",
+    "bytes": 2157
+   },
+   {
+    "file": "3.svg",
+    "sursa": "https://steer-ten.vercel.app/brands/crosswind-tires",
+    "url": "https://images.simpletire.com/image/upload/f_auto/q_auto/v1596765107/manf-logos/18b.svg",
+    "why": "img[Crosswind]",
+    "bytes": 2157
+   },
+   {
+    "file": "4.svg",
+    "sursa": "https://steer-ten.vercel.app/brands/crosswind-tires",
+    "url": "https://images.simpletire.com/image/upload/f_auto/q_auto/v1596765107/manf-logos/18b.svg",
+    "why": "img[Crosswind]",
+    "bytes": 2157
+   }
+  ]
+ },
+ "aplus": {
+  "gasit": false,
+  "site": "https://www.aplus-tyre.com/"
+ },
+ "landspider": {
+  "gasit": true,
+  "site": "https://www.landspidertire.com/",
+  "marca": "Landspider",
+  "produse": 200,
+  "candidati": [
+   {
+    "file": "1.webp",
+    "sursa": "https://www.landspidertire.com/",
+    "url": "https://www.landspidertire.com/themes/default/public/assets/img/brand_1.webp",
+    "why": "img[logo]",
+    "bytes": 6964
+   },
+   {
+    "file": "2.png",
+    "sursa": "https://www.landspidertire.com/",
+    "url": "https://shengchi-test.oss-cn-qingdao.aliyuncs.com/portal/20260113/ca57279117980ea035890f5ddcc7b674.png",
+    "why": "img[Tracmax X-PRIVILO A/S VAN SAVER light truck tire - angled view highlighting ultimate tread design with central groove and brand new compound for excellent handling performance]",
+    "bytes": 1083826
+   },
+   {
+    "file": "3.webp",
+    "sursa": "https://www.landspidertire.com/",
+    "url": "https://www.landspidertire.com/themes/default/public/assets/img/brand_1.webp",
+    "why": "img[logo]",
+    "bytes": 6964
+   }
+  ]
+ },
+ "hilo": {
+  "gasit": true,
+  "site": "https://www.hilotyres.com/",
+  "marca": "Hilo",
+  "produse": 177,
+  "candidati": [
+   {
+    "file": "1.png",
+    "sursa": "https://www.hilotyres.com/",
+    "url": "https://www.hilotyres.com/wp-content/themes/hilo/assets/images/hilo-logo.png",
+    "why": "img[HILO Tyres Australia]",
+    "bytes": 1040689
+   },
+   {
+    "file": "2.png",
+    "sursa": "https://www.hilotyres.com/",
+    "url": "https://www.hilotyres.com/wp-content/themes/hilo/assets/images/hilo-logo.png",
+    "why": "img[HILO Tyres Australia]",
+    "bytes": 1040689
+   }
+  ]
+ },
+ "firemax": {
+  "gasit": true,
+  "site": "https://www.firemaxtyre.com/",
+  "marca": "Firemax",
+  "produse": 159,
+  "candidati": [
+   {
+    "file": "1.png",
+    "sursa": "https://www.firemaxtyre.com/",
+    "url": "https://omo-oss-image.thefastimg.com/portal-saas/pg2025110319351580085/cms/image/e5b52f03-fba8-490f-90b3-74450f1819e8.png",
+    "why": "img[firemax-logo]",
+    "bytes": 10099
+   }
+  ]
+ },
+ "starmaxx": {
+  "gasit": false,
+  "incercate": [
+   "www.starmaxx.com.tr",
+   "www.starmaxx.com",
+   "www.starmaxxtire.com",
+   "www.starmaxxtires.com",
+   "www.starmaxxtyre.com",
+   "www.starmaxxtyres.com",
+   "www.starmaxx-tyres.com",
+   "www.starmaxx.eu",
+   "www.starmaxx.cn"
+  ]
+ },
+ "riken": {
+  "gasit": true,
+  "site": "https://passenger-car.riken.com/",
+  "marca": "Riken",
+  "produse": 149,
+  "candidati": [
+   {
+    "file": "1.png",
+    "sursa": "https://passenger-car.riken.com/",
+    "url": "https://dgaddcosprod.blob.core.windows.net/assembly-a3/clx2txqiy30rh01o0f2kf8vha/attachments/clxukfgn729h601l3faf752mt-riken-logo-rgb.one-third.png",
+    "why": "img[orium logo]",
+    "bytes": 9527
+   },
+   {
+    "file": "2.png",
+    "sursa": "https://passenger-car.riken.com/",
+    "url": "https://dgaddcosprod.blob.core.windows.net/assembly-a3/clx2txqiy30rh01o0f2kf8vha/attachments/clxuklff229kf01l38bmf6ilt-riken-logo-rgb.full.png",
+    "why": "img[logo]",
+    "bytes": 39889
+   }
+  ]
+ },
+ "centara": {
+  "gasit": true,
+  "site": "https://www.centaratyre.com/",
+  "marca": "Centara",
+  "produse": 146,
+  "candidati": [
+   {
+    "file": "1.png",
+    "sursa": "https://www.centaratyre.com/",
+    "url": "https://www.centaratyre.com/Images/default/21041209031051.png",
+    "why": "antet",
+    "bytes": 6248
+   }
+  ]
+ },
+ "fortune": {
+  "gasit": true,
+  "site": "https://www.fortune.com/",
+  "marca": "Fortune",
+  "produse": 132,
+  "candidati": [
+   {
+    "file": "1.jpg",
+    "sursa": "https://www.fortune.com/",
+    "url": "https://fortune.com/img-assets/wp-content/uploads/2025/05/F500-Logo-e1748637656471.jpg?format=webp&amp;w=1440&amp;q=100",
+    "why": "img[Fortune 500]",
+    "bytes": 152012
+   },
+   {
+    "file": "2.jpg",
+    "sursa": "https://www.fortune.com/",
+    "url": "https://fortune.com/img-assets/wp-content/uploads/2025/05/Fortune-Logo-MPW.jpg?format=webp&amp;w=1440&amp;q=100",
+    "why": "img[Most Powerful Women]",
+    "bytes": 856568
+   }
+  ]
+ },
+ "tourador": {
+  "gasit": false,
+  "incercate": [
+   "www.tourador.com",
+   "touradortyres.com",
+   "www.touradortire.com",
+   "www.touradortires.com",
+   "www.touradortyre.com",
+   "www.touradortyres.com",
+   "www.tourador-tyres.com",
+   "www.tourador.eu",
+   "www.tourador.cn"
+  ]
+ },
+ "kpatos": {
+  "gasit": false,
+  "incercate": [
+   "www.kpatostyre.com",
+   "kpatos.com",
+   "www.kpatos.com",
+   "www.kpatostire.com",
+   "www.kpatostires.com",
+   "www.kpatostyres.com",
+   "www.kpatos-tyres.com",
+   "www.kpatos.eu",
+   "www.kpatos.cn"
+  ]
+ },
+ "accelera": {
+  "gasit": true,
+  "site": "https://www.acceleratire.com/",
+  "marca": "ACCELERA",
+  "produse": 118,
+  "candidati": [
+   {
+    "file": "1.png",
+    "sursa": "https://www.acceleratire.com/",
+    "url": "https://www.acceleratire.com/theme_accelera/static/src/img/Accelera_logo.png",
+    "why": "img[Accelera Logo]",
+    "bytes": 4781
+   },
+   {
+    "file": "2.png",
+    "sursa": "https://www.acceleratire.com/",
+    "url": "https://www.acceleratire.com/theme_accelera/static/src/img/Accelera_logo.png",
+    "why": "img[Accelera Logo]",
+    "bytes": 4781
+   }
+  ]
+ },
+ "ovation": {
+  "gasit": true,
+  "site": "https://hilcodigital.com/ovation/",
+  "marca": "Ovation",
+  "produse": 114,
+  "candidati": [
+   {
+    "file": "1.svg",
+    "sursa": "https://hilcodigital.com/ovation/",
+    "url": "https://hilcodigital.com/wp-content/themes/hilco2023/assets/images/logo.svg",
+    "why": "img[Hilco Digital Assets]",
+    "bytes": 5681
+   }
+  ]
+ },
+ "leao": {
+  "gasit": false,
+  "site": "https://www.leao.com/"
+ },
+ "otani": {
+  "gasit": true,
+  "site": "https://www.otanitire.com/",
+  "marca": "Otani",
+  "produse": 108,
+  "candidati": [
+   {
+    "file": "1.png",
+    "sursa": "https://www.otanitire.com/",
+    "url": "https://www.otanitire.com/wp-content/uploads/2020/12/B_Logo_%E0%B9%81%E0%B8%99%E0%B8%A7%E0%B8%99%E0%B8%AD%E0%B8%99_Logo3DTagline_%E0%B9%81%E0%B8%99%E0%B8%A7%E0%B8%99%E0%B8%AD%E0%B8%991-scaled.png",
+    "why": "img[logo]",
+    "bytes": 133693
+   },
+   {
+    "file": "2.svg",
+    "sursa": "https://www.otanitire.com/",
+    "url": "https://www.otanitire.com/wp-content/plugins/webtoffee-cookie-consent/lite/frontend/images/webtoffee.svg",
+    "why": "img[Webtoffee logo]",
+    "bytes": 13716
+   }
+  ]
+ },
+ "laufenn": {
+  "gasit": true,
+  "site": "https://www.laufenn.com/it/front/it_front/index.do",
+  "marca": "Laufenn",
+  "produse": 107,
+  "candidati": [
+   {
+    "file": "1.svg",
+    "sursa": "https://www.laufenn.com/it/front/it_front/index.do",
+    "url": "https://www.laufenn.com/it/front/images/common/ch_logo.svg",
+    "why": "img[Laufenn]",
+    "bytes": 2321
+   },
+   {
+    "file": "2.jpg",
+    "sursa": "https://www.laufenn.com/it/front/it_front/index.do",
+    "url": "https://www.laufenn.com/it/front/images/main_2025/poster/LF_US_Main_brand_video_PC.jpg",
+    "why": "img[logo]",
+    "bytes": 57145
+   },
+   {
+    "file": "3.jpg",
+    "sursa": "https://www.laufenn.com/it/front/it_front/index.do",
+    "url": "https://www.laufenn.com/it/front/images/main_2025/poster/LF_US_Main_brand_video_PC.jpg",
+    "why": "img[logo]",
+    "bytes": 57145
+   }
+  ]
+ },
+ "lanvigator": {
+  "gasit": false,
+  "incercate": [
+   "www.lanvigator.com",
+   "lanvigatortyre.com",
+   "www.lanvigatortire.com",
+   "www.lanvigatortires.com",
+   "www.lanvigatortyre.com",
+   "www.lanvigatortyres.com",
+   "www.lanvigator-tyres.com",
+   "www.lanvigator.eu",
+   "www.lanvigator.cn"
+  ]
+ },
+ "davanti": {
+  "gasit": true,
+  "site": "https://davanti-tyres.com/",
+  "marca": "Davanti",
+  "produse": 100,
+  "candidati": [
+   {
+    "file": "1.svg",
+    "sursa": "https://davanti-tyres.com/",
+    "url": "https://davanti-tyres.com/app/themes/davanti-tyres-theme/assets/gfx/logo.svg",
+    "why": "img[Davanti Tyres logo]",
+    "bytes": 7140
+   },
+   {
+    "file": "2.svg",
+    "sursa": "https://davanti-tyres.com/",
+    "url": "https://davanti-tyres.com/app/themes/davanti-tyres-theme/assets/gfx/logo.svg",
+    "why": "img[Davanti Tyres logo]",
+    "bytes": 7140
+   },
+   {
+    "file": "3.svg",
+    "sursa": "https://davanti-tyres.com/",
+    "url": "https://davanti-tyres.com/app/themes/davanti-tyres-theme/assets/gfx/logo.svg",
+    "why": "img[Davanti Tyres logo]",
+    "bytes": 7140
+   },
+   {
+    "file": "4.svg",
+    "sursa": "https://davanti-tyres.com/",
+    "url": "https://davanti-tyres.com/app/themes/davanti-tyres-theme/assets/gfx/logo.svg",
+    "why": "img[Davanti Tyres logo]",
+    "bytes": 7140
+   }
+  ]
+ },
+ "sunny": {
+  "gasit": false,
+  "site": "https://sunnytires.com/"
+ },
+ "point-s": {
+  "gasit": true,
+  "site": "https://www.pointstire.com/",
+  "marca": "Point S",
+  "produse": 94,
+  "candidati": [
+   {
+    "file": "1.webp",
+    "sursa": "https://www.pointstire.com/",
+    "url": "https://cdn.coopdome.com/pointsretail/platinum_logos/falken-no-background.webp",
+    "why": "img[Falken]",
+    "bytes": 31078
+   },
+   {
+    "file": "2.webp",
+    "sursa": "https://www.pointstire.com/",
+    "url": "https://cdn.coopdome.com/pointsretail/platinum_logos/Nexen.webp",
+    "why": "img[Nexen]",
+    "bytes": 26458
+   },
+   {
+    "file": "3.webp",
+    "sursa": "https://www.pointstire.com/",
+    "url": "https://cdn.coopdome.com/pointsretail/platinum_logos/Hankook.webp",
+    "why": "img[Hankook]",
+    "bytes": 93332
+   },
+   {
+    "file": "4.webp",
+    "sursa": "https://www.pointstire.com/",
+    "url": "https://cdn.coopdome.com/pointsretail/platinum_logos/Nokian.webp",
+    "why": "img[Nokian Tyres]",
+    "bytes": 31618
+   }
+  ]
+ },
+ "ilink": {
+  "gasit": true,
+  "site": "https://www.ilinktires.com/",
+  "marca": "ILINK",
+  "produse": 91,
+  "candidati": [
+   {
+    "file": "1.svg",
+    "sursa": "https://www.ilinktires.com/",
+    "url": "https://www.ilinktires.com/assets/svg/logoB.svg",
+    "why": "img[logo]",
+    "bytes": 3286
+   }
+  ]
+ },
+ "zmax": {
+  "gasit": true,
+  "site": "https://www.zmax.com/",
+  "marca": "Zmax",
+  "produse": 86,
+  "candidati": [
+   {
+    "file": "1.png",
+    "sursa": "https://www.zmax.com/",
+    "url": "https://www.zmax.com/lib/image/logo-zmax-no-tag.png",
+    "why": "img[zMax]",
+    "bytes": 4496
+   },
+   {
+    "file": "2.png",
+    "sursa": "https://www.zmax.com/",
+    "url": "https://www.zmax.com/lib/image/brand/brand-advanced-auto-parts.png",
+    "why": "img[Advanced Auto Parts]",
+    "bytes": 5646
+   },
+   {
+    "file": "3.png",
+    "sursa": "https://www.zmax.com/",
+    "url": "https://www.zmax.com/lib/image/brand/brand-auto-zone.png",
+    "why": "img[AutoZone]",
+    "bytes": 9062
+   },
+   {
+    "file": "4.png",
+    "sursa": "https://www.zmax.com/",
+    "url": "https://www.zmax.com/lib/image/brand/brand-walmart.png",
+    "why": "img[Walmart]",
+    "bytes": 5124
+   }
+  ]
+ },
+ "tigar": {
+  "gasit": true,
+  "site": "https://passenger-car.tigar-tyres.com/",
+  "marca": "Tigar",
+  "produse": 84,
+  "candidati": [
+   {
+    "file": "1.png",
+    "sursa": "https://passenger-car.tigar-tyres.com/",
+    "url": "https://dgaddcosprod.blob.core.windows.net/assembly-a3/clx2tw9cr2y7401mz9xcy7z7g/attachments/clxa52l560e4901l355u180lo-3-ppt-taurus-point8-sales-pitch-en-1-3x.one-third.png",
+    "why": "antet",
+    "bytes": 6267
+   }
+  ]
+ },
+ "rovelo": {
+  "gasit": true,
+  "site": "https://www.rovelotire.com/",
+  "marca": "Rovelo",
+  "produse": 73,
+  "candidati": [
+   {
+    "file": "1.png",
+    "sursa": "https://www.rovelotire.com/",
+    "url": "https://d2nqlu7qcep8eh.cloudfront.net/rovelo/template/default/index/img/LOGO.png",
+    "why": "img[logo]",
+    "bytes": 3160
+   },
+   {
+    "file": "2.png",
+    "sursa": "https://www.rovelotire.com/",
+    "url": "https://d2nqlu7qcep8eh.cloudfront.net/rovelo/template/default/index/img/LOGOa.png",
+    "why": "img[logo]",
+    "bytes": 3198
+   },
+   {
+    "file": "3.png",
+    "sursa": "https://www.rovelotire.com/",
+    "url": "https://d2nqlu7qcep8eh.cloudfront.net/rovelo/template/default/index/img/LOGOa.png",
+    "why": "img[logo]",
+    "bytes": 3198
+   }
+  ]
+ },
+ "duraturn": {
+  "gasit": true,
+  "site": "https://www.duraturntires.com/",
+  "marca": "Duraturn",
+  "produse": 73,
+  "candidati": [
+   {
+    "file": "1.png",
+    "sursa": "https://www.duraturntires.com/",
+    "url": "https://www.duraturntires.com/wp-content/uploads/duraturn-logo.png",
+    "why": "img[Duraturn Tires]",
+    "bytes": 7478
+   },
+   {
+    "file": "2.jpg",
+    "sursa": "https://www.duraturntires.com/",
+    "url": "https://www.duraturntires.com/wp-content/uploads/home-video.jpg",
+    "why": "img[About the Brand]",
+    "bytes": 23636
+   }
+  ]
+ },
+ "nordexx": {
+  "gasit": true,
+  "site": "https://www.nordexx.com/",
+  "marca": "Nordexx",
+  "produse": 69,
+  "candidati": [
+   {
+    "file": "1.png",
+    "sursa": "https://www.nordexx.com/",
+    "url": "https://www.nordexx.com/wp-content/uploads/2026/03/Nordexx_logo_340x156px.png",
+    "why": "img[Nordexx]",
+    "bytes": 6801
+   },
+   {
+    "file": "2.png",
+    "sursa": "https://www.nordexx.com/",
+    "url": "https://www.nordexx.com/wp-content/uploads/2026/03/Nordexx_logo_340x156px_white.png",
+    "why": "img[logo]",
+    "bytes": 6407
+   },
+   {
+    "file": "3.png",
+    "sursa": "https://www.nordexx.com/",
+    "url": "https://www.nordexx.com/wp-content/uploads/2026/03/Nordexx_logo_340px_white-300x30.png",
+    "why": "img[logo]",
+    "bytes": 4347
+   },
+   {
+    "file": "4.png",
+    "sursa": "https://www.nordexx.com/",
+    "url": "https://www.nordexx.com/wp-content/uploads/2026/03/Nordexx_logo_340x156px-300x138.png",
+    "why": "img[logo]",
+    "bytes": 6942
+   }
+  ]
+ },
+ "cooper": {
+  "gasit": true,
+  "site": "https://www.coopertire.com/",
+  "marca": "Cooper",
+  "produse": 66,
+  "candidati": [
+   {
+    "file": "1.svg",
+    "sursa": "https://www.coopertire.com/",
+    "url": "https://www.coopertire.com/on/demandware.static/-/Sites-CooperTire-Library/default/dwda690093/footer/footer-logo.svg",
+    "why": "img[logo]",
+    "bytes": 5287
+   }
+  ]
+ },
+ "nereus": {
+  "gasit": false,
+  "site": "https://trusted.domainseller.site/nereus.eu"
+ },
+ "rydanz": {
+  "gasit": false,
+  "site": "https://www.rydanz.com/"
+ },
+ "prinx": {
+  "gasit": true,
+  "site": "https://www.prinxtire.com/",
+  "marca": "Prinx",
+  "produse": 59,
+  "candidati": [
+   {
+    "file": "1.jpg",
+    "sursa": "https://www.prinxtire.com/",
+    "url": "https://www.prinxtire.com/statics/images/n/logo.jpg",
+    "why": "img[logo]",
+    "bytes": 12880
+   }
+  ]
+ },
+ "roadstone": {
+  "gasit": false,
+  "site": "https://www.roadstonetire.com/"
+ },
+ "tristar": {
+  "gasit": true,
+  "site": "https://www.tristar.com/",
+  "marca": "TRISTAR",
+  "produse": 42,
+  "candidati": [
+   {
+    "file": "1.svg",
+    "sursa": "https://www.tristar.com/",
+    "url": "https://cdn.tristar.com/wp-content/uploads/2026/06/tristar-logo-regular-1.svg",
+    "why": "img[TriStar Digital Thread Solutions Logo]",
+    "bytes": 3037
+   },
+   {
+    "file": "2.svg",
+    "sursa": "https://www.tristar.com/",
+    "url": "https://cdn.tristar.com/wp-content/uploads/2026/06/tristar-logo-regular-1.svg",
+    "why": "img[TriStar Digital Thread Solutions Logo]",
+    "bytes": 3037
+   },
+   {
+    "file": "3.svg",
+    "sursa": "https://www.tristar.com/",
+    "url": "https://cdn.tristar.com/wp-content/uploads/2026/06/tristar-logo-regular-1.svg",
+    "why": "img[TriStar Digital Thread Solutions Logo]",
+    "bytes": 3037
+   },
+   {
+    "file": "4.png",
+    "sursa": "https://www.tristar.com/",
+    "url": "https://cdn.tristar.com/wp-content/uploads/2020/11/tristar-logo-regular.png",
+    "why": "img[TriStar CAD & PLM Logo]",
+    "bytes": 1566
+   }
+  ]
+ },
+ "superia": {
+  "gasit": false,
+  "site": "https://www.superia-tyres.com/"
+ },
+ "comfoser": {
+  "gasit": false,
+  "site": "https://www.comfoser.com/"
+ },
+ "marshal": {
+  "gasit": true,
+  "site": "https://www.levelblue.com/?utm_source=referrer&utm_medium=website&utm_content=m86-website",
+  "marca": "Marshal",
+  "produse": 36,
+  "candidati": [
+   {
+    "file": "1.svg",
+    "sursa": "https://www.levelblue.com/?utm_source=referrer&utm_medium=website&utm_content=m86-website",
+    "url": "https://www.levelblue.com/hubfs/lb-web/logos/LevelBlue-Logo-reverse.svg",
+    "why": "img[LevelBlue]",
+    "bytes": 3240
+   },
+   {
+    "file": "2.svg",
+    "sursa": "https://www.levelblue.com/?utm_source=referrer&utm_medium=website&utm_content=m86-website",
+    "url": "https://www.levelblue.com/hubfs/lb-web/logos/LevelBlue-Logo-reverse.svg",
+    "why": "img[LevelBlue]",
+    "bytes": 3240
+   },
+   {
+    "file": "3.svg",
+    "sursa": "https://www.levelblue.com/?utm_source=referrer&utm_medium=website&utm_content=m86-website",
+    "url": "https://www.levelblue.com/hubfs/Imported%20images/Gartner_logo.svg",
+    "why": "img[Gartner_logo]",
+    "bytes": 5698
+   },
+   {
+    "file": "4.svg",
+    "sursa": "https://www.levelblue.com/?utm_source=referrer&utm_medium=website&utm_content=m86-website",
+    "url": "https://www.levelblue.com/hubfs/Logo%20Images/idc-logo-blue.svg",
+    "why": "img[idc-logo-blue]",
+    "bytes": 3181
+   }
+  ]
+ },
+ "rockblade": {
+  "gasit": true,
+  "site": "https://www.hugedomains.com/domain_profile.cfm?d=rockblade.com",
+  "marca": "Rockblade",
+  "produse": 35,
+  "candidati": [
+   {
+    "file": "1.svg",
+    "sursa": "https://www.hugedomains.com/domain_profile.cfm?d=rockblade.com",
+    "url": "https://static.hugedomains.com/images/hdv3-img/hd-header-logo-v3.svg",
+    "why": "img[logo]",
+    "bytes": 3247
+   },
+   {
+    "file": "2.png",
+    "sursa": "https://www.hugedomains.com/domain_profile.cfm?d=rockblade.com",
+    "url": "https://static.hugedomains.com/images/hdv3-img/footer-logo-1.png",
+    "why": "img[logo]",
+    "bytes": 694
+   },
+   {
+    "file": "3.png",
+    "sursa": "https://www.hugedomains.com/domain_profile.cfm?d=rockblade.com",
+    "url": "https://static.hugedomains.com/images/hdv3-img/footer-logo-2.png",
+    "why": "img[logo]",
+    "bytes": 1659
+   },
+   {
+    "file": "4.png",
+    "sursa": "https://www.hugedomains.com/domain_profile.cfm?d=rockblade.com",
+    "url": "https://static.hugedomains.com/images/hdv3-img/footer-logo-3.png",
+    "why": "img[logo]",
+    "bytes": 2178
+   }
+  ]
+ },
+ "mileking": {
+  "gasit": false,
+  "incercate": [
+   "www.mileking.com",
+   "www.milekingtire.com",
+   "www.milekingtires.com",
+   "www.milekingtyre.com",
+   "www.milekingtyres.com",
+   "www.mileking-tyres.com",
+   "www.mileking.eu",
+   "www.mileking.cn"
+  ]
+ },
+ "annaite": {
+  "gasit": false,
+  "site": "https://annaitetyres.weebly.com/"
+ },
+ "charmhoo": {
+  "gasit": false,
+  "incercate": [
+   "www.charmhoo.com",
+   "www.charmhootire.com",
+   "www.charmhootires.com",
+   "www.charmhootyre.com",
+   "www.charmhootyres.com",
+   "www.charmhoo-tyres.com",
+   "www.charmhoo.eu",
+   "www.charmhoo.cn"
+  ]
+ },
+ "onyx": {
+  "gasit": true,
+  "site": "https://www.hugedomains.com/domain_profile.cfm?d=onyxtyres.com",
+  "marca": "ONYX",
+  "produse": 27,
+  "candidati": [
+   {
+    "file": "1.svg",
+    "sursa": "https://www.hugedomains.com/domain_profile.cfm?d=onyxtyres.com",
+    "url": "https://static.hugedomains.com/images/hdv3-img/hd-header-logo-v3.svg",
+    "why": "img[logo]",
+    "bytes": 3247
+   },
+   {
+    "file": "2.png",
+    "sursa": "https://www.hugedomains.com/domain_profile.cfm?d=onyxtyres.com",
+    "url": "https://static.hugedomains.com/images/hdv3-img/footer-logo-1.png",
+    "why": "img[logo]",
+    "bytes": 694
+   },
+   {
+    "file": "3.png",
+    "sursa": "https://www.hugedomains.com/domain_profile.cfm?d=onyxtyres.com",
+    "url": "https://static.hugedomains.com/images/hdv3-img/footer-logo-2.png",
+    "why": "img[logo]",
+    "bytes": 1659
+   },
+   {
+    "file": "4.png",
+    "sursa": "https://www.hugedomains.com/domain_profile.cfm?d=onyxtyres.com",
+    "url": "https://static.hugedomains.com/images/hdv3-img/footer-logo-3.png",
+    "why": "img[logo]",
+    "bytes": 2178
+   }
+  ]
+ },
+ "avon": {
+  "gasit": true,
+  "site": "https://www.avontyres.com/it-it/",
+  "marca": "Avon",
+  "produse": 25,
+  "candidati": [
+   {
+    "file": "1.svg",
+    "sursa": "https://www.avontyres.com/it-it/",
+    "url": "https://www.avontyres.com/.publisher/sd/coopertires_sites/cooper/img/avon-logo.svg",
+    "why": "img[Avon Tyres]",
+    "bytes": 2670
+   },
+   {
+    "file": "2.svg",
+    "sursa": "https://www.avontyres.com/it-it/",
+    "url": "https://www.avontyres.com/.publisher/sd/coopertires_sites/cooper/img/logo-avon-white.svg",
+    "why": "img[Avon Tyres]",
+    "bytes": 2645
+   },
+   {
+    "file": "3.svg",
+    "sursa": "https://www.avontyres.com/it-it/",
+    "url": "https://www.avontyres.com/.publisher/sd/coopertires_sites/cooper/img/avon-logo-small.svg",
+    "why": "img[Avon Tyres]",
+    "bytes": 422
+   }
+  ]
+ },
+ "royal-black": {
+  "gasit": true,
+  "site": "https://www.royalblacktyre.com/",
+  "marca": "Royal Black",
+  "produse": 22,
+  "candidati": [
+   {
+    "file": "1.png",
+    "sursa": "https://www.royalblacktyre.com/",
+    "url": "https://www.royalblacktyre.com/LOGO/1-HAOHUA.png",
+    "why": "img[logo]",
+    "bytes": 29778
+   },
+   {
+    "file": "2.png",
+    "sursa": "https://www.royalblacktyre.com/",
+    "url": "https://www.royalblacktyre.com/LOGO/2-LANVIGATOR.png",
+    "why": "img[logo]",
+    "bytes": 18461
+   },
+   {
+    "file": "3.png",
+    "sursa": "https://www.royalblacktyre.com/",
+    "url": "https://www.royalblacktyre.com/LOGO/3-APLUS.png",
+    "why": "img[logo]",
+    "bytes": 18961
+   },
+   {
+    "file": "4.png",
+    "sursa": "https://www.royalblacktyre.com/",
+    "url": "https://www.royalblacktyre.com/LOGO/4-COMPASAL.png",
+    "why": "img[logo]",
+    "bytes": 19923
+   }
+  ]
+ },
+ "kelly": {
+  "gasit": false,
+  "incercate": [
+   "www.kellytires.com",
+   "www.kelly.com",
+   "www.kellytire.com",
+   "www.kellytyre.com",
+   "www.kellytyres.com",
+   "www.kelly-tyres.com",
+   "www.kelly.eu",
+   "www.kelly.cn"
+  ]
+ },
+ "neolin": {
+  "gasit": false,
+  "incercate": [
+   "www.neolin.com",
+   "www.neolintire.com",
+   "www.neolintires.com",
+   "www.neolintyre.com",
+   "www.neolintyres.com",
+   "www.neolin-tyres.com",
+   "www.neolin.eu",
+   "www.neolin.cn"
+  ]
+ },
+ "rotex": {
+  "gasit": true,
+  "site": "https://therotexgroup.com/",
+  "marca": "Rotex",
+  "produse": 19,
+  "candidati": [
+   {
+    "file": "1.svg",
+    "sursa": "https://therotexgroup.com/",
+    "url": "https://therotexgroup.com/wp-content/themes/rotexgroup/img/global/logo.svg",
+    "why": "img[Rotex Logo]",
+    "bytes": 6125
+   },
+   {
+    "file": "2.svg",
+    "sursa": "https://therotexgroup.com/",
+    "url": "https://therotexgroup.com/wp-content/themes/rotexgroup/img/global/icon_logo.svg",
+    "why": "img[Rotex Logo icon]",
+    "bytes": 770
+   }
+  ]
+ },
+ "minerva": {
+  "gasit": false,
+  "site": "https://www.minerva.com/"
+ },
+ "gripmax": {
+  "gasit": true,
+  "site": "https://www.gripmax.com/",
+  "marca": "Gripmax",
+  "produse": 17,
+  "candidati": [
+   {
+    "file": "1.png",
+    "sursa": "https://www.gripmax.com/",
+    "url": "https://www.gripmax.com/public/files/image/logo.png?v=1",
+    "why": "img[logo]",
+    "bytes": 22469
+   },
+   {
+    "file": "2.png",
+    "sursa": "https://www.gripmax.com/",
+    "url": "https://www.gripmax.com/public/files/image/logo.png",
+    "why": "img[logo]",
+    "bytes": 22469
+   },
+   {
+    "file": "3.png",
+    "sursa": "https://www.gripmax.com/",
+    "url": "https://www.gripmax.com/public/files/image/footer_logo.png?v=1",
+    "why": "img[logo]",
+    "bytes": 15873
+   }
+  ]
+ },
+ "greentrac": {
+  "gasit": true,
+  "site": "https://www.hugedomains.com/domain_profile.cfm?d=greentrac.com",
+  "marca": "Greentrac",
+  "produse": 15,
+  "candidati": [
+   {
+    "file": "1.svg",
+    "sursa": "https://www.hugedomains.com/domain_profile.cfm?d=greentrac.com",
+    "url": "https://static.hugedomains.com/images/hdv3-img/hd-header-logo-v3.svg",
+    "why": "img[logo]",
+    "bytes": 3247
+   },
+   {
+    "file": "2.png",
+    "sursa": "https://www.hugedomains.com/domain_profile.cfm?d=greentrac.com",
+    "url": "https://static.hugedomains.com/images/hdv3-img/footer-logo-1.png",
+    "why": "img[logo]",
+    "bytes": 694
+   },
+   {
+    "file": "3.png",
+    "sursa": "https://www.hugedomains.com/domain_profile.cfm?d=greentrac.com",
+    "url": "https://static.hugedomains.com/images/hdv3-img/footer-logo-2.png",
+    "why": "img[logo]",
+    "bytes": 1659
+   },
+   {
+    "file": "4.png",
+    "sursa": "https://www.hugedomains.com/domain_profile.cfm?d=greentrac.com",
+    "url": "https://static.hugedomains.com/images/hdv3-img/footer-logo-3.png",
+    "why": "img[logo]",
+    "bytes": 2178
+   }
+  ]
+ },
+ "kustone": {
+  "gasit": true,
+  "site": "https://www.hugedomains.com/domain_profile.cfm?d=kustone.com",
+  "marca": "Kustone",
+  "produse": 14,
+  "candidati": [
+   {
+    "file": "1.svg",
+    "sursa": "https://www.hugedomains.com/domain_profile.cfm?d=kustone.com",
+    "url": "https://static.hugedomains.com/images/hdv3-img/hd-header-logo-v3.svg",
+    "why": "img[logo]",
+    "bytes": 3247
+   },
+   {
+    "file": "2.png",
+    "sursa": "https://www.hugedomains.com/domain_profile.cfm?d=kustone.com",
+    "url": "https://static.hugedomains.com/images/hdv3-img/footer-logo-1.png",
+    "why": "img[logo]",
+    "bytes": 694
+   },
+   {
+    "file": "3.png",
+    "sursa": "https://www.hugedomains.com/domain_profile.cfm?d=kustone.com",
+    "url": "https://static.hugedomains.com/images/hdv3-img/footer-logo-2.png",
+    "why": "img[logo]",
+    "bytes": 1659
+   },
+   {
+    "file": "4.png",
+    "sursa": "https://www.hugedomains.com/domain_profile.cfm?d=kustone.com",
+    "url": "https://static.hugedomains.com/images/hdv3-img/footer-logo-3.png",
+    "why": "img[logo]",
+    "bytes": 2178
+   }
+  ]
+ },
+ "kinforest": {
+  "gasit": true,
+  "site": "https://www.hugedomains.com/domain_profile.cfm?d=kinforest.com",
+  "marca": "Kinforest",
+  "produse": 13,
+  "candidati": [
+   {
+    "file": "1.svg",
+    "sursa": "https://www.hugedomains.com/domain_profile.cfm?d=kinforest.com",
+    "url": "https://static.hugedomains.com/images/hdv3-img/hd-header-logo-v3.svg",
+    "why": "img[logo]",
+    "bytes": 3247
+   },
+   {
+    "file": "2.png",
+    "sursa": "https://www.hugedomains.com/domain_profile.cfm?d=kinforest.com",
+    "url": "https://static.hugedomains.com/images/hdv3-img/footer-logo-1.png",
+    "why": "img[logo]",
+    "bytes": 694
+   },
+   {
+    "file": "3.png",
+    "sursa": "https://www.hugedomains.com/domain_profile.cfm?d=kinforest.com",
+    "url": "https://static.hugedomains.com/images/hdv3-img/footer-logo-2.png",
+    "why": "img[logo]",
+    "bytes": 1659
+   },
+   {
+    "file": "4.png",
+    "sursa": "https://www.hugedomains.com/domain_profile.cfm?d=kinforest.com",
+    "url": "https://static.hugedomains.com/images/hdv3-img/footer-logo-3.png",
+    "why": "img[logo]",
+    "bytes": 2178
+   }
+  ]
+ },
+ "diplomat": {
+  "gasit": false,
+  "site": "https://www.diplomat.com/"
+ },
+ "three-a": {
+  "gasit": false,
+  "site": "https://threeatires.com/"
+ },
+ "unigrip": {
+  "gasit": true,
+  "site": "https://www.unigriptyre.com/",
+  "marca": "Unigrip",
+  "produse": 10,
+  "candidati": [
+   {
+    "file": "1.png",
+    "sursa": "https://www.unigriptyre.com/",
+    "url": "https://www.unigriptyre.com/public/files/img/logo.png",
+    "why": "img[logo]",
+    "bytes": 3746
+   },
+   {
+    "file": "2.png",
+    "sursa": "https://www.unigriptyre.com/",
+    "url": "https://www.unigriptyre.com/public/files/img/s2.png",
+    "why": "antet",
+    "bytes": 4239
+   },
+   {
+    "file": "3.png",
+    "sursa": "https://www.unigriptyre.com/",
+    "url": "https://www.unigriptyre.com/uploads/product/huawei/ROAD-TURBO-M.png",
+    "why": "antet",
+    "bytes": 10019
+   },
+   {
+    "file": "4.png",
+    "sursa": "https://www.unigriptyre.com/",
+    "url": "https://www.unigriptyre.com/uploads/product/pcr/slt/ROAD_UNIQUE.png",
+    "why": "antet",
+    "bytes": 9861
+   }
+  ]
+ },
+ "waterfall": {
+  "gasit": true,
+  "site": "https://mobilecommons.com/waterfall/",
+  "marca": "Waterfall",
+  "produse": 9,
+  "candidati": [
+   {
+    "file": "1.svg",
+    "sursa": "https://mobilecommons.com/waterfall/",
+    "url": "https://mobilecommons.com/wp-content/uploads/2025/06/logo-mc.svg",
+    "why": "img[Site Logo]",
+    "bytes": 15026
+   }
+  ]
+ },
+ "imperial": {
+  "gasit": true,
+  "site": "https://imperialtyres.com/",
+  "marca": "Imperial",
+  "produse": 9,
+  "candidati": [
+   {
+    "file": "1.png",
+    "sursa": "https://imperialtyres.com/",
+    "url": "https://imperialtyres.com/images/brand-aeolus.png",
+    "why": "img[Aeolus Tyres logo]",
+    "bytes": 4885
+   },
+   {
+    "file": "2.png",
+    "sursa": "https://imperialtyres.com/",
+    "url": "https://imperialtyres.com/images/brand-agate.png",
+    "why": "img[Agate Tyres logo]",
+    "bytes": 136550
+   },
+   {
+    "file": "3.svg",
+    "sursa": "https://imperialtyres.com/",
+    "url": "https://imperialtyres.com/images/brand-alliance.svg",
+    "why": "img[Alliance Tire Group logo]",
+    "bytes": 6788
+   },
+   {
+    "file": "4.png",
+    "sursa": "https://imperialtyres.com/",
+    "url": "https://imperialtyres.com/images/brand-boto.png",
+    "why": "img[Boto Quality Tyres logo]",
+    "bytes": 84125
+   }
+  ]
+ },
+ "compasal": {
+  "gasit": true,
+  "site": "https://www.compasal.com/",
+  "marca": "Compasal",
+  "produse": 8,
+  "candidati": [
+   {
+    "file": "1.png",
+    "sursa": "https://www.compasal.com/",
+    "url": "https://www.compasal.com/template/asd/images/logo.png",
+    "why": "img[logo]",
+    "bytes": 109145
+   }
+  ]
+ },
+ "zeta": {
+  "gasit": true,
+  "site": "https://www.hugedomains.com/domain_profile.cfm?d=zetatires.com",
+  "marca": "ZETA",
+  "produse": 7,
+  "candidati": [
+   {
+    "file": "1.svg",
+    "sursa": "https://www.hugedomains.com/domain_profile.cfm?d=zetatires.com",
+    "url": "https://static.hugedomains.com/images/hdv3-img/hd-header-logo-v3.svg",
+    "why": "img[logo]",
+    "bytes": 3247
+   },
+   {
+    "file": "2.png",
+    "sursa": "https://www.hugedomains.com/domain_profile.cfm?d=zetatires.com",
+    "url": "https://static.hugedomains.com/images/hdv3-img/footer-logo-1.png",
+    "why": "img[logo]",
+    "bytes": 694
+   },
+   {
+    "file": "3.png",
+    "sursa": "https://www.hugedomains.com/domain_profile.cfm?d=zetatires.com",
+    "url": "https://static.hugedomains.com/images/hdv3-img/footer-logo-2.png",
+    "why": "img[logo]",
+    "bytes": 1659
+   },
+   {
+    "file": "4.png",
+    "sursa": "https://www.hugedomains.com/domain_profile.cfm?d=zetatires.com",
+    "url": "https://static.hugedomains.com/images/hdv3-img/footer-logo-3.png",
+    "why": "img[logo]",
+    "bytes": 2178
+   }
+  ]
+ },
+ "anchee": {
+  "gasit": true,
+  "site": "https://www.ancheetyre.com/",
+  "marca": "Anchee",
+  "produse": 6,
+  "candidati": [
+   {
+    "file": "1.png",
+    "sursa": "https://www.ancheetyre.com/",
+    "url": "https://static.wixstatic.com/media/8116f4_dfff254b3e1f44d3a9919731b5f52508~mv2.png/v1/fill/w_384,h_50,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/ANCHEE%20LOGO.png",
+    "why": "img[ANCHEE LOGO.png]",
+    "bytes": 19628
+   }
+  ]
+ },
+ "austone": {
+  "gasit": true,
+  "site": "https://www.austonetire.com/",
+  "marca": "Austone",
+  "produse": 6,
+  "candidati": [
+   {
+    "file": "1.webp",
+    "sursa": "https://www.austonetire.com/",
+    "url": "https://www.austonetire.com/assets/austone_logo_blk.50d600c4.webp",
+    "why": "img[AUSTONE Tires]",
+    "bytes": 9883
+   },
+   {
+    "file": "2.webp",
+    "sursa": "https://www.austonetire.com/",
+    "url": "https://www.austonetire.com/assets/discover_more_brand.f5d9d4e8.webp",
+    "why": "img[Brand Introduction - AUSTONE Tires]",
+    "bytes": 227600
+   },
+   {
+    "file": "3.webp",
+    "sursa": "https://www.austonetire.com/",
+    "url": "https://www.austonetire.com/assets/autone_logo.cfea8846.webp",
+    "why": "img[AUSTONE Tires]",
+    "bytes": 10095
+   }
+  ]
+ },
+ "giti": {
+  "gasit": true,
+  "site": "https://www.giti.com/",
+  "marca": "GiTi",
+  "produse": 5,
+  "candidati": [
+   {
+    "file": "1.svg",
+    "sursa": "https://www.giti.com/",
+    "url": "https://giti-f3dxbhcdedcccpge.a01.azurefd.net/staticfiles/storage/global/images/general/logo.svg",
+    "why": "img[logo]",
+    "bytes": 2724
+   },
+   {
+    "file": "2.svg",
+    "sursa": "https://www.giti.com/",
+    "url": "https://giti-f3dxbhcdedcccpge.a01.azurefd.net/staticfiles/storage/global/images/home/experts-and-technology/logo-advanztech.svg",
+    "why": "img[logo advanztech]",
+    "bytes": 23243
+   },
+   {
+    "file": "3.svg",
+    "sursa": "https://www.giti.com/",
+    "url": "https://giti-f3dxbhcdedcccpge.a01.azurefd.net/staticfiles/storage/global/images/home/experts-and-technology/logo-giti-seal.svg",
+    "why": "img[logo giti seal]",
+    "bytes": 16352
+   },
+   {
+    "file": "4.svg",
+    "sursa": "https://www.giti.com/",
+    "url": "https://giti-f3dxbhcdedcccpge.a01.azurefd.net/staticfiles/storage/global/images/home/experts-and-technology/logo-giti-slient.svg",
+    "why": "img[logo giti slient]",
+    "bytes": 19696
+   }
+  ]
+ },
+ "fortuna": {
+  "gasit": false,
+  "site": "https://www.fortuna-tyres.com/"
+ },
+ "orium": {
+  "gasit": true,
+  "site": "https://passenger-car.orium-tyres.com/",
+  "marca": "ORIUM",
+  "produse": 4,
+  "candidati": [
+   {
+    "file": "1.png",
+    "sursa": "https://passenger-car.orium-tyres.com/",
+    "url": "https://dgaddcosprod.blob.core.windows.net/assembly-a3/clui1h7x715b401nj1bsc8n87/attachments/clumr966h0tlq01na1klc3miw-orium-logo-rgb-1.one-third.png",
+    "why": "img[orium logo]",
+    "bytes": 9133
+   },
+   {
+    "file": "2.webp",
+    "sursa": "https://passenger-car.orium-tyres.com/",
+    "url": "https://dgaddcosprod.blob.core.windows.net/assembly-a3/clui1h7x715b401nj1bsc8n87/attachments/clvappil10lt701lr6y0932wi-orium-logo.full.webp",
+    "why": "img[logo]",
+    "bytes": 7294
+   }
+  ]
+ },
+ "roadboss": {
+  "gasit": false,
+  "incercate": [
+   "www.roadbosstyre.com",
+   "www.roadboss.com",
+   "www.roadbosstire.com",
+   "www.roadbosstires.com",
+   "www.roadbosstyres.com",
+   "www.roadboss-tyres.com",
+   "www.roadboss.eu",
+   "www.roadboss.cn"
+  ]
+ },
+ "voyager": {
+  "gasit": false,
+  "site": "https://www.voyager.com/"
+ },
+ "atturo": {
+  "gasit": true,
+  "site": "https://atturo.com/",
+  "marca": "Atturo",
+  "produse": 3,
+  "candidati": [
+   {
+    "file": "1.png",
+    "sursa": "https://atturo.com/",
+    "url": "https://atturo.com/images/logo-mini.png?v2",
+    "why": "img[Atturo]",
+    "bytes": 43949
+   },
+   {
+    "file": "2.png",
+    "sursa": "https://atturo.com/",
+    "url": "https://atturo.com/images/Atturo-Logo-mini-isolated-inv.png?v3",
+    "why": "img[Atturo]",
+    "bytes": 45611
+   },
+   {
+    "file": "4.png",
+    "sursa": "https://atturo.com/",
+    "url": "https://flagcdn.com/w40/mx.png",
+    "why": "antet",
+    "bytes": 328
+   }
+  ]
+ },
+ "aptany": {
+  "gasit": true,
+  "site": "https://www.aptanytire.com/",
+  "marca": "Aptany",
+  "produse": 3,
+  "candidati": [
+   {
+    "file": "1.png",
+    "sursa": "https://www.aptanytire.com/",
+    "url": "https://www.aptanytire.com/template/default/images/common/logo.png",
+    "why": "img[logo]",
+    "bytes": 14243
+   },
+   {
+    "file": "2.png",
+    "sursa": "https://www.aptanytire.com/",
+    "url": "https://www.aptanytire.com/template/default/images/common/logoH.png",
+    "why": "img[logo]",
+    "bytes": 14243
+   },
+   {
+    "file": "3.webp",
+    "sursa": "https://www.aptanytire.com/",
+    "url": "https://www.aptanytire.com/template/default/images/index/indBrand-img1.webp",
+    "why": "img[logo]",
+    "bytes": 44814
+   },
+   {
+    "file": "4.png",
+    "sursa": "https://www.aptanytire.com/",
+    "url": "https://www.aptanytire.com/template/default/images/index/indBrand-logo1.png",
+    "why": "img[logo]",
+    "bytes": 2791
+   }
+  ]
+ },
+ "toledo": {
+  "gasit": false,
+  "incercate": [
+   "www.toledo-tyres.com",
+   "www.toledo.com",
+   "www.toledotire.com",
+   "www.toledotires.com",
+   "www.toledotyre.com",
+   "www.toledotyres.com",
+   "www.toledo.eu",
+   "www.toledo.cn"
+  ]
+ },
+ "rapid": {
+  "gasit": false,
+  "site": "https://strongdomains.com/domain/rapidtires.com"
+ },
+ "doublestar": {
+  "gasit": false,
+  "site": "https://www.doublestar.com/"
+ },
+ "bearway": {
+  "gasit": true,
+  "site": "https://www.hugedomains.com/domain_profile.cfm?d=bearway.com",
+  "marca": "Bearway",
+  "produse": 2,
+  "candidati": [
+   {
+    "file": "1.svg",
+    "sursa": "https://www.hugedomains.com/domain_profile.cfm?d=bearway.com",
+    "url": "https://static.hugedomains.com/images/hdv3-img/hd-header-logo-v3.svg",
+    "why": "img[logo]",
+    "bytes": 3247
+   },
+   {
+    "file": "2.png",
+    "sursa": "https://www.hugedomains.com/domain_profile.cfm?d=bearway.com",
+    "url": "https://static.hugedomains.com/images/hdv3-img/footer-logo-1.png",
+    "why": "img[logo]",
+    "bytes": 694
+   },
+   {
+    "file": "3.png",
+    "sursa": "https://www.hugedomains.com/domain_profile.cfm?d=bearway.com",
+    "url": "https://static.hugedomains.com/images/hdv3-img/footer-logo-2.png",
+    "why": "img[logo]",
+    "bytes": 1659
+   },
+   {
+    "file": "4.png",
+    "sursa": "https://www.hugedomains.com/domain_profile.cfm?d=bearway.com",
+    "url": "https://static.hugedomains.com/images/hdv3-img/footer-logo-3.png",
+    "why": "img[logo]",
+    "bytes": 2178
+   }
+  ]
+ },
+ "atlas": {
+  "gasit": false,
+  "site": "https://www.atlas-tyres.eu/"
+ },
+ "dovroad": {
+  "gasit": false,
+  "incercate": [
+   "www.dovroadtyre.com",
+   "www.dovroad.com",
+   "www.dovroadtire.com",
+   "www.dovroadtires.com",
+   "www.dovroadtyres.com",
+   "www.dovroad-tyres.com",
+   "www.dovroad.eu",
+   "www.dovroad.cn"
+  ]
+ },
+ "powertrac": {
+  "gasit": true,
+  "site": "https://goepf-moeckli.ch/",
+  "marca": "POWERTRAC",
+  "produse": 1,
+  "candidati": [
+   {
+    "file": "1.jpg",
+    "sursa": "https://goepf-moeckli.ch/",
+    "url": "https://goepf-moeckli.ch/media/image/64/ed/06/firmen_logodNLEta6EEgD4v.jpg",
+    "why": "img[Copyright]",
+    "bytes": 72895
+   }
+  ]
+ },
+ "federal": {
+  "gasit": true,
+  "site": "https://www.federaltire.com/en/",
+  "marca": "Federal",
+  "produse": 1,
+  "candidati": [
+   {
+    "file": "1.png",
+    "sursa": "https://www.federaltire.com/en/",
+    "url": "https://www.federaltire.com/en/images/logo.png",
+    "why": "img[logo]",
+    "bytes": 4944
+   },
+   {
+    "file": "2.jpg",
+    "sursa": "https://www.federaltire.com/en/",
+    "url": "https://www.federaltire.com/en/images/logo_print.jpg",
+    "why": "img[logo]",
+    "bytes": 14801
+   }
+  ]
+ },
+ "ardent": {
+  "gasit": true,
+  "site": "https://ardenttires.com/",
+  "marca": "Ardent",
+  "produse": 1,
+  "candidati": [
+   {
+    "file": "1.png",
+    "sursa": "https://ardenttires.com/",
+    "url": "https://ardenttires.com/cdn/shop/files/ardent_logo_85x@2x.png?v=1706190383",
+    "why": "img[Ardent Tires]",
+    "bytes": 24434
+   },
+   {
+    "file": "2.png",
+    "sursa": "https://ardenttires.com/",
+    "url": "https://ardenttires.com/cdn/shop/files/ardent_logo_125x@2x.png?v=1706190383",
+    "why": "img[Ardent Tires]",
+    "bytes": 46311
+   }
+  ]
+ },
+ "brics": {
+  "gasit": false,
+  "incercate": [
+   "www.bricstyre.com",
+   "www.brics.com",
+   "www.bricstire.com",
+   "www.bricstires.com",
+   "www.bricstyres.com",
+   "www.brics-tyres.com",
+   "www.brics.eu",
+   "www.brics.cn"
+  ]
+ },
+ "strial": {
+  "gasit": false,
+  "incercate": [
+   "www.strial-tyres.com",
+   "www.strial.com",
+   "www.strialtire.com",
+   "www.strialtires.com",
+   "www.strialtyre.com",
+   "www.strialtyres.com",
+   "www.strial.eu",
+   "www.strial.cn"
+  ]
+ },
+ "achilles": {
+  "gasit": true,
+  "site": "https://achilles.eu/en-gb",
+  "marca": "Achilles",
+  "produse": 1,
+  "candidati": [
+   {
+    "file": "1.svg",
+    "sursa": "https://achilles.eu/en-gb",
+    "url": "https://buy.nameshift.com/img/logo.svg",
+    "why": "img[Nameshift Logo]",
+    "bytes": 1006
+   }
+  ]
+ },
+ "aoteli": {
+  "gasit": false,
+  "site": "https://aotelityre.com/"
+ }
+}

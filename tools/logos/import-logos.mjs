@@ -33,6 +33,7 @@ const DIR = path.resolve(arg('--dir') ?? './logos-sursa');
 const APPLY = argv.includes('--apply');
 const BUCKET = process.env.SUPABASE_BRAND_BUCKET ?? 'marci';
 const NORMALIZER = fileURLToPath(new URL('./normalize-png.py', import.meta.url));
+const LIGHT_CHECK = fileURLToPath(new URL('./is-light.py', import.meta.url));
 
 const MIME = { '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp' };
 /**
@@ -93,6 +94,42 @@ function checkSvg(buf, name) {
   return { body: Buffer.from(fixed, 'utf8'), nota: `viewBox adăugat (0 0 ${w} ${h})` };
 }
 
+/**
+ * Un logo desenat în alb nu e un logo stricat — e varianta pentru antet închis,
+ * singura pe care o publică mulți producători. În loc s-o refuzăm, o marcăm:
+ * `brands.logo_on_dark` spune interfeței să-i dea placa închisă pentru care a
+ * fost desenată. Rasterele se măsoară cu `is-light.py`; la SVG se numără
+ * culorile din fișier.
+ */
+function svgIsLight(buf) {
+  const s = buf.toString('utf8');
+  const culori = [...s.matchAll(/(?:fill|stroke)\s*[:=]\s*["']?(#[0-9a-f]{3,8}|white|black|rgb\([^)]*\))/gi)]
+    .map((m) => m[1].toLowerCase())
+    .filter((c) => c !== 'none');
+  if (!culori.length) return false;
+
+  const lum = (c) => {
+    if (c === 'white') return 1;
+    if (c === 'black') return 0;
+    let r, g, b;
+    if (c.startsWith('rgb')) [r, g, b] = c.match(/[\d.]+/g).map(Number);
+    else {
+      const h = c.slice(1);
+      const p = h.length <= 4 ? h.split('').slice(0, 3).map((x) => parseInt(x + x, 16)) : [0, 2, 4].map((i) => parseInt(h.slice(i, i + 2), 16));
+      [r, g, b] = p;
+    }
+    return (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
+  };
+  const vizibile = culori.filter((c) => lum(c) < 0.62).length;
+  return vizibile / culori.length < 0.08;
+}
+
+function rasterIsLight(file) {
+  try {
+    return execFileSync('python3', [LIGHT_CHECK, file], { encoding: 'utf8' }).trim().startsWith('light');
+  } catch { return false; }
+}
+
 const tmp = await fsp.mkdtemp(path.join(os.tmpdir(), 'logos-'));
 
 /* ------------------------------------------------------------------ lucrul */
@@ -128,7 +165,10 @@ for (const file of files) {
     note = `${w} px${note ? ` · ${note}` : ''}`;
   }
 
-  matched.push({ file, ext, brand, body, note });
+  const peInchis = ext === '.svg' ? svgIsLight(body) : rasterIsLight(path.join(DIR, file));
+  if (peInchis) note = `${note ? note + ' · ' : ''}desenat în alb -> placă închisă`;
+
+  matched.push({ file, ext, brand, body, note, peInchis });
 }
 
 matched.sort((a, b) => b.brand.product_count - a.brand.product_count);
@@ -166,7 +206,9 @@ for (const m of matched) {
   if (upErr) { console.error(`  EROARE ${m.file}: ${upErr.message}`); continue; }
 
   const url = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${BUCKET}/${objectPath}`;
-  const { error: dbErr } = await db.from('brands').update({ logo_url: url }).eq('id', m.brand.id);
+  const { error: dbErr } = await db.from('brands')
+    .update({ logo_url: url, logo_on_dark: m.peInchis })
+    .eq('id', m.brand.id);
   if (dbErr) { console.error(`  EROARE la ${m.brand.name}: ${dbErr.message}`); continue; }
   uploaded++;
   log(`  ${m.brand.name} (${m.brand.product_count}) -> ${objectPath}${m.note ? ` · ${m.note}` : ''}`);

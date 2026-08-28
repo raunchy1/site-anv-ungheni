@@ -42,18 +42,22 @@ Schelete create, `body` `NULL`, pagini pe `noindex` până se completează.
 
 Nu există în sursă la niciunul dintre cele 134 de branduri. `brands.description_ro/ru` NULL.
 
-## 7. Logo-urile de marcă — 42 din 132, restul lipsesc
+## 7. Logo-urile de marcă — 78 din 132, restul lipsesc
 
-Urcate la 28 august 2026: **43 de mărci**, care acoperă **7.316 din 15.005 produse (48,8%)**.
-Sursele: Wikimedia Commons (37) și site-urile oficiale ale producătorilor (6).
+Urcate la 28 august 2026: **78 de mărci**, care acoperă **11.463 din 15.005 produse (76,4%)**.
+Surse: Wikimedia Commons (37) și site-urile oficiale ale producătorilor (41).
 
-Cele 89 rămase n-au logo găsibil din surse acceptabile — sunt aproape toate mărci
-chinezești fără site oficial funcțional. Lista completă, în ordinea importanței, e în
-`tools/logos/marci-checklist.csv`; primele cinci: TRACMAX (713), Grenlander (456),
-Petlas (348), Arivo (331), Joyroad (328).
+Cele 54 rămase n-au logo găsibil din surse acceptabile. Lista completă e în
+`tools/logos/marci-checklist.csv`; primele cinci: TRACMAX (713), Haida (278),
+Fronway (271), Crosswind (220), Kpatos (126).
 
-Dacă obții fișierul oficial al vreuneia, pune-l în `logos-sursa/` cu numele slug-ului
-și rulează:
+Cazul TRACMAX, cel mai mare gol: marca n-are site propriu. Fișierele care circulă
+sunt pe site-uri de distribuitori (`interpneu.de`), iar site-ul grupului proprietar
+(Shandong Yongsheng) arată logo-ul companiei, nu al mărcii. Dacă obții fișierul
+oficial de la furnizor, acoperirea sare la 81%.
+
+Dacă primești fișierul oficial al vreuneia, pune-l în `logos-sursa/` cu numele
+slug-ului și rulează:
 
 ```bash
 pnpm logos                 # rulare seacă

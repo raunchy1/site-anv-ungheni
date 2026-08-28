@@ -35,8 +35,11 @@ Actualizat: 21 august 2026 (promptul nr. 3).
   (seeklogo, brandsoftheworld, worldvectorlogo) și nimic de la concurență.
 - Fiecare fișier are proveniența scrisă în `logos-sursa/manifest.json` și se verifică
   pe planșa de contact (`pnpm logos:sheet`), pe fundal alb și pe fundal închis.
-- Un logo desenat în alb, pentru antet închis, **se respinge**: pe placa deschisă a
-  cardului ar fi invizibil (cazul Grenlander).
+- Un logo desenat în alb, pentru antet închis, **nu se respinge — primește placa
+  pentru care a fost desenat**: `brands.logo_on_dark`, ridicat automat de importator
+  când sub 8% din desen e vizibil pe alb, face `BrandLogo` să randeze placă închisă.
+  Un sfert dintre producători publică doar varianta albă; refuzul lor ar fi însemnat
+  1.500 de produse fără identitate vizuală.
 - `brands.logo_url` ține URL-ul public complet, nu o cale de Storage.
 
 ## A.4 — rutare bilingvă

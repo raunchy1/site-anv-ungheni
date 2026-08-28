@@ -30,7 +30,7 @@ const db = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL, process.env.SUPABA
 });
 
 const { data: brands, error } = await db.from('brands')
-  .select('name, slug_ro, product_count, logo_url')
+  .select('name, slug_ro, product_count, logo_url, logo_on_dark')
   .order('product_count', { ascending: false });
 if (error) throw new Error(error.message);
 
@@ -64,7 +64,7 @@ const cards = brands.map((b, i) => {
   const imgSrc = LIVE ? b.logo_url : file ? dataUri(file) : null;
   const media = imgSrc
     ? `<div class="pair">
-         <div class="plate light"><img src="${esc(imgSrc)}" alt="${esc(b.name)}" loading="lazy"></div>
+         <div class="plate light${b.logo_on_dark ? ' flagged' : ''}"><img src="${esc(imgSrc)}" alt="${esc(b.name)}" loading="lazy"></div>
          <div class="plate dark"><img src="${esc(imgSrc)}" alt="${esc(b.name)}" loading="lazy"></div>
        </div>`
     : `<div class="pair missing"><div class="plate none">fără logo</div></div>`;
@@ -108,6 +108,9 @@ const html = `<!doctype html>
   .pair { display: grid; grid-template-columns: 1fr 1fr; }
   .plate { display: flex; align-items: center; justify-content: center; height: 96px; padding: 12px; }
   .plate.light { background: #fff; }
+  /* Marcate: logo-uri albe, care în site primesc placă închisă. Aici rămân pe
+     alb intenționat, ca să se vadă de ce au nevoie de tratamentul special. */
+  .plate.light.flagged { background: repeating-linear-gradient(45deg,#fff,#fff 6px,#F6F3EE 6px,#F6F3EE 12px); }
   .plate.dark { background: #121211; }
   .plate.none { grid-column: 1 / -1; height: 96px; color: #9B968C; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; background: repeating-linear-gradient(45deg, #F2EFEA, #F2EFEA 8px, #EAE6DF 8px, #EAE6DF 16px); }
   .pair.missing { grid-template-columns: 1fr; }

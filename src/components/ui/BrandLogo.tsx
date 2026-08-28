@@ -11,9 +11,12 @@ import { cn } from "@/lib/cn";
  * 1. CUTIE DE ÎNĂLȚIME FIXĂ, `object-contain`. Un logo lat (`CONTINENTAL`) și
  *    unul pătrat (`GT`) trebuie să ocupe aceeași bandă verticală, altfel
  *    titlurile din grilă nu mai cad pe aceeași linie.
- * 2. ACEEAȘI PLACĂ ca la fotografii (`--img-plate` + `mix-blend-mode`).
- *    Logo-urile sunt aproape toate negre pe alb: pe fundal închis ar apărea ca
- *    dreptunghiuri albe decupate, iar fără placă ar dispărea complet.
+ * 2. PLACĂ, nu fundal transparent. Implicit e aceeași placă deschisă ca la
+ *    fotografii (`--img-plate` + `mix-blend-mode`), pentru că logo-urile sunt
+ *    aproape toate întunecate pe alb. Un sfert dintre producători publică însă
+ *    doar varianta albă, cea din antetul propriului site: acelea primesc placă
+ *    ÎNCHISĂ (`onDark`), adică exact suprafața pentru care au fost desenate.
+ *    Alternativa — să le lăsăm pe alb — le-ar face invizibile.
  * 3. REZERVĂ TIPOGRAFICĂ, nu spațiu gol. Cât timp `brands.logo_url` e NULL —
  *    adică pentru toate mărcile până se încarcă fișierele oficiale — se afișează
  *    numele în versale, care e oricum identitatea de brand a site-ului
@@ -22,11 +25,14 @@ import { cn } from "@/lib/cn";
 export function BrandLogo({
   name,
   src,
+  onDark = false,
   size = "sm",
   className,
 }: {
   name: string | null;
   src?: string | null;
+  /** Logo desenat în alb: are nevoie de placă închisă ca să se vadă. */
+  onDark?: boolean;
   /** `sm` = card de produs (20px), `md` = fișă de produs, `lg` = pagină de marcă. */
   size?: "sm" | "md" | "lg";
   className?: string;
@@ -44,7 +50,8 @@ export function BrandLogo({
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-[var(--radius-xs)] bg-[var(--img-plate)]",
+        "relative overflow-hidden rounded-[var(--radius-xs)]",
+        onDark ? "bg-[var(--panel)]" : "bg-[var(--img-plate)]",
         box,
         className,
       )}
@@ -54,7 +61,12 @@ export function BrandLogo({
         alt={name}
         fill
         sizes="160px"
-        className="object-contain object-left p-[4%] [mix-blend-mode:var(--img-blend)]"
+        className={cn(
+          "object-contain object-left p-[6%]",
+          // `multiply` lipește fotografia de placa deschisă; pe placa închisă
+          // ar înnegri exact desenul alb pe care vrem să-l vedem.
+          !onDark && "[mix-blend-mode:var(--img-blend)]",
+        )}
       />
     </div>
   );

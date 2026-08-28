@@ -38,6 +38,7 @@ export type Product = {
   image_url?: string | null;
   /** Completate din `brands` la citire, nu coloane pe `products`. */
   brand_logo_url?: string | null;
+  brand_logo_on_dark?: boolean;
   brand_slug?: string | null;
   brand_slug_ru?: string | null;
 };
@@ -64,6 +65,8 @@ export type Brand = {
   name: string;
   /** URL public complet către logo, sau NULL cât timp nu a fost încărcat. */
   logo_url: string | null;
+  /** Logo desenat în alb: se randează pe placă închisă. */
+  logo_on_dark: boolean;
   product_count: number;
   meta_title_ro: string | null;
   meta_title_ru: string | null;

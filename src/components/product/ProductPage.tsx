@@ -83,7 +83,7 @@ export async function ProductPage({ product, locale }: { product: Product; local
         </div>
 
         <div className="min-w-0">
-          <BrandLogo name={product.brand_name} src={product.brand_logo_url} size="md" />
+          <BrandLogo name={product.brand_name} src={product.brand_logo_url} onDark={product.brand_logo_on_dark} size="md" />
           <h1 className="optical-left mt-[var(--sp-2)] text-700 font-semibold tracking-[var(--tr-title)] text-[var(--ink-strong)] sm:text-800">
             {title}
           </h1>

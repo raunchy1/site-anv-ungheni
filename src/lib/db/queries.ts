@@ -11,10 +11,10 @@ const PRODUCT_COLS = `
   price_mdl, stock_status, title_ro, title_ru, description_ro, description_ru,
   meta_title_ro, meta_title_ru, meta_desc_ro, meta_desc_ru,
   product_images ( storage_path, alt_ro, alt_ru ),
-  brands ( slug_ro, slug_ru, name, logo_url )
+  brands ( slug_ro, slug_ru, name, logo_url, logo_on_dark )
 `;
 
-type BrandRef = { slug_ro: string; slug_ru: string | null; name: string; logo_url: string | null };
+type BrandRef = { slug_ro: string; slug_ru: string | null; name: string; logo_url: string | null; logo_on_dark: boolean };
 
 type Row = Product & {
   product_images?: { storage_path: string; alt_ro: string | null; alt_ru: string | null }[];
@@ -32,6 +32,7 @@ const withImage = (r: Row): Product => {
     // `logo_url` ține URL-ul public complet, nu o cale de Storage: logo-urile se
     // încarcă o singură dată, manual, iar bucket-ul lor nu e cel al produselor.
     brand_logo_url: brand?.logo_url ?? null,
+    brand_logo_on_dark: brand?.logo_on_dark ?? false,
     brand_slug: brand?.slug_ro ?? null,
     brand_slug_ru: brand?.slug_ru ?? null,
   };
