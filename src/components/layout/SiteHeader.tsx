@@ -1,6 +1,7 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { LanguageSwitch } from "./LanguageSwitch";
+import { Logo } from "@/components/brand/Logo";
 import { IconPhone, IconCart, IconCompare, IconFavorite } from "@/components/icons";
 import { telLink } from "@/lib/format";
 import type { Locale, Settings } from "@/lib/types";
@@ -15,8 +16,15 @@ export function SiteHeader({ settings, locale }: { settings: Settings; locale: L
   return (
     <header className="sticky top-0 z-40 border-b border-[var(--line)] bg-[var(--surface)]/95 backdrop-blur-[2px]">
       <div className="shell flex h-[60px] items-center gap-[var(--sp-5)]">
-        <Link href="/" className="shrink-0 font-semibold tracking-[var(--tr-title)] text-[var(--ink-strong)]">
-          ANVELOPE UNGHENI
+        {/* Numele accesibil sta pe link, nu pe SVG: SVG-ul e `aria-hidden`,
+            altfel cititorul de ecran ar anunta de doua ori acelasi lucru. */}
+        <Link
+          href="/"
+          aria-label={t("logoHome")}
+          className="logo shrink-0"
+        >
+          <Logo height={38} className="sm:hidden" />
+          <Logo height={48} className="hidden sm:block" />
         </Link>
 
         <nav className="hidden items-center gap-[var(--sp-5)] text-[var(--fs-200)] md:flex">

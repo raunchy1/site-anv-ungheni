@@ -207,3 +207,17 @@
      filtre, tabele) isi rezolva depasirea in propriul container cu overflow. */
   html, body { max-width: 100%; overflow-x: clip; }
 }
+
+@layer components {
+  /* LOGO-UL, UN SINGUR COMPONENT PENTRU TOATE CONTEXTELE.
+     `Logo` isi ia semnul din `currentColor` si „Ungheni" din `--lg-accent`.
+     Ambele se mostenesc, deci nu exista o a doua componenta pentru fundal
+     inchis: `--ink-strong` se inverseaza singur cu tema, iar `--lg-accent` e
+     token semantic in `tokens.css` — 600 pe deschis, 500 pe inchis. */
+  .logo { color: var(--ink-strong); }
+
+  /* Exceptia: logo-ul asezat pe o suprafata inchisa CAT TIMP pagina e in tema
+     deschisa — panoul de cautare, un banner. Acolo tema nu ajuta, deci se
+     spune explicit. */
+  .logo-on-dark { color: var(--pure-white); --lg-accent: var(--red-500); }
+}

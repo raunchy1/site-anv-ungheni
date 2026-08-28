@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { IconPin, IconPhone, IconClock } from "@/components/icons";
 import { TreadRule } from "@/components/icons";
+import { Logo } from "@/components/brand/Logo";
 import { telLink } from "@/lib/format";
 import { getBrands, getServices } from "@/lib/db/queries";
 import type { Locale, Settings } from "@/lib/types";
@@ -27,7 +28,7 @@ export async function SiteFooter({ settings, locale }: { settings: Settings; loc
     <footer className="mt-[var(--sp-16)] border-t border-[var(--line)] bg-[var(--surface-2)]">
       <div className="shell grid gap-[var(--sp-8)] py-[var(--sp-10)] sm:grid-cols-2 lg:grid-cols-4">
         <div>
-          <p className="font-semibold tracking-[var(--tr-title)] text-[var(--ink-strong)]">ANVELOPE UNGHENI</p>
+          <Logo height={44} className="logo" />
           <TreadRule variant="mark" width={92} className="mt-[var(--sp-2)] text-[var(--accent)]" />
           <ul className="mt-[var(--sp-4)] space-y-[var(--sp-3)] text-[var(--fs-200)] text-[var(--ink-muted)]">
             <li className="flex gap-[var(--sp-2)]">
