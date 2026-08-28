@@ -14,6 +14,10 @@ import { cn } from "@/lib/cn";
  *    pluti într-o bandă de trei ori mai lată decât ele — o bară, cu logo-ul ca
  *    accident. Lățimea e plafonată, ca un wordmark foarte lung (LingLong, 10:1)
  *    să nu împingă cardul.
+ *
+ *    Înălțimile: 38px pe card, 52 pe fișă, 72 pe pagina de marcă. La 26 px
+ *    emblemele erau abia lizibile — un logo de marcă trebuie recunoscut dintr-o
+ *    privire, altfel nu-și face treaba pentru care a fost pus acolo.
  * 2. PLACĂ, nu fundal transparent. Implicit e aceeași placă deschisă ca la
  *    fotografii (`--img-plate` + `mix-blend-mode`), pentru că logo-urile sunt
  *    aproape toate întunecate pe alb. Un sfert dintre producători publică însă
@@ -49,8 +53,8 @@ export function BrandLogo({
      o parte dintre mărci au emblemă aproape pătrată (Joyroad, Nexen), iar pe o
      bandă de 20px acelea se randau la 20×20 — o pată, nu un logo. La 26px,
      emblema rămâne lizibilă, iar wordmark-urile late nu pierd nimic. */
-  const h = size === "lg" ? 56 : size === "md" ? 40 : 26;
-  const maxW = size === "lg" ? 224 : size === "md" ? 144 : 108;
+  const h = size === "lg" ? 72 : size === "md" ? 52 : 38;
+  const maxW = size === "lg" ? 300 : size === "md" ? 210 : 150;
   // +8% pentru marginea interioară, ca desenul să nu atingă muchia plăcii
   const w = Math.round(Math.min(maxW, Math.max(h, h * (ratio ?? 6) * 1.08)));
 
