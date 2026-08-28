@@ -14,6 +14,7 @@ export function toUiProduct(p: DbProduct): UiProduct {
     brand: p.brand_name,
     brandLogo: p.brand_logo_url ?? null,
     brandLogoOnDark: p.brand_logo_on_dark ?? false,
+    brandLogoRatio: p.brand_logo_ratio ?? null,
     brandSlug: p.brand_slug ?? null,
     title: p.title_ro,
     titleRu: p.title_ru ?? p.title_ro,

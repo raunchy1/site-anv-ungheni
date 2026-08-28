@@ -98,8 +98,16 @@ function checkSvg(buf, name) {
  * Un logo desenat în alb nu e un logo stricat — e varianta pentru antet închis,
  * singura pe care o publică mulți producători. În loc s-o refuzăm, o marcăm:
  * `brands.logo_on_dark` spune interfeței să-i dea placa închisă pentru care a
- * fost desenată. Rasterele se măsoară cu `is-light.py`; la SVG se numără
- * culorile din fișier.
+ * fost desenată.
+ *
+ * ATENȚIE la limita metodei. Rasterele se măsoară corect cu `is-light.py`, dar
+ * la SVG numărarea culorilor din fișier GREȘEȘTE în ambele sensuri: Vredestein
+ * are text alb pe un dreptunghi bleumarin desenat în fișier (deci arată bine pe
+ * placa deschisă, dar iese „alb" la numărătoare), iar ILINK are un accent roșu
+ * care îl scoate din prag deși restul mărcii e alb. Verdictul sigur se ia numai
+ * randând fișierul: `tools/logos/build-contrast-page.mjs` desenează fiecare logo
+ * pe alb și pe închis într-un canvas și măsoară cât rămâne vizibil. Rulează-l
+ * după fiecare import și corectează steagurile din măsurători.
  */
 function svgIsLight(buf) {
   const s = buf.toString('utf8');

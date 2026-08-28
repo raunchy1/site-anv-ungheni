@@ -26,7 +26,7 @@ export async function CatalogView({
   search: Search;
   title?: string;
   /** Pagina de marcă își pune logo-ul deasupra titlului, dacă are unul încărcat. */
-  brandLogo?: { name: string; src: string | null; onDark?: boolean };
+  brandLogo?: { name: string; src: string | null; onDark?: boolean; ratio?: number | null };
 }) {
   const t = await getTranslations();
   const page = Math.max(1, Number(search.pagina ?? 1) || 1);
@@ -67,7 +67,7 @@ export async function CatalogView({
       />
 
       {brandLogo?.src ? (
-        <BrandLogo name={brandLogo.name} src={brandLogo.src} onDark={brandLogo.onDark} size="lg" className="mt-[var(--sp-4)]" />
+        <BrandLogo name={brandLogo.name} src={brandLogo.src} onDark={brandLogo.onDark} ratio={brandLogo.ratio} size="lg" className="mt-[var(--sp-4)]" />
       ) : null}
 
       <div className="mt-[var(--sp-4)] flex flex-wrap items-baseline justify-between gap-[var(--sp-4)]">

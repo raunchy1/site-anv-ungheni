@@ -21,7 +21,12 @@
    "File:Hankook Logo 2024.svg",
    "File:Hankook Tire logo.svg",
    "File:Hankook logo.png"
-  ]
+  ],
+  "contrast": {
+   "peAlb": 0.24,
+   "peInchis": 0.073,
+   "pePlacaInchisa": false
+  }
  },
  "nexen": {
   "file": "nexen.png",
@@ -36,7 +41,12 @@
   "inaltime": 900,
   "licenta": "CC BY-SA 4.0",
   "scor": 45,
-  "alternative": []
+  "alternative": [],
+  "contrast": {
+   "peAlb": 0.249,
+   "peInchis": 0,
+   "pePlacaInchisa": false
+  }
  },
  "linglong": {
   "file": "linglong.png",
@@ -45,7 +55,12 @@
   "sursa": "site oficial al producătorului",
   "pagina": "https://www.linglong.cn/",
   "url": "https://www.linglong.cn/images/logo.png",
-  "verificat": "logo din antetul site-ului oficial, PNG transparent 2654×252"
+  "verificat": "logo din antetul site-ului oficial, PNG transparent 2654×252",
+  "contrast": {
+   "peAlb": 0.137,
+   "peInchis": 0.007,
+   "pePlacaInchisa": false
+  }
  },
  "michelin": {
   "file": "michelin.svg",
@@ -62,7 +77,12 @@
   "scor": 60,
   "alternative": [
    "File:Clefs Michelin.svg"
-  ]
+  ],
+  "contrast": {
+   "peAlb": 0.229,
+   "peInchis": 0,
+   "pePlacaInchisa": false
+  }
  },
  "grenlander": {
   "file": "grenlander.svg",
@@ -71,7 +91,12 @@
   "sursa": "site oficial al producătorului",
   "pagina": "https://grenlander.com/",
   "url": "https://grenlander.com/local/templates/grenlander/images/logo.svg",
-  "verificat": "variantă albă din antetul site-ului oficial — se randează pe placă închisă"
+  "verificat": "variantă albă din antetul site-ului oficial — se randează pe placă închisă",
+  "contrast": {
+   "peAlb": 0.038,
+   "peInchis": 0.26,
+   "pePlacaInchisa": true
+  }
  },
  "continental": {
   "file": "continental.svg",
@@ -89,7 +114,12 @@
   "alternative": [
    "File:Continental wordmark.svg",
    "File:Continental Edison logo.svg"
-  ]
+  ],
+  "contrast": {
+   "peAlb": 0.229,
+   "peInchis": 0,
+   "pePlacaInchisa": false
+  }
  },
  "goodyear": {
   "file": "goodyear.png",
@@ -98,7 +128,12 @@
   "sursa": "site oficial al producătorului",
   "pagina": "https://www.goodyear.eu/",
   "url": "https://www.goodyear.eu/content/experience-fragments/goodyear/ecommerce/header/header/en_gb/_jcr_content/root/container/header/logo.coreimg.png/1764318717192/goodyear-logo-tg-2025.png",
-  "verificat": "logo din antetul goodyear.eu, PNG transparent 336×61, versiunea 2025"
+  "verificat": "logo din antetul goodyear.eu, PNG transparent 336×61, versiunea 2025",
+  "contrast": {
+   "peAlb": 0.179,
+   "peInchis": 0.24,
+   "pePlacaInchisa": false
+  }
  },
  "lassa": {
   "file": "lassa.png",
@@ -107,7 +142,12 @@
   "sursa": "site oficial al producătorului",
   "pagina": "https://www.lassa.com/",
   "url": "https://admin.lassa.com/Uploads/Cms/lassa-global-cati-soylem-2022_ing_440x65px-1.png",
-  "verificat": "logo din antetul site-ului oficial, 440×65, include semnătura „Together in every mile\""
+  "verificat": "logo din antetul site-ului oficial, 440×65, include semnătura „Together in every mile\"",
+  "contrast": {
+   "peAlb": 0.271,
+   "peInchis": 0.021,
+   "pePlacaInchisa": false
+  }
  },
  "maxxis": {
   "file": "maxxis.svg",
@@ -126,7 +166,12 @@
    "File:Maxxis logo.png",
    "File:MAXXISロゴ透明.png"
   ],
-  "verificat": "titlu și categorii confirmă marca de anvelope"
+  "verificat": "titlu și categorii confirmă marca de anvelope",
+  "contrast": {
+   "peAlb": 0.394,
+   "peInchis": 0.376,
+   "pePlacaInchisa": false
+  }
  },
  "kumho": {
   "file": "kumho.svg",
@@ -145,7 +190,12 @@
    "File:Kumho Resort logo(2021).svg",
    "File:KUMHO TIRE logo.png",
    "File:Kumho Asiana logo.svg"
-  ]
+  ],
+  "contrast": {
+   "peAlb": 0.381,
+   "peInchis": 0,
+   "pePlacaInchisa": false
+  }
  },
  "petlas": {
   "file": "petlas.png",
@@ -154,7 +204,12 @@
   "sursa": "site oficial al producătorului",
   "pagina": "https://www.petlastires.com/",
   "url": "https://www.petlastires.com/assets/images/site/tema/petlasfooterlogo_1.png",
-  "verificat": "logo din antetul site-ului oficial"
+  "verificat": "logo din antetul site-ului oficial",
+  "contrast": {
+   "peAlb": 0.386,
+   "peInchis": 0,
+   "pePlacaInchisa": false
+  }
  },
  "arivo": {
   "file": null,
@@ -167,7 +222,12 @@
   "sursa": "site oficial al producătorului",
   "pagina": "https://joyroad.eu/",
   "url": "https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=375,fit=crop/ALp21v4M1vH0DRG5/joyroad-logo-no-bg-blanc-txt-m7VDeygEjkuVMqnk.png",
-  "verificat": "variantă albă din antetul site-ului oficial — se randează pe placă închisă"
+  "verificat": "variantă albă din antetul site-ului oficial — se randează pe placă închisă",
+  "contrast": {
+   "peAlb": 0,
+   "peInchis": 0.122,
+   "pePlacaInchisa": true
+  }
  },
  "roadx": {
   "file": "roadx.png",
@@ -176,7 +236,13 @@
   "sursa": "site oficial al producătorului",
   "pagina": "https://roadxtire.com/",
   "url": "https://omo-oss-image.thefastimg.com/portal-saas/pg2025103120522131959/cms/image/641177c9-b85f-4c09-9172-3af957b4bb73.png",
-  "verificat": "antetul roadxtire.com, variantă albă — se randează pe placă închisă"
+  "verificat": "antetul roadxtire.com, variantă albă — se randează pe placă închisă",
+  "contrast": {
+   "peAlb": 0.119,
+   "peInchis": 0.206,
+   "pePlacaInchisa": true,
+   "nota": "sub prag la măsurătoare (0,119 pe alb), dar din desen se vede doar paralelogramul roșu — cuvântul ROADX e alb. Pus manual pe placă închisă."
+  }
  },
  "sailun": {
   "file": "sailun.png",
@@ -191,7 +257,12 @@
   "inaltime": 318,
   "licenta": "Public domain",
   "scor": 45,
-  "alternative": []
+  "alternative": [],
+  "contrast": {
+   "peAlb": 0.23,
+   "peInchis": 0,
+   "pePlacaInchisa": false
+  }
  },
  "haida": {
   "file": null,
@@ -204,7 +275,12 @@
   "sursa": "site oficial al producătorului",
   "pagina": "https://www.platin-wheels.com/",
   "url": "https://www.platin-wheels.com/fileadmin/user_upload/graphics/platin.svg",
-  "verificat": "logo din antetul site-ului oficial"
+  "verificat": "logo din antetul site-ului oficial",
+  "contrast": {
+   "peAlb": 0.498,
+   "peInchis": 0,
+   "pePlacaInchisa": false
+  }
  },
  "fronway": {
   "file": null,
@@ -217,7 +293,12 @@
   "sursa": "site oficial al producătorului",
   "pagina": "https://www.torquetyres.com/",
   "url": "https://www.torquetyres.com/wp-content/uploads/2026/03/torque-logo-medium-dark.png",
-  "verificat": "logo din antetul site-ului oficial"
+  "verificat": "logo din antetul site-ului oficial",
+  "contrast": {
+   "peAlb": 0.415,
+   "peInchis": 0,
+   "pePlacaInchisa": false
+  }
  },
  "bridgestone": {
   "file": "bridgestone.svg",
@@ -237,7 +318,12 @@
    "File:Bridgestone Logo.png",
    "File:Bridgestone 201x logo.svg"
   ],
-  "verificat": "titlu și categorii confirmă marca de anvelope"
+  "verificat": "titlu și categorii confirmă marca de anvelope",
+  "contrast": {
+   "peAlb": 0.224,
+   "peInchis": 0,
+   "pePlacaInchisa": false
+  }
  },
  "crosswind": {
   "file": null,
@@ -268,7 +354,12 @@
   ],
   "motiv": "nicio urmă de anvelope în categorii sau descriere",
   "titlu_respins": "File:Pirelli RE logo.svg",
-  "verificat": "ales manual, după verificarea paginii de pe Commons"
+  "verificat": "ales manual, după verificarea paginii de pe Commons",
+  "contrast": {
+   "peAlb": 0.351,
+   "peInchis": 0.607,
+   "pePlacaInchisa": false
+  }
  },
  "aplus": {
   "file": "aplus.png",
@@ -277,7 +368,12 @@
   "sursa": "site oficial al producătorului",
   "pagina": "https://www.royalblacktyre.com/",
   "url": "https://www.royalblacktyre.com/LOGO/3-APLUS.png",
-  "verificat": "antetul royalblacktyre.com, site-ul grupului care produce marca"
+  "verificat": "antetul royalblacktyre.com, site-ul grupului care produce marca",
+  "contrast": {
+   "peAlb": 0.001,
+   "peInchis": 0.243,
+   "pePlacaInchisa": true
+  }
  },
  "yokohama": {
   "file": "yokohama.svg",
@@ -296,7 +392,12 @@
    "File:Yokohama Tire new logo.svg",
    "File:Yokohama (Unternehmen) logo.svg"
   ],
-  "verificat": "ales manual, după verificarea paginii de pe Commons"
+  "verificat": "ales manual, după verificarea paginii de pe Commons",
+  "contrast": {
+   "peAlb": 0.185,
+   "peInchis": 0,
+   "pePlacaInchisa": false
+  }
  },
  "landspider": {
   "file": "landspider.webp",
@@ -305,7 +406,12 @@
   "sursa": "site oficial al producătorului",
   "pagina": "https://www.landspidertire.com/",
   "url": "https://www.landspidertire.com/themes/default/public/assets/img/brand_1.webp",
-  "verificat": "logo din antetul site-ului oficial"
+  "verificat": "logo din antetul site-ului oficial",
+  "contrast": {
+   "peAlb": 0.251,
+   "peInchis": 0.064,
+   "pePlacaInchisa": false
+  }
  },
  "triangle": {
   "file": "triangle.svg",
@@ -324,7 +430,12 @@
    "File:Troyca triangle logo (2021).svg",
    "File:Triangle Logo.png",
    "File:Blue Triangle logo.PNG"
-  ]
+  ],
+  "contrast": {
+   "peAlb": 0.096,
+   "peInchis": 0,
+   "pePlacaInchisa": false
+  }
  },
  "kapsen": {
   "file": "kapsen.png",
@@ -333,7 +444,12 @@
   "sursa": "site oficial al producătorului",
   "pagina": "https://kapsentyre.com/",
   "url": "https://kapsentyre.com/img/logo_KAPSEN.png",
-  "verificat": "site oficial Kapsen/Habilead, PNG transparent 600×109"
+  "verificat": "site oficial Kapsen/Habilead, PNG transparent 600×109",
+  "contrast": {
+   "peAlb": 0.347,
+   "peInchis": 0.014,
+   "pePlacaInchisa": false
+  }
  },
  "vredestein": {
   "file": "vredestein.svg",
@@ -352,7 +468,12 @@
    "File:Vredestein tyres logo.png",
    "File:Vredestein Tyres Logo.png"
   ],
-  "verificat": "titlu și categorii confirmă marca de anvelope"
+  "verificat": "titlu și categorii confirmă marca de anvelope",
+  "contrast": {
+   "peAlb": 0.627,
+   "peInchis": 0.107,
+   "pePlacaInchisa": false
+  }
  },
  "hilo": {
   "file": "hilo.png",
@@ -361,7 +482,12 @@
   "sursa": "site oficial de marcă",
   "pagina": "https://www.hilotyres.com/",
   "url": "https://www.hilotyres.com/wp-content/themes/hilo/assets/images/hilo-logo.png",
-  "verificat": "antetul hilotyres.com (site-ul dedicat mărcii, filiala australiană), PNG 2306×857"
+  "verificat": "antetul hilotyres.com (site-ul dedicat mărcii, filiala australiană), PNG 2306×857",
+  "contrast": {
+   "peAlb": 0.212,
+   "peInchis": 0.073,
+   "pePlacaInchisa": false
+  }
  },
  "matador": {
   "file": "matador.svg",
@@ -379,7 +505,12 @@
   "alternative": [
    "File:Matador Network logo.svg",
    "File:Matador text logo.svg"
-  ]
+  ],
+  "contrast": {
+   "peAlb": 0.194,
+   "peInchis": 0.004,
+   "pePlacaInchisa": false
+  }
  },
  "rosava": {
   "file": "rosava.png",
@@ -395,7 +526,12 @@
   "licenta": "Public domain",
   "scor": 45,
   "alternative": [],
-  "verificat": "titlu și categorii confirmă marca de anvelope"
+  "verificat": "titlu și categorii confirmă marca de anvelope",
+  "contrast": {
+   "peAlb": 0.341,
+   "peInchis": 0,
+   "pePlacaInchisa": false
+  }
  },
  "barum": {
   "file": "barum.svg",
@@ -410,7 +546,12 @@
   "inaltime": 69,
   "licenta": "Public domain",
   "scor": 80,
-  "alternative": []
+  "alternative": [],
+  "contrast": {
+   "peAlb": 0.25,
+   "peInchis": 0.016,
+   "pePlacaInchisa": false
+  }
  },
  "firemax": {
   "file": "firemax.png",
@@ -419,7 +560,12 @@
   "sursa": "site oficial al producătorului",
   "pagina": "https://www.firemaxtyre.com/",
   "url": "https://omo-oss-image.thefastimg.com/portal-saas/pg2025110319351580085/cms/image/e5b52f03-fba8-490f-90b3-74450f1819e8.png",
-  "verificat": "logo din antetul site-ului oficial"
+  "verificat": "logo din antetul site-ului oficial",
+  "contrast": {
+   "peAlb": 0.245,
+   "peInchis": 0,
+   "pePlacaInchisa": false
+  }
  },
  "starmaxx": {
   "file": "starmaxx.png",
@@ -428,7 +574,12 @@
   "sursa": "site oficial al producătorului",
   "pagina": "https://www.starmaxx.com.tr/",
   "url": "https://www.starmaxx.com.tr/Assets/img/sticklogo.png",
-  "verificat": "antetul starmaxx.com.tr (grupul Petlas), PNG 600×136"
+  "verificat": "antetul starmaxx.com.tr (grupul Petlas), PNG 600×136",
+  "contrast": {
+   "peAlb": 0.32,
+   "peInchis": 0,
+   "pePlacaInchisa": false
+  }
  },
  "habilead": {
   "file": "habilead.png",
@@ -437,7 +588,12 @@
   "sursa": "site oficial al producătorului",
   "pagina": "https://kapsentyre.com/",
   "url": "https://kapsentyre.com/img/logo_habilead.png",
-  "verificat": "același producător, PNG transparent 600×200"
+  "verificat": "același producător, PNG transparent 600×200",
+  "contrast": {
+   "peAlb": 0.192,
+   "peInchis": 0,
+   "pePlacaInchisa": false
+  }
  },
  "riken": {
   "file": "riken.png",
@@ -446,7 +602,12 @@
   "sursa": "site oficial al producătorului",
   "pagina": "https://passenger-car.riken.com/",
   "url": "https://dgaddcosprod.blob.core.windows.net/assembly-a3/clx2txqiy30rh01o0f2kf8vha/attachments/clxuklff229kf01l38bmf6ilt-riken-logo-rgb.full.png",
-  "verificat": "logo din antetul site-ului oficial"
+  "verificat": "logo din antetul site-ului oficial",
+  "contrast": {
+   "peAlb": 0.454,
+   "peInchis": 0,
+   "pePlacaInchisa": false
+  }
  },
  "centara": {
   "file": null,
@@ -491,7 +652,12 @@
   "inaltime": 539,
   "licenta": "Public domain",
   "scor": 80,
-  "alternative": []
+  "alternative": [],
+  "contrast": {
+   "peAlb": 0.449,
+   "peInchis": 0,
+   "pePlacaInchisa": false
+  }
  },
  "kpatos": {
   "file": null,
@@ -504,7 +670,12 @@
   "sursa": "site oficial al producătorului",
   "pagina": "https://www.acceleratire.com/",
   "url": "https://www.acceleratire.com/theme_accelera/static/src/img/Accelera_logo.png",
-  "verificat": "variantă albă din antetul site-ului oficial — se randează pe placă închisă"
+  "verificat": "variantă albă din antetul site-ului oficial — se randează pe placă închisă",
+  "contrast": {
+   "peAlb": 0,
+   "peInchis": 0.202,
+   "pePlacaInchisa": true
+  }
  },
  "ovation": {
   "file": null,
@@ -540,7 +711,12 @@
   "scor": 90,
   "alternative": [
    "File:Uniroyal Logo vector.svg"
-  ]
+  ],
+  "contrast": {
+   "peAlb": 0.317,
+   "peInchis": 0.192,
+   "pePlacaInchisa": false
+  }
  },
  "leao": {
   "file": null,
@@ -564,7 +740,12 @@
    "File:Dunlop tires logo.png",
    "File:Logo Dunlop Tire.png"
   ],
-  "verificat": "titlu și categorii confirmă marca de anvelope"
+  "verificat": "titlu și categorii confirmă marca de anvelope",
+  "contrast": {
+   "peAlb": 0.133,
+   "peInchis": 0.622,
+   "pePlacaInchisa": false
+  }
  },
  "otani": {
   "file": "otani.png",
@@ -573,7 +754,12 @@
   "sursa": "site oficial al producătorului",
   "pagina": "https://www.otanitire.com/",
   "url": "https://www.otanitire.com/wp-content/uploads/2020/12/B_Logo_%E0%B9%81%E0%B8%99%E0%B8%A7%E0%B8%99%E0%B8%AD%E0%B8%99_Logo3DTagline_%E0%B9%81%E0%B8%99%E0%B8%A7%E0%B8%99%E0%B8%AD%E0%B8%991-scaled.png",
-  "verificat": "logo din antetul site-ului oficial"
+  "verificat": "logo din antetul site-ului oficial",
+  "contrast": {
+   "peAlb": 0.57,
+   "peInchis": 0.2,
+   "pePlacaInchisa": false
+  }
  },
  "laufenn": {
   "file": "laufenn.svg",
@@ -582,7 +768,12 @@
   "sursa": "site oficial al producătorului",
   "pagina": "https://www.laufenn.com/it/front/it_front/index.do",
   "url": "https://www.laufenn.com/it/front/images/common/ch_logo.svg",
-  "verificat": "logo din antetul site-ului oficial"
+  "verificat": "logo din antetul site-ului oficial",
+  "contrast": {
+   "peAlb": 0.18,
+   "peInchis": 0,
+   "pePlacaInchisa": false
+  }
  },
  "lanvigator": {
   "file": "lanvigator.png",
@@ -591,7 +782,12 @@
   "sursa": "site oficial al producătorului",
   "pagina": "https://www.royalblacktyre.com/",
   "url": "https://www.royalblacktyre.com/LOGO/2-LANVIGATOR.png",
-  "verificat": "antetul royalblacktyre.com, site-ul grupului care produce marca"
+  "verificat": "antetul royalblacktyre.com, site-ul grupului care produce marca",
+  "contrast": {
+   "peAlb": 0.148,
+   "peInchis": 0.05,
+   "pePlacaInchisa": false
+  }
  },
  "davanti": {
   "file": "davanti.svg",
@@ -600,7 +796,12 @@
   "sursa": "site oficial al producătorului",
   "pagina": "https://davanti-tyres.com/",
   "url": "https://davanti-tyres.com/app/themes/davanti-tyres-theme/assets/gfx/logo.svg",
-  "verificat": "logo din antetul site-ului oficial"
+  "verificat": "logo din antetul site-ului oficial",
+  "contrast": {
+   "peAlb": 0.26,
+   "peInchis": 0.061,
+   "pePlacaInchisa": false
+  }
  },
  "gt-radial": {
   "file": "gt-radial.svg",
@@ -615,7 +816,12 @@
   "inaltime": 40,
   "licenta": "Public domain",
   "scor": 80,
-  "alternative": []
+  "alternative": [],
+  "contrast": {
+   "peAlb": 0.336,
+   "peInchis": 0,
+   "pePlacaInchisa": false
+  }
  },
  "sunny": {
   "file": null,
@@ -659,7 +865,12 @@
    "File:Viking-Logo.png",
    "File:Viking-freight-logo-svg-vector.svg",
    "File:Viking (Reifenmarke) logo.svg"
-  ]
+  ],
+  "contrast": {
+   "peAlb": 0.424,
+   "peInchis": 0,
+   "pePlacaInchisa": false
+  }
  },
  "ilink": {
   "file": "ilink.svg",
@@ -668,7 +879,12 @@
   "sursa": "site oficial al producătorului",
   "pagina": "https://www.ilinktires.com/",
   "url": "https://www.ilinktires.com/assets/svg/logoB.svg",
-  "verificat": "variantă albă din antetul site-ului oficial — se randează pe placă închisă"
+  "verificat": "variantă albă din antetul site-ului oficial — se randează pe placă închisă",
+  "contrast": {
+   "peAlb": 0.052,
+   "peInchis": 0.334,
+   "pePlacaInchisa": true
+  }
  },
  "zmax": {
   "file": null,
@@ -681,7 +897,12 @@
   "sursa": "site oficial al producătorului",
   "pagina": "https://passenger-car.tigar-tyres.com/",
   "url": "https://dgaddcosprod.blob.core.windows.net/assembly-a3/clx2tw9cr2y7401mz9xcy7z7g/attachments/clxa52l560e4901l355u180lo-3-ppt-taurus-point8-sales-pitch-en-1-3x.one-third.png",
-  "verificat": "logo din antetul site-ului oficial"
+  "verificat": "logo din antetul site-ului oficial",
+  "contrast": {
+   "peAlb": 0.279,
+   "peInchis": 0,
+   "pePlacaInchisa": false
+  }
  },
  "rovelo": {
   "file": "rovelo.png",
@@ -690,7 +911,12 @@
   "sursa": "site oficial al producătorului",
   "pagina": "https://www.rovelotire.com/",
   "url": "https://d2nqlu7qcep8eh.cloudfront.net/rovelo/template/default/index/img/LOGOa.png",
-  "verificat": "logo din antetul site-ului oficial"
+  "verificat": "logo din antetul site-ului oficial",
+  "contrast": {
+   "peAlb": 0.303,
+   "peInchis": 0.328,
+   "pePlacaInchisa": false
+  }
  },
  "duraturn": {
   "file": "duraturn.png",
@@ -699,7 +925,12 @@
   "sursa": "site oficial al producătorului",
   "pagina": "https://www.duraturntires.com/",
   "url": "https://www.duraturntires.com/wp-content/uploads/duraturn-logo.png",
-  "verificat": "logo din antetul site-ului oficial"
+  "verificat": "logo din antetul site-ului oficial",
+  "contrast": {
+   "peAlb": 0.388,
+   "peInchis": 0,
+   "pePlacaInchisa": false
+  }
  },
  "ceat": {
   "file": "ceat.svg",
@@ -715,7 +946,12 @@
   "licenta": "Public domain",
   "scor": 80,
   "alternative": [],
-  "verificat": "titlu și categorii confirmă marca de anvelope"
+  "verificat": "titlu și categorii confirmă marca de anvelope",
+  "contrast": {
+   "peAlb": 0.632,
+   "peInchis": 0.34,
+   "pePlacaInchisa": false
+  }
  },
  "nordexx": {
   "file": "nordexx.png",
@@ -724,7 +960,12 @@
   "sursa": "site oficial al producătorului",
   "pagina": "https://www.nordexx.com/",
   "url": "https://www.nordexx.com/wp-content/uploads/2026/03/Nordexx_logo_340x156px.png",
-  "verificat": "logo din antetul site-ului oficial"
+  "verificat": "logo din antetul site-ului oficial",
+  "contrast": {
+   "peAlb": 0.209,
+   "peInchis": 0.013,
+   "pePlacaInchisa": false
+  }
  },
  "cooper": {
   "file": "cooper.svg",
@@ -733,7 +974,12 @@
   "sursa": "site oficial al producătorului",
   "pagina": "https://www.coopertire.com/",
   "url": "https://www.coopertire.com/on/demandware.static/-/Sites-CooperTire-Library/default/dwda690093/footer/footer-logo.svg",
-  "verificat": "variantă albă din antetul site-ului oficial — se randează pe placă închisă"
+  "verificat": "variantă albă din antetul site-ului oficial — se randează pe placă închisă",
+  "contrast": {
+   "peAlb": 0,
+   "peInchis": 0.413,
+   "pePlacaInchisa": true
+  }
  },
  "nankang": {
   "file": "nankang.svg",
@@ -750,7 +996,12 @@
   "scor": 80,
   "alternative": [
    "File:Nankang-logo.png"
-  ]
+  ],
+  "contrast": {
+   "peAlb": 0.238,
+   "peInchis": 0,
+   "pePlacaInchisa": false
+  }
  },
  "debica": {
   "file": "debica.png",
@@ -765,7 +1016,12 @@
   "inaltime": 80,
   "licenta": "Public domain",
   "scor": 45,
-  "alternative": []
+  "alternative": [],
+  "contrast": {
+   "peAlb": 0.749,
+   "peInchis": 0.602,
+   "pePlacaInchisa": false
+  }
  },
  "nereus": {
   "file": null,
@@ -782,7 +1038,12 @@
   "sursa": "site oficial al producătorului",
   "pagina": "https://www.prinxtire.com/",
   "url": "https://www.prinxtire.com/statics/images/n/logo.jpg",
-  "verificat": "logo din antetul site-ului oficial"
+  "verificat": "logo din antetul site-ului oficial",
+  "contrast": {
+   "peAlb": 0.589,
+   "peInchis": 0.75,
+   "pePlacaInchisa": false
+  }
  },
  "fulda": {
   "file": "fulda.svg",
@@ -800,7 +1061,12 @@
   "alternative": [
    "File:Fulda logo.png",
    "File:VWI-Fulda-Logo.svg"
-  ]
+  ],
+  "contrast": {
+   "peAlb": 0.295,
+   "peInchis": 0,
+   "pePlacaInchisa": false
+  }
  },
  "roadstone": {
   "file": null,
@@ -861,7 +1127,12 @@
    "File:Nokian-Renkaat-Logo.svg",
    "File:Nokian logo (1965).svg"
   ],
-  "verificat": "titlu și categorii confirmă marca de anvelope"
+  "verificat": "titlu și categorii confirmă marca de anvelope",
+  "contrast": {
+   "peAlb": 0.262,
+   "peInchis": 0.225,
+   "pePlacaInchisa": false
+  }
  },
  "comfoser": {
   "file": null,
@@ -917,7 +1188,12 @@
   "scor": 80,
   "alternative": [
    "File:FALKEN Logo Blue.png"
-  ]
+  ],
+  "contrast": {
+   "peAlb": 0.241,
+   "peInchis": 0,
+   "pePlacaInchisa": false
+  }
  },
  "sava": {
   "file": "sava.svg",
@@ -934,7 +1210,12 @@
   "scor": 35,
   "alternative": [
    "File:Sava Centar Logo.svg"
-  ]
+  ],
+  "contrast": {
+   "peAlb": 0.363,
+   "peInchis": 0.47,
+   "pePlacaInchisa": false
+  }
  },
  "onyx": {
   "file": null,
@@ -966,7 +1247,12 @@
   "sursa": "site oficial al producătorului",
   "pagina": "https://www.avontyres.com/it-it/",
   "url": "https://www.avontyres.com/.publisher/sd/coopertires_sites/cooper/img/logo-avon-white.svg",
-  "verificat": "variantă albă din antetul site-ului oficial — se randează pe placă închisă"
+  "verificat": "variantă albă din antetul site-ului oficial — se randează pe placă închisă",
+  "contrast": {
+   "peAlb": 0.052,
+   "peInchis": 0.224,
+   "pePlacaInchisa": true
+  }
  },
  "bfgoodrich": {
   "file": "bfgoodrich.svg",
@@ -982,7 +1268,12 @@
   "licenta": "Public domain",
   "scor": 80,
   "alternative": [],
-  "verificat": "titlu și categorii confirmă marca de anvelope"
+  "verificat": "titlu și categorii confirmă marca de anvelope",
+  "contrast": {
+   "peAlb": 0.27,
+   "peInchis": 0.048,
+   "pePlacaInchisa": false
+  }
  },
  "westlake": {
   "file": "westlake.png",
@@ -1000,7 +1291,12 @@
   "alternative": [
    "File:Westlake chem logo.svg",
    "File:Westlake Center logo.svg"
-  ]
+  ],
+  "contrast": {
+   "peAlb": 0,
+   "peInchis": 0.275,
+   "pePlacaInchisa": true
+  }
  },
  "royal-black": {
   "file": null,
@@ -1039,7 +1335,12 @@
   "sursa": "site oficial al producătorului",
   "pagina": "https://therotexgroup.com/",
   "url": "https://therotexgroup.com/wp-content/themes/rotexgroup/img/global/logo.svg",
-  "verificat": "variantă albă din antetul site-ului oficial — se randează pe placă închisă"
+  "verificat": "variantă albă din antetul site-ului oficial — se randează pe placă închisă",
+  "contrast": {
+   "peAlb": 0.003,
+   "peInchis": 0.236,
+   "pePlacaInchisa": true
+  }
  },
  "kormoran": {
   "file": "kormoran.svg",
@@ -1054,7 +1355,12 @@
   "inaltime": 201,
   "licenta": "Public domain",
   "scor": 80,
-  "alternative": []
+  "alternative": [],
+  "contrast": {
+   "peAlb": 0.25,
+   "peInchis": 0,
+   "pePlacaInchisa": false
+  }
  },
  "minerva": {
   "file": null,
@@ -1090,7 +1396,12 @@
   "inaltime": 71,
   "licenta": "Public domain",
   "scor": 80,
-  "alternative": []
+  "alternative": [],
+  "contrast": {
+   "peAlb": 0.492,
+   "peInchis": 0.178,
+   "pePlacaInchisa": false
+  }
  },
  "gripmax": {
   "file": "gripmax.png",
@@ -1099,7 +1410,12 @@
   "sursa": "site oficial al producătorului",
   "pagina": "https://www.gripmax.com/",
   "url": "https://www.gripmax.com/public/files/image/logo.png?v=1",
-  "verificat": "variantă albă din antetul site-ului oficial — se randează pe placă închisă"
+  "verificat": "variantă albă din antetul site-ului oficial — se randează pe placă închisă",
+  "contrast": {
+   "peAlb": 0,
+   "peInchis": 0.205,
+   "pePlacaInchisa": true
+  }
  },
  "firestone": {
   "file": "firestone.svg",
@@ -1115,7 +1431,12 @@
   "licenta": "Public domain",
   "scor": 60,
   "alternative": [],
-  "verificat": "titlu și categorii confirmă marca de anvelope"
+  "verificat": "titlu și categorii confirmă marca de anvelope",
+  "contrast": {
+   "peAlb": 0.193,
+   "peInchis": 0,
+   "pePlacaInchisa": false
+  }
  },
  "greentrac": {
   "file": null,
@@ -1143,7 +1464,12 @@
   "licenta": "Public domain",
   "scor": 60,
   "alternative": [],
-  "verificat": "titlu și categorii confirmă marca de anvelope"
+  "verificat": "titlu și categorii confirmă marca de anvelope",
+  "contrast": {
+   "peAlb": 0.159,
+   "peInchis": 0,
+   "pePlacaInchisa": false
+  }
  },
  "diplomat": {
   "file": null,
@@ -1177,7 +1503,12 @@
   "sursa": "site oficial al producătorului",
   "pagina": "https://www.unigriptyre.com/",
   "url": "https://www.unigriptyre.com/public/files/img/logo.png",
-  "verificat": "logo din antetul site-ului oficial"
+  "verificat": "logo din antetul site-ului oficial",
+  "contrast": {
+   "peAlb": 0,
+   "peInchis": 0.327,
+   "pePlacaInchisa": true
+  }
  },
  "waterfall": {
   "file": null,
@@ -1212,7 +1543,12 @@
   "sursa": "site oficial al producătorului",
   "pagina": "https://www.royalblacktyre.com/",
   "url": "https://www.royalblacktyre.com/LOGO/4-COMPASAL.png",
-  "verificat": "antetul royalblacktyre.com, site-ul grupului care produce marca"
+  "verificat": "antetul royalblacktyre.com, site-ul grupului care produce marca",
+  "contrast": {
+   "peAlb": 0.253,
+   "peInchis": 0.002,
+   "pePlacaInchisa": false
+  }
  },
  "motrio": {
   "file": "motrio.png",
@@ -1228,7 +1564,12 @@
   "licenta": "CC BY-SA 4.0",
   "scor": 45,
   "alternative": [],
-  "verificat": "titlu și categorii confirmă marca de anvelope"
+  "verificat": "titlu și categorii confirmă marca de anvelope",
+  "contrast": {
+   "peAlb": 0.669,
+   "peInchis": 0.114,
+   "pePlacaInchisa": false
+  }
  },
  "toyo": {
   "file": "toyo.svg",
@@ -1247,7 +1588,12 @@
    "File:Toyo Engineering company logo.svg",
    "File:Toyo Piano logo.svg",
    "File:TOYO LOGO COMPANY OFFICIAL FILE.svg"
-  ]
+  ],
+  "contrast": {
+   "peAlb": 0.242,
+   "peInchis": 0.222,
+   "pePlacaInchisa": false
+  }
  },
  "zeta": {
   "file": null,
@@ -1279,16 +1625,26 @@
   "sursa": "site oficial al producătorului",
   "pagina": "https://www.ancheetyre.com/",
   "url": "https://static.wixstatic.com/media/8116f4_dfff254b3e1f44d3a9919731b5f52508~mv2.png/v1/fill/w_384,h_50,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/ANCHEE%20LOGO.png",
-  "verificat": "logo din antetul site-ului oficial"
+  "verificat": "logo din antetul site-ului oficial",
+  "contrast": {
+   "peAlb": 0.201,
+   "peInchis": 0.212,
+   "pePlacaInchisa": false
+  }
  },
  "austone": {
-  "file": "austone.webp",
+  "file": "austone.jpg",
   "marca": "Austone",
   "produse": 6,
   "sursa": "site oficial al producătorului",
   "pagina": "https://www.austonetire.com/",
   "url": "https://www.austonetire.com/assets/autone_logo.cfea8846.webp",
-  "verificat": "logo din antetul site-ului oficial"
+  "verificat": "antetul austonetire.com, varianta întunecată (JPEG 430×79) — cea albă există, dar pe placa deschisă ar dispărea",
+  "contrast": {
+   "peAlb": 0.141,
+   "peInchis": 0.51,
+   "pePlacaInchisa": false
+  }
  },
  "giti": {
   "file": "giti.svg",
@@ -1297,7 +1653,12 @@
   "sursa": "site oficial al producătorului",
   "pagina": "https://www.giti.com/",
   "url": "https://giti-f3dxbhcdedcccpge.a01.azurefd.net/staticfiles/storage/global/images/general/logo.svg",
-  "verificat": "logo din antetul site-ului oficial"
+  "verificat": "logo din antetul site-ului oficial",
+  "contrast": {
+   "peAlb": 0.3,
+   "peInchis": 0.506,
+   "pePlacaInchisa": false
+  }
  },
  "fortuna": {
   "file": null,
@@ -1333,7 +1694,12 @@
   "inaltime": 137,
   "licenta": "Public domain",
   "scor": 45,
-  "alternative": []
+  "alternative": [],
+  "contrast": {
+   "peAlb": 0.234,
+   "peInchis": 0.248,
+   "pePlacaInchisa": false
+  }
  },
  "roadboss": {
   "file": null,
@@ -1346,7 +1712,12 @@
   "sursa": "site oficial al producătorului",
   "pagina": "https://passenger-car.orium-tyres.com/",
   "url": "https://dgaddcosprod.blob.core.windows.net/assembly-a3/clui1h7x715b401nj1bsc8n87/attachments/clvappil10lt701lr6y0932wi-orium-logo.full.webp",
-  "verificat": "logo din antetul site-ului oficial"
+  "verificat": "logo din antetul site-ului oficial",
+  "contrast": {
+   "peAlb": 0.27,
+   "peInchis": 0.241,
+   "pePlacaInchisa": false
+  }
  },
  "voyager": {
   "file": null,
@@ -1381,7 +1752,12 @@
   "sursa": "site oficial al producătorului",
   "pagina": "https://atturo.com/",
   "url": "https://atturo.com/images/Atturo-Logo-mini-isolated-inv.png?v3",
-  "verificat": "logo din antetul site-ului oficial"
+  "verificat": "logo din antetul site-ului oficial",
+  "contrast": {
+   "peAlb": 0.211,
+   "peInchis": 0.22,
+   "pePlacaInchisa": false
+  }
  },
  "rapid": {
   "file": null,
@@ -1476,7 +1852,12 @@
   "licenta": "Public domain",
   "scor": 80,
   "alternative": [],
-  "verificat": "titlu și categorii confirmă marca de anvelope"
+  "verificat": "titlu și categorii confirmă marca de anvelope",
+  "contrast": {
+   "peAlb": 0.215,
+   "peInchis": 0,
+   "pePlacaInchisa": false
+  }
  },
  "strial": {
   "file": null,
@@ -1496,7 +1877,12 @@
   "licenta": "Public domain",
   "scor": 15,
   "alternative": [],
-  "verificat": "titlu și categorii confirmă marca de anvelope"
+  "verificat": "titlu și categorii confirmă marca de anvelope",
+  "contrast": {
+   "peAlb": 0.331,
+   "peInchis": 0.232,
+   "pePlacaInchisa": false
+  }
  },
  "achilles": {
   "file": null,
@@ -1509,7 +1895,12 @@
   "sursa": "site oficial al producătorului",
   "pagina": "https://www.federaltire.com/en/",
   "url": "https://www.federaltire.com/en/images/logo_print.jpg",
-  "verificat": "logo din antetul site-ului oficial"
+  "verificat": "logo din antetul site-ului oficial",
+  "contrast": {
+   "peAlb": 0.199,
+   "peInchis": 0.675,
+   "pePlacaInchisa": false
+  }
  },
  "ardent": {
   "file": null,

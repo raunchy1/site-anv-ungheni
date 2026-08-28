@@ -39,6 +39,7 @@ export type Product = {
   /** Completate din `brands` la citire, nu coloane pe `products`. */
   brand_logo_url?: string | null;
   brand_logo_on_dark?: boolean;
+  brand_logo_ratio?: number | null;
   brand_slug?: string | null;
   brand_slug_ru?: string | null;
 };
@@ -67,6 +68,8 @@ export type Brand = {
   logo_url: string | null;
   /** Logo desenat în alb: se randează pe placă închisă. */
   logo_on_dark: boolean;
+  /** Lățime/înălțime a fișierului, pentru lățimea benzii. */
+  logo_ratio: number | null;
   product_count: number;
   meta_title_ro: string | null;
   meta_title_ru: string | null;

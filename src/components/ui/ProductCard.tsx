@@ -55,7 +55,7 @@ export function ProductCard({
       />
 
       <div className="mt-[var(--sp-4)] flex flex-1 flex-col">
-        <BrandLogo name={product.brand} src={product.brandLogo} onDark={product.brandLogoOnDark} />
+        <BrandLogo name={product.brand} src={product.brandLogo} onDark={product.brandLogoOnDark} ratio={product.brandLogoRatio} />
 
         <h3 className="mt-[var(--sp-1)] text-300 font-medium leading-snug text-[var(--ink-strong)]">
           <a

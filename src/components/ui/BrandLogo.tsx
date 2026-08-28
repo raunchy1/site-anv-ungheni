@@ -8,9 +8,12 @@ import { cn } from "@/lib/cn";
  * Trei reguli, toate impuse de faptul că logo-urile vin de la 134 de
  * producători diferiți și nu pot fi normalizate:
  *
- * 1. CUTIE DE ÎNĂLȚIME FIXĂ, `object-contain`. Un logo lat (`CONTINENTAL`) și
- *    unul pătrat (`GT`) trebuie să ocupe aceeași bandă verticală, altfel
- *    titlurile din grilă nu mai cad pe aceeași linie.
+ * 1. ÎNĂLȚIME FIXĂ, lățime pe măsura desenului. Înălțimea egală ține titlurile
+ *    din grilă pe aceeași linie și păstrează CLS-ul zero; lățimea vine din
+ *    `brands.logo_ratio`, altfel emblemele aproape pătrate (Joyroad, Nexen) ar
+ *    pluti într-o bandă de trei ori mai lată decât ele — o bară, cu logo-ul ca
+ *    accident. Lățimea e plafonată, ca un wordmark foarte lung (LingLong, 10:1)
+ *    să nu împingă cardul.
  * 2. PLACĂ, nu fundal transparent. Implicit e aceeași placă deschisă ca la
  *    fotografii (`--img-plate` + `mix-blend-mode`), pentru că logo-urile sunt
  *    aproape toate întunecate pe alb. Un sfert dintre producători publică însă
@@ -26,6 +29,7 @@ export function BrandLogo({
   name,
   src,
   onDark = false,
+  ratio,
   size = "sm",
   className,
 }: {
@@ -33,13 +37,22 @@ export function BrandLogo({
   src?: string | null;
   /** Logo desenat în alb: are nevoie de placă închisă ca să se vadă. */
   onDark?: boolean;
+  /** Lățime/înălțime a fișierului. Lipsă = bandă la lățimea maximă. */
+  ratio?: number | null;
   /** `sm` = card de produs (20px), `md` = fișă de produs, `lg` = pagină de marcă. */
   size?: "sm" | "md" | "lg";
   className?: string;
 }) {
   if (!name) return null;
 
-  const box = size === "lg" ? "h-12 w-40" : size === "md" ? "h-8 w-28" : "h-5 w-20";
+  /* Banda e mai înaltă decât pare necesar pentru un wordmark, și e intenționat:
+     o parte dintre mărci au emblemă aproape pătrată (Joyroad, Nexen), iar pe o
+     bandă de 20px acelea se randau la 20×20 — o pată, nu un logo. La 26px,
+     emblema rămâne lizibilă, iar wordmark-urile late nu pierd nimic. */
+  const h = size === "lg" ? 56 : size === "md" ? 40 : 26;
+  const maxW = size === "lg" ? 224 : size === "md" ? 144 : 108;
+  // +8% pentru marginea interioară, ca desenul să nu atingă muchia plăcii
+  const w = Math.round(Math.min(maxW, Math.max(h, h * (ratio ?? 6) * 1.08)));
 
   if (!src) {
     return (
@@ -49,10 +62,10 @@ export function BrandLogo({
 
   return (
     <div
+      style={{ width: w, height: h }}
       className={cn(
-        "relative overflow-hidden rounded-[var(--radius-xs)]",
+        "relative shrink-0 overflow-hidden rounded-[var(--radius-xs)]",
         onDark ? "bg-[var(--panel)]" : "bg-[var(--img-plate)]",
-        box,
         className,
       )}
     >
@@ -60,9 +73,9 @@ export function BrandLogo({
         src={src}
         alt={name}
         fill
-        sizes="160px"
+        sizes="224px"
         className={cn(
-          "object-contain object-left p-[6%]",
+          "object-contain object-center p-[6%]",
           // `multiply` lipește fotografia de placa deschisă; pe placa închisă
           // ar înnegri exact desenul alb pe care vrem să-l vedem.
           !onDark && "[mix-blend-mode:var(--img-blend)]",

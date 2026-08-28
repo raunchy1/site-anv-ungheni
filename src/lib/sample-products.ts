@@ -17,6 +17,7 @@ export type Product = {
   /** URL public al logo-ului de marca; NULL cat timp nu a fost incarcat. */
   brandLogo?: string | null;
   brandLogoOnDark?: boolean;
+  brandLogoRatio?: number | null;
   brandSlug?: string | null;
   title: string;
   titleRu: string;
