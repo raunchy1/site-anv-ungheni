@@ -265,8 +265,13 @@
   }
  },
  "haida": {
-  "file": null,
-  "cautat": true
+  "file": "haida.png",
+  "marca": "Haida",
+  "produse": 278,
+  "sursa": "site de marcă",
+  "pagina": "https://haida-tyres.com/",
+  "url": "https://haida-tyres.com/wp-content/uploads/2025/01/haida-logo.png",
+  "verificat": "antetul haida-tyres.com, PNG transparent 604×405 (emblemă peste wordmark)"
  },
  "platin": {
   "file": "platin.svg",
@@ -614,26 +619,13 @@
   "cautat": true
  },
  "fortune": {
-  "file": null,
+  "file": "fortune.webp",
   "marca": "Fortune",
   "produse": 132,
-  "sursa": "Wikimedia Commons",
-  "titlu": "File:Fortune Systems logo.svg",
-  "pagina": "https://commons.wikimedia.org/wiki/File%3AFortune%20Systems%20logo.svg",
-  "url": "https://upload.wikimedia.org/wikipedia/commons/1/14/Fortune_Systems_logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-  "mime": "image/svg+xml",
-  "latime": 10471,
-  "inaltime": 3201,
-  "licenta": "Public domain",
-  "scor": 35,
-  "alternative": [
-   "File:Fortune Brands Logo.svg",
-   "File:Fortune Entertainment logo.svg"
-  ],
-  "suspect": true,
-  "motiv": "nicio urmă de anvelope în categorii sau descriere",
-  "respins": "alt subiect decât marca de anvelope",
-  "titlu_respins": "File:Fortune Systems logo.svg"
+  "sursa": "site oficial al producătorului",
+  "pagina": "https://www.fortunetire.com/",
+  "url": "https://www.fortunetire.com/assets/fortune_logo.85a9c549.webp",
+  "verificat": "antetul fortunetire.com — variantă albă, merge pe placă închisă"
  },
  "tourador": {
   "file": null,
@@ -661,7 +653,8 @@
  },
  "kpatos": {
   "file": null,
-  "cautat": true
+  "cautat": true,
+  "respins": "singurul fișier oficial (sunfulcess.com, producătorul) are 155×25 px — prea mic, s-ar vedea neclar la 38 px înălțime"
  },
  "accelera": {
   "file": "accelera.png",
@@ -1024,8 +1017,13 @@
   }
  },
  "nereus": {
-  "file": null,
-  "cautat": true
+  "file": "nereus.png",
+  "marca": "Nereus",
+  "produse": 60,
+  "sursa": "site oficial al producătorului",
+  "pagina": "http://www.nereustyre.com/",
+  "url": "http://www.nereustyre.com/templet/images/logo.png",
+  "verificat": "antetul nereustyre.com (Qingdao Ditrip Tire), PNG transparent 462×100"
  },
  "rydanz": {
   "file": null,
@@ -1092,22 +1090,13 @@
   "titlu_respins": "File:Tristar-logo.svg"
  },
  "superia": {
-  "file": null,
+  "file": "superia.webp",
   "marca": "Superia",
   "produse": 40,
-  "sursa": "Wikimedia Commons",
-  "titlu": "File:Superia.png",
-  "pagina": "https://commons.wikimedia.org/wiki/File%3ASuperia.png",
-  "url": "https://upload.wikimedia.org/wikipedia/commons/3/3b/Superia.png?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-  "mime": "image/png",
-  "latime": 229,
-  "inaltime": 134,
-  "licenta": "Public domain",
-  "scor": 25,
-  "alternative": [],
-  "verificat": "titlu și categorii confirmă marca de anvelope",
-  "titlu_respins": "File:Superia.png",
-  "respins": "PNG de 209 px — sub pragul de calitate"
+  "sursa": "site oficial al producătorului",
+  "pagina": "https://superiatyre.com/",
+  "url": "https://superiatyre.com/wp-content/uploads/2025/04/superia-150px.webp",
+  "verificat": "antetul superiatyre.com, site-ul mărcii"
  },
  "nokian": {
   "file": "nokian.svg",
@@ -1795,25 +1784,13 @@
   "cautat": true
  },
  "toledo": {
-  "file": null,
+  "file": "toledo.png",
   "marca": "Toledo",
   "produse": 2,
-  "sursa": "Wikimedia Commons",
-  "titlu": "File:Universidad Toledo Logo.svg",
-  "pagina": "https://commons.wikimedia.org/wiki/File%3AUniversidad%20Toledo%20Logo.svg",
-  "url": "https://upload.wikimedia.org/wikipedia/commons/b/b7/Universidad_Toledo_Logo.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
-  "mime": "image/svg+xml",
-  "latime": 2775,
-  "inaltime": 628,
-  "licenta": "Public domain",
-  "scor": 35,
-  "alternative": [
-   "File:Toledo Rockets wordmark.svg"
-  ],
-  "suspect": true,
-  "motiv": "nicio urmă de anvelope în categorii sau descriere",
-  "respins": "alt subiect decât marca de anvelope",
-  "titlu_respins": "File:Universidad Toledo Logo.svg"
+  "sursa": "site oficial al producătorului",
+  "pagina": "https://www.toledo-tyres.com/",
+  "url": "https://www.toledo-tyres.com/uploads/allimg/20251218/logo.png",
+  "verificat": "antetul toledo-tyres.com, site-ul mărcii"
  },
  "atlas": {
   "file": null,
