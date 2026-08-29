@@ -1,7 +1,7 @@
 "use server";
 
 import { z } from "zod";
-import { db, dbWrite, adminDb } from "@/lib/supabase/server";
+import { db, dbWrite } from "@/lib/supabase/server";
 import { getSettings } from "@/lib/db/queries";
 import { trimiteEmailComanda } from "./email";
 import { comandaText, type OrderData, type OrderLine } from "./mesaj";
@@ -24,10 +24,18 @@ import type { Locale } from "@/lib/types";
  *    nu depinde de nimic din afară — și e cea pe care o citește aplicația de
  *    administrare.
  *
- * 3. INSERAREA MERGE PE CHEIA ANONIMĂ. În bază stau honeypot-ul și limita de
+ * 3. TOTUL MERGE PE CHEIA ANONIMĂ. În bază stau honeypot-ul și limita de
  *    3 comenzi pe oră per IP (migrarea 0007), iar cu `service_role` ele sunt
- *    sărite din construcție. Cititul de după — pentru numărul comenzii — se face
- *    cu service role, pentru că publicul nu are voie să citească `orders`.
+ *    sărite din construcție. Numărul comenzii și articolele trec prin două
+ *    funcții `security definer` (migrările 0013 și 0014), nu prin cheia de
+ *    service — care oricum nu era în variabilele de mediu de pe Vercel și a
+ *    produs, la primul test pe producție, o comandă salvată fără articole și un
+ *    mesaj de eroare pentru un client a cărui comandă intrase deja.
+ *
+ * 4. DUPĂ SALVARE, NIMIC NU MAI POATE STRICA RĂSPUNSUL. Articolele și e-mailul
+ *    sunt în `try`: dacă pică, se scriu în jurnal, dar clientul își primește
+ *    numărul. O comandă intrată despre care clientul crede că n-a intrat e mai
+ *    rea decât una fără e-mail.
  */
 
 const LinieSchema = z.object({
@@ -143,18 +151,18 @@ export async function plaseazaComanda(input: ComandaInput): Promise<RezultatComa
     return { ok: false, eroare: limita ? "prea_multe" : "salvare_esuata" };
   }
 
-  /* Articolele au nevoie de `order_id`, iar publicul nu poate citi `orders`. */
-  const admin = adminDb();
-  const { data: creata } = await admin.from("orders").select("id").eq("order_number", orderNumber).single();
-  if (creata?.id) {
-    const { error: eItems } = await admin
-      .from("order_items")
-      .insert(itemeDb.map((i) => ({ ...i, order_id: creata.id })));
-    if (eItems) console.error("[comandă] order_items:", eItems.message);
+  /* ---------------------------------------------------------- articolele */
+  try {
+    const { error: eItems } = await dbWrite.rpc("add_order_items", {
+      p_order_number: orderNumber,
+      p_items: itemeDb,
+    });
+    if (eItems) console.error("[comandă] add_order_items:", eItems.message, orderNumber);
+  } catch (e) {
+    console.error("[comandă] add_order_items a aruncat:", e, orderNumber);
   }
 
   /* ------------------------------------------------------------ anunțurile */
-  const settings = await getSettings();
   const date: OrderData = {
     orderNumber,
     customerName: c.customerName,
@@ -173,13 +181,19 @@ export async function plaseazaComanda(input: ComandaInput): Promise<RezultatComa
     locale,
   };
 
-  const email = await trimiteEmailComanda(date, settings.email);
+  let emailTrimis = false;
+  try {
+    const settings = await getSettings();
+    emailTrimis = (await trimiteEmailComanda(date, settings.email)).trimis;
+  } catch (e) {
+    console.error("[comandă] e-mailul n-a putut fi trimis:", e, orderNumber);
+  }
 
   return {
     ok: true,
     orderNumber,
     total,
     whatsapp: whatsappLink(comandaText(date, SITE_URL)),
-    emailTrimis: email.trimis,
+    emailTrimis,
   };
 }
