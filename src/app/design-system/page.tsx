@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { DesignSystemShell } from "./Shell";
+import { getBrandOptions, getSeasonCounts } from "@/lib/db/queries";
 
 /**
  * Ruta interna de design system.
@@ -15,6 +16,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function DesignSystemPage() {
-  return <DesignSystemShell />;
+export default async function DesignSystemPage() {
+  const [brands, seasonCounts] = await Promise.all([getBrandOptions(), getSeasonCounts()]);
+  return <DesignSystemShell brands={brands} seasonCounts={seasonCounts} />;
 }

@@ -3,6 +3,7 @@ import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { ProductCard } from "@/components/ui/ProductCard";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { TireFinderPanel } from "@/components/ui/TireFinderPanel";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { BrandLogo } from "@/components/ui/BrandLogo";
 import { TreadRule, IconWhatsApp } from "@/components/icons";
@@ -160,7 +161,14 @@ function pageWindow(page: number, pages: number): number[] {
   return Array.from({ length: to - from + 1 }, (_, i) => from + i);
 }
 
-/** Zero rezultate nu e capăt de drum: mereu o cale înainte. */
+/**
+ * Zero rezultate nu e capăt de drum: mereu o cale înainte.
+ *
+ * Sub explicație stă panoul de căutare, același de peste tot. Filtrele din
+ * stânga rafinează o listă care nu mai există; panoul pornește o căutare nouă,
+ * cu contoare care spun dinainte unde e marfă. E singurul loc din catalog unde
+ * apar amândouă, și e locul unde asta ajută.
+ */
 async function EmptyStateWithWhatsApp({
   locale, filters, unavailableTotal,
 }: { locale: Locale; filters: ParsedFilters; unavailableTotal: number }) {
@@ -169,6 +177,7 @@ async function EmptyStateWithWhatsApp({
   const wa = whatsappLink(t("wa.catalog", { size: size || "—", season: filters.season ? t(`season.${filters.season}`) : "—" }));
 
   return (
+    <div className="flex flex-col gap-[var(--sp-6)]">
     <EmptyState
       title={t("catalog.empty")}
       body={t("catalog.emptyHint")}
@@ -185,5 +194,7 @@ async function EmptyStateWithWhatsApp({
         </div>
       }
     />
+      <div className="max-w-[380px]"><TireFinderPanel locale={locale} /></div>
+    </div>
   );
 }

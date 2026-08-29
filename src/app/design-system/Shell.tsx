@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { cn } from "@/lib/cn";
 import { TreadRule } from "@/components/icons";
-import { SizeSelector } from "@/components/ui/SizeSelector";
+import { TireFinder, type BrandOption } from "@/components/ui/TireFinder";
 import { Gallery } from "./sections/Gallery";
 import { ProductPageMockup } from "./sections/ProductPage";
 import {
@@ -11,6 +11,7 @@ import {
 } from "./sections/Foundations";
 import { products } from "@/lib/sample-products";
 import type { Locale } from "@/lib/i18n";
+import type { Season } from "@/lib/types";
 
 type Theme = "light" | "dark";
 type Accent = "oxid" | "signal" | "karmin";
@@ -136,7 +137,15 @@ function Toggle<T extends string>({
   );
 }
 
-export function DesignSystemShell() {
+export function DesignSystemShell({
+  brands,
+  seasonCounts,
+}: {
+  /* Panoul de căutare se arată cu datele reale din catalog. Un design system
+     care își desenează propriile cifre inventate arată bine și minte. */
+  brands: readonly BrandOption[];
+  seasonCounts: Record<Season, number>;
+}) {
   const [locale, setLocale] = useState<Locale>("ro");
   const [theme, setTheme] = useState<Theme>("light");
   const [accent, setAccent] = useState<Accent>("oxid");
@@ -264,14 +273,16 @@ export function DesignSystemShell() {
         <Section
           id="dimensiune"
           n="02"
-          title="Selectorul de dimensiune"
-          lead="Ecranul care contează cel mai mult. Șoferul știe „205/55 R16” și vrea un preț în trei atingeri. Contoarele de sub fiecare opțiune sunt reale — 14.988 de anvelope metrice, numărate din catalog."
+          title="Panoul de căutare"
+          lead="Ecranul care contează cel mai mult, și singurul instrument de căutare din site: pagina principală, 404-ul și catalogul fără rezultate arată exact panoul ăsta. Cinci liste numerotate, în ordinea de pe flancul anvelopei, cu contoare reale — 14.988 de anvelope metrice, numărate din catalog."
         >
-          <SizeSelector locale={locale} />
+          <div className="max-w-[380px]">
+            <TireFinder locale={locale} brands={brands} seasonCounts={seasonCounts} />
+          </div>
           <DoDont
             className="mt-[var(--sp-8)]"
-            doText="Afișaj mare în mono, sus, care se completează sub deget. Opțiunile se restrâng dependent, iar contorul spune înainte de apăsare dacă există stoc."
-            dontText="Trei `<select>`-uri unul lângă altul, cu un buton „Caută” și un ecran de rezultate goale la final. Aceleași trei date, dar fără citire și fără feedback."
+            doText="Fiecare opțiune poartă numărul real de anvelope, iar listele se restrâng una pe alta: înălțimile sunt cele care există pe lățimea aleasă. Nicio combinație nu duce la zero rezultate."
+            dontText="Aceleași cinci liste, dar cu opțiuni fixe și fără contoare. Arată identic până la apăsare, apoi dă un ecran gol — și omul nu află de ce."
           />
         </Section>
 
@@ -357,7 +368,7 @@ export function DesignSystemShell() {
               <div key={l} className="min-w-0">
                 <p className="label mb-[var(--sp-3)]">{l.toUpperCase()}</p>
                 <div className="flex flex-col gap-[var(--sp-6)]">
-                  <SizeSelector locale={l} compact />
+                  <TireFinder locale={l} brands={brands} seasonCounts={seasonCounts} />
                   <div className="overflow-hidden rounded-[var(--radius-md)] border border-[var(--line-strong)]">
                     <ProductPageMockup product={hero} locale={l} compact />
                   </div>
@@ -379,7 +390,7 @@ export function DesignSystemShell() {
               <div key={th} data-theme={th} className="min-w-0 rounded-[var(--radius-md)] border border-[var(--line-strong)] bg-[var(--bg)] p-[var(--sp-4)]">
                 <p className="label mb-[var(--sp-3)]">{th}</p>
                 <div className="flex flex-col gap-[var(--sp-6)]">
-                  <SizeSelector locale={locale} compact />
+                  <TireFinder locale={locale} brands={brands} seasonCounts={seasonCounts} />
                   <div className="overflow-hidden rounded-[var(--radius-md)] border border-[var(--line-strong)]">
                     <ProductPageMockup product={hero} locale={locale} compact />
                   </div>
