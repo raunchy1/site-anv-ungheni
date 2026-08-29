@@ -3,14 +3,21 @@ import { Skeleton } from "@/components/ui/Skeleton";
 /**
  * Ce se vede în timp ce catalogul se aduce de la server.
  *
- * Catalogul e singura rută dinamică din site: citește pagina și sortarea din
- * query, deci nu poate fi pre-generată și fiecare clic pe un filtru așteaptă
- * serverul. Fără asta, Next ține ecranul VECHI pe loc până sosește răspunsul —
- * apeși un filtru și nu se schimbă nimic o jumătate de secundă. Arată exact ca
- * o aplicație blocată, chiar dacă totul funcționează.
+ * Combinațiile de filtre sunt prea multe ca să fie toate pre-generate la build:
+ * cele obișnuite vin din cache în ~10 ms, dar prima cerere a unei combinații
+ * noi se randează pe loc și costă o secundă. Fără schelet, Next ține ecranul
+ * VECHI pe loc până sosește răspunsul — apeși un filtru și nu se schimbă nimic.
+ * Arată exact ca o aplicație blocată, chiar dacă totul funcționează.
  *
  * Silueta e a paginii reale, cu aceleași dimensiuni: bara laterală de 240px,
  * grila de carduri cu aceeași proporție. Când sosesc datele, nimic nu sare.
+ *
+ * DE CE DOAR AICI. `/[slug]` a avut și el `loading.tsx` exact o zi. Un
+ * `loading.tsx` face răspunsul să curgă în bucăți, iar statusul HTTP pleacă
+ * ÎNAINTE ca pagina să se randeze — deci `notFound()` nu-l mai poate schimba,
+ * și fiecare adresă greșită răspundea 200 cu conținut de 404. Un „soft 404" pe
+ * o rută care servește 1.087 de pagini de produs e o problemă de indexare, nu
+ * un detaliu. Catalogul nu cheamă niciodată `notFound()`, deci aici e sigur.
  */
 export function CatalogSkeleton() {
   return (
