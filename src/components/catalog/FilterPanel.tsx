@@ -5,7 +5,7 @@ import { buildFilterSegments, type ParsedFilters } from "@/lib/catalog-filters";
 import { sizeTree } from "@/lib/size-tree";
 import type { Brand, Locale, Season } from "@/lib/types";
 import { UnavailableToggle } from "./UnavailableToggle";
-import { MobileFilterDrawer } from "./MobileFilterDrawer";
+import { FiltersShell } from "./FiltersShell";
 
 const SEASONS: Season[] = ["vara", "iarna", "all_season"];
 
@@ -119,18 +119,15 @@ export async function FilterPanel({
     </div>
   );
 
+  /* Un singur exemplar al filtrelor, pentru ambele forme. Vezi FiltersShell. */
   return (
-    <>
-      <aside className="hidden lg:block">{body}</aside>
-      <MobileFilterDrawer
-        label={activeCount ? t("catalog.filtersApplied", { count: activeCount }) : t("catalog.filters")}
-        resultsLabel={t("catalog.results", { count: includeUnavailable ? availableTotal + unavailableTotal : availableTotal })}
-        closeLabel={t("catalog.apply")}
-        locale={locale}
-      >
-        {body}
-      </MobileFilterDrawer>
-    </>
+    <FiltersShell
+      label={activeCount ? t("catalog.filtersApplied", { count: activeCount }) : t("catalog.filters")}
+      resultsLabel={t("catalog.results", { count: includeUnavailable ? availableTotal + unavailableTotal : availableTotal })}
+      closeLabel={t("catalog.apply")}
+    >
+      {body}
+    </FiltersShell>
   );
 }
 
