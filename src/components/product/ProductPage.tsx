@@ -12,7 +12,7 @@ import { Badge } from "@/components/ui/Badge";
 import { TreadRule, IconPin, IconPhone } from "@/components/icons";
 import { getAlternatives, getNearAlternatives, getRelated, getSettings } from "@/lib/db/queries";
 import { toUiProduct } from "@/lib/adapt";
-import { absoluteUrl, telLink } from "@/lib/format";
+import { absoluteUrl, sizeLabel, telLink } from "@/lib/format";
 import { t as dict } from "@/lib/i18n";
 import { MapEmbed } from "@/components/layout/MapEmbed";
 import type { Locale, Product } from "@/lib/types";
@@ -134,6 +134,15 @@ export async function ProductPage({ product, locale }: { product: Product; local
                 url={productUrl}
                 phone={settings.phone_display}
                 phoneHref={telLink(settings.phone_e164)}
+                item={{
+                  id: product.id,
+                  slug: (locale === "ru" ? product.slug_ru : product.slug_ro) ?? product.slug_ro,
+                  title,
+                  price: Number(product.price_mdl),
+                  image: ui.image,
+                  size: sizeLabel(product),
+                  brand: product.brand_name,
+                }}
               />
             )}
           </div>

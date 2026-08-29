@@ -111,7 +111,7 @@ export async function ServicePage({ service, locale }: { service: Service; local
           </p>
 
           <div className="mt-[var(--sp-8)] flex flex-wrap items-center gap-[var(--sp-3)]">
-            <a href={telLink(settings.phone_e164)} className="inline-flex min-h-11 items-center gap-[var(--sp-2)] rounded-[var(--radius-sm)] bg-[var(--accent)] px-[var(--sp-5)] text-300 font-medium text-[var(--accent-ink)]">
+            <a href={telLink(settings.phone_e164)} className="inline-flex min-h-11 items-center gap-[var(--sp-2)] rounded-[var(--radius-sm)] bg-[var(--accent)] px-[var(--sp-5)] text-300 font-medium text-[var(--on-accent)]">
               <IconPhone size={17} />
               <span className="num">{settings.phone_display}</span>
             </a>

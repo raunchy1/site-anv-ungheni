@@ -2,12 +2,13 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { Button } from "@/components/ui/Button";
-import { IconCart, IconPhone } from "@/components/icons";
+import { IconPhone } from "@/components/icons";
+import { AddToCart } from "@/components/cart/AddToCart";
 import { WhatsAppButton } from "./WhatsAppButton";
 import { formatPrice } from "@/lib/format";
 import { cn } from "@/lib/cn";
 import type { Locale } from "@/lib/types";
+import type { CartItem } from "@/lib/cart/store";
 
 const QUANTITIES = [1, 2, 4] as const;
 
@@ -18,7 +19,7 @@ const QUANTITIES = [1, 2, 4] as const;
  * preselectat, nu un câmp numeric.
  */
 export function BuyBox({
-  locale, price, title, code, url, phone, phoneHref,
+  locale, price, title, code, url, phone, phoneHref, item,
 }: {
   locale: Locale;
   price: number;
@@ -27,6 +28,8 @@ export function BuyBox({
   url: string;
   phone: string;
   phoneHref: string;
+  /** Identitatea produsului pentru coș; prețul de aici e doar pentru afișare. */
+  item: Omit<CartItem, "qty">;
 }) {
   const t = useTranslations();
   const [qty, setQty] = useState<number>(4);
@@ -78,9 +81,7 @@ export function BuyBox({
       {/* Trei acțiuni pe un rând: CTA-ul pe toată lățimea ducea roșul la 5,9%
           din suprafață pe mobil, peste pragul de 5%. */}
       <div className="flex flex-wrap gap-[var(--sp-2)]">
-        <Button variant="primary" size="lg" iconStart={<IconCart size={17} />} className="grow sm:grow-0">
-          {t("product.addToCart")}
-        </Button>
+        <AddToCart item={item} qty={qty} />
         <WhatsAppButton message={t("wa.product", { title, code, qty, url })} label="WhatsApp" />
         {/* Sub 640px numărul e ascuns și rămâne doar iconița: fără `aria-label`,
             legătura n-ar avea nume accesibil (WCAG 2.4.4). */}

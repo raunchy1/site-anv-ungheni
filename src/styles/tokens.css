@@ -122,6 +122,12 @@
 
   --accent:        var(--a-l);
   --accent-hover:  var(--a-l-hover);
+  /* ATENTIE la cele doua de mai jos, se confunda usor si greseala nu se vede
+     decat pe ecran: `--accent-ink` E ROSUL FOLOSIT CA TEXT (pe fundal deschis),
+     `--on-accent` e textul de PE rosu. `text-[var(--accent-ink)]` peste
+     `bg-[var(--accent)]` da rosu pe rosu — buton gol. S-a intamplat de trei ori:
+     butonul de telefon din fisa de serviciu, WhatsApp-ul primar si pastila
+     cosului. */
   --accent-ink:    var(--a-l);       /* rosul folosit ca text sau linie */
   --on-accent:     var(--pure-white);
   /* „Ungheni" din logo. Pe fundal deschis e rosul din fisierul original; pe

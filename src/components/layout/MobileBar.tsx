@@ -1,6 +1,7 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { IconTyre, IconSearch, IconWhatsApp, IconCart } from "@/components/icons";
+import { CartLink } from "@/components/cart/CartLink";
+import { IconTyre, IconSearch, IconWhatsApp } from "@/components/icons";
 import { whatsappLink } from "@/lib/format";
 import type { Settings } from "@/lib/types";
 
@@ -26,7 +27,7 @@ export function MobileBar({ settings }: { settings: Settings }) {
           <IconWhatsApp size={20} />
           <span>WhatsApp</span>
         </a>
-        <Link href="/cos" className={item}><IconCart size={20} /><span>{t("cart")}</span></Link>
+        <CartLink variant="mobile" />
       </div>
     </nav>
   );

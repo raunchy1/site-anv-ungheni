@@ -25,6 +25,20 @@ export const db = createClient(
   { auth: { persistSession: false }, global: { fetch: cachedFetch } },
 );
 
+/**
+ * Client de SCRIERE, tot cu cheia anonimă, dar fără cache.
+ *
+ * Comenzile se inserează cu cheia publică intenționat: honeypot-ul și limita de
+ * 3 comenzi pe oră stau în declanșatoare de bază (migrarea 0007), iar
+ * `service_role` le sare din construcție. Fetch-ul e cel implicit — un POST
+ * n-are ce căuta în Data Cache, iar `revalidate` pe el ar fi doar zgomot.
+ */
+export const dbWrite = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+  { auth: { persistSession: false } },
+);
+
 /** Doar pentru operații care trebuie să ocolească RLS. Niciodată importat în client. */
 export function adminDb() {
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY;

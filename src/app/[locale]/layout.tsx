@@ -7,6 +7,7 @@ import { fontVarsFor } from "../fonts";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { MobileBar } from "@/components/layout/MobileBar";
+import { CartProvider } from "@/lib/cart/store";
 import { getSettings } from "@/lib/db/queries";
 import { SITE_URL } from "@/lib/format";
 import type { Locale } from "@/lib/types";
@@ -47,6 +48,9 @@ export default async function LocaleLayout({
     <html lang={locale} data-theme="light" className={`${fontVarsFor(locale)} h-full`} suppressHydrationWarning>
       <body className="min-h-full bg-[var(--surface)] text-[var(--ink)] antialiased">
         <NextIntlClientProvider>
+         {/* Coșul trebuie citit și de antet, și de pagini: providerul stă
+             deasupra amândurora. E singurul context global din site. */}
+         <CartProvider>
           <a href="#continut" className="skip-link">
             {locale === "ru" ? "К содержимому" : "Sari la conținut"}
           </a>
@@ -56,6 +60,7 @@ export default async function LocaleLayout({
           </main>
           <SiteFooter settings={settings} locale={locale as Locale} />
           <MobileBar settings={settings} />
+         </CartProvider>
         </NextIntlClientProvider>
       </body>
     </html>

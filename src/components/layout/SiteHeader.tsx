@@ -1,8 +1,9 @@
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import { CartLink } from "@/components/cart/CartLink";
 import { LanguageSwitch } from "./LanguageSwitch";
 import { Logo } from "@/components/brand/Logo";
-import { IconPhone, IconCart, IconCompare, IconFavorite } from "@/components/icons";
+import { IconPhone, IconCompare, IconFavorite } from "@/components/icons";
 import { telLink } from "@/lib/format";
 import type { Locale, Settings } from "@/lib/types";
 
@@ -45,7 +46,7 @@ export function SiteHeader({ settings, locale }: { settings: Settings; locale: L
           <div className="hidden items-center gap-[var(--sp-1)] sm:flex">
             <Link href="/favorite" className="icon-button" aria-label={t("favorites")}><IconFavorite size={18} /></Link>
             <Link href="/comparare" className="icon-button" aria-label={t("compare")}><IconCompare size={18} /></Link>
-            <Link href="/cos" className="icon-button" aria-label={t("cart")}><IconCart size={18} /></Link>
+            <CartLink />
           </div>
         </div>
       </div>
