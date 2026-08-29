@@ -97,3 +97,44 @@ Sunt fotografii reale de atelier, dar **nu din atelierul nostru**. Când ai poze
 proprii, ele sunt de preferat: schimbi fișierul din `public/servicii/`, pui
 `sursa: "Anvelope Ungheni"`, `licenta: "Foto proprie"` și ștergi rândul din
 LICENSES.md. Atribuirea de sub imagine dispare singură.
+
+## 11. E-mailul de comandă — cheia Resend
+
+Comanda se salvează în bază și pleacă pe WhatsApp, dar **e-mailul către
+info@anvelope-ungheni.md nu pleacă încă**: `RESEND_API_KEY` e gol. Ai ales
+(30 august 2026) să rămână așa deocamdată — codul e scris și așteaptă cheia.
+
+**Cât timp e așa, comenzile se citesc din baza de date.** Dacă un client nu
+apasă butonul de WhatsApp de pe ecranul de confirmare, singurul loc unde apare
+comanda e tabelul `orders`. Merită verificat zilnic până se pune cheia.
+
+Ce e de făcut, o singură dată:
+
+1. Cont pe [resend.com](https://resend.com) (gratuit până la 3.000 de e-mailuri
+   pe lună — suficient).
+2. **Domains → Add Domain → `anvelope-ungheni.md`**, apoi cele trei înregistrări
+   DNS (SPF, DKIM, DMARC) la registrarul domeniului. Fără asta, e-mailurile ori
+   nu pleacă, ori ajung în spam.
+3. **API Keys → Create**, apoi:
+
+```bash
+npx vercel env add RESEND_API_KEY production   # lipești cheia
+npx vercel env add RESEND_FROM production      # Anvelope Ungheni <comenzi@anvelope-ungheni.md>
+```
+
+4. Deploy și o comandă de test. `emailTrimis` din răspuns spune adevărul: dacă
+   e `false`, comanda a intrat oricum în bază.
+
+Adresa destinatarului nu e scrisă în cod — vine din `settings.email`, deci se
+schimbă din baza de date, nu din repo.
+
+## 12. WhatsApp: de ce e buton, nu trimitere automată
+
+Pe ecranul de confirmare, comanda e gata scrisă și pleacă la un clic spre
+numărul atelierului. **Nu se trimite singură** și nu se poate, fără WhatsApp
+Business API de la Meta: acela cere cont de business verificat, iar numărul
+înregistrat acolo nu mai poate fi folosit din aplicația WhatsApp obișnuită —
+adică exact ce folosiți zilnic.
+
+Dacă vrei totuși trimitere automată, canalul corect e e-mailul (punctul 11) plus,
+eventual, un al doilea număr dedicat pentru API. Spune-mi și îl configurez.

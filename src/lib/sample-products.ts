@@ -9,6 +9,13 @@ export type Season = "vara" | "iarna" | "all_season";
 export type SizeSystem = "metric" | "imperial";
 
 export type Product = {
+  /**
+   * `id`-ul din bază. Opțional pentru că datele de mostră din acest fișier
+   * n-au unul — coșul are nevoie de el, iar `ProductCard` ascunde butonul de
+   * adăugare când lipsește. Comanda se validează pe server DUPĂ `id`, nu după
+   * slug: slug-ul se poate schimba la o redenumire de produs.
+   */
+  id?: number;
   slug: string;
   slugRu: string;
   legacyId: number;

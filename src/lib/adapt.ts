@@ -8,6 +8,7 @@ import type { Product as DbProduct } from "@/lib/types";
  */
 export function toUiProduct(p: DbProduct): UiProduct {
   return {
+    id: p.id,
     slug: p.slug_ro,
     slugRu: p.slug_ru ?? p.slug_ro,
     legacyId: p.legacy_product_id,

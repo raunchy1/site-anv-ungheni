@@ -5,6 +5,7 @@ import { Price, PriceOnRequest } from "./PriceOnRequest";
 import { StockIndicator } from "./StockIndicator";
 import { SeasonBadge, SpecBadges } from "./Badge";
 import { BrandLogo } from "./BrandLogo";
+import { AddToCartCard } from "@/components/cart/AddToCartCard";
 import type { Product } from "@/lib/sample-products";
 import type { Locale } from "@/lib/i18n";
 import { formatSize, formatIndex, normalizeSpeedIndex } from "@/lib/format";
@@ -99,6 +100,22 @@ export function ProductCard({
             locale={locale}
             className="mt-[var(--sp-2)]"
           />
+
+          {/* Doar unde chiar se poate cumpăra: fără preț sau fără `id` din bază,
+              butonul ar promite ceva ce nu poate duce la capăt. */}
+          {!unavailable && product.price !== null && product.id ? (
+            <AddToCartCard
+              item={{
+                id: product.id,
+                slug: locale === "ru" ? product.slugRu : product.slug,
+                title,
+                price: product.price,
+                image: product.image,
+                size,
+                brand: product.brand,
+              }}
+            />
+          ) : null}
         </div>
       </div>
     </Card>
