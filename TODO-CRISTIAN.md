@@ -72,3 +72,28 @@ Nu se iau de pe agregatoare și nici de la concurență. Mărcile fără logo ar
 
 Fișierul din catalogul furnizorului are **27614×5592 px, 21 MB** și servește 16 produse.
 E o eroare în sursă. Funcționează, dar merită înlocuită.
+
+## 9. Traducerea rusă a paginii de servicii
+
+Textul românesc din `src/content/servicii.ts` e preluat cuvânt cu cuvânt din
+`AnvelopeUngheniServiciisiPreturi.docx` — prețurile și denumirile operațiunilor
+sunt ale atelierului, nu ale mele.
+
+**Varianta rusă e traducerea mea și nu a fost citită de un vorbitor nativ.** E
+corectă tehnic (шиномонтаж, балансировка, вентиль, датчик давления), dar tonul
+comercial merită o trecere de la cineva care vorbește rusa zilnic — mai ales
+cârligele („Presiunea care nu scade de la o lună la alta") și îndemnurile.
+
+Totul stă într-un singur fișier, în perechi `t("ro", "ru")`, deci corecturile se
+fac direct acolo, fără să umbli prin componente.
+
+## 10. Fotografiile serviciilor
+
+Zece imagini, toate de pe Wikimedia Commons, cu autorul și licența trecute atât
+în `src/content/servicii.ts` (câmpul `foto`, de unde se generează atribuirea de
+sub fiecare fotografie), cât și în `public/servicii/LICENSES.md`.
+
+Sunt fotografii reale de atelier, dar **nu din atelierul nostru**. Când ai poze
+proprii, ele sunt de preferat: schimbi fișierul din `public/servicii/`, pui
+`sursa: "Anvelope Ungheni"`, `licenta: "Foto proprie"` și ștergi rândul din
+LICENSES.md. Atribuirea de sub imagine dispare singură.

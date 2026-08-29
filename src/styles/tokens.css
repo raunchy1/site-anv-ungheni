@@ -339,6 +339,8 @@
 
   /* Latimi de coloana. Grila de 12 la desktop, 4 la mobil. */
   --measure: 68ch;      /* lungime maxima de rand pentru text curent */
+  --measure-table: 880px; /* latimea maxima a unui tabel de preturi: peste atat,
+                             coloanele se departeaza si ochiul pierde randul */
   --shell-max: 90rem;   /* 1440 */
   --gutter: var(--sp-4);
 }
