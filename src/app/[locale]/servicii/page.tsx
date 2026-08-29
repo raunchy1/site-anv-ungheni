@@ -3,7 +3,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { TreadRule } from "@/components/icons";
 import { SectiuneServiciu } from "@/components/servicii/SectiuneServiciu";
-import { SERVICII, text } from "@/content/servicii";
+import { SERVICII, pretDeLa, text } from "@/content/servicii";
 import { getSettings } from "@/lib/db/queries";
 import type { Locale } from "@/lib/types";
 
@@ -37,32 +37,6 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
       languages: { ro: "/servicii", ru: "/ru/uslugi" },
     },
   };
-}
-
-/**
- * Prețul „de la …" pentru index.
- *
- * Se calculează din PRIMUL tabel al capitolului — cel al serviciului propriu-zis
- * — nu din toate: la reparații, al doilea tabel conține sacul de 10 lei, iar
- * „reparații de la 10 lei" ar fi o promisiune falsă.
- *
- * Rândurile la gram se sar din același motiv: freonul costă 0,85 lei gramul,
- * dar nimeni nu cumpără un gram, iar „aer condiționat de la 0,85 lei" e o cifră
- * care induce în eroare, nu una care ajută.
- */
-function pretDeLa(tabele: (typeof SERVICII)[number]["tabele"]): number | null {
-  const primul = tabele[0];
-  if (!primul) return null;
-  const valori = primul.randuri
-    .filter((r) => !/gram|грамм/i.test(r[0]))
-    .flatMap((r) =>
-      r.slice(1).map((v) => {
-        const n = Number(String(v).replace(/[^\d,.]/g, "").replace(",", "."));
-        return Number.isFinite(n) && n > 0 ? n : null;
-      }),
-    )
-    .filter((n): n is number => n !== null);
-  return valori.length ? Math.min(...valori) : null;
 }
 
 export default async function ServiciiPage({ params }: { params: Promise<{ locale: string }> }) {

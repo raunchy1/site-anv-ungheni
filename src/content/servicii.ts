@@ -45,6 +45,13 @@ export type Serviciu = {
   indemn: Bilingv;
   /** Slug-ul paginii de serviciu existente, unde există una. */
   dbSlug?: string;
+  /**
+   * Alte pagini de serviciu din bază acoperite de același capitol. Vechiul site
+   * împărțea pe operațiuni („Balansarea rotilor"), documentul de prețuri
+   * grupează pe capitol — aici se leagă unele de altele, ca fiecare pagină să
+   * poată arăta prețuri reale, nu doar titlul ei.
+   */
+  dbAlias?: string[];
   foto: { fisier: string; alt: Bilingv; sursa: string; autor: string; licenta: string; pagina: string };
 };
 
@@ -55,6 +62,7 @@ export const SERVICII: Serviciu[] = [
     id: "service-roti",
     numar: "01",
     dbSlug: "schimbul-rotilor",
+    dbAlias: ["balansarea-rotilor"],
     titlu: t("Service roți și vulcanizare", "Шиномонтаж и вулканизация"),
     carlig: t(
       "Vibrează volanul la 90 km/h? Nu e drumul. E o roată dezechilibrată cu 15 grame.",
@@ -303,6 +311,7 @@ export const SERVICII: Serviciu[] = [
     id: "jante",
     numar: "06",
     dbSlug: "reparatia-discurilor",
+    dbAlias: ["vopsirea-discurilor"],
     titlu: t("Reparație și vopsire jante", "Ремонт и покраска дисков"),
     carlig: t(
       "Bordura ți-a îndoit janta. Nu îți trebuie una nouă de 4000 de lei.",
@@ -540,4 +549,39 @@ export const SERVICII: Serviciu[] = [
 export function text(v: Bilingv, locale: Locale, tel?: string): string {
   const s = locale === "ru" ? v.ru : v.ro;
   return tel ? s.replace("{tel}", tel) : s;
+}
+
+/**
+ * Capitolul care acoperă o pagină de serviciu din bază.
+ *
+ * `sudura-cu-argon` rămâne intenționat nelegată: documentul de prețuri nu are
+ * niciun tarif de sudură în argon, iar a-i lipi tabelul de la îndreptare ar
+ * însemna să arătăm un preț care nu e al acelei lucrări.
+ */
+export function serviciuPentruSlug(slug: string): Serviciu | undefined {
+  return SERVICII.find((s) => s.dbSlug === slug || s.dbAlias?.includes(slug));
+}
+
+/**
+ * Prețul minim al unui capitol, pentru indexul de pe pagina de servicii și
+ * pentru datele structurate ale paginilor de serviciu.
+ *
+ * Se calculează din PRIMUL tabel — cel al serviciului propriu-zis: la reparații,
+ * al doilea tabel conține sacul de 10 lei, iar „reparații de la 10 lei" ar fi o
+ * promisiune falsă. Rândurile la gram se sar din același motiv: freonul costă
+ * 0,85 lei gramul, dar nimeni nu cumpără un gram.
+ */
+export function pretDeLa(tabele: TabelPreturi[]): number | null {
+  const primul = tabele[0];
+  if (!primul) return null;
+  const valori = primul.randuri
+    .filter((r) => !/gram|\u0433\u0440\u0430\u043c\u043c/i.test(r[0]))
+    .flatMap((r) =>
+      r.slice(1).map((v) => {
+        const n = Number(String(v).replace(/[^\d,.]/g, "").replace(",", "."));
+        return Number.isFinite(n) && n > 0 ? n : null;
+      }),
+    )
+    .filter((n): n is number => n !== null);
+  return valori.length ? Math.min(...valori) : null;
 }
