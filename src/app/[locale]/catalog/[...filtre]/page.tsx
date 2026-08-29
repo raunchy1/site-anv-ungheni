@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { CatalogView } from "@/components/catalog/CatalogView";
-import { parseFilterSegments, buildFilterSegments, activeFilterCount } from "@/lib/catalog-filters";
+import { parseFilterSegments, canonicalSegments, activeFilterCount } from "@/lib/catalog-filters";
 import { sizeTree } from "@/lib/size-tree";
 import type { Locale } from "@/lib/types";
 
@@ -31,6 +31,10 @@ export async function generateStaticParams() {
  */
 function isIndexable(f: ReturnType<typeof parseFilterSegments>): boolean {
   if (f.unknown.length) return false;
+  /* Sortarea, paginile 2+ și „arată și indisponibilele" sunt aceeași marfă în
+     altă ordine sau în altă felie. Se pot deschide și partaja, dar nu intră în
+     index — altfel o singură selecție ar produce zeci de rute duplicate. */
+  if (f.sort || (f.page && f.page > 1) || f.includeUnavailable) return false;
   const fullSize = Boolean(f.width && f.aspect && f.diameter);
   const partial = [f.width, f.aspect, f.diameter].filter(Boolean).length;
   if (partial > 0 && !fullSize && partial > 1) return false;
@@ -44,9 +48,10 @@ export async function generateMetadata({
   const t = await getTranslations({ locale, namespace: "catalog" });
   const tAll = await getTranslations({ locale });
   const f = parseFilterSegments(filtre);
-  const canonicalSegments = buildFilterSegments(f);
-  const roPath = `/catalog-anvelope/${canonicalSegments.join("/")}`;
-  const ruPath = `/ru/katalog-shin/${canonicalSegments.join("/")}`;
+  /* Canonicul arată spre selecția fără sortare și fără pagină. */
+  const canonical = canonicalSegments(f);
+  const roPath = canonical.length ? `/catalog-anvelope/${canonical.join("/")}` : "/catalog-anvelope";
+  const ruPath = canonical.length ? `/ru/katalog-shin/${canonical.join("/")}` : "/ru/katalog-shin";
 
   const bits = [
     f.width && f.aspect && f.diameter ? `${f.width}/${f.aspect} ${f.diameter}` : null,
@@ -64,21 +69,17 @@ export async function generateMetadata({
 }
 
 export default async function FilteredCatalogPage({
-  params, searchParams,
+  params,
 }: {
   params: Promise<{ locale: string; filtre: string[] }>;
-  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const { locale, filtre } = await params;
   setRequestLocale(locale);
-  const sp = await searchParams;
-  const one = (v: string | string[] | undefined) => (Array.isArray(v) ? v[0] : v);
 
   return (
     <CatalogView
       locale={locale as Locale}
       filters={parseFilterSegments(filtre)}
-      search={{ pagina: one(sp.pagina), sortare: one(sp.sortare), indisponibile: one(sp.indisponibile) }}
     />
   );
 }

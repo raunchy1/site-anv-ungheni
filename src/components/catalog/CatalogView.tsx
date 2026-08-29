@@ -1,4 +1,3 @@
-import { Suspense } from "react";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { ProductCard } from "@/components/ui/ProductCard";
@@ -17,22 +16,20 @@ import type { Locale, Product } from "@/lib/types";
 
 const PER_PAGE = 30;
 
-type Search = { pagina?: string; sortare?: string; indisponibile?: string };
-
 export async function CatalogView({
-  locale, filters, search, title, brandLogo,
+  locale, filters, title, brandLogo,
 }: {
   locale: Locale;
+  /** Tot ce ține de listă vine din cale: filtre, sortare, pagină. */
   filters: ParsedFilters;
-  search: Search;
   title?: string;
   /** Pagina de marcă își pune logo-ul deasupra titlului, dacă are unul încărcat. */
   brandLogo?: { name: string; src: string | null; onDark?: boolean; ratio?: number | null };
 }) {
   const t = await getTranslations();
-  const page = Math.max(1, Number(search.pagina ?? 1) || 1);
-  const includeUnavailable = search.indisponibile === "1";
-  const sort = (["price_asc", "price_desc", "name"] as const).find((s) => s === search.sortare) ?? "default";
+  const page = filters.page && filters.page > 1 ? filters.page : 1;
+  const includeUnavailable = filters.includeUnavailable === true;
+  const sort = filters.sort ?? "default";
 
   const [result, brands] = await Promise.all([
     getCatalog({
@@ -43,16 +40,16 @@ export async function CatalogView({
     getBrands(),
   ]);
 
-  const base = buildFilterSegments(filters);
-  const hrefFor = (extra: Record<string, string | undefined>) => {
-    const qs = new URLSearchParams();
-    if (sort !== "default") qs.set("sortare", sort);
-    if (includeUnavailable) qs.set("indisponibile", "1");
-    for (const [k, v] of Object.entries(extra)) { if (v === undefined) qs.delete(k); else qs.set(k, v); }
-    const q = qs.toString();
-    return base.length
-      ? ({ pathname: "/catalog/[...filtre]" as const, params: { filtre: base }, query: q ? Object.fromEntries(qs) : undefined })
-      : ({ pathname: "/catalog" as const, query: q ? Object.fromEntries(qs) : undefined });
+  /**
+   * Orice legătură din pagină e o rută, nu un query. `hrefFor` primește ce se
+   * schimbă față de starea curentă și returnează calea completă; când nu mai
+   * rămâne niciun segment, e catalogul gol, `/catalog-anvelope`.
+   */
+  const hrefFor = (patch: Partial<Omit<ParsedFilters, "unknown">>) => {
+    const segs = buildFilterSegments({ ...filters, ...patch });
+    return segs.length
+      ? ({ pathname: "/catalog/[...filtre]" as const, params: { filtre: segs } })
+      : ({ pathname: "/catalog" as const });
   };
 
   const heading = title ?? headingFor(filters, t);
@@ -88,17 +85,28 @@ export async function CatalogView({
           availableTotal={result.availableTotal}
           unavailableTotal={result.unavailableTotal}
           includeUnavailable={includeUnavailable}
-          sort={sort}
+          hrefClear={hrefFor({ width: undefined, aspect: undefined, diameter: undefined, season: undefined, brand: undefined, onlyAvailable: undefined, page: 1 })}
+          hrefUnavailable={{
+            on: hrefFor({ includeUnavailable: true, page: 1 }),
+            off: hrefFor({ includeUnavailable: undefined, page: 1 }),
+          }}
+          hrefFor={hrefFor}
         />
 
         <div className="min-w-0">
           <div className="mb-[var(--sp-4)] flex items-center justify-end">
-            {/* `useSearchParams` cere o graniță Suspense ca pagina să poată fi
-                pre-generată. Rezerva are exact înălțimea controlului, ca să nu
-                producă salt de layout. */}
-            <Suspense fallback={<div className="h-11 w-[200px] rounded-[var(--radius-sm)] border border-[var(--line)]" aria-hidden />}>
-              <SortSelect locale={locale} value={sort} />
-            </Suspense>
+            {/* Căile vin gata construite de pe server: controlul nu mai
+                citește query-ul, deci nu mai are nevoie nici de `useSearchParams`,
+                nici de graniță Suspense. */}
+            <SortSelect
+              value={sort}
+              hrefs={{
+                default: hrefFor({ sort: undefined, page: 1 }),
+                price_asc: hrefFor({ sort: "price_asc", page: 1 }),
+                price_desc: hrefFor({ sort: "price_desc", page: 1 }),
+                name: hrefFor({ sort: "name", page: 1 }),
+              }}
+            />
           </div>
 
           {result.items.length === 0 ? (
@@ -115,12 +123,12 @@ export async function CatalogView({
               {result.pages > 1 && (
                 <nav className="mt-[var(--sp-8)] flex flex-wrap items-center gap-[var(--sp-2)]" aria-label={t("catalog.page", { n: page })}>
                   {page > 1 && (
-                    <Link href={hrefFor({ pagina: String(page - 1) })} className="pagination-link">{t("catalog.prev")}</Link>
+                    <Link href={hrefFor({ page: page - 1 })} className="pagination-link">{t("catalog.prev")}</Link>
                   )}
                   {pageWindow(page, result.pages).map((n) => (
                     <Link
                       key={n}
-                      href={hrefFor({ pagina: n === 1 ? undefined : String(n) })}
+                      href={hrefFor({ page: n })}
                       aria-current={n === page ? "page" : undefined}
                       className={`pagination-link num ${n === page ? "is-current" : ""}`}
                     >
@@ -128,7 +136,7 @@ export async function CatalogView({
                     </Link>
                   ))}
                   {page < result.pages && (
-                    <Link href={hrefFor({ pagina: String(page + 1) })} className="pagination-link">{t("catalog.next")}</Link>
+                    <Link href={hrefFor({ page: page + 1 })} className="pagination-link">{t("catalog.next")}</Link>
                   )}
                 </nav>
               )}
@@ -184,7 +192,7 @@ async function EmptyStateWithWhatsApp({
       action={
         <div className="flex flex-wrap items-center gap-[var(--sp-3)]">
           {unavailableTotal > 0 && (
-            <Link href={{ pathname: "/catalog/[...filtre]", params: { filtre: buildFilterSegments(filters) }, query: { indisponibile: "1" } }} className="nav-link text-200 underline">
+            <Link href={{ pathname: "/catalog/[...filtre]", params: { filtre: buildFilterSegments({ ...filters, includeUnavailable: true, page: undefined }) } }} className="nav-link text-200 underline">
               {t("catalog.showUnavailable")} ({unavailableTotal})
             </Link>
           )}

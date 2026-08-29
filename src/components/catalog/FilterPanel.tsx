@@ -1,7 +1,8 @@
 import { Suspense } from "react";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { buildFilterSegments, type ParsedFilters } from "@/lib/catalog-filters";
+import { type ParsedFilters } from "@/lib/catalog-filters";
+import type { CatalogHref } from "./hrefs";
 import { sizeTree } from "@/lib/size-tree";
 import type { Brand, Locale, Season } from "@/lib/types";
 import { UnavailableToggle } from "./UnavailableToggle";
@@ -15,7 +16,8 @@ const SEASONS: Season[] = ["vara", "iarna", "all_season"];
  * generat din bază la build — nu dintr-un COUNT(*) pe 15.010 rânduri.
  */
 export async function FilterPanel({
-  locale, filters, brands, activeCount, availableTotal, unavailableTotal, includeUnavailable, sort,
+  locale, filters, brands, activeCount, availableTotal, unavailableTotal, includeUnavailable,
+  hrefClear, hrefUnavailable, hrefFor,
 }: {
   locale: Locale;
   filters: ParsedFilters;
@@ -24,17 +26,15 @@ export async function FilterPanel({
   availableTotal: number;
   unavailableTotal: number;
   includeUnavailable: boolean;
-  sort: string;
+  hrefClear: CatalogHref;
+  hrefUnavailable: { on: CatalogHref; off: CatalogHref };
+  hrefFor: (patch: Partial<Omit<ParsedFilters, "unknown">>) => CatalogHref;
 }) {
   const t = await getTranslations();
-  const query = { ...(sort !== "default" ? { sortare: sort } : {}), ...(includeUnavailable ? { indisponibile: "1" } : {}) };
 
-  const linkTo = (patch: Partial<ParsedFilters>) => {
-    const next = buildFilterSegments({ ...filters, ...patch });
-    return next.length
-      ? ({ pathname: "/catalog/[...filtre]" as const, params: { filtre: next }, query })
-      : ({ pathname: "/catalog" as const, query });
-  };
+  /* Orice schimbare de filtru readuce lista la prima pagină: pagina 7 a unei
+     alte selecții e, aproape mereu, o pagină care nu există. */
+  const linkTo = (patch: Partial<Omit<ParsedFilters, "unknown">>) => hrefFor({ ...patch, page: 1 });
 
   const widths = Object.keys(sizeTree);
   const aspects = filters.width ? Object.keys(sizeTree[String(filters.width)]?.[2] ?? {}) : [];
@@ -49,12 +49,14 @@ export async function FilterPanel({
           checked={includeUnavailable}
           label={t("catalog.showUnavailable")}
           count={unavailableTotal}
+          hrefOn={hrefUnavailable.on}
+          hrefOff={hrefUnavailable.off}
         />
       </Suspense>
 
 
       {activeCount > 0 && (
-        <Link href={{ pathname: "/catalog", query }} className="nav-link text-200 underline">
+        <Link href={hrefClear} className="nav-link text-200 underline">
           {t("catalog.clear")}
         </Link>
       )}

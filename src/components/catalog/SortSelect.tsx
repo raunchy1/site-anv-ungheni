@@ -1,17 +1,27 @@
 "use client";
 
-import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { useTranslations } from "next-intl";
 import { Select } from "@/components/ui/Select";
-import type { Locale } from "@/lib/types";
+import type { CatalogHref } from "./hrefs";
 
-/** Sortarea stă în query, nu în cale: nu e o rută pe care vrem s-o indexăm. */
-export function SortSelect({ locale, value }: { locale: Locale; value: string }) {
+/**
+ * Sortarea stă în cale, ca filtrele: `/catalog-anvelope/latime_205/sortare_pret-asc`.
+ *
+ * Nu ca s-o indexăm — paginile sortate rămân `noindex` — ci pentru că un query
+ * făcea toată ruta dinamică, iar catalogul plătea un drum până la bază la
+ * fiecare clic. Căile vin gata construite de pe server, deci controlul nu mai
+ * citește URL-ul curent și nu mai are nevoie de `useSearchParams`.
+ */
+export function SortSelect({
+  value,
+  hrefs,
+}: {
+  value: string;
+  hrefs: Record<"default" | "price_asc" | "price_desc" | "name", CatalogHref>;
+}) {
   const t = useTranslations("catalog");
   const router = useRouter();
-  const pathname = usePathname();
-  const params = useSearchParams();
-  void locale;
 
   return (
     <Select
@@ -19,12 +29,8 @@ export function SortSelect({ locale, value }: { locale: Locale; value: string })
       labelHidden
       value={value}
       onChange={(e) => {
-        const next = new URLSearchParams(params.toString());
-        if (e.target.value === "default") next.delete("sortare");
-        else next.set("sortare", e.target.value);
-        next.delete("pagina");
-        const qs = next.toString();
-        router.push(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
+        const href = hrefs[e.target.value as keyof typeof hrefs] ?? hrefs.default;
+        router.push(href, { scroll: false });
       }}
       options={[
         { value: "default", label: t("sortDefault") },

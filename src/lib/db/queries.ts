@@ -126,10 +126,18 @@ export async function getCatalog(f: CatalogFilters): Promise<CatalogResult> {
   const page = Math.max(1, f.page ?? 1);
   const perPage = f.perPage ?? 30;
 
-  // contoarele se cer separat de rânduri: filtrul implicit ascunde indisponibilele,
-  // dar utilizatorul trebuie să vadă câte sunt înainte să activeze comutatorul
+  /* Contoarele se cer separat de rânduri: filtrul implicit ascunde
+     indisponibilele, dar utilizatorul trebuie să vadă câte sunt înainte să
+     activeze comutatorul.
+
+     `head: true` ar trimite un HEAD, iar un HEAD nu intră în Data Cache — și o
+     singură cerere necacheabilă face TOATĂ ruta dinamică, oricât ar scrie
+     `revalidate` deasupra. De aici veneau cele ~450 ms la fiecare clic pe un
+     filtru: pagina era pre-generată la build și tot se re-randa la fiecare
+     cerere. `select("id").limit(1)` cere același contor printr-un GET obișnuit,
+     cu un singur rând în corp. */
   const base = () => {
-    let q = db.from("products").select("*", { count: "exact", head: true }).eq("is_active", true).eq("category", "anvelope");
+    let q = db.from("products").select("id", { count: "exact" }).limit(1).eq("is_active", true).eq("category", "anvelope");
     for (const [col, val] of filterEntries(f)) q = q.eq(col, val);
     return q;
   };
@@ -361,7 +369,8 @@ export const getSeasonCounts = cache(async (): Promise<Record<Season, number>> =
   const seasons: Season[] = ["vara", "iarna", "all_season"];
   const counts = await Promise.all(
     seasons.map((s) =>
-      db.from("products").select("*", { count: "exact", head: true })
+      /* GET, nu HEAD — vezi comentariul din getCatalog. */
+      db.from("products").select("id", { count: "exact" }).limit(1)
         .eq("is_active", true).eq("category", "anvelope").eq("season", s)
         .in("stock_status", AVAILABLE)
         .then(({ count }) => count ?? 0),

@@ -1,16 +1,24 @@
 "use client";
 
-import { useRouter, useSearchParams, usePathname } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { Checkbox } from "@/components/ui/Checkbox";
+import type { CatalogHref } from "./hrefs";
 
 /**
  * 46% din catalog e indisponibil. Filtrul implicit le ascunde, dar comutatorul
  * e vizibil și poartă contorul — nu îngropat într-un accordion.
  */
-export function UnavailableToggle({ checked, label, count }: { checked: boolean; label: string; count: number }) {
+export function UnavailableToggle({
+  checked, label, count, hrefOn, hrefOff,
+}: {
+  checked: boolean;
+  label: string;
+  count: number;
+  /* Adresele vin de pe server, ca la sortare: vezi SortSelect. */
+  hrefOn: CatalogHref;
+  hrefOff: CatalogHref;
+}) {
   const router = useRouter();
-  const pathname = usePathname();
-  const params = useSearchParams();
 
   return (
     <Checkbox
@@ -19,14 +27,7 @@ export function UnavailableToggle({ checked, label, count }: { checked: boolean;
       className="[&_span:last-child]:overflow-visible [&_span:last-child]:whitespace-normal"
       checked={checked}
       label={`${label} (${count})`}
-      onChange={(e) => {
-        const next = new URLSearchParams(params.toString());
-        if (e.target.checked) next.set("indisponibile", "1");
-        else next.delete("indisponibile");
-        next.delete("pagina");
-        const qs = next.toString();
-        router.push(qs ? `${pathname}?${qs}` : pathname, { scroll: false });
-      }}
+      onChange={(e) => router.push(e.target.checked ? hrefOn : hrefOff, { scroll: false })}
     />
   );
 }

@@ -26,7 +26,6 @@ export async function BrandPage({ brand, locale }: { brand: Brand; locale: Local
     <CatalogView
       locale={locale}
       filters={{ brand: locale === "ru" ? (brand.slug_ru ?? brand.slug_ro) : brand.slug_ro, unknown: [] }}
-      search={{}}
       title={t("brandPage.title", { brand: brand.name })}
       brandLogo={{ name: brand.name, src: brand.logo_url, onDark: brand.logo_on_dark, ratio: brand.logo_ratio }}
     />
