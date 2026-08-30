@@ -3,7 +3,7 @@
 import { z } from "zod";
 import { db, dbWrite } from "@/lib/supabase/server";
 import { getSettings } from "@/lib/db/queries";
-import { trimiteEmailComanda } from "./email";
+import { destinatariComenzi, trimiteEmailComanda } from "./email";
 import { comandaText, type OrderData, type OrderLine } from "./mesaj";
 import { SITE_URL, whatsappLink } from "@/lib/format";
 import { COST_LIVRARE } from "./livrare";
@@ -184,7 +184,7 @@ export async function plaseazaComanda(input: ComandaInput): Promise<RezultatComa
   let emailTrimis = false;
   try {
     const settings = await getSettings();
-    emailTrimis = (await trimiteEmailComanda(date, settings.email)).trimis;
+    emailTrimis = (await trimiteEmailComanda(date, destinatariComenzi(settings.email))).trimis;
   } catch (e) {
     console.error("[comandă] e-mailul n-a putut fi trimis:", e, orderNumber);
   }

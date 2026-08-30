@@ -20,7 +20,22 @@ export type RezultatEmail =
   | { trimis: true; id: string }
   | { trimis: false; motiv: "neconfigurat" | "eroare"; detaliu?: string };
 
-export async function trimiteEmailComanda(o: OrderData, catre: string): Promise<RezultatEmail> {
+/**
+ * Cui îi ajunge comanda. `ORDER_NOTIFY_EMAIL` bate ce scrie în `settings`,
+ * pentru că adresa din `settings` e cea publică, afișată pe site la contact —
+ * cine citește comenzile nu e neapărat aceeași persoană. Acceptă mai multe
+ * adrese separate prin virgulă. Fără variabilă, rămâne comportamentul vechi.
+ */
+export function destinatariComenzi(emailDinSettings: string): string[] {
+  const brut = process.env.ORDER_NOTIFY_EMAIL ?? emailDinSettings;
+  const lista = brut
+    .split(",")
+    .map((a) => a.trim())
+    .filter(Boolean);
+  return lista.length > 0 ? lista : [emailDinSettings];
+}
+
+export async function trimiteEmailComanda(o: OrderData, catre: string | string[]): Promise<RezultatEmail> {
   const key = process.env.RESEND_API_KEY;
   if (!key) return { trimis: false, motiv: "neconfigurat" };
 
@@ -32,7 +47,7 @@ export async function trimiteEmailComanda(o: OrderData, catre: string): Promise<
   try {
     const { data, error } = await new Resend(key).emails.send({
       from,
-      to: [catre],
+      to: Array.isArray(catre) ? catre : [catre],
       /* Răspunsul pleacă direct la client, dacă și-a lăsat adresa. */
       ...(o.email ? { replyTo: o.email } : {}),
       subject: `${o.orderNumber} · ${o.customerName} · ${Math.round(o.total)} MDL`,
