@@ -144,3 +144,61 @@ test('marja pe brand bate marja pe interval, care bate implicitul', () => {
   assert.equal(calculeazaPret(6000, 'Ceat', r).motiv, 'interval:5000–∞');
   assert.equal(calculeazaPret(100, 'Ceat', r).motiv, 'implicit');
 });
+
+/* --------------------------------------------------------------- imaginile */
+
+test('textul alternativ al imaginii e titlul din catalog, în ambele limbi', async () => {
+  const { pregatesteImagini } = await import('./images.mjs');
+  const original = globalThis.fetch;
+  /* JPEG minim valid: SOI + SOF0 cu 900x900 + umplutură până peste pragul de 1 KB. */
+  const antet = Buffer.from([0xff, 0xd8, 0xff, 0xc0, 0x00, 0x11, 0x08, 0x03, 0x84, 0x03, 0x84]);
+  const buf = Buffer.concat([antet, Buffer.alloc(2048)]);
+  globalThis.fetch = async () => ({ ok: true, arrayBuffer: async () => buf });
+  try {
+    const { imagini } = await pregatesteImagini(
+      [{ url: 'https://x/y.jpg', alt: 'Anvelopa Crosswind Comfort Peak 165/65 R15 81H' }],
+      new Set(),
+      { dryRun: true, altRo: 'Crosswind Comfort Peak 165/65 R15 81H', altRu: 'Crosswind Comfort Peak 165/65 R15 81H' },
+    );
+    assert.equal(imagini.length, 1);
+    assert.equal(imagini[0].alt_ro, 'Crosswind Comfort Peak 165/65 R15 81H', 'fără prefixul „Anvelopa" din captionul lor');
+    assert.equal(imagini[0].alt_ru, 'Crosswind Comfort Peak 165/65 R15 81H', 'alt_ru nu rămâne gol');
+    assert.equal(imagini[0].width, 900);
+    assert.equal(imagini[0].height, 900);
+    assert.equal(imagini[0].content_hash.length, 40, 'numele fișierului e SHA-1-ul conținutului');
+  } finally {
+    globalThis.fetch = original;
+  }
+});
+
+test('un produs fără nicio imagine descărcată ajunge în carantină', async () => {
+  const { pregatesteImagini } = await import('./images.mjs');
+  const original = globalThis.fetch;
+  globalThis.fetch = async () => ({ ok: false, status: 404 });
+  try {
+    const { imagini, erori } = await pregatesteImagini([{ url: 'https://x/y.jpg' }], new Set(), { dryRun: true });
+    assert.equal(imagini.length, 0);
+    assert.equal(erori.length, 1, 'eroarea nu se pierde tăcut');
+  } finally {
+    globalThis.fetch = original;
+  }
+});
+
+test('aceeași fotografie nu se urcă de două ori', async () => {
+  const { pregatesteImagini } = await import('./images.mjs');
+  const original = globalThis.fetch;
+  const buf = Buffer.concat([Buffer.from([0xff, 0xd8]), Buffer.alloc(2048, 7)]);
+  globalThis.fetch = async () => ({ ok: true, arrayBuffer: async () => buf });
+  try {
+    const cunoscute = new Set();
+    const { imagini } = await pregatesteImagini(
+      [{ url: 'https://x/1.jpg' }, { url: 'https://x/2.jpg' }], cunoscute, { dryRun: true },
+    );
+    assert.equal(imagini[0].content_hash, imagini[1].content_hash);
+    assert.equal(imagini[0].refolosita, false);
+    assert.equal(imagini[1].refolosita, true);
+    assert.equal(cunoscute.size, 1, 'un singur fișier, două referințe');
+  } finally {
+    globalThis.fetch = original;
+  }
+});

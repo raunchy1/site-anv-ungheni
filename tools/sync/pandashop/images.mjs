@@ -61,7 +61,7 @@ async function descarca(url) {
  * @param {Set<string>} hashuriCunoscute  SHA-1-urile deja prezente în catalog
  * @param {{ dryRun?: boolean, max?: number }} opts
  */
-export async function pregatesteImagini(imagini, hashuriCunoscute, { dryRun = true, max = 4 } = {}) {
+export async function pregatesteImagini(imagini, hashuriCunoscute, { dryRun = true, max = 4, altRo = null, altRu = null } = {}) {
   const out = [];
   const erori = [];
   for (const [i, im] of imagini.slice(0, max).entries()) {
@@ -86,7 +86,11 @@ export async function pregatesteImagini(imagini, hashuriCunoscute, { dryRun = tr
         original_path: im.url.replace(/^https?:\/\/[^/]+/, ''),
         content_hash: hash,
         width, height,
-        alt_ro: im.alt ?? null,
+        /* Textul alternativ e titlul din catalog, în ambele limbi, ca la cele 15.000
+           existente. NU `im.caption` de la ei: acela începe cu „Anvelopa", pe care
+           titlurile noastre nu-l au, iar `alt_ru` ar rămâne gol. */
+        alt_ro: altRo ?? im.alt ?? null,
+        alt_ru: altRu ?? altRo ?? im.alt ?? null,
         sort_order: i,
         refolosita,
       });

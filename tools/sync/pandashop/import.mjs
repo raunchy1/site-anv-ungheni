@@ -183,8 +183,13 @@ async function main() {
 
       if (faraPret && motive.length === 0) { rezultate.faraPret.push({ id: ref.id, titlu: sursa.titleRo }); continue; }
 
-      const { imagini: imgs, erori: eImg } = await pregatesteImagini(sursa.images, hashuri, { dryRun: !aplica });
+      const { imagini: imgs, erori: eImg } = await pregatesteImagini(sursa.images, hashuri, {
+        dryRun: !aplica, altRo: rand.title_ro, altRu: rand.title_ru,
+      });
       if (imgs.length === 0) motive.push(`nicio imagine descărcată${eImg.length ? `: ${eImg[0]}` : ''}`);
+      /* O imagine care n-a putut fi adusă nu trece tăcut: ajunge în jurnalul rulării
+         chiar dacă produsul a intrat cu celelalte. Pozele sunt jumătate din pagină. */
+      if (eImg.length) rezultate.erori.push({ id: ref.id, motiv: `imagini ratate (${eImg.length}): ${eImg.join(' | ').slice(0, 200)}` });
 
       if (motive.length) { rezultate.carantina.push({ id: ref.id, titlu: sursa.titleRo, motive, rand }); continue; }
 

@@ -183,12 +183,32 @@ duplicat al unui produs pe care îl avem deja sub alt ID.
 prima care se potrivește: **brand → interval de preț → implicit**. Rotunjire
 `end_9`: următorul multiplu de 10, minus 1, fără să coboare sub marja calculată.
 
-#### Imaginile
+#### Imaginile — regula fără excepții
 
-Cerute direct la 900×900 de la CDN-ul lor, care acceptă `w`/`h` în query — nu
-instalăm o bibliotecă de procesare ca să facem ce face deja serverul lor.
-Numele fișierului e SHA-1-ul conținutului, ca la cele 1.749 existente, deci
-aceeași fotografie nu se urcă de două ori.
+**Un produs fără nicio imagine descărcată NU intră în catalog.** E una din cele
+șase verificări obligatorii, iar o anvelopă fără poză oricum nu se vinde. Dacă o
+imagine dintre mai multe eșuează, produsul intră cu restul, dar ratarea ajunge în
+jurnalul rulării — nu trece tăcut.
+
+Cerute direct la 900×900 de la CDN-ul lor, care acceptă `w`/`h` în query; când
+originalul e mai mic, vine cât e. Nu instalăm o bibliotecă de procesare ca să
+facem ce face deja serverul lor. Numele fișierului e SHA-1-ul conținutului, ca la
+cele 1.749 existente, deci aceeași fotografie nu se urcă de două ori.
+
+Textul alternativ e titlul din catalog, în ambele limbi — nu captionul lor, care
+începe cu „Anvelopa" și n-are variantă RU.
+
+```bash
+node --env-file=.env.local tools/sync/pandashop/verify-images.mjs          # produsele importate
+node --env-file=.env.local tools/sync/pandashop/verify-images.mjs --toate  # tot catalogul
+```
+
+Verificarea întreabă direct fișierele din storage, nu baza: un rând care arată
+bine în `product_images` nu dovedește că fișierul mai e acolo.
+
+**De știut:** se salvează până la 4 imagini per produs, dar pagina afișează doar
+prima — toate cele 15.000 de produse vechi au exact o imagine, deci nu există
+galerie. Imaginile în plus stau în storage, gata pentru o galerie, dacă se vrea.
 
 ### Ce urmează
 
