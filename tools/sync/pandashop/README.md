@@ -146,7 +146,50 @@ rularea rapidă, și în enumerarea completă a celor 138 de pagini.
 `db-write.mjs` are o listă albă de tabele în care `products` nu figurează. O
 scriere greșită eșuează înainte să atingă rețeaua, nu după.
 
+### Gate B — făcut
+
+```bash
+node --env-file=.env.local tools/sync/pandashop/import.mjs                  # dry-run
+node --env-file=.env.local tools/sync/pandashop/import.mjs --simuleaza 40   # dry-run pe produse simulate
+node --env-file=.env.local tools/sync/pandashop/import.mjs --limit 3 --apply
+```
+
+Șase verificări, toate obligatorii: dimensiune parsată · brand existent · preț
+pozitiv · cel puțin o imagine · titlu în ambele limbi · slug fără coliziune.
+Orice eșec trimite produsul întreg în carantină; nu există import parțial.
+
+Trei produse importate real și verificate pe producție (200 pe RO și pe RU,
+preț cu marjă, „Disponibil · livrare 1–3 zile", imagine din Supabase Storage).
+`products` a rămas cu 15.010 rânduri `legacy`, cu `updated_at` neschimbat.
+
+#### Convenția de slug, dedusă din catalog și verificată pe el
+
+| | |
+|---|---|
+| RO | titlul fără cuvântul de categorie, minuscule, cratime — `crosswind-comfort-peak-165-65-r15-81h` |
+| RU | la fel, dar lățimea se lipește de profil — `crosswind-comfort-peak-16565-r15-81h` |
+
+Generatorul reproduce **12.430 din 15.010** slug-uri RO existente exact. Restul
+sunt din valuri de import mai vechi: 2.446 cu prefixul `anvelope-` și 134 cu
+sufix numeric. Convenția dominantă e cea fără prefix, deci aia se folosește.
+
+La coliziune, produsul merge în carantină. Nu se adaugă niciodată sufix `-1` și
+nu se suprascrie un slug existent — e singura protecție împotriva creării unui
+duplicat al unui produs pe care îl avem deja sub alt ID.
+
+#### Marja
+
+`settings.pricing_rules`, editabile din admin. Se evaluează în ordine și câștigă
+prima care se potrivește: **brand → interval de preț → implicit**. Rotunjire
+`end_9`: următorul multiplu de 10, minus 1, fără să coboare sub marja calculată.
+
+#### Imaginile
+
+Cerute direct la 900×900 de la CDN-ul lor, care acceptă `w`/`h` în query — nu
+instalăm o bibliotecă de procesare ca să facem ce face deja serverul lor.
+Numele fișierului e SHA-1-ul conținutului, ca la cele 1.749 existente, deci
+aceeași fotografie nu se urcă de două ori.
+
 ### Ce urmează
 
-Gate B: importul propriu-zis — validare, carantină, marjă, imagini, slug-uri.
-Gate C: Vercel Cron, blocaj de execuție, alerte pe e-mail.
+Gate C: Vercel Cron la 3 ore, blocaj de execuție, alerte pe e-mail prin Resend.

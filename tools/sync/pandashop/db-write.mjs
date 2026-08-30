@@ -16,7 +16,14 @@ function conexiune() {
   return { url, key };
 }
 
-const PERMISE = new Set(['pandashop_seen', 'sync_quarantine', 'import_runs']);
+/*
+ * `products` și `product_images` au intrat în listă la Gate B, când importul a
+ * fost aprobat. Până atunci lipseau intenționat, ca o greșeală de tastare într-un
+ * nume de tabel să nu poată ajunge în catalog. Scrierea în ele se face DOAR prin
+ * `import.mjs`, care inserează rânduri noi; nu există în tot directorul ăsta
+ * nicio operație de UPDATE sau DELETE pe produse existente.
+ */
+const PERMISE = new Set(['pandashop_seen', 'sync_quarantine', 'import_runs', 'products', 'product_images']);
 
 function verifica(table) {
   if (!PERMISE.has(table)) {
@@ -46,4 +53,33 @@ export async function insert(table, rows, { onConflict = null, chunk = 500 } = {
     scrise += lot.length;
   }
   return scrise;
+}
+
+/** Actualizare țintită, pe o singură cheie. Folosită doar pe `pandashop_seen`. */
+export async function update(table, match, patch) {
+  verifica(table);
+  if (table === 'products' || table === 'product_images') {
+    throw new Error(`update pe „${table}" nu e permis: sincronizarea adaugă, nu modifică`);
+  }
+  const { url, key } = conexiune();
+  const q = Object.entries(match).map(([k, v]) => `${k}=eq.${encodeURIComponent(v)}`).join('&');
+  const res = await fetch(`${url}/rest/v1/${table}?${q}`, {
+    method: 'PATCH',
+    headers: { apikey: key, Authorization: `Bearer ${key}`, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
+    body: JSON.stringify(patch),
+  });
+  if (!res.ok) throw new Error(`${table}: HTTP ${res.status} ${await res.text()}`);
+}
+
+/** Inserare care întoarce rândurile create — ne trebuie `id`-ul produsului nou. */
+export async function insertReturning(table, rows) {
+  verifica(table);
+  const { url, key } = conexiune();
+  const res = await fetch(`${url}/rest/v1/${table}`, {
+    method: 'POST',
+    headers: { apikey: key, Authorization: `Bearer ${key}`, 'Content-Type': 'application/json', Prefer: 'return=representation' },
+    body: JSON.stringify(rows),
+  });
+  if (!res.ok) throw new Error(`${table}: HTTP ${res.status} ${await res.text()}`);
+  return res.json();
 }
