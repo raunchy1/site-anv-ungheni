@@ -1,0 +1,95 @@
+/**
+ * Teste pe cheia naturală. Aici se decide dacă primul import face 15.010
+ * duplicate sau nu, deci fiecare caz de mai jos vine dintr-un titlu real din
+ * catalogul lor sau dintr-un rând real din al nostru.
+ *
+ *   node --test tools/sync/pandashop/*.test.mjs
+ */
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { normalizeModel, normalizeBrand, naturalKey } from './natural-key.mjs';
+import { parseTitle } from './parse-title.mjs';
+
+const BRANDS = ['Centara', 'Ceat', 'Tracmax', 'Rockblade', 'Double Coin', 'Gt Radial', 'Michelin'];
+
+test('modelul curat rămâne neatins', () => {
+  assert.equal(normalizeModel('X-privilo TX2', { brand: 'Tracmax' }), 'x privilo tx2');
+  assert.equal(normalizeModel('IceCruiser II', { brand: 'Rockblade' }), 'icecruiser ii');
+});
+
+test('cifrele din numele modelului NU se taie', () => {
+  // Regresie: „Rock 868S" redus la „rock" ar fi confundat două modele diferite.
+  assert.equal(normalizeModel('Rock 868S', { brand: 'Rockblade' }), 'rock 868s');
+  assert.notEqual(
+    normalizeModel('Rock 868S', { brand: 'Rockblade' }),
+    normalizeModel('Rock 515', { brand: 'Rockblade' }),
+  );
+});
+
+test('dimensiunea și indicii lipiți de model se taie', () => {
+  assert.equal(normalizeModel('WinterDrive 225/40 R18 92V XL', { brand: 'Ceat' }), 'winterdrive');
+  assert.equal(normalizeModel('Commercial 205/65 R16C 107/105R', { brand: 'Centara' }), 'commercial');
+});
+
+test('aceeași anvelopă scrisă de ei și de noi dă aceeași cheie', () => {
+  const lor = parseTitle('Anvelopa Tracmax X-privilo TX2 165/70 R13 79T', BRANDS);
+  const cheiaLor = naturalKey({
+    brand: lor.brand, model: lor.model, width: lor.width, aspect: lor.aspect, diameter: lor.diameter,
+    loadIndex: lor.loadIndex, speedIndex: lor.speedIndex, isXl: lor.isXl, isRunflat: lor.isRunflat,
+  });
+  const cheiaNoastra = naturalKey({
+    brand: 'TRACMAX', model: 'X-privilo TX2', width: 165, aspect: 70, diameter: 'R13',
+    loadIndex: '79', speedIndex: 'T', isXl: false, isRunflat: false,
+  });
+  assert.equal(cheiaLor, cheiaNoastra);
+});
+
+test('XL și runflat separă produse altfel identice', () => {
+  const baza = { brand: 'Ceat', model: 'WinterDrive', width: 225, aspect: 40, diameter: 'R18', loadIndex: '92', speedIndex: 'V' };
+  assert.notEqual(naturalKey({ ...baza, isXl: true }), naturalKey({ ...baza, isXl: false }));
+  assert.notEqual(naturalKey({ ...baza, isRunflat: true }), naturalKey({ ...baza, isRunflat: false }));
+});
+
+test('diacriticele și punctuația nu produc chei diferite', () => {
+  assert.equal(normalizeBrand('Continental'), normalizeBrand('CONTINENTAL'));
+  assert.equal(normalizeModel('Grand Tourer H/T'), normalizeModel('grand tourer h t'));
+});
+
+test('brandul din două cuvinte nu se taie în două', () => {
+  const t = parseTitle('Anvelopa Double Coin RLB1 315/80 R22.5 157/154L', BRANDS);
+  assert.equal(t.brand, 'Double Coin');
+  assert.equal(t.model, 'RLB1');
+  assert.equal(t.loadIndex, '157/154');
+  assert.equal(t.speedIndex, 'L');
+});
+
+test('un brand necunoscut rămâne necunoscut, nu se inventează', () => {
+  const t = parseTitle('Anvelopa Marcanecunoscuta Ceva 185/65 R15 88H', BRANDS);
+  assert.equal(t.brandKnown, false);
+  assert.equal(t.brand, null);
+});
+
+test('dimensiunea imperială trece prin parserul existent', () => {
+  const t = parseTitle('Anvelopa Gt Radial Savero 31x10.50 R15 109S', BRANDS);
+  assert.equal(t.size_system, 'imperial');
+  assert.equal(t.diameter, 'R15');
+});
+
+/* --------------------------------------------------- descoperirea prin sitemap */
+
+test('slug-ul de anvelopă se întoarce într-un titlu parsabil', async () => {
+  const { slugToTitle } = await import('./sitemap.mjs');
+  const t = slugToTitle('shina-rockblade-rock-868s-205-55-r16-91h-01259984');
+  const p = parseTitle(t, BRANDS);
+  assert.equal(p.brand, 'Rockblade');
+  assert.equal(p.size_raw, '205/55 R16');
+  assert.equal(p.loadIndex, '91');
+  assert.equal(p.speedIndex, 'H');
+});
+
+test('XL din slug ajunge în cheie', async () => {
+  const { slugToTitle } = await import('./sitemap.mjs');
+  const p = parseTitle(slugToTitle('shina-ceat-sport-drive-225-50-r18-99w-xl-01255621'), BRANDS);
+  assert.equal(p.isXl, true);
+  assert.equal(p.speedIndex, 'W');
+});

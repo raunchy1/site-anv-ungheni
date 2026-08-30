@@ -56,3 +56,9 @@ logos-sursa/*
 # raportul lor spune ce s-a gasit si de unde
 logos-candidate/*
 !logos-candidate/candidati.json
+
+# Cache-ul și starea sincronizării pandashop. Se regenerează; nu intră în git.
+data/sync/
+
+# Rapoartele de sincronizare: .md-ul se pastreaza, JSON-ul brut (megaocteti) nu.
+reports/sync/*.json
