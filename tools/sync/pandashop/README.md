@@ -110,6 +110,17 @@ node --test tools/sync/pandashop/*.test.mjs
 | `config.mjs` | pragurile întrerupătorului, în configurare, nu în cod |
 | `report-match.mjs` | rularea de la Gate 1 |
 
+## Etapa 0 — pregătirea (Gate 0)
+
+```bash
+node --env-file=.env.local tools/sync/pandashop/report-mismatch.mjs    # 0.1 titlu vs coloane
+node --env-file=.env.local tools/sync/pandashop/report-duplicates.mjs  # 0.2 duplicate interne
+node --env-file=.env.local tools/sync/pandashop/fix-columns.mjs        # corectia, DRY-RUN
+```
+
+`fix-columns.mjs` fara `--apply` nu scrie nimic. Scrierea nici nu e implementata
+inca — se activeaza dupa aprobarea rapoartelor.
+
 ## Ce urmează, după aprobarea Gate 1
 
 1. Migrarea `0015`: `pandashop_id`, `source`, `source_price_mdl`, `last_synced_at`,

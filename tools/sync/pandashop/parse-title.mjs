@@ -45,9 +45,14 @@ export function parseTitle(title, knownBrands = []) {
   const sizeAt = size.size_raw ? afterBrand.search(/\d{2,3}\s*[\/x]|\d{2,3}\s*(?:Z)?R\s*\d/i) : -1;
   const model = (sizeAt > 0 ? afterBrand.slice(0, sizeAt) : afterBrand).trim();
 
-  /* Indicii: se caută DUPĂ dimensiune, ca „225/40" să nu fie citit ca „225 kg / 40". */
+  /* Indicii: se caută DUPĂ dimensiune, ca „225/40" să nu fie citit ca „225 kg / 40".
+     Regexul de mai jos trebuie să acopere ȘI forma fără profil („175 R14C"), altfel
+     la „VS450 175 R14C 99R" dimensiunea rămâne în șir și „14C" e citit drept indice
+     de sarcină-viteză. A ieșit la iveală în dry-run-ul corecției, nu în producție. */
   const tail = sizeAt >= 0 ? afterBrand.slice(sizeAt) : afterBrand;
-  const afterSize = size.size_raw ? tail.replace(/\d{2,3}\s*[\/x]\s*\d{2,3}\s*(?:Z)?R\s*\d{1,2}(?:\.\d)?C?/i, ' ') : tail;
+  const afterSize = size.size_raw
+    ? tail.replace(/\d{2,3}(?:\s*[\/x]\s*\d{1,3}(?:[.,]\d{1,2})?)?\s*(?:Z)?R\s*\d{1,2}(?:[.,]\d)?C?/i, ' ')
+    : tail;
   const idx = afterSize.match(IDX);
 
   return {

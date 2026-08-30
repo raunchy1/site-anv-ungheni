@@ -93,3 +93,17 @@ test('XL din slug ajunge în cheie', async () => {
   assert.equal(p.isXl, true);
   assert.equal(p.speedIndex, 'W');
 });
+
+test('dimensiunea fără profil nu-și pierde indicii', () => {
+  // Regresie prinsă în dry-run: „175 R14C 99R" citea „14C" drept indice.
+  const t = parseTitle('Anvelopa Tracmax X-privilo VS450 175 R14C 99R', [...BRANDS, 'Tracmax']);
+  assert.equal(t.size_raw, '175 R14C');
+  assert.equal(t.loadIndex, '99');
+  assert.equal(t.speedIndex, 'R');
+});
+
+test('marcajele de flanc lipite de model nu produc chei diferite', () => {
+  // „Winter MS FP" din coloana noastră și „Winter" din titlul lor.
+  assert.equal(normalizeModel('Winter MS FP', { brand: 'Voyager' }), normalizeModel('Winter', { brand: 'Voyager' }));
+  assert.equal(normalizeModel('X-privilo TX3 TL', { brand: 'Tracmax' }), normalizeModel('X-privilo TX3', { brand: 'Tracmax' }));
+});

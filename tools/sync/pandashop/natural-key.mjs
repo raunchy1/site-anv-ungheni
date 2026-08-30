@@ -35,6 +35,14 @@ const SIZE_TOKENS = [
  * fix genul de potrivire falsă care creează duplicate mai târziu.
  */
 const TAIL_FLAG = /(?:\s|^)(?:xl|extra\s*load|rft|run\s*flat|runflat|zp|ssr|moe|dsst|dot|tl|tt|lt)\s*$/i;
+
+/*
+ * Marcajele de construcție și de flanc, care în catalogul nostru au ajuns lipite
+ * de numele modelului („Winter MS FP", „X-privilo TX3 TL"), iar în titlurile lor
+ * stau după indici. Se taie de la coadă în ambele cazuri, altfel aceeași anvelopă
+ * are două chei diferite și apare ca produs nou.
+ */
+const TAIL_MARKER = /(?:\s|^)(?:m\s*\+?\s*s|ms|fp|fr|owl|rwl|bsw|3pmsf|\d{1,2}pr)\s*$/i;
 const TAIL_INDEX = /(?:\s|^)\d{2,3}\/?\d{0,3}\s*[a-z]{1,2}\s*$/i;
 
 /**
@@ -49,17 +57,23 @@ export function normalizeModel(raw, { brand = null } = {}) {
   let aveaDimensiune = false;
   for (const re of SIZE_TOKENS) s = s.replace(re, () => { aveaDimensiune = true; return ' '; });
   s = s.replace(/\s+/g, ' ').trim();
+  /* Marcajele și steagurile se taie mereu, cu sau fără dimensiune în șir: XL și
+     runflat sunt câmpuri separate în cheie, deci n-au ce căuta și în model. */
+  for (let i = 0; i < 6 && (TAIL_MARKER.test(s) || TAIL_FLAG.test(s)); i++) {
+    s = s.replace(TAIL_MARKER, '').replace(TAIL_FLAG, '').trim();
+  }
   /* Indicii se taie doar dacă în șir CHIAR era o dimensiune, adică suntem în cazul
      „model + dimensiune + indici" lipite de ei. Într-un model curat, venit din
      coloana noastră `model`, „868S" e parte din nume și rămâne. Repetat, pentru
      că „92V XL" are doi tokeni de coadă unul după altul. */
+  /* Indicele de sarcină-viteză se taie DOAR dacă în șir chiar era o dimensiune,
+     și o singură dată. Într-un model curat, „Rock 868S" e un nume, nu un indice;
+     o tăiere lacomă l-ar confunda cu „Rock 515" al aceluiași brand. */
   if (aveaDimensiune) {
-    /* Steagurile pot fi mai multe; indicele de sarcină-viteză e unul singur.
-       Dacă am tăia lacom, „Rock 868S 88H" ar ajunge „rock" și s-ar confunda cu
-       oricare alt model „Rock" al aceluiași brand. */
-    for (let i = 0; i < 4 && TAIL_FLAG.test(s); i++) s = s.replace(TAIL_FLAG, '').trim();
     s = s.replace(TAIL_INDEX, '').trim();
-    for (let i = 0; i < 2 && TAIL_FLAG.test(s); i++) s = s.replace(TAIL_FLAG, '').trim();
+    for (let i = 0; i < 4 && (TAIL_MARKER.test(s) || TAIL_FLAG.test(s)); i++) {
+      s = s.replace(TAIL_MARKER, '').replace(TAIL_FLAG, '').trim();
+    }
   }
   return s.replace(/[^\p{L}\p{N}]+/gu, ' ').replace(/\s+/g, ' ').trim();
 }
