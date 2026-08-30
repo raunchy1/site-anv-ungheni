@@ -35,19 +35,17 @@ export function destinatariComenzi(emailDinSettings: string): string[] {
   return lista.length > 0 ? lista : [emailDinSettings];
 }
 
-export async function trimiteEmailComanda(o: OrderData, catre: string | string[]): Promise<RezultatEmail> {
-  const key = process.env.RESEND_API_KEY;
-  if (!key) return { trimis: false, motiv: "neconfigurat" };
-
-  /* Expeditorul trebuie să fie pe un domeniu verificat în Resend. Până când
-     anvelope-ungheni.md e verificat, `onboarding@resend.dev` livrează doar către
-     adresa contului — de aceea e configurabil, nu scris în cod. */
-  const from = process.env.RESEND_FROM ?? "Anvelope Ungheni <comenzi@anvelope-ungheni.md>";
-
+/** O singură trimitere. Nu aruncă; spune doar ce s-a întâmplat. */
+async function trimite(
+  key: string,
+  from: string,
+  catre: string[],
+  o: OrderData,
+): Promise<RezultatEmail> {
   try {
     const { data, error } = await new Resend(key).emails.send({
       from,
-      to: Array.isArray(catre) ? catre : [catre],
+      to: catre,
       /* Răspunsul pleacă direct la client, dacă și-a lăsat adresa. */
       ...(o.email ? { replyTo: o.email } : {}),
       subject: `${o.orderNumber} · ${o.customerName} · ${Math.round(o.total)} MDL`,
@@ -64,4 +62,31 @@ export async function trimiteEmailComanda(o: OrderData, catre: string | string[]
     console.error("[comandă] Resend inaccesibil:", e);
     return { trimis: false, motiv: "eroare", detaliu: String(e).slice(0, 300) };
   }
+}
+
+export async function trimiteEmailComanda(o: OrderData, catre: string | string[]): Promise<RezultatEmail> {
+  const key = process.env.RESEND_API_KEY;
+  if (!key) return { trimis: false, motiv: "neconfigurat" };
+
+  /* Expeditorul trebuie să fie pe un domeniu verificat în Resend. Până când
+     anvelope-ungheni.md e verificat, `onboarding@resend.dev` livrează doar către
+     adresa contului — de aceea e configurabil, nu scris în cod. */
+  const from = process.env.RESEND_FROM ?? "Anvelope Ungheni <comenzi@anvelope-ungheni.md>";
+  const lista = Array.isArray(catre) ? catre : [catre];
+
+  const rezultat = await trimite(key, from, lista, o);
+  if (rezultat.trimis) return rezultat;
+
+  /* PLASA DE SIGURANȚĂ, cât timp domeniul nu e încă verificat în Resend.
+     Atunci trimiterea de mai sus e refuzată din principiu, iar comanda ar rămâne
+     doar în bază, fără să anunțe pe nimeni. Dacă cele două variabile sunt puse,
+     mai încercăm o dată pe perechea care sigur trece — expeditorul de test al
+     Resend către adresa contului. Se scot amândouă în ziua verificării; fără
+     ele, codul se poartă exact ca înainte. */
+  const rezervaCatre = process.env.RESEND_FALLBACK_TO;
+  const rezervaFrom = process.env.RESEND_FALLBACK_FROM;
+  if (!rezervaCatre || !rezervaFrom) return rezultat;
+
+  console.warn("[comandă] trimit pe adresa de rezervă:", o.orderNumber);
+  return trimite(key, rezervaFrom, [rezervaCatre], o);
 }
