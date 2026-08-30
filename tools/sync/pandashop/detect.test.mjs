@@ -1,0 +1,82 @@
+/**
+ * Teste pe detector, cu o sursă fabricată. Fără rețea, fără bază.
+ *
+ *   node --test tools/sync/pandashop/*.test.mjs
+ */
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { detecteaza } from './detect.mjs';
+
+/** Sursă falsă: `pagini` e o listă de liste de ID-uri. */
+function sursaFalsa(pagini) {
+  return {
+    async *listProducts({ onPage } = {}) {
+      for (const [i, ids] of pagini.entries()) {
+        const refs = ids.map((id) => ({ id, url: `/ro/product/x-${id}/`, card: { title: `Anvelopa Test ${id}`, price: 1000 } }));
+        if (onPage?.(i + 1, refs, { total: pagini.flat().length }) === 'stop') return;
+        for (const r of refs) yield r;
+      }
+    },
+  };
+}
+
+test('imediat după fotografia inițială nu se detectează nimic', async () => {
+  const ids = ['00170643', '01129684', '105f6fc6-c8f0-11e4-9153-d43d7ef8efab'];
+  const { noi } = await detecteaza({ cunoscute: new Set(ids), source: sursaFalsa([ids]), full: true });
+  assert.equal(noi.length, 0);
+});
+
+test('un ID necunoscut e detectat', async () => {
+  const { noi } = await detecteaza({
+    cunoscute: new Set(['00170643']),
+    source: sursaFalsa([['00170643', '09999999']]),
+    full: true,
+  });
+  assert.deepEqual(noi.map((r) => r.id), ['09999999']);
+});
+
+test('zerourile din față contează: „00170643" nu e „170643"', async () => {
+  const { noi } = await detecteaza({
+    cunoscute: new Set(['170643']),
+    source: sursaFalsa([['00170643']]),
+    full: true,
+  });
+  assert.deepEqual(noi.map((r) => r.id), ['00170643'], 'ID-ul trebuie tratat ca text, nu ca număr');
+});
+
+test('UUID-urile trec la fel ca ID-urile numerice', async () => {
+  const u = '105f6fc6-c8f0-11e4-9153-d43d7ef8efab';
+  const { noi } = await detecteaza({ cunoscute: new Set(), source: sursaFalsa([[u]]), full: true });
+  assert.deepEqual(noi.map((r) => r.id), [u]);
+});
+
+test('rularea rapidă se oprește după 2 pagini fără nimic nou', async () => {
+  const cunoscute = new Set(['a1', 'a2', 'b1', 'b2', 'c1', 'c2']);
+  const { noi, pagini } = await detecteaza({
+    cunoscute,
+    source: sursaFalsa([['a1', 'a2'], ['b1', 'b2'], ['c1', 'c2'], ['nou1']]),
+    full: false,
+  });
+  assert.equal(pagini, 2, 'trebuie să se oprească înainte de pagina a patra');
+  assert.equal(noi.length, 0);
+});
+
+test('enumerarea completă nu se oprește devreme și prinde produsul din coadă', async () => {
+  const cunoscute = new Set(['a1', 'a2', 'b1', 'b2', 'c1', 'c2']);
+  const { noi } = await detecteaza({
+    cunoscute,
+    source: sursaFalsa([['a1', 'a2'], ['b1', 'b2'], ['c1', 'c2'], ['nou1']]),
+    full: true,
+  });
+  assert.deepEqual(noi.map((r) => r.id), ['nou1']);
+});
+
+test('a doua rulare nu mai vede nimic (idempotență)', async () => {
+  const cunoscute = new Set(['a1']);
+  const pagini = [['a1', 'a2']];
+  const prima = await detecteaza({ cunoscute, source: sursaFalsa(pagini), full: true });
+  assert.equal(prima.noi.length, 1);
+  for (const r of prima.noi) cunoscute.add(r.id);          // ce ar face importul
+  const doua = await detecteaza({ cunoscute, source: sursaFalsa(pagini), full: true });
+  assert.equal(doua.noi.length, 0);
+});

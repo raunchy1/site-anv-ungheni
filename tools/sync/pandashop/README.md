@@ -121,9 +121,32 @@ node --env-file=.env.local tools/sync/pandashop/fix-columns.mjs        # corecti
 `fix-columns.mjs` fara `--apply` nu scrie nimic. Scrierea nici nu e implementata
 inca — se activeaza dupa aprobarea rapoartelor.
 
-## Ce urmează, după aprobarea Gate 1
+## Detectorul de produse noi (scopul final)
 
-1. Migrarea `0015`: `pandashop_id`, `source`, `source_price_mdl`, `last_synced_at`,
-   `sync_status`, plus indexul unic pe cheia naturală (Partea B.1 și B.3).
-2. Etapele 2–5 din pipeline și dry-run-ul de import (Gate 2).
-3. Regulile de preț, carantina, întrerupătorul, programarea (Părțile E–I).
+Nu potrivim produsele lor cu ale noastre — n-avem nevoie. `pandashop_seen` ține
+minte ce ID-uri existau la ei în ziua înghețării; orice ID care apare mai târziu
+și nu e acolo e produs nou. O comparație de mulțimi.
+
+```bash
+node --env-file=.env.local tools/sync/pandashop/baseline.mjs --apply  # o singură dată
+node --env-file=.env.local tools/sync/pandashop/detect.mjs            # rapid, la 3 ore
+node --env-file=.env.local tools/sync/pandashop/detect.mjs --full     # complet, săptămânal
+```
+
+### Gate A — făcut
+
+Fotografia inițială: **8.221 ID-uri** în `pandashop_seen`, toate `baseline`,
+niciunul importat. `products` neatins — 15.010 rânduri, zero cu `pandashop_id`,
+zero cu `source <> 'legacy'`, iar cel mai recent `updated_at` din tabel e din
+27 august, adică dinaintea acestei lucrări.
+
+Zero-detecție: după fotografie, detectorul găsește **0 produse noi**, și în
+rularea rapidă, și în enumerarea completă a celor 138 de pagini.
+
+`db-write.mjs` are o listă albă de tabele în care `products` nu figurează. O
+scriere greșită eșuează înainte să atingă rețeaua, nu după.
+
+### Ce urmează
+
+Gate B: importul propriu-zis — validare, carantină, marjă, imagini, slug-uri.
+Gate C: Vercel Cron, blocaj de execuție, alerte pe e-mail.

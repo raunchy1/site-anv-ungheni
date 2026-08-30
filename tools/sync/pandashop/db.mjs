@@ -4,16 +4,19 @@
  * DOAR CITIRE. Fișierul ăsta n-are nicio funcție de scriere, intenționat:
  * rularea de la Gate 1 nu trebuie să poată atinge producția nici din greșeală.
  */
-const URL_BASE = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const KEY = process.env.SUPABASE_SECRET_KEY ?? process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-if (!URL_BASE || !KEY) {
-  throw new Error('lipsesc NEXT_PUBLIC_SUPABASE_URL / SUPABASE_SECRET_KEY (rulează cu --env-file=.env.local)');
+/* Citite la apel, nu la încărcarea modulului: altfel orice fișier care importă
+   modulul ăsta — inclusiv testele, care n-au nevoie de bază — moare la `import`. */
+function conexiune() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SECRET_KEY ?? process.env.SUPABASE_SERVICE_ROLE_KEY;
+  if (!url || !key) throw new Error('lipsesc NEXT_PUBLIC_SUPABASE_URL / SUPABASE_SECRET_KEY (rulează cu --env-file=.env.local)');
+  return { url, key };
 }
 
 async function page(table, select, from, to, extra = '') {
-  const res = await fetch(`${URL_BASE}/rest/v1/${table}?select=${select}${extra}`, {
-    headers: { apikey: KEY, Authorization: `Bearer ${KEY}`, Range: `${from}-${to}`, 'Range-Unit': 'items' },
+  const { url, key } = conexiune();
+  const res = await fetch(`${url}/rest/v1/${table}?select=${select}${extra}`, {
+    headers: { apikey: key, Authorization: `Bearer ${key}`, Range: `${from}-${to}`, 'Range-Unit': 'items' },
   });
   if (!res.ok) throw new Error(`${table}: HTTP ${res.status} ${await res.text()}`);
   return res.json();

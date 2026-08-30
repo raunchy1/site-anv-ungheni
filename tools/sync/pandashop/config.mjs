@@ -23,11 +23,11 @@ export const config = {
 
   /* Întrerupătorul din Partea G.1. Implicit: OPRIRE, nu continuare. */
   breakers: {
-    maxDelistedShare: 0.10,
-    maxPriceChangeShare: 0.15,
-    maxSinglePriceJump: 0.50,
+    /* Peste atâtea produse noi într-o singură rulare, ceva e greșit: catalogul
+       lor nu crește cu sute de anvelope pe noapte. Se oprește, nu continuă. */
+    maxNewPerRun: 100,
+    maxQuarantineShare: 0.30,
     maxParseFailureRate: 0.05,
-    maxQuarantineShare: 0.20,
   },
 
   paths: {
