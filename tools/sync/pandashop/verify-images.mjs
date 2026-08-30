@@ -28,11 +28,13 @@ async function main() {
   console.log(`· verific ${tinta.length} produse${toate ? ' (tot catalogul)' : ' importate prin sincronizare'}`);
 
   const faraImagine = [];
+  const oSinguraImagine = [];
   const faraAlt = [];
   const cai = new Map();               // cale unică -> produsele care o folosesc
   for (const p of tinta) {
     const list = (peProdus.get(p.id) ?? []).sort((a, b) => a.sort_order - b.sort_order);
     if (list.length === 0) { faraImagine.push(p); continue; }
+    if (list.length === 1) oSinguraImagine.push(p);
     if (list.some((i) => !i.alt_ro || !i.alt_ru)) faraAlt.push(p);
     for (const i of list) (cai.get(i.storage_path) ?? cai.set(i.storage_path, []).get(i.storage_path)).push(p);
   }
@@ -57,6 +59,8 @@ async function main() {
 
   console.log(`\nProduse fără nicio imagine: ${faraImagine.length}`);
   for (const p of faraImagine.slice(0, 20)) console.log(`  #${p.id} ${p.slug_ro}`);
+  console.log(`Produse cu o singură imagine: ${oSinguraImagine.length}`);
+  for (const p of oSinguraImagine.slice(0, 20)) console.log(`  #${p.id} ${p.slug_ro}`);
   console.log(`Produse cu text alternativ incomplet: ${faraAlt.length}`);
   for (const p of faraAlt.slice(0, 10)) console.log(`  #${p.id} ${p.slug_ro}`);
   console.log(`Fișiere care nu răspund: ${rupte.length}`);
