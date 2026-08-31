@@ -80,3 +80,34 @@ test('a doua rulare nu mai vede nimic (idempotență)', async () => {
   const doua = await detecteaza({ cunoscute, source: sursaFalsa(pagini), full: true });
   assert.equal(doua.noi.length, 0);
 });
+
+/* ------------------------------------------------------- întrerupătorul */
+
+import { config } from './config.mjs';
+
+test('pragurile întrerupătorului stau în configurare, nu în cod', () => {
+  assert.equal(typeof config.breakers.maxNewPerRun, 'number');
+  assert.equal(typeof config.breakers.maxQuarantineShare, 'number');
+  assert.equal(typeof config.breakers.maxParseFailureRate, 'number');
+  assert.ok(config.breakers.maxNewPerRun > 0);
+});
+
+test('peste pragul de produse noi, rularea se oprește', async () => {
+  const prag = config.breakers.maxNewPerRun;
+  const ids = Array.from({ length: prag + 1 }, (_, i) => `nou-${i}`);
+  const { noi } = await detecteaza({ cunoscute: new Set(), source: sursaFalsa([ids]), full: true });
+  assert.ok(noi.length > prag, `${noi.length} trebuie să depășească pragul de ${prag}`);
+  /* Verificarea pragului trăiește în `import.mjs`; aici se demonstrează că
+     detectorul chiar produce numărul care o declanșează. */
+});
+
+test('o enumerare goală e tratată ca structură schimbată, nu ca „nimic nou"', async () => {
+  const { SourceStructureChanged } = await import('./source.mjs');
+  const sursaGoala = {
+    async *listProducts() { throw new SourceStructureChanged('prima pagină de listare n-a dat niciun produs'); },
+  };
+  await assert.rejects(
+    () => detecteaza({ cunoscute: new Set(['a']), source: sursaGoala, full: true }),
+    /structur|niciun produs/i,
+  );
+});

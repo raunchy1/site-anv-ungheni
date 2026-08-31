@@ -35,6 +35,7 @@ import { slugRo, slugRu, titluCatalog } from './slug.mjs';
 import { calculeazaPret } from './pricing.mjs';
 import { pregatesteImagini } from './images.mjs';
 import { detecteaza } from './detect.mjs';
+import { iaLacatul, elibereazaLacatul } from './lock.mjs';
 
 /* Rutele care nu sunt produse. Un produs cu slug-ul `contact` ar înlocui tăcut
    pagina de contact — vezi tools/route-map/check-collisions.ts. */
@@ -128,16 +129,26 @@ function hashNumeric(id) {
   return h || 1;
 }
 
-async function main() {
+/**
+ * O rulare completă. CLI-ul și cronul apelează exact funcția asta — nu există
+ * două căi de cod care s-ar putea comporta diferit în producție față de mână.
+ *
+ * @param {{apply?: boolean, limit?: number, full?: boolean, simuleaza?: number, actor?: string, log?: Function}} opts
+ */
+export async function ruleaza(opts = {}) {
+  const { apply: aplica = false, limit = Infinity, full = false, simuleaza = 0, actor = 'manual' } = opts;
+  const log = opts.log ?? console.log;
   const t0 = Date.now();
-  const aplica = process.argv.includes('--apply');
-  const iLimit = process.argv.indexOf('--limit');
-  const limit = iLimit > 0 ? Number(process.argv[iLimit + 1]) : Infinity;
+  const jurnal = [];
+  const spune = (...a) => { jurnal.push(a.join(' ')); log(...a); };
 
   const setari = (await readAll('settings', 'sync_enabled,pricing_rules'))[0] ?? {};
-  if (setari.sync_enabled === false) { console.log('sincronizarea e oprită din admin (settings.sync_enabled = false)'); return; }
+  if (setari.sync_enabled === false) {
+    spune('sincronizarea e oprită din admin (settings.sync_enabled = false)');
+    return { oprit: 'din_admin', jurnal, importate: [], carantina: [], faraPret: [], erori: [] };
+  }
 
-  console.log('· citesc catalogul nostru…');
+  spune('· citesc catalogul nostru…');
   const [branduri, produse, imagini, vazute] = await Promise.all([
     readBrands(), readAll('products', 'slug_ro,slug_ru'), readAll('product_images', 'content_hash'), readAll('pandashop_seen', 'pandashop_id'),
   ]);
@@ -145,31 +156,32 @@ async function main() {
   const sluguriRu = new Set(produse.map((p) => p.slug_ru).filter(Boolean));
   const hashuri = new Set(imagini.map((i) => i.content_hash).filter(Boolean));
   const cunoscute = new Set(vazute.map((v) => v.pandashop_id));
-  console.log(`  ${produse.length} produse, ${branduri.length} branduri, ${hashuri.size} imagini distincte, ${cunoscute.size} ID-uri văzute`);
+  spune(`  ${produse.length} produse, ${branduri.length} branduri, ${hashuri.size} imagini distincte, ${cunoscute.size} ID-uri văzute`);
 
   /* SIMULARE. Ca să putem verifica pipeline-ul înainte ca pandashop să urce ceva
      nou, `--simuleaza N` uită N ID-uri din setul din memorie, deci detectorul le
      vede ca noi. Nu atinge baza. Refuzată împreună cu `--apply`: un import „real"
      pe produse simulate ar fi exact importul retroactiv pe care nu-l vrem. */
-  const iSim = process.argv.indexOf('--simuleaza');
-  if (iSim > 0) {
-    if (aplica) throw new Error('--simuleaza nu se combină cu --apply');
-    const n = Number(process.argv[iSim + 1]) || 10;
-    const sterse = [...cunoscute].slice(-n);
+  if (simuleaza > 0) {
+    if (aplica) throw new Error('simularea nu se combină cu scrierea');
+    const sterse = [...cunoscute].slice(-simuleaza);
     for (const id of sterse) cunoscute.delete(id);
-    console.log(`· SIMULARE: ${sterse.length} ID-uri scoase din set, ca să pară noi`);
+    spune(`· SIMULARE: ${sterse.length} ID-uri scoase din set, ca să pară noi`);
   }
 
   const http = createHttp({ ...config.http });
   const source = createHtmlSource(http);
-  const { noi } = await detecteaza({ cunoscute, source, full: process.argv.includes('--full') || iSim > 0 });
-  console.log(`· produse noi detectate: ${noi.length}`);
+  const { noi } = await detecteaza({ cunoscute, source, full: full || simuleaza > 0 });
+  spune(`· produse noi detectate: ${noi.length}`);
 
   /* Întrerupătorul, înainte de orice scriere. */
   if (noi.length > config.breakers.maxNewPerRun) {
     throw new Error(`${noi.length} produse noi, peste pragul de ${config.breakers.maxNewPerRun} — se oprește fără să scrie`);
   }
-  if (noi.length === 0) { console.log('  nimic de făcut'); return; }
+  if (noi.length === 0) {
+    spune('  nimic de făcut');
+    return { jurnal, importate: [], carantina: [], faraPret: [], erori: [], durata: Date.now() - t0 };
+  }
 
   const deImportat = noi.slice(0, limit);
   const rezultate = { importate: [], carantina: [], faraPret: [], erori: [] };
@@ -206,20 +218,20 @@ async function main() {
   const totalIncercate = deImportat.length;
   const rataCarantina = totalIncercate ? rezultate.carantina.length / totalIncercate : 0;
 
-  console.log(`\n${aplica ? 'APLIC' : 'DRY-RUN — nu se scrie nimic'}`);
-  console.log(`  de importat:      ${rezultate.importate.length}`);
-  console.log(`  în carantină:     ${rezultate.carantina.length}`);
-  console.log(`  fără preț (așteptare): ${rezultate.faraPret.length}`);
-  console.log(`  erori:            ${rezultate.erori.length}`);
+  spune(`\n${aplica ? 'APLIC' : 'DRY-RUN — nu se scrie nimic'}`);
+  spune(`  de importat:      ${rezultate.importate.length}`);
+  spune(`  în carantină:     ${rezultate.carantina.length}`);
+  spune(`  fără preț (așteptare): ${rezultate.faraPret.length}`);
+  spune(`  erori:            ${rezultate.erori.length}`);
 
-  for (const c of rezultate.carantina.slice(0, 10)) console.log(`   carantină ${c.id}: ${c.titlu} → ${c.motive.join('; ')}`);
+  for (const c of rezultate.carantina.slice(0, 10)) spune(`   carantină ${c.id}: ${c.titlu} → ${c.motive.join('; ')}`);
   for (const x of rezultate.importate.slice(0, 20)) {
-    console.log(`\n  ${x.id}  ${x.rand.title_ro}`);
-    console.log(`    slug RO: ${x.rand.slug_ro}`);
-    console.log(`    slug RU: ${x.rand.slug_ru}`);
-    console.log(`    ${x.rand.size_raw} ${x.rand.load_index ?? ''}${x.rand.speed_index ?? ''}${x.rand.is_xl ? ' XL' : ''} · ${x.rand.season ?? 'fără sezon'} · ${x.rand.brand_name}`);
-    console.log(`    preț: ${x.rand.source_price_mdl} MDL + ${x.pret.pct}% (${x.pret.motiv}) = ${x.rand.price_mdl} MDL`);
-    console.log(`    imagini: ${x.imgs.length} (${x.imgs.filter((i) => i.refolosita).length} refolosite)`);
+    spune(`\n  ${x.id}  ${x.rand.title_ro}`);
+    spune(`    slug RO: ${x.rand.slug_ro}`);
+    spune(`    slug RU: ${x.rand.slug_ru}`);
+    spune(`    ${x.rand.size_raw} ${x.rand.load_index ?? ''}${x.rand.speed_index ?? ''}${x.rand.is_xl ? ' XL' : ''} · ${x.rand.season ?? 'fără sezon'} · ${x.rand.brand_name}`);
+    spune(`    preț: ${x.rand.source_price_mdl} MDL + ${x.pret.pct}% (${x.pret.motiv}) = ${x.rand.price_mdl} MDL`);
+    spune(`    imagini: ${x.imgs.length} (${x.imgs.filter((i) => i.refolosita).length} refolosite)`);
   }
 
   /* Întrerupătorul se verifică DUPĂ ce s-a tipărit raportul, nu înainte: dacă
@@ -230,15 +242,18 @@ async function main() {
     peMotiv[cheie] = (peMotiv[cheie] ?? 0) + 1;
   }
   if (Object.keys(peMotiv).length) {
-    console.log('\n  motivele carantinei:');
-    for (const [m, n] of Object.entries(peMotiv).sort((a, b) => b[1] - a[1])) console.log(`    ${String(n).padStart(4)}  ${m}`);
+    spune('\n  motivele carantinei:');
+    for (const [m, n] of Object.entries(peMotiv).sort((a, b) => b[1] - a[1])) spune(`    ${String(n).padStart(4)}  ${m}`);
   }
 
   if (rataCarantina > config.breakers.maxQuarantineShare) {
     throw new Error(`carantină ${(rataCarantina * 100).toFixed(0)}%, peste pragul de ${config.breakers.maxQuarantineShare * 100}% — se oprește fără să scrie`);
   }
 
-  if (!aplica) { console.log('\nNimic scris. Adaugă --apply.'); return; }
+  if (!aplica) {
+    spune('\nNimic scris. Adaugă --apply.');
+    return { ...rezultate, jurnal, dryRun: true, durata: Date.now() - t0 };
+  }
 
   /* -------------------------------------------------------------- scrierea */
   let create = 0;
@@ -260,14 +275,44 @@ async function main() {
   }
 
   await insert('import_runs', [{
-    source: 'pandashop_sync', actor: 'sync:new', dry_run: false,
+    source: 'pandashop_sync', actor, dry_run: false,
     started_at: new Date(t0).toISOString(), finished_at: new Date().toISOString(),
     rows_total: totalIncercate, rows_created: create, rows_skipped: rezultate.faraPret.length,
     errors: rezultate.erori, notes: `carantină: ${rezultate.carantina.length}`,
   }]);
 
-  console.log(`\n  create: ${create} produse`);
-  console.log(`gata în ${Math.round((Date.now() - t0) / 1000)}s`);
+  spune(`\n  create: ${create} produse`);
+  spune(`gata în ${Math.round((Date.now() - t0) / 1000)}s`);
+  return { ...rezultate, jurnal, dryRun: false, create, durata: Date.now() - t0 };
+}
+
+/**
+ * Rulare cu lacăt. Cronul o folosește pe asta: două rulări simultane nu trebuie
+ * să existe niciodată, iar lacătul se eliberează și dacă rularea aruncă.
+ */
+export async function ruleazaCuLacat(opts = {}) {
+  const cine = opts.actor ?? 'sync';
+  if (!(await iaLacatul(cine))) {
+    return { oprit: 'lacat_ocupat', jurnal: ['o altă rulare e în curs; se sare peste'], importate: [], carantina: [], faraPret: [], erori: [] };
+  }
+  try {
+    return await ruleaza(opts);
+  } finally {
+    await elibereazaLacatul();
+  }
+}
+
+async function main() {
+  const iLimit = process.argv.indexOf('--limit');
+  const iSim = process.argv.indexOf('--simuleaza');
+  const r = await ruleazaCuLacat({
+    apply: process.argv.includes('--apply'),
+    full: process.argv.includes('--full'),
+    limit: iLimit > 0 ? Number(process.argv[iLimit + 1]) : Infinity,
+    simuleaza: iSim > 0 ? (Number(process.argv[iSim + 1]) || 10) : 0,
+    actor: 'cli',
+  });
+  if (r.oprit === 'lacat_ocupat') console.log('o altă rulare e în curs; se sare peste');
 }
 
 if (import.meta.url === pathToFileURL(process.argv[1]).href) {

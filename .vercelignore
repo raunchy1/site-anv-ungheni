@@ -5,9 +5,23 @@
 # Tiparele sunt ancorate la rădăcină cu `/`. Fără ancoră, `supabase/` exclude
 # și `src/lib/supabase/`, iar build-ul cade cu „Module not found".
 /data
-/tools
 /reports
 /docs
 /supabase
 /.next/cache
 *.docx
+
+# Din `tools/` pleacă la deploy DOAR ce apelează cronul de sincronizare:
+# `tools/sync/pandashop/` și parserele din `tools/scraper/` pe care le
+# refolosește. Restul sunt scripturi de migrare, rulate de pe laptop.
+/tools/logos
+/tools/preview
+/tools/perf
+/tools/seed
+/tools/db
+/tools/check
+/tools/route-map
+/tools/build
+/tools/parse
+/tools/scraper/*.test.mjs
+/tools/sync/pandashop/*.test.mjs
