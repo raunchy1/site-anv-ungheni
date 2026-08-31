@@ -111,3 +111,40 @@ test('o enumerare goală e tratată ca structură schimbată, nu ca „nimic nou
     /structur|niciun produs/i,
   );
 });
+
+/* ------------------------------------------------------------- lacătul */
+
+test('a doua rulare simultană nu pornește: lacătul e ocupat', async () => {
+  /* Se testează contractul, cu un lacăt fals — funcția reală stă în bază
+     (migrarea 0016) și e verificată acolo. Ce contează aici e că `ruleaza` NU se
+     apelează a doua oară cât timp prima e în curs. */
+  let ocupat = false;
+  let porniri = 0;
+  const iaLacatul = async () => (ocupat ? false : (ocupat = true));
+  const elibereaza = async () => { ocupat = false; };
+  const cuLacat = async (fn) => {
+    if (!(await iaLacatul())) return { oprit: 'lacat_ocupat' };
+    try { porniri++; return await fn(); } finally { await elibereaza(); }
+  };
+
+  const lenta = () => new Promise((r) => setTimeout(() => r({ ok: true }), 40));
+  const [a, b] = await Promise.all([cuLacat(lenta), cuLacat(lenta)]);
+  assert.equal(porniri, 1, 'o singură rulare trebuie să pornească');
+  assert.ok(a.oprit === 'lacat_ocupat' || b.oprit === 'lacat_ocupat');
+
+  /* După ce prima termină, lacătul se eliberează și următoarea poate porni. */
+  const c = await cuLacat(lenta);
+  assert.equal(c.ok, true);
+  assert.equal(porniri, 2);
+});
+
+test('lacătul se eliberează și când rularea aruncă', async () => {
+  let ocupat = false;
+  const cuLacat = async (fn) => {
+    if (ocupat) return { oprit: 'lacat_ocupat' };
+    ocupat = true;
+    try { return await fn(); } finally { ocupat = false; }
+  };
+  await assert.rejects(() => cuLacat(async () => { throw new Error('întrerupător'); }), /întrerupător/);
+  assert.equal(ocupat, false, 'un eșec nu trebuie să lase sistemul blocat');
+});

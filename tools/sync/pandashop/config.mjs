@@ -1,3 +1,15 @@
+import os from 'node:os';
+import path from 'node:path';
+
+/*
+ * Pe Vercel sistemul de fișiere e read-only, cu excepția lui `/tmp`. Cache-ul
+ * HTTP și starea trebuie să meargă acolo, altfel prima cerere moare cu
+ * „ENOENT: mkdir 'data/sync/cache'" înainte să atingă pandashop. Local rămân
+ * unde erau, ca o rulare întreruptă de pe laptop să se reia din cache.
+ */
+const peServer = Boolean(process.env.VERCEL || process.env.AWS_LAMBDA_FUNCTION_NAME);
+const radacina = peServer ? path.join(os.tmpdir(), 'pandashop-sync') : '.';
+
 /**
  * Configurarea sincronizării. Pragurile din Partea G stau AICI, nu în cod, ca să
  * poată fi strânse fără deploy când vedem cum se poartă sursa în realitate.
@@ -7,7 +19,7 @@ export const config = {
   source: process.env.PANDASHOP_SOURCE ?? 'html',
 
   http: {
-    cacheDir: 'data/sync/cache',
+    cacheDir: path.join(radacina, 'data/sync/cache'),
     concurrency: Number(process.env.SYNC_CONCURRENCY ?? 4),
     delayMin: 400,
     delayMax: 800,
@@ -31,7 +43,7 @@ export const config = {
   },
 
   paths: {
-    reports: 'reports/sync',
-    state: 'data/sync',
+    reports: path.join(radacina, 'reports/sync'),
+    state: path.join(radacina, 'data/sync'),
   },
 };
