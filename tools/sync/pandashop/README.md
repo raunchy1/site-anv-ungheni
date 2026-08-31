@@ -210,6 +210,51 @@ bine în `product_images` nu dovedește că fișierul mai e acolo.
 prima — toate cele 15.000 de produse vechi au exact o imagine, deci nu există
 galerie. Imaginile în plus stau în storage, gata pentru o galerie, dacă se vrea.
 
-### Ce urmează
+### Gate C — programarea automată
 
-Gate C: Vercel Cron la 3 ore, blocaj de execuție, alerte pe e-mail prin Resend.
+| Job | Când | Ce face |
+|---|---|---|
+| `/api/cron/sync?full=1` | zilnic, 04:00 | enumerare completă a celor ~8.200 de ID-uri |
+
+**De ce zilnic și nu la 3 ore.** Planul Vercel Hobby acceptă o singură rulare de
+cron pe zi; `0 */3 * * *` e respins la deploy. Cu o rulare pe zi se folosește
+enumerarea COMPLETĂ, nu cea rapidă: costă ~2 minute în loc de 3 secunde, dar
+prinde și produsele adăugate retroactiv, în mijlocul listei — când ai o singură
+șansă pe zi, e strict mai bună.
+
+Pe planul Pro se pun înapoi cele două joburi din specificație (rapid la 3 ore,
+complet săptămânal); ruta le suportă deja pe amândouă, se schimbă doar `crons`
+din `vercel.json`.
+
+Ruta răspunde **401** fără `CRON_SECRET`, iar dacă secretul nu e configurat rămâne
+închisă — nu se deschide „ca să meargă". `?dry=1` rulează fără să scrie.
+
+#### Blocajul de execuție
+
+Un rând cu termen de expirare (migrarea 0016), nu `pg_advisory_lock`: peste
+PostgREST fiecare cerere e altă sesiune, deci un lacăt de sesiune ar cădea
+imediat. Cu expirare la 20 de minute, o rulare care moare fără să elibereze nu
+blochează sistemul pe veci.
+
+#### Întrerupătorul
+
+Se oprește **fără să scrie** și trimite alertă dacă: enumerarea întoarce 0 produse ·
+ar importa peste `maxNewPerRun` produse · carantina depășește `maxQuarantineShare` ·
+apare o coliziune de slug. Pragurile sunt în `config.mjs`, nu în cod.
+
+#### Alertele
+
+Pe e-mail prin Resend, către `SYNC_ALERT_EMAIL`. Pleacă **doar când e ceva de
+spus** — produse noi, carantină, întrerupător, rulare eșuată. O alertă la fiecare
+3 ore cu „0 produse noi" ar fi ignorată în două zile, și atunci ar fi ignorată și
+cea care contează.
+
+Separat, **alerta de tăcere**: dacă nicio rulare n-a reușit de 48h, se anunță. Un
+sistem oprit arată exact ca un sistem fără produse noi.
+
+### Comutatorul de oprire
+
+```sql
+update settings set sync_enabled = false;
+```
+Fără deploy. Cronul rulează, vede steagul și se retrage fără să atingă nimic.
