@@ -135,10 +135,20 @@ node --env-file=.env.local tools/sync/pandashop/detect.mjs --full     # complet,
 
 ### Gate A — făcut
 
-Fotografia inițială: **8.221 ID-uri** în `pandashop_seen`, toate `baseline`,
+Fotografia inițială: **25.332 ID-uri** în `pandashop_seen`, toate `baseline`,
 niciunul importat. `products` neatins — 15.010 rânduri, zero cu `pandashop_id`,
 zero cu `source <> 'legacy'`, iar cel mai recent `updated_at` din tabel e din
 27 august, adică dinaintea acestei lucrări.
+
+**Fotografia acoperă și anvelopele fără stoc la ei.** Prima versiune enumera doar
+listarea categoriei — 8.221 de ID-uri, adică numai ce aveau pe stoc în ziua aceea.
+Mecanismul ieșea greșit din temelie: un produs care revine în stoc peste o lună
+apărea drept „nou" deși există la ei de ani de zile, iar dacă îl aveam deja se
+ciocnea de slug și pleca în carantină. S-a văzut exact așa — prima rulare completă
+pe producție a găsit 48 de „produse noi", din care 39 erau ale noastre. „Nou"
+înseamnă „ID care n-a existat niciodată la ei", nu „ID care nu e în stoc azi", iar
+sitemap-ul lor separă explicit cele două stări: `baseline.mjs` citește ambele
+(16.811 fără stoc + 8.248 în stoc) peste enumerarea listării.
 
 Zero-detecție: după fotografie, detectorul găsește **0 produse noi**, și în
 rularea rapidă, și în enumerarea completă a celor 138 de pagini.

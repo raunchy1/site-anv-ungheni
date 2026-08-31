@@ -19,6 +19,7 @@ import { createHtmlSource } from './html-source.mjs';
 import { createFeedSource } from './feed-source.mjs';
 import { readAll } from './db.mjs';
 import { insert } from './db-write.mjs';
+import { tyreUrls } from './sitemap.mjs';
 
 const aplica = process.argv.includes('--apply');
 
@@ -57,15 +58,43 @@ async function main() {
   })) {
     ids.push(ref.id);
   }
-  console.log(`\n  ${ids.length} ID-uri (ei declară ${declarat})`);
+  const inStoc = ids.length;
+  console.log(`\n  ${inStoc} în stoc (ei declară ${declarat})`);
 
-  /* Întrerupătorul, chiar și aici: o enumerare goală înseamnă că s-a schimbat
-     structura lor, iar o fotografie goală ar declara tot catalogul lor „nou"
-     la următoarea rulare. */
-  if (ids.length === 0) throw new Error('enumerarea a întors 0 produse — nu se scrie nimic');
-  if (declarat && ids.length < declarat * 0.9) {
-    throw new Error(`enumerare incompletă: ${ids.length} din ${declarat} declarate — nu se scrie nimic`);
+  /* Întrerupătorul se judecă AICI, pe enumerarea listării, nu pe totalul de mai
+     jos: sitemap-ul adaugă mii de ID-uri și ar masca o listare ciuntită. */
+  if (inStoc === 0) throw new Error('enumerarea a întors 0 produse — nu se scrie nimic');
+  if (declarat && inStoc < declarat * 0.9) {
+    throw new Error(`enumerare incompletă: ${inStoc} din ${declarat} declarate — nu se scrie nimic`);
   }
+
+  /*
+   * ȘI CELE FĂRĂ STOC. Fără pasul ăsta fotografia e incompletă și mecanismul e
+   * greșit din temelie: listarea categoriei arată doar ce au ei pe stoc ACUM,
+   * deci un produs care revine în stoc peste o lună apare ca „nou" deși există
+   * la ei de ani de zile — și, dacă îl avem deja, se ciocnește de slug și ajunge
+   * în carantină. S-a văzut exact așa: prima rulare completă pe producție a
+   * găsit 48 de „produse noi", din care 39 erau ale noastre.
+   *
+   * „Nou" înseamnă „ID care n-a existat niciodată la ei", nu „ID care nu e în
+   * stoc azi". Sitemap-ul lor separă explicit cele două stări.
+   */
+  console.log('· adaug ID-urile din sitemap (inclusiv fără stoc)…');
+  const ID_NUMERIC = /-(\d{6,10})\/$/;
+  const ID_UUID = /\/([0-9a-f]{8}-[0-9a-f-]{20,})\/$/i;
+  for (const kind of ['outofstock', 'instock']) {
+    const urls = await tyreUrls({
+      kind, stateDir: config.paths.state, refresh: process.argv.includes('--refresh-sitemap'),
+      onFile: (i, n, gasite) => process.stdout.write(`  ${kind}: fișierul ${i}/${n}, ${gasite} anvelope\r`),
+    });
+    let extrase = 0;
+    for (const u of urls) {
+      const id = u.url.match(ID_NUMERIC)?.[1] ?? u.url.match(ID_UUID)?.[1] ?? null;
+      if (id) { ids.push(id); extrase++; }
+    }
+    console.log(`\n  ${kind}: ${urls.length} anvelope, ${extrase} cu ID extras`);
+  }
+  console.log(`  total: ${new Set(ids).size} ID-uri distincte`);
 
   const noi = ids.filter((id) => !cunoscute.has(id));
   const unice = [...new Set(noi)];
