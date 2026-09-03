@@ -39,25 +39,19 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-data/raw/*.ndjson
-data/raw/pages.json
-
-# date de migrare — volum mare, se regenerează din scraper
+# Datele brute de migrare (products.ndjson, pages.json, urls.json, jurnalele)
+# SUNT in git: sunt sursa din care s-a construit catalogul, nu se regenereaza
+# identic si nu incap in alta parte. Raman afara doar cache-urile grele, care
+# se refac rulandu-l pe scraper.
 data/raw/images/
 data/raw/html-cache/
 data/raw/*.bak
-data/raw/*.log
 
-# logo-urile de marca: sursa de adevar e Supabase Storage, nu repo-ul.
-# Manifestul ramane in git — el spune de unde vine fiecare fisier.
-logos-sursa/*
-!logos-sursa/manifest.json
-# candidatii bruti (94 de fisiere de pe site-uri oficiale) raman locali;
-# raportul lor spune ce s-a gasit si de unde
-logos-candidate/*
-!logos-candidate/candidati.json
+# Logo-urile de marca si candidatii lor: sunt in git ca backup complet.
+# Sursa de adevar in productie ramane Supabase Storage.
 
-# Cache-ul și starea sincronizării pandashop. Se regenerează; nu intră în git.
+# Cache-ul HTTP si starea sincronizarii pandashop: ~340 MB de pagini descarcate,
+# se regenereaza la prima rulare. Nu intra in git.
 data/sync/
 
 # Rapoartele de sincronizare: .md-ul se pastreaza, JSON-ul brut (megaocteti) nu.
