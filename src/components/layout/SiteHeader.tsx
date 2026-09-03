@@ -3,7 +3,7 @@ import { Link } from "@/i18n/navigation";
 import { CartLink } from "@/components/cart/CartLink";
 import { LanguageSwitch } from "./LanguageSwitch";
 import { Logo } from "@/components/brand/Logo";
-import { IconPhone, IconCompare, IconFavorite } from "@/components/icons";
+import { IconPhone } from "@/components/icons";
 import { telLink } from "@/lib/format";
 import type { Locale, Settings } from "@/lib/types";
 
@@ -43,9 +43,12 @@ export function SiteHeader({ settings, locale }: { settings: Settings; locale: L
             {settings.phone_display}
           </a>
           <LanguageSwitch locale={locale} />
+          {/* Favoritele si compararea nu au inca pagini: `/favorite`,
+              `/comparare` si perechile lor RU raspund 404. Doua pictograme pe
+              antetul fiecarei pagini care duc in 404 sunt mai rele decat lipsa
+              lor, iar Next le si preincarca, deci 404-urile apar chiar si fara
+              ca cineva sa apese. Se pun la loc odata cu paginile. */}
           <div className="hidden items-center gap-[var(--sp-1)] sm:flex">
-            <Link href="/favorite" className="icon-button" aria-label={t("favorites")}><IconFavorite size={18} /></Link>
-            <Link href="/comparare" className="icon-button" aria-label={t("compare")}><IconCompare size={18} /></Link>
             <CartLink />
           </div>
         </div>
