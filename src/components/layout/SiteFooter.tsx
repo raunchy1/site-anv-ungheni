@@ -43,7 +43,10 @@ export async function SiteFooter({ settings, locale }: { settings: Settings; loc
               <IconClock size={16} className="mt-[2px] shrink-0" />
               <span>
                 {t("contact.hoursValue")}
-                {!hours.sun && <span className="block text-[var(--fs-100)]">TODO(cristian): program duminică</span>}
+                {/* Cand `opening_hours.sun` se completeaza in admin, programul de
+                    duminica apare aici. Pana atunci nu se afiseaza nimic: o nota
+                    de lucru pe subsolul fiecarei pagini o citeste clientul, nu
+                    programatorul. */}
               </span>
             </li>
           </ul>

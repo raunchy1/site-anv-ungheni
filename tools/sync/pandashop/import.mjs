@@ -113,6 +113,10 @@ export function normalizeaza(sursa, { branduri, sluguriRo, sluguriRu, reguli }) 
     title_ru: titluRu || null,
     description_ro: sursa.descriptionRo || null,
     description_ru: sursa.descriptionRu || null,
+    /* Meta-urile se scriu la import, dupa conventia celor 15.010 fise vechi.
+       Fara ele fisa intra in index fara descriere — Google isi alege singur o
+       propozitie din pagina, de obicei tabelul de specificatii. */
+    ...meta(titluRo, titluRu || titluRo),
     attributes: sursa.attributes ?? {},
     in_catalog: true,
     is_active: true,
@@ -120,6 +124,21 @@ export function normalizeaza(sursa, { branduri, sluguriRo, sluguriRu, reguli }) 
   };
 
   return { rand, motive, pret, faraPret: !pret };
+}
+
+/**
+ * Titlul si descrierea pentru motoarele de cautare, in exact forma folosita de
+ * catalogul existent — inclusiv telefonul si bifele. Nu inventam un al doilea
+ * stil pentru 66 de fise dintr-un catalog de 15.000.
+ */
+export function meta(titluRo, titluRu) {
+  const tel = '068-263-644';
+  return {
+    meta_title_ro: `${titluRo} - cumpara in Ungheni`,
+    meta_desc_ro: `Anvelope ${titluRo} - cele mai mici preturi din Ungheni. \u2714\ufe0fLivrare \u2714\ufe0fGarantie \u2742Oferim servicii de montare \u260e${tel}`,
+    meta_title_ru: `${titluRu} - \u043a\u0443\u043f\u0438\u0442\u044c \u0432 \u0423\u043d\u0433\u0435\u043d\u0430\u0445`,
+    meta_desc_ru: `\u0428\u0438\u043d\u044b ${titluRu} - \u043b\u0443\u0447\u0448\u0438\u0435 \u0446\u0435\u043d\u044b \u0432 \u0423\u043d\u0433\u0435\u043d\u044b \u2714\ufe0f\u0414\u043e\u0441\u0442\u0430\u0432\u043a\u0430 \u2714\ufe0f\u0413\u0430\u0440\u0430\u043d\u0442\u0438\u044f \u2742\u041f\u0440\u0435\u0434\u043e\u0441\u0442\u0430\u0432\u043b\u044f\u0435\u043c \u0448\u0438\u043d\u043e\u043c\u043e\u043d\u0442\u0430\u0436 \u260e${tel}`,
+  };
 }
 
 /** ID numeric stabil din ID-ul lor, care poate fi text sau UUID. */

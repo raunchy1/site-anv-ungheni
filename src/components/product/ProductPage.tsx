@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { ProductImage } from "@/components/ui/ProductImage";
+import { ProductGallery } from "@/components/product/ProductGallery";
 import { BrandLogo } from "@/components/ui/BrandLogo";
 import { SeasonBadge, SpecBadges } from "@/components/ui/Badge";
 import { SpecTable, buildSpecRows } from "@/components/ui/SpecTable";
@@ -19,10 +19,37 @@ import type { Locale, Product } from "@/lib/types";
 import { BuyBox } from "./BuyBox";
 import { WhatsAppButton } from "./WhatsAppButton";
 
+/**
+ * Descrierea produsului vine din catalogul lor cu marcaje HTML in ea — inclusiv
+ * `<br class="Apple-interchange-newline" />`, semnul ca cineva a lipit textul
+ * dintr-un mail. Pusa ca atare in `<meta name="description">`, Google o afiseaza
+ * cu tot cu etichete. Se scot etichetele, se decod cele patru entitati care
+ * chiar apar, se strang spatiile si se taie la lungimea afisata in rezultate.
+ */
+function textSimplu(html: string | null | undefined): string | undefined {
+  if (!html) return undefined;
+  const text = html
+    .replace(/<[^>]*>/g, " ")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/\s+/g, " ")
+    .trim();
+  if (!text) return undefined;
+  return text.length > 160 ? `${text.slice(0, 157).trimEnd()}…` : text;
+}
+
 export function productMetadata(p: Product | null, locale: Locale): Metadata {
   if (!p) return {};
   const title = (locale === "ru" ? p.meta_title_ru : p.meta_title_ro) ?? (locale === "ru" ? p.title_ru : p.title_ro) ?? p.title_ro;
-  const description = (locale === "ru" ? p.meta_desc_ru : p.meta_desc_ro) ?? undefined;
+  /* Daca meta-descrierea lipseste — s-a intamplat cu primele fise importate din
+     pandashop — se cade pe descrierea produsului, taiata la lungimea pe care o
+     afiseaza Google. O fisa fara descriere lasa motorul sa-si aleaga singur o
+     propozitie din pagina, de obicei din tabelul de specificatii. */
+  const descriereLunga = (locale === "ru" ? p.description_ru : p.description_ro) ?? p.description_ro;
+  const description =
+    (locale === "ru" ? p.meta_desc_ru : p.meta_desc_ro) ?? textSimplu(descriereLunga);
   const roPath = `/${p.slug_ro}`;
   const ruPath = `/${p.slug_ru ?? p.slug_ro}`;
   const unavailable = p.stock_status === "out_of_stock" || p.price_mdl == null;
@@ -79,7 +106,13 @@ export async function ProductPage({ product, locale }: { product: Product; local
 
       <div className="mt-[var(--sp-5)] grid gap-[var(--sp-8)] lg:grid-cols-[minmax(0,380px)_1fr]">
         <div>
-          <ProductImage src={ui.image} alt={title} locale={locale} priority sizes="(min-width: 1024px) 380px, 92vw" />
+          {/* Fotografia se mareste la click. Lista vine din `product_images`;
+              produsele vechi au una singura, cele din pandashop pana la patru. */}
+          <ProductGallery
+            images={product.images?.length ? product.images : ui.image ? [{ url: ui.image, alt: title, alt_ru: title }] : []}
+            alt={title}
+            locale={locale}
+          />
         </div>
 
         <div className="min-w-0">

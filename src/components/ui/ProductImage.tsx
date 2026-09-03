@@ -52,6 +52,10 @@ export function ProductImage({
           fill
           sizes={sizes}
           priority={priority}
+          /* `priority` singur pune preload-ul, dar nu si `fetchpriority=high` pe
+             tag. Fotografia produsului E elementul LCP pe fisa, iar browserul o
+             cere altfel in coada decat CSS-ul si fonturile daca nu i se spune. */
+          fetchPriority={priority ? "high" : undefined}
           className="object-contain p-[10%] [mix-blend-mode:var(--img-blend)]"
         />
       ) : (

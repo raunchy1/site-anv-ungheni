@@ -54,9 +54,6 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
               <div>
                 <dt className="label">{t("contact.hours")}</dt>
                 <dd className="mt-[var(--sp-1)] text-300 text-[var(--ink-strong)]">{t("contact.hoursValue")}</dd>
-                {!s.opening_hours.sun && (
-                  <dd className="mt-[var(--sp-1)] text-100 text-[var(--ink-muted)]">TODO(cristian): program duminică</dd>
-                )}
               </div>
             </div>
           </dl>

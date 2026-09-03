@@ -36,6 +36,12 @@ export type Product = {
   meta_desc_ro: string | null;
   meta_desc_ru: string | null;
   image_url?: string | null;
+  /**
+   * Toate fotografiile produsului, in ordinea din `product_images`. Prima e
+   * aceeasi cu `image_url`. Produsele vechi au exact una; cele importate din
+   * pandashop au pana la patru.
+   */
+  images?: { url: string; alt: string | null; alt_ru: string | null }[];
   /** Completate din `brands` la citire, nu coloane pe `products`. */
   brand_logo_url?: string | null;
   brand_logo_on_dark?: boolean;

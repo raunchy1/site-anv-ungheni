@@ -71,6 +71,9 @@ export type Dict = {
   typeMore: string;
   noImage: string;
   showUnavailable: string;
+  /** Indiciul de pe fotografia produsului si eticheta lupei. */
+  zoom: string;
+  imageOf: string;
   // actiuni
   filter: string;
   compare: string;
@@ -144,6 +147,8 @@ const ro: Dict = {
   typeMore: "Mai scrie o literă",
   noImage: "Fără fotografie",
   showUnavailable: "Arată și produsele momentan indisponibile",
+  zoom: "Mărește fotografia",
+  imageOf: "Fotografia {n} din {total}",
   filter: "Filtre",
   compare: "Compară",
   favorite: "Favorite",
@@ -215,6 +220,8 @@ const ru: Dict = {
   loading: "Загрузка",
   typeMore: "Введите ещё одну букву",
   noImage: "Без фотографии",
+  zoom: "Увеличить фотографию",
+  imageOf: "Фотография {n} из {total}",
   showUnavailable: "Показать и недоступные товары",
   filter: "Фильтры",
   compare: "Сравнить",

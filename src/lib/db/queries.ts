@@ -29,6 +29,9 @@ const withImage = (r: Row): Product => {
   return {
     ...r,
     image_url: imageUrl(r.product_images?.[0]?.storage_path),
+    images: (r.product_images ?? [])
+      .map((i) => ({ url: imageUrl(i.storage_path), alt: i.alt_ro, alt_ru: i.alt_ru }))
+      .filter((i): i is { url: string; alt: string | null; alt_ru: string | null } => Boolean(i.url)),
     // `logo_url` ține URL-ul public complet, nu o cale de Storage: logo-urile se
     // încarcă o singură dată, manual, iar bucket-ul lor nu e cel al produselor.
     brand_logo_url: brand?.logo_url ?? null,
