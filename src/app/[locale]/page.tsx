@@ -4,7 +4,6 @@ import { TireFinder } from "@/components/ui/TireFinder";
 import { ProductCard } from "@/components/ui/ProductCard";
 import { TreadRule, IconArrowRight, IconPin, IconClock, IconPhone } from "@/components/icons";
 import { getBrandOptions, getSeasonCounts, getServices, getSettings, getShowcase } from "@/lib/db/queries";
-import { serviciuPentruSlug, pretDeLa } from "@/content/servicii";
 import { toUiProduct } from "@/lib/adapt";
 import { formatCount, telLink } from "@/lib/format";
 import { sizeTree } from "@/lib/size-tree";
@@ -79,9 +78,8 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         </ul>
       </section>
 
-      {/* Serviciile de pe prima pagină arată și prețul de pornire. Un card cu
-          titlul singur nu răspunde la nimic — omul intră, se întoarce, intră în
-          altul. Cifra vine din catalogul de prețuri, deci nu poate rămâne veche. */}
+      {/* Serviciile de pe prima pagină: titlul și o săgeată. Cât costă se
+          spune la telefon — depinde de diametru și de starea piesei. */}
       <section>
         <div className="flex flex-wrap items-baseline justify-between gap-[var(--sp-3)]">
           <h2 className="text-500 font-semibold text-[var(--ink-strong)]">{t("home.servicesTitle")}</h2>
@@ -92,30 +90,19 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
         </div>
         <TreadRule variant="full" className="mt-[var(--sp-3)] text-[var(--line)]" />
         <ul className="mt-[var(--sp-5)] grid gap-[var(--sp-3)] sm:grid-cols-2 lg:grid-cols-3">
-          {services.map((s) => {
-            const cap = serviciuPentruSlug(s.slug_ro);
-            const dela = cap ? pretDeLa(cap.tabele) : null;
-            return (
-              <li key={s.id}>
-                <Link
-                  href={{ pathname: "/[slug]", params: { slug: (l === "ru" ? s.slug_ru : s.slug_ro) ?? s.slug_ro } }}
-                  className="flex h-full items-center gap-[var(--sp-3)] rounded-[var(--radius-md)] border border-[var(--line)] px-[var(--sp-4)] py-[var(--sp-4)] transition-colors duration-[var(--dur-1)] hover:border-[var(--line-strong)]"
-                >
-                  <span className="min-w-0 text-300 text-[var(--ink-strong)]">
-                    {(l === "ru" ? s.title_ru : s.title_ro) ?? s.title_ro}
-                  </span>
-                  {dela !== null ? (
-                    <span className="num ml-auto shrink-0 whitespace-nowrap text-200 text-[var(--ink-muted)]">
-                      {l === "ru" ? "от" : "de la"}{" "}
-                      <span className="font-mono font-medium text-[var(--ink-strong)]">{dela}</span> lei
-                    </span>
-                  ) : (
-                    <IconArrowRight size={16} className="ml-auto shrink-0 text-[var(--ink-muted)]" />
-                  )}
-                </Link>
-              </li>
-            );
-          })}
+          {services.map((s) => (
+            <li key={s.id}>
+              <Link
+                href={{ pathname: "/[slug]", params: { slug: (l === "ru" ? s.slug_ru : s.slug_ro) ?? s.slug_ro } }}
+                className="flex h-full items-center gap-[var(--sp-3)] rounded-[var(--radius-md)] border border-[var(--line)] px-[var(--sp-4)] py-[var(--sp-4)] transition-colors duration-[var(--dur-1)] hover:border-[var(--line-strong)]"
+              >
+                <span className="min-w-0 text-300 text-[var(--ink-strong)]">
+                  {(l === "ru" ? s.title_ru : s.title_ro) ?? s.title_ro}
+                </span>
+                <IconArrowRight size={16} className="ml-auto shrink-0 text-[var(--ink-muted)]" />
+              </Link>
+            </li>
+          ))}
         </ul>
       </section>
 

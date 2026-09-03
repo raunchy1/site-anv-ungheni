@@ -3,7 +3,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { TreadRule } from "@/components/icons";
 import { SectiuneServiciu } from "@/components/servicii/SectiuneServiciu";
-import { SERVICII, pretDeLa, text } from "@/content/servicii";
+import { SERVICII, text } from "@/content/servicii";
 import { getSettings } from "@/lib/db/queries";
 import type { Locale } from "@/lib/types";
 
@@ -12,15 +12,14 @@ export const revalidate = 3600;
 /**
  * CATALOGUL DE SERVICII, într-o singură pagină.
  *
- * De ce o pagină și nu zece: prețurile se compară. Cine intră vrea să știe cât
- * costă montajul PE DIMENSIUNEA LUI și, în aceeași vizită, dacă merită și
- * azotul — două pagini separate ar însemna două căutări. Cele nouă fișe de
- * serviciu vechi rămân indexate și primesc trafic din Google; de aici se leagă
- * spre ele, nu invers.
+ * De ce o pagină și nu zece: serviciile se citesc împreună. Cine intră vrea să
+ * știe ce facem cu roata lui și, în aceeași vizită, dacă merită și azotul —
+ * două pagini separate ar însemna două căutări. Cele nouă fișe de serviciu
+ * vechi rămân indexate și primesc trafic din Google; de aici se leagă spre ele,
+ * nu invers.
  *
  * Navigarea rezolvă lungimea: un index numerotat sus, lipicios pe desktop, cu
- * ancore către fiecare capitol. Prețul „de la" din index e calculat din tabele,
- * nu scris de mână — dacă se schimbă un preț, indexul se schimbă cu el.
+ * ancore către fiecare capitol.
  */
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
@@ -30,8 +29,8 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
     title: t("title"),
     description:
       locale === "ru"
-        ? "Все услуги мастерской с ценами: шиномонтаж и балансировка, азот, ремонт шин, датчики давления, правка и покраска дисков, автокондиционер, тормоза, хранение шин."
-        : "Toate serviciile atelierului, cu prețuri: vulcanizare și echilibrare, azot, reparații anvelope, senzori TPMS, îndreptare și vopsire jante, aer condiționat, frâne, hotel anvelope.",
+        ? "Все услуги мастерской: шиномонтаж и балансировка, азот, ремонт шин, датчики давления, правка и покраска дисков, автокондиционер, тормоза, хранение шин."
+        : "Toate serviciile atelierului: vulcanizare și echilibrare, azot, reparații anvelope, senzori TPMS, îndreptare și vopsire jante, aer condiționat, frâne, hotel anvelope.",
     alternates: {
       canonical: locale === "ru" ? "/ru/uslugi" : "/servicii",
       languages: { ro: "/servicii", ru: "/ru/uslugi" },
@@ -57,42 +56,33 @@ export default async function ServiciiPage({ params }: { params: Promise<{ local
         <TreadRule variant="mark" width={128} className="mt-[var(--sp-3)] text-[var(--accent)]" />
         <p className="measure mt-[var(--sp-4)] text-400 text-[var(--ink)]">
           {l === "ru"
-            ? "Все услуги мастерской, с ценами. Цены указаны в леях и включают работу. Приходите без записи или звоните заранее."
-            : "Tot ce facem în atelier, cu prețurile la vedere. Sumele sunt în lei și includ manopera. Vino fără programare sau sună înainte."}
+            ? "Всё, что делаем в мастерской. Приходите без записи или звоните заранее — назовём стоимость по вашему размеру."
+            : "Tot ce facem în atelier. Vino fără programare sau sună înainte — îți spunem cât costă pe dimensiunea ta."}
         </p>
       </header>
 
       {/* ------------------------------------------------------------- index --
-          Zece rânduri, numerotate, cu prețul minim al fiecărui capitol. E
-          singurul loc din pagină unde toate serviciile se văd deodată; de aceea
-          nu are fotografii — ar transforma o listă de citit în zece imagini de
-          parcurs. */}
+          Zece rânduri, numerotate. E singurul loc din pagină unde toate
+          serviciile se văd deodată; de aceea nu are fotografii — ar transforma o
+          listă de citit în zece imagini de parcurs. */}
       <nav
         aria-label={l === "ru" ? "Услуги" : "Serviciile"}
         className="mt-[var(--sp-8)] rounded-[var(--radius-md)] border border-[var(--line)]"
       >
         <ul className="grid grid-cols-1 divide-y divide-[var(--line)] sm:grid-cols-2 sm:divide-x lg:grid-cols-2">
-          {SERVICII.map((s, i) => {
-            const p = pretDeLa(s.tabele);
-            return (
-              <li key={s.id} className={i % 2 === 1 ? "sm:border-l-0" : ""}>
-                <a
-                  href={`#${s.id}`}
-                  className="flex min-h-[52px] items-baseline gap-[var(--sp-3)] px-[var(--sp-4)] py-[var(--sp-3)] transition-colors duration-[var(--dur-1)] hover:bg-[var(--surface-2)]"
-                >
-                  <span className="num font-mono text-[var(--fs-100)] text-[var(--ink-faint)]">{s.numar}</span>
-                  <span className="min-w-0 flex-1 text-300 font-medium text-[var(--ink-strong)]">
-                    {text(s.titlu, l)}
-                  </span>
-                  {p !== null ? (
-                    <span className="num shrink-0 whitespace-nowrap text-[var(--fs-200)] text-[var(--ink-muted)]">
-                      {l === "ru" ? "от" : "de la"} <span className="font-mono font-medium text-[var(--ink-strong)]">{p}</span> lei
-                    </span>
-                  ) : null}
-                </a>
-              </li>
-            );
-          })}
+          {SERVICII.map((s, i) => (
+            <li key={s.id} className={i % 2 === 1 ? "sm:border-l-0" : ""}>
+              <a
+                href={`#${s.id}`}
+                className="flex min-h-[52px] items-baseline gap-[var(--sp-3)] px-[var(--sp-4)] py-[var(--sp-3)] transition-colors duration-[var(--dur-1)] hover:bg-[var(--surface-2)]"
+              >
+                <span className="num font-mono text-[var(--fs-100)] text-[var(--ink-faint)]">{s.numar}</span>
+                <span className="min-w-0 flex-1 text-300 font-medium text-[var(--ink-strong)]">
+                  {text(s.titlu, l)}
+                </span>
+              </a>
+            </li>
+          ))}
         </ul>
       </nav>
 
@@ -109,12 +99,12 @@ export default async function ServiciiPage({ params }: { params: Promise<{ local
         ))}
       </div>
 
-      {/* Nota de subsol: prețurile „de la" și sursa lor. Nu e mărunțiș juridic,
-          e răspunsul la întrebarea „de ce scrie «de la»?" */}
+      {/* Nota de subsol: răspunsul la întrebarea „bine, și cât costă?". Se dă
+          la telefon, pentru că depinde de diametru și de starea piesei. */}
       <p className="measure mt-[var(--sp-10)] border-t border-[var(--line)] pt-[var(--sp-5)] text-[var(--fs-200)] text-[var(--ink-muted)]">
         {l === "ru"
-          ? "Цены взяты из системы учёта мастерской и действительны на день публикации. Позиции «от…» зависят от состояния детали и диаметра — точную цену называем после осмотра, он бесплатный."
-          : "Prețurile vin din sistemul de gestiune al atelierului și sunt valabile la data publicării. Pozițiile marcate „de la…” depind de starea piesei și de diametru — prețul exact ți-l spunem după ce vedem lucrarea, iar verificarea e gratuită."}
+          ? "Стоимость зависит от диаметра колеса и состояния детали — назовём её по телефону или после осмотра, он бесплатный."
+          : "Cât costă depinde de diametrul roții și de starea piesei — îți spunem la telefon sau după ce vedem lucrarea, iar verificarea e gratuită."}
       </p>
     </div>
   );

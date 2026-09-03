@@ -7,9 +7,7 @@ import { getServices, getSettings } from "@/lib/db/queries";
 import { Link } from "@/i18n/navigation";
 import { telLink } from "@/lib/format";
 import { WhatsAppButton } from "./WhatsAppButton";
-import { TabelPreturi } from "@/components/servicii/TabelPreturi";
-import { TabelFiltrat } from "@/components/servicii/TabelFiltrat";
-import { serviciuPentruSlug, pretDeLa, text as sText } from "@/content/servicii";
+import { serviciuPentruSlug, text as sText } from "@/content/servicii";
 import { BookingForm } from "./BookingForm";
 import type { Locale, Service } from "@/lib/types";
 
@@ -27,15 +25,13 @@ export function serviceMetadata(s: Service | null, locale: Locale): Metadata {
 /**
  * `body` e NULL pentru toate cele 9 servicii — sursa n-a avut niciun text.
  *
- * De acum textul și PREȚURILE vin din catalogul de servicii
- * (`src/content/servicii.ts`, transcris din documentul atelierului): pagina își
- * caută capitolul după slug și randează descrierea, ce include și tabelele lui.
- * O pagină de serviciu fără preț e o pagină care nu răspunde la singura
- * întrebare pentru care a fost deschisă.
+ * Textul vine din catalogul de servicii (`src/content/servicii.ts`, transcris
+ * din documentul atelierului): pagina își caută capitolul după slug și
+ * randează cârligul, descrierea și ce include.
  *
- * Când nu există capitol (`sudura-cu-argon` — documentul n-are tarif de sudură
- * în argon), pagina rămâne pe layout-ul vechi și trimite la lista completă. Mai
- * bine niciun preț decât prețul altei lucrări.
+ * Când nu există capitol (`sudura-cu-argon` — documentul n-are un capitol de
+ * sudură în argon), pagina rămâne pe layout-ul vechi și trimite la lista
+ * completă. Mai bine nicio descriere decât descrierea altei lucrări.
  */
 export async function ServicePage({ service, locale }: { service: Service; locale: Locale }) {
   const t = await getTranslations();
@@ -44,7 +40,6 @@ export async function ServicePage({ service, locale }: { service: Service; local
   const body = locale === "ru" ? service.body_ru : service.body_ro;
   const others = all.filter((s) => s.id !== service.id).slice(0, 6);
   const cap = serviciuPentruSlug(service.slug_ro);
-  const dela = cap ? pretDeLa(cap.tabele) : null;
   const img = service.image_url ? `https://anvelope-ungheni.md${service.image_url}` : null;
 
   return (
@@ -92,21 +87,12 @@ export async function ServicePage({ service, locale }: { service: Service; local
                 </div>
               ) : null}
 
-              {/* Prețurile capitolului, aceleași date ca pe pagina de servicii —
-                  o singură sursă, ca să nu se despartă niciodată. */}
-              {cap.tabele.map((tabel, i) =>
-                tabel.randuri.length > 8 ? (
-                  <TabelFiltrat key={i} tabel={tabel} locale={locale} coloanaEvidentiata={5} />
-                ) : (
-                  <TabelPreturi key={i} tabel={tabel} locale={locale} />
-                ),
-              )}
             </>
           ) : null}
 
           <p className="mt-[var(--sp-5)] text-200">
             <Link href="/servicii" className="nav-link">
-              {locale === "ru" ? "Все услуги и цены" : "Toate serviciile și prețurile"}
+              {locale === "ru" ? "Все услуги" : "Toate serviciile"}
             </Link>
           </p>
 
@@ -154,9 +140,6 @@ export async function ServicePage({ service, locale }: { service: Service; local
           "@context": "https://schema.org", "@type": "Service", name: title,
           provider: { "@type": "AutoRepair", name: "anvelope-ungheni.md", telephone: settings.phone_e164, address: settings.address },
           areaServed: settings.city,
-          ...(dela !== null
-            ? { offers: { "@type": "AggregateOffer", priceCurrency: "MDL", lowPrice: dela } }
-            : {}),
         }),
       }} />
     </article>

@@ -3,8 +3,6 @@ import { cn } from "@/lib/cn";
 import { Link } from "@/i18n/navigation";
 import { IconArrowRight, IconPhone } from "@/components/icons";
 import { WhatsAppButton } from "@/components/product/WhatsAppButton";
-import { TabelPreturi } from "./TabelPreturi";
-import { TabelFiltrat } from "./TabelFiltrat";
 import { text, type Serviciu } from "@/content/servicii";
 import { telLink } from "@/lib/format";
 import type { Locale } from "@/lib/types";
@@ -18,9 +16,8 @@ import type { Locale } from "@/lib/types";
  * identice pe care ochiul le sare.
  *
  * Ierarhia în interiorul capitolului e fixă: numărul (mono, mic), titlul,
- * cârligul la 24px, textul la măsura de citit, ce include, prețurile, îndemnul.
- * Prețul e ultimul lucru dinaintea îndemnului, pentru că exact în ordinea asta
- * se ia decizia.
+ * cârligul la 24px, textul la măsura de citit, ce include, îndemnul. Ultimul
+ * lucru dinaintea telefonului e ce primește omul, nu cât dă pe el.
  */
 export function SectiuneServiciu({
   serviciu: s,
@@ -114,17 +111,6 @@ export function SectiuneServiciu({
           ) : null}
         </div>
       </div>
-
-      {/* ------------------------------------------------------------ prețuri
-          Tabelul mare primește filtru de diametru; celelalte au 2–5 rânduri și
-          un filtru peste ele ar fi mai mult de citit decât de filtrat. */}
-      {s.tabele.map((tabel, i) =>
-        tabel.randuri.length > 8 ? (
-          <TabelFiltrat key={i} tabel={tabel} locale={locale} coloanaEvidentiata={5} />
-        ) : (
-          <TabelPreturi key={i} tabel={tabel} locale={locale} />
-        ),
-      )}
 
       {/* ------------------------------------------------------------- îndemn */}
       <div className="mt-[var(--sp-5)] flex flex-wrap items-center gap-[var(--sp-4)] rounded-[var(--radius-sm)] bg-[var(--surface-2)] px-[var(--sp-5)] py-[var(--sp-4)]">
