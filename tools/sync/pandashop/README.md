@@ -262,6 +262,23 @@ cea care contează.
 Separat, **alerta de tăcere**: dacă nicio rulare n-a reușit de 48h, se anunță. Un
 sistem oprit arată exact ca un sistem fără produse noi.
 
+### Perechea RU — `hreflang` nu se crede pe cuvant
+
+Paginile lor de produs declara uneori adresa RU cu doua prefixe de limba lipite:
+`/ru/ro/product/...`, care raspunde 404. Titlul RU lipsa trimite produsul intreg
+in carantina, deci `fetchProduct` incearca intai `hreflang`, iar daca pagina vine
+goala reia pe URL-ul construit (`/ro/` -> `/ru/`, acelasi slug).
+
+Fara asta, TOATE produsele noi cadeau in carantina si intrerupatorul oprea
+rularea — exact ce s-a intamplat intre 31 august si 3 septembrie 2026, cand
+cronul n-a importat nimic patru nopti la rand.
+
+### Prima rulare reala — 3 septembrie 2026
+
+68 de produse noi detectate cu enumerarea completa, **66 importate**, 2 in
+carantina (coliziune de slug: le aveam deja sub alt ID). Catalogul: 15.079
+produse. Zero produse fara imagine, zero fara titlu RU.
+
 ### Comutatorul de oprire
 
 ```sql

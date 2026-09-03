@@ -179,8 +179,22 @@ export function createHtmlSource(http, { path = TYRES_PATH } = {}) {
     const dRo = jsonLd(ro, ref.url);
     const tRo = paramTable(ro);
 
-    const ruUrl = ro.match(/hreflang="ru-MD" href="([^"]+)"/)?.[1] ?? abs(ref.urlRu ?? ref.url.replace('/ro/', '/ru/'));
-    const ru = await http.get(ruUrl);
+    /* Perechea RU. `hreflang` e prima varianta incercata, dar NU e crezuta pe
+       cuvant: paginile lor o scriu uneori cu doua prefixe de limba lipite
+       (`/ru/ro/product/...`), iar aia raspunde 404. Un titlu RU lipsa trimite
+       produsul intreg in carantina, deci merita a doua incercare pe URL-ul
+       construit — acelasi slug, doar `/ro/` schimbat in `/ru/`. */
+    const candidatiRu = [];
+    const dinHreflang = ro.match(/hreflang="ru-MD" href="([^"]+)"/)?.[1];
+    if (dinHreflang) candidatiRu.push(dinHreflang);
+    const construit = abs(ref.urlRu ?? ref.url.replace('/ro/', '/ru/'));
+    if (!candidatiRu.includes(construit)) candidatiRu.push(construit);
+
+    let ruUrl = construit; let ru = '';
+    for (const u of candidatiRu) {
+      const h = await http.get(u);
+      if (h) { ru = h; ruUrl = u; break; }
+    }
     const dRu = ru ? (() => { try { return jsonLd(ru, ruUrl); } catch { return null; } })() : null;
     const tRu = ru ? paramTable(ru) : {};
 
