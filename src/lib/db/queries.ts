@@ -253,6 +253,8 @@ export type LegalPage = {
   title_ro: string; title_ru: string | null;
   body_ro: string | null; body_ru: string | null;
   meta_desc_ro: string | null; meta_desc_ru: string | null;
+  /** Un document juridic fara data e un document in care nu ai incredere. */
+  updated_at: string;
 };
 
 export const getLegalPageBySlug = cache(async (slug: string, locale: Locale): Promise<LegalPage | null> => {

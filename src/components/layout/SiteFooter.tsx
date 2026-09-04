@@ -113,6 +113,9 @@ export async function SiteFooter({ settings, locale }: { settings: Settings; loc
             <Link href={{ pathname: "/[slug]", params: { slug: locale === "ru" ? "politika-konfidencialnosti" : "politica-de-confidentialitate" } }} className="nav-link">
               {locale === "ru" ? "Конфиденциальность" : "Confidențialitate"}
             </Link>
+            <Link href={{ pathname: "/[slug]", params: { slug: locale === "ru" ? "politika-cookie" : "politica-cookie" } }} className="nav-link">
+              Cookie
+            </Link>
           </nav>
         </div>
       </div>

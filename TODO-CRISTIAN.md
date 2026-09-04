@@ -34,9 +34,32 @@ Dacă vrei marcă pe ei (Foxwell), o completezi din admin.
 
 `body_ro` și `body_ru` sunt `NULL`. Layout-ul funcționează fără ele.
 
-## 5. Textul juridic al celor 4 pagini legale
+## 5. Textul juridic al paginilor legale
 
-Schelete create, `body` `NULL`, pagini pe `noindex` până se completează.
+Paginile sunt acum cinci, nu patru: s-a adăugat **Politica de cookie**.
+
+| Pagină | RO | RU |
+|---|---|---|
+| Politica de confidențialitate | scrisă, publicată | lipsește |
+| Politica de cookie | scrisă, publicată | lipsește |
+| Termeni și condiții | lipsește | lipsește |
+| Livrare și plată | lipsește | lipsește |
+| Retur și garanție | lipsește | lipsește |
+
+Cele fără text stau pe `noindex` și arată blocul „Textul este în pregătire", cu
+trimitere la telefon. Nu apar în sitemap până nu au text.
+
+**Ce am nevoie de la tine pentru confidențialitate**, două lucruri pe care nu le
+inventez:
+
+1. **Denumirea juridică și IDNO-ul societății.** Acum politica numește atelierul
+   „Anvelope Ungheni" și adresa din `settings`. Corect, dar o politică de
+   confidențialitate se cere semnată de o persoană juridică identificabilă.
+2. **Confirmarea a două termene pe care le-am pus ca implicite rezonabile:**
+   comenzile se păstrează 2 ani (durata garanției) plus termenul contabil, iar
+   programările la serviciu 12 luni. Dacă vrei alte durate, se schimbă textul.
+
+Ambele se completează din admin, în `legal_pages.body_ro` — nu e nevoie de deploy.
 
 ## 6. Descrierile de marcă
 

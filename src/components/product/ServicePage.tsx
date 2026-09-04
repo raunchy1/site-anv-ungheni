@@ -64,7 +64,7 @@ export async function ServicePage({ service, locale }: { service: Service; local
           )}
 
           {/* Se randează doar dacă există. Nu punem tab gol. */}
-          {body && <div className="measure mt-[var(--sp-6)] text-300 leading-relaxed" dangerouslySetInnerHTML={{ __html: body }} />}
+          {body && <div className="doc measure mt-[var(--sp-6)]" dangerouslySetInnerHTML={{ __html: body }} />}
 
           {cap ? (
             <>

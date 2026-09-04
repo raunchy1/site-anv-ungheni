@@ -20,6 +20,16 @@ export function legalMetadata(p: LegalPage | null, locale: Locale): Metadata {
   };
 }
 
+/** Data la Chisinau: `en-CA` da forma ISO ceruta de atributul `datetime`. */
+function zi(iso: string, locale: string, lunaInLitere = false): string {
+  return new Intl.DateTimeFormat(locale, {
+    day: lunaInLitere ? "numeric" : "2-digit",
+    month: lunaInLitere ? "long" : "2-digit",
+    year: "numeric",
+    timeZone: "Europe/Chisinau",
+  }).format(new Date(iso));
+}
+
 /**
  * Scheletele celor patru pagini legale. Textul juridic îl scrie clientul din
  * admin — nu redactăm clauze. Până atunci pagina spune deschis că e în lucru
@@ -36,8 +46,22 @@ export async function LegalPageView({ page, locale }: { page: LegalPage; locale:
       <h1 className="optical-left mt-[var(--sp-4)] text-700 font-semibold tracking-[var(--tr-title)] text-[var(--ink-strong)]">{title}</h1>
       <TreadRule variant="mark" width={128} className="mt-[var(--sp-3)] text-[var(--accent)]" />
 
+      {/* Data ultimei modificari vine din `updated_at`, deci nu poate ramane in
+          urma textului: se scrie singura la orice actualizare din admin.
+          Ambele forme, cea citita si cea din `datetime`, se calculeaza in fusul
+          de la Chisinau — altfel o modificare facuta seara apare cu doua date
+          diferite in aceeasi propozitie. */}
+      {body && (
+        <p className="mt-[var(--sp-4)] text-200 text-[var(--ink-muted)]">
+          {locale === "ru" ? "Последнее обновление: " : "Ultima actualizare: "}
+          <time dateTime={zi(page.updated_at, "en-CA")} className="num">
+            {zi(page.updated_at, locale === "ru" ? "ru-MD" : "ro-MD", true)}
+          </time>
+        </p>
+      )}
+
       {body ? (
-        <div className="measure mt-[var(--sp-8)] text-300 leading-relaxed" dangerouslySetInnerHTML={{ __html: body }} />
+        <div className="doc measure mt-[var(--sp-8)]" dangerouslySetInnerHTML={{ __html: body }} />
       ) : (
         <EmptyState
           className="mt-[var(--sp-8)]"
