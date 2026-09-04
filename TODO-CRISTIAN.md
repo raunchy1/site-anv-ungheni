@@ -40,14 +40,18 @@ Paginile sunt acum cinci, nu patru: s-a adăugat **Politica de cookie**.
 
 | Pagină | RO | RU |
 |---|---|---|
-| Politica de confidențialitate | scrisă, publicată | lipsește |
-| Politica de cookie | scrisă, publicată | lipsește |
+| Politica de confidențialitate | scrisă, publicată | tradusă, publicată |
+| Politica de cookie | scrisă, publicată | tradusă, publicată |
 | Termeni și condiții | lipsește | lipsește |
 | Livrare și plată | lipsește | lipsește |
 | Retur și garanție | lipsește | lipsește |
 
 Cele fără text stau pe `noindex` și arată blocul „Textul este în pregătire", cu
 trimitere la telefon. Nu apar în sitemap până nu au text.
+
+Varianta rusă a celor două publicate e **traducerea mea**, cu aceleași rezerve ca
+la punctul 9: termenii juridici sunt cei din versiunea rusă a Legii 133/2011, dar
+tonul n-a fost citit de un vorbitor nativ.
 
 **Ce am nevoie de la tine pentru confidențialitate**, două lucruri pe care nu le
 inventez:
