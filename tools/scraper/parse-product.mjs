@@ -26,15 +26,35 @@ function contentBlock(html) {
  * ceea ce explică diferența 14.982 vs 15.002 din contoare.
  */
 const IMPERIAL = /(?<![\d.])(\d{2})\s*[x×\/]\s*(\d{1,2}[.,]\d{1,2})\s*R?\s*(\d{2})(?:LT|C)?/i;
-const METRIC = /(\d{2,3}(?:[.,]\d+)?)\s*[/x]\s*(\d{2,3}(?:[.,]\d+)?)\s*(?:R|ZR)\s*(\d{1,2}(?:[.,]\d+)?C?)/i;
-const METRIC_NO_ASPECT = /(\d{2,3}(?:[.,]\d+)?)\s*(?:R|ZR)\s*(\d{1,2}C?)/i;
+/*
+ * `Z?` intre profil si R: catalogul lor scrie si „205/50Z R17", cu indicele de
+ * viteza lipit de profil. Fara el, dimensiunea ramanea necitita si produsul
+ * nepotrivit — 3 anvelope Laufenn.
+ */
+const METRIC = /(\d{2,3}(?:[.,]\d+)?)\s*[/x]\s*(\d{2,3}(?:[.,]\d+)?)\s*Z?\s*(?:R|ZR)\s*(\d{1,2}(?:[.,]\d+)?C?)/i;
+/*
+ * `\/?` inainte de R: „185/R14C" e o dimensiune de marfa fara profil, scrisa cu
+ * bara desi nu urmeaza niciun numar. Apare la Petlas si Nereus.
+ */
+const METRIC_NO_ASPECT = /(\d{2,3}(?:[.,]\d+)?)\s*\/?\s*(?:R|ZR)\s*(\d{1,2}C?)/i;
 
 const num = (v) => (v == null ? null : Number(String(v).replace(',', '.')));
+
+/*
+ * Literele chirilice care arata identic cu cele latine. Catalogul sursa le
+ * amesteca: „6.50-16С" are un С rusesc (U+0421), „88Т" un Т rusesc. Pana acum
+ * normalizarea se facea doar pe indicele de viteza, dupa parsare; dar daca
+ * litera sta in DIMENSIUNE, parsarea esueaza inainte sa apuce cineva sa o
+ * normalizeze, iar produsul ramane fara dimensiune si nepotrivit.
+ */
+const CYRILLIC_LOOKALIKE = { 'А': 'A', 'В': 'B', 'С': 'C', 'Е': 'E', 'Н': 'H', 'К': 'K', 'М': 'M',
+  'О': 'O', 'Р': 'P', 'Т': 'T', 'У': 'Y', 'Х': 'X', 'Ј': 'J' };
+const deCyrillic = (v) => (v ? [...v].map((ch) => CYRILLIC_LOOKALIKE[ch] ?? ch).join('') : v);
 
 export function parseSize(raw) {
   const empty = { size_system: null, width: null, aspect: null, diameter: null, overall_diameter_in: null, section_width_in: null, size_raw: null };
   if (!raw) return empty;
-  const s = raw.replace(/\s+/g, ' ').trim();
+  const s = deCyrillic(raw).replace(/\s+/g, ' ').trim();
 
   const imp = s.match(IMPERIAL);
   if (imp) {
@@ -79,12 +99,6 @@ export function parseSize(raw) {
   // TPMS induce în eroare orice cod care îl citește ca dimensiune.
   return empty;
 }
-
-// Indicii de viteză sunt uneori tastați cu litere chirilice care arată identic cu cele latine.
-// 3 produse au „Н" (U+041D) în loc de „H". Normalizăm la import, nu la randare.
-const CYRILLIC_LOOKALIKE = { 'А': 'A', 'В': 'B', 'С': 'C', 'Е': 'E', 'Н': 'H', 'К': 'K', 'М': 'M',
-  'О': 'O', 'Р': 'P', 'Т': 'T', 'У': 'Y', 'Х': 'X', 'Ј': 'J' };
-const deCyrillic = (v) => (v ? [...v].map((ch) => CYRILLIC_LOOKALIKE[ch] ?? ch).join('') : v);
 
 const SEASON_MAP = {
   vara: 'vara', 'vară': 'vara', 'лето': 'vara', 'летние': 'vara',

@@ -134,3 +134,23 @@ test('normalizarea sezonului, RO și RU', () => {
     assert.equal(normalizeSeason(raw), expected, `normalizeSeason(${JSON.stringify(raw)})`);
   }
 });
+
+const pick = (r) => ({ w: r.width, a: r.aspect, d: r.diameter });
+
+test('indicele de viteză lipit de profil nu ascunde dimensiunea', () => {
+  // „205/50Z R17" — Z-ul stă între profil și R. Fără el, 3 anvelope Laufenn
+  // rămâneau fără dimensiune și nepotrivite cu sursa.
+  assert.deepEqual(pick(parseSize('Laufenn LK01 S Fit EQ 205/50Z R17 93W XL')), { w: 205, a: 50, d: 'R17' });
+  assert.deepEqual(pick(parseSize('Laufenn LH01 S Fit A/S 245/50Z R18 100W')), { w: 245, a: 50, d: 'R18' });
+});
+
+test('bara fără profil, la anvelopele de marfă', () => {
+  // „185/R14C" — bară deși nu urmează niciun număr. Petlas și Nereus scriu așa.
+  assert.deepEqual(pick(parseSize('Petlas Power PT825 185/R14C 102/100R')), { w: 185, a: null, d: 'R14C' });
+  assert.deepEqual(pick(parseSize('Nereus NS913 195/R14C 106/104Q')), { w: 195, a: null, d: 'R14C' });
+});
+
+test('literele chirilice din dimensiune nu opresc parsarea', () => {
+  // С rusesc (U+0421) în loc de C latin, într-o dimensiune de marfă.
+  assert.deepEqual(pick(parseSize('Anvelopa Ceva 195/70 R15\u0421 104/102R')), { w: 195, a: 70, d: 'R15C' });
+});
