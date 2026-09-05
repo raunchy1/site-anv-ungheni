@@ -27,16 +27,22 @@
  * Copia de siguranță (produse + imagini + rânduri `pandashop_seen`) se scrie în
  * `reports/sync/` ÎNAINTE de orice ștergere, și în rularea seacă, și în cea reală.
  *
- *   node --env-file=.env.local tools/db/scoate-branduri.mjs           # rulare seacă
- *   node --env-file=.env.local tools/db/scoate-branduri.mjs --apply
+ *   node --env-file=.env.local tools/db/scoate-branduri.mjs zeta greentrac          # rulare seacă
+ *   node --env-file=.env.local tools/db/scoate-branduri.mjs zeta greentrac --apply
  */
 import fs from 'node:fs';
 import path from 'node:path';
 
-const MARCI = ['rosava', 'centara', 'rotex', 'powertrac', 'charmhoo'];
-const NOTA = 'brand scos din catalog la cererea atelierului (5 septembrie 2026)';
+/*
+ * Mărcile se dau în linia de comandă, ca slug-uri. Fără argumente rămâne lista
+ * primei cereri, ca rularea din 5 septembrie să se poată reface identic.
+ */
+const MARCI_IMPLICITE = ['rosava', 'centara', 'rotex', 'powertrac', 'charmhoo'];
+const NOTA = 'brand scos din catalog la cererea atelierului';
 
 const aplica = process.argv.includes('--apply');
+const MARCI = process.argv.slice(2).filter((a) => !a.startsWith('--'));
+if (MARCI.length === 0) MARCI.push(...MARCI_IMPLICITE);
 const URL_BASE = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const KEY = process.env.SUPABASE_SECRET_KEY ?? process.env.SUPABASE_SERVICE_ROLE_KEY;
 if (!URL_BASE || !KEY) throw new Error('lipsesc NEXT_PUBLIC_SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY (rulează cu --env-file=.env.local)');

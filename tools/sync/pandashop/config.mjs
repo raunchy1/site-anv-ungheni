@@ -42,7 +42,15 @@ export const config = {
     /* `premiorri`/`premiorre` e linia de produse a Rosavei, scrisă de furnizori
        și ca marcă de sine stătătoare. Fără ea în listă, aceleași anvelope ar fi
        reintrat din alt catalog sub alt nume — exact ce s-a cerut să dispară. */
-    excluse: ['rosava', 'centara', 'rotex', 'powertrac', 'charmhoo', 'premiorri', 'premiorre'],
+    excluse: [
+      /* Prima cerere, 5 septembrie 2026. */
+      'rosava', 'centara', 'rotex', 'powertrac', 'charmhoo',
+      /* A doua cerere, aceeași zi, după importul din pneuexpert. */
+      'valleystone', 'zeta', 'greentrac',
+      /* Linia de produse a Rosavei, pe care furnizorii o scriu și ca marcă de sine
+         stătătoare. Fără ea, aceleași anvelope reintră din alt catalog sub alt nume. */
+      'premiorri', 'premiorre',
+    ],
   },
 
   discovery: {
