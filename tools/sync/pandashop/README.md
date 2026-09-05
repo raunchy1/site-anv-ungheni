@@ -285,3 +285,29 @@ produse. Zero produse fara imagine, zero fara titlu RU.
 update settings set sync_enabled = false;
 ```
 Fără deploy. Cronul rulează, vede steagul și se retrage fără să atingă nimic.
+
+## Mărcile scoase din catalog — 5 septembrie 2026
+
+Atelierul nu mai vinde **Rosava, Centara, Rotex, Powertrac și Charmhoo**. Cele
+403 de produse și cele 5 rânduri din `brands` sunt șterse, nu ascunse; cele 98
+de fotografii rămase fără niciun produs au fost șterse și din storage. Copia de
+siguranță, cu tot cu rândurile întregi, e în
+`reports/sync/scoatere-branduri-2026-09-05-20-58-19.json`.
+
+```bash
+node --env-file=.env.local tools/db/scoate-branduri.mjs           # rulare seacă
+node --env-file=.env.local tools/db/scoate-branduri.mjs --apply
+```
+
+**Ștergerea singură ar fi ținut o noapte.** Produsele există în continuare la
+pandashop, deci prima recuperare care trecea pe lângă ele le aducea înapoi. De
+aceea numele stau în `config.brands.excluse`, iar `normalizeaza` le oprește
+înaintea oricărei alte verificări — nu în carantină, ci refuzate deliberat.
+`backfill.mjs --branduri` nu le recreează nici când i se cere explicit.
+
+Ca să reintre o marcă: se scoate din `config.brands.excluse` și se rulează
+`backfill.mjs --branduri`. Produsele revin cu date proaspete de la sursă.
+
+Rândurile din `pandashop_seen` **nu se șterg** — ele sunt ce împiedică
+detectorul să vadă ID-urile ca „produse noi". Trec pe `status = 'skipped'` cu
+motivul scris în `note`.

@@ -49,6 +49,15 @@ export const REZERVATE = new Set([
 ]);
 
 /**
+ * Marca e pe lista celor scoase din catalog? Comparația e pe numele normalizat,
+ * ca „POWERTRAC", „Powertrac" și „ powertrac " să fie același lucru.
+ */
+export function esteExclus(nume) {
+  const n = String(nume ?? '').trim().toLowerCase();
+  return n !== '' && config.brands.excluse.includes(n);
+}
+
+/**
  * Normalizează un produs de la ei în forma rândului nostru, sau spune de ce nu se poate.
  * Funcție pură: nicio cerere de rețea, niciun efect. De aceea e testabilă.
  */
@@ -59,6 +68,15 @@ export function normalizeaza(sursa, { branduri, sluguriRo, sluguriRu, reguli }) 
   const titluRo = titluCatalog(sursa.titleRo);
   const titluRu = titluCatalog(sursa.titleRu);
   const t = parseTitle(titluRo, branduri.map((b) => b.name));
+
+  /* Mărcile scoase din catalog se opresc aici, înaintea oricărei alte verificări:
+     nu e un defect de date, e o decizie comercială, iar carantina n-are ce face
+     cu ele. `esteExclus` se uită și la brandul parsat, și la cel brut de la ei —
+     marca poate lipsi din `brands` tocmai pentru că a fost ștearsă. */
+  const brandBrut = String(t.brand ?? sursa.brandRaw ?? '');
+  if (esteExclus(brandBrut) || esteExclus(sursa.brandRaw)) {
+    return { rand: null, motive: [], exclus: brandBrut || sursa.brandRaw || '—' };
+  }
 
   if (!t.size_raw) motive.push('dimensiune neparsată');
   const brand = branduri.find((b) => b.name.toLowerCase() === String(t.brand ?? '').toLowerCase());
@@ -165,7 +183,7 @@ export async function ruleaza(opts = {}) {
   const setari = (await readAll('settings', 'sync_enabled,pricing_rules'))[0] ?? {};
   if (setari.sync_enabled === false) {
     spune('sincronizarea e oprită din admin (settings.sync_enabled = false)');
-    return { oprit: 'din_admin', jurnal, importate: [], carantina: [], faraPret: [], erori: [] };
+    return { oprit: 'din_admin', jurnal, importate: [], carantina: [], faraPret: [], erori: [], excluse: [] };
   }
 
   spune('· citesc catalogul nostru…');
@@ -200,18 +218,20 @@ export async function ruleaza(opts = {}) {
   }
   if (noi.length === 0) {
     spune('  nimic de făcut');
-    return { jurnal, importate: [], carantina: [], faraPret: [], erori: [], durata: Date.now() - t0 };
+    return { jurnal, importate: [], carantina: [], faraPret: [], erori: [], excluse: [], durata: Date.now() - t0 };
   }
 
   const deImportat = noi.slice(0, limit);
-  const rezultate = { importate: [], carantina: [], faraPret: [], erori: [] };
+  const rezultate = { importate: [], carantina: [], faraPret: [], erori: [], excluse: [] };
 
   for (const ref of deImportat) {
     try {
       const sursa = await source.fetchProduct(ref);
       if (!sursa) { rezultate.erori.push({ id: ref.id, motiv: '404 la extragere' }); continue; }
 
-      const { rand, motive, pret, faraPret } = normalizeaza(sursa, { branduri, sluguriRo, sluguriRu, reguli: setari.pricing_rules });
+      const { rand, motive, pret, faraPret, exclus } = normalizeaza(sursa, { branduri, sluguriRo, sluguriRu, reguli: setari.pricing_rules });
+
+      if (exclus) { rezultate.excluse.push({ id: ref.id, titlu: sursa.titleRo, brand: exclus }); continue; }
 
       if (faraPret && motive.length === 0) { rezultate.faraPret.push({ id: ref.id, titlu: sursa.titleRo }); continue; }
 
@@ -243,6 +263,7 @@ export async function ruleaza(opts = {}) {
   spune(`  în carantină:     ${rezultate.carantina.length}`);
   spune(`  fără preț (așteptare): ${rezultate.faraPret.length}`);
   spune(`  erori:            ${rezultate.erori.length}`);
+  if (rezultate.excluse.length) spune(`  mărci scoase din catalog: ${rezultate.excluse.length} (${[...new Set(rezultate.excluse.map((e) => e.brand))].join(', ')})`);
 
   for (const c of rezultate.carantina.slice(0, 10)) spune(`   carantină ${c.id}: ${c.titlu} → ${c.motive.join('; ')}`);
   for (const x of rezultate.importate.slice(0, 20)) {
@@ -290,6 +311,11 @@ export async function ruleaza(opts = {}) {
     await insert('sync_quarantine', [{ pandashop_id: c.id, reason: c.motive.join('; '), raw: c.rand }], { onConflict: 'pandashop_id,reason' });
     await insert('pandashop_seen', [{ pandashop_id: c.id, baseline: false, imported: false, status: 'quarantined', last_checked_at: new Date().toISOString() }], { onConflict: 'pandashop_id' });
   }
+  /* ID-ul unei mărci scoase se scrie în `pandashop_seen` ca 'skipped': altfel
+     rămâne „nou" la fiecare rulare și se reevaluează la nesfârșit. */
+  for (const x of rezultate.excluse) {
+    await insert('pandashop_seen', [{ pandashop_id: x.id, baseline: false, imported: false, status: 'skipped', note: `marcă scoasă din catalog: ${x.brand}`, last_checked_at: new Date().toISOString() }], { onConflict: 'pandashop_id' });
+  }
   for (const f of rezultate.faraPret) {
     await insert('pandashop_seen', [{ pandashop_id: f.id, baseline: false, imported: false, status: 'no_price', last_checked_at: new Date().toISOString() }], { onConflict: 'pandashop_id' });
   }
@@ -315,7 +341,7 @@ export async function ruleaza(opts = {}) {
 export async function ruleazaCuLacat(opts = {}) {
   const cine = opts.actor ?? 'sync';
   if (!(await iaLacatul(cine))) {
-    return { oprit: 'lacat_ocupat', jurnal: ['o altă rulare e în curs; se sare peste'], importate: [], carantina: [], faraPret: [], erori: [] };
+    return { oprit: 'lacat_ocupat', jurnal: ['o altă rulare e în curs; se sare peste'], importate: [], carantina: [], faraPret: [], erori: [], excluse: [] };
   }
   try {
     return await ruleaza(opts);

@@ -5,7 +5,7 @@
  */
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { normalizeaza, REZERVATE } from './import.mjs';
+import { normalizeaza, REZERVATE, esteExclus } from './import.mjs';
 import { slugRo, slugRu, titluCatalog } from './slug.mjs';
 import { calculeazaPret, rotunjeste } from './pricing.mjs';
 
@@ -216,4 +216,37 @@ test('aceeași fotografie nu se urcă de două ori', async () => {
   } finally {
     globalThis.fetch = original;
   }
+});
+
+/*
+ * Mărcile scoase din catalog (config.brands.excluse). Nu sunt carantină: nu e un
+ * defect de date, e o decizie comercială, iar produsul nu trebuie nici măcar
+ * evaluat mai departe.
+ */
+test('o marcă scoasă din catalog nu se importă și nu ajunge în carantină', () => {
+  const r = normalizeaza(produsul({
+    titleRo: 'Anvelopa Rosava Premiorri ViaMaggiore 185/60 R15 88T',
+    titleRu: 'Шина Rosava Premiorri ViaMaggiore 185/60 R15 88T',
+    brandRaw: 'Rosava',
+  }), context());
+  assert.equal(r.exclus, 'Rosava');
+  assert.equal(r.rand, null);
+  assert.deepEqual(r.motive, [], 'nu e carantină — e refuz deliberat');
+});
+
+test('marca scoasă e prinsă și când vine doar din brandRaw, nu din titlu', () => {
+  const r = normalizeaza(produsul({
+    titleRo: 'Anvelopa Charmhoo CH01 195/65 R15 91H',
+    titleRu: 'Шина Charmhoo CH01 195/65 R15 91H',
+    brandRaw: 'Charmhoo',
+  }), context());
+  assert.equal(r.exclus, 'Charmhoo');
+});
+
+test('esteExclus nu ține cont de majuscule sau spații', () => {
+  assert.equal(esteExclus('POWERTRAC'), true);
+  assert.equal(esteExclus(' Rotex '), true);
+  assert.equal(esteExclus('Michelin'), false);
+  assert.equal(esteExclus(null), false, 'brand lipsă nu înseamnă brand exclus');
+  assert.equal(esteExclus(''), false);
 });

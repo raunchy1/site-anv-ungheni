@@ -56,3 +56,8 @@ data/sync/
 
 # Rapoartele de sincronizare: .md-ul se pastreaza, JSON-ul brut (megaocteti) nu.
 reports/sync/*.json
+
+# Exceptia: copiile de siguranta de dinaintea unei stergeri. Sunt singurul drum
+# inapoi pentru randuri care nu mai exista in baza, deci intra in git chiar daca
+# sunt JSON de un megaoctet.
+!reports/sync/scoatere-branduri-*.json

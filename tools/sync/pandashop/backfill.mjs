@@ -33,7 +33,7 @@ import { createHtmlSource } from './html-source.mjs';
 import { readAll, readBrands } from './db.mjs';
 import { insert, insertReturning } from './db-write.mjs';
 import { indexeazaCatalogul, potriveste, potrivireRelaxata } from './match.mjs';
-import { normalizeaza } from './import.mjs';
+import { normalizeaza, esteExclus } from './import.mjs';
 import { pregatesteImagini } from './images.mjs';
 import { slugRo, slugRu } from './slug.mjs';
 import { iaLacatul, elibereazaLacatul } from './lock.mjs';
@@ -55,6 +55,11 @@ const COLOANE = [
  * marcheaza `is_active` ca oricare altul, ca sa se poata stinge dintr-un click.
  */
 async function creeazaBranduri(nume, { apply, log }) {
+  /* O marca scoasa din catalog nu se recreeaza nici cand omul cere explicit
+     `--branduri`: altfel `backfill.mjs --branduri` o readuce cu tot cu produse. */
+  const respinse = nume.filter((n) => esteExclus(n));
+  if (respinse.length) log(`· branduri scoase din catalog, nu se creeaza: ${respinse.join(', ')}`);
+  nume = nume.filter((n) => !esteExclus(n));
   if (nume.length === 0) return new Map();
   log(`· branduri de creat: ${nume.length} — ${nume.join(', ')}`);
   if (!apply) return new Map();
@@ -191,7 +196,7 @@ export async function recupereaza(opts = {}) {
    * `--cache` trece instant peste ce s-a facut deja.
    */
   const LOT = 40;
-  const rezultate = { importate: [], carantina: [], faraPret: [], erori: [] };
+  const rezultate = { importate: [], carantina: [], faraPret: [], erori: [], excluse: [] };
   let opritDeSursa = null;
 
   for (let start = 0; start < deLucru.length; start += LOT) {
@@ -223,9 +228,13 @@ export async function recupereaza(opts = {}) {
       if (sursa._eroare) { rezultate.erori.push({ id: sursa._id, motiv: sursa._eroare }); continue; }
 
       try {
-        const { rand, motive, pret, faraPret } = normalizeaza(sursa, {
+        const { rand, motive, pret, faraPret, exclus } = normalizeaza(sursa, {
           branduri, sluguriRo, sluguriRu, reguli: setari.pricing_rules,
         });
+
+        /* Marcile scoase din catalog nu se recupereaza. Recuperarea e exact
+           drumul pe care s-ar intoarce: ele exista in continuare la ei. */
+        if (exclus) { rezultate.excluse.push({ id: sursa.id, titlu: sursa.titleRo, brand: exclus }); continue; }
 
         if (faraPret && motive.length === 0) { rezultate.faraPret.push({ id: sursa.id, titlu: sursa.titleRo }); continue; }
 
@@ -293,6 +302,7 @@ export async function recupereaza(opts = {}) {
   spune(`\n${aplica ? 'APLICAT' : 'DRY-RUN — nu s-a scris nimic'}`);
   spune(`  importate:        ${rezultate.importate.length}`);
   spune(`  in carantina:     ${rezultate.carantina.length}`);
+  if (rezultate.excluse.length) spune(`  marci scoase din catalog: ${rezultate.excluse.length} (${[...new Set(rezultate.excluse.map((e) => e.brand))].join(", ")})`);
   spune(`  fara pret:        ${rezultate.faraPret.length}`);
   spune(`  erori:            ${rezultate.erori.length}`);
   if (Object.keys(peMotiv).length) {

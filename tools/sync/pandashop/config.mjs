@@ -26,6 +26,22 @@ export const config = {
     retries: 4,
   },
 
+  /*
+   * MĂRCILE SCOASE DIN CATALOG. Nu se importă și nu se creează, niciodată,
+   * indiferent de cale — cronul de noapte, `backfill.mjs`, `--branduri`.
+   *
+   * Fără lista asta, ștergerea lor din bază ar ține exact o noapte: produsele
+   * există în continuare la pandashop, iar prima recuperare care trece pe lângă
+   * ele le-ar aduce înapoi. Comparația se face pe numele normalizat, minuscule,
+   * ca „POWERTRAC" și „Powertrac" să fie același lucru.
+   *
+   * Cerute de atelier pe 5 septembrie 2026. Ca să reintre o marcă, se scoate de
+   * aici și se rulează `backfill.mjs --branduri`.
+   */
+  brands: {
+    excluse: ['rosava', 'centara', 'rotex', 'powertrac', 'charmhoo'],
+  },
+
   discovery: {
     /* `sync:new` se uită doar în față; oprire după atâtea pagini consecutive
        fără niciun ID necunoscut. */
