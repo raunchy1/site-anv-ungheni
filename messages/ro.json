@@ -200,6 +200,8 @@
     "doneWhatsApp": "Trimite comanda și pe WhatsApp",
     "doneWhatsAppHint": "Ajunge instant pe telefonul atelierului. Recomandat dacă vrei confirmare rapidă.",
     "doneCall": "Sună atelierul",
-    "doneBack": "Înapoi la catalog"
+    "doneBack": "Înapoi la catalog",
+    "privacy": "Trimițând comanda, ne dai numele, telefonul și adresa ca să o putem livra. Le folosim doar pentru comanda asta și nu le dăm nimănui în scop de reclamă.",
+    "privacyLink": "Politica de confidențialitate"
   }
 }

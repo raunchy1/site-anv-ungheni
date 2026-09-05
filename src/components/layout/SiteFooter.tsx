@@ -3,6 +3,7 @@ import { Link } from "@/i18n/navigation";
 import { IconPin, IconPhone, IconClock } from "@/components/icons";
 import { TreadRule } from "@/components/icons";
 import { Logo } from "@/components/brand/Logo";
+import { CookieSettingsLink } from "@/components/layout/CookieBanner";
 import { telLink } from "@/lib/format";
 import { getBrands, getServices } from "@/lib/db/queries";
 import type { Locale, Settings } from "@/lib/types";
@@ -116,6 +117,9 @@ export async function SiteFooter({ settings, locale }: { settings: Settings; loc
             <Link href={{ pathname: "/[slug]", params: { slug: locale === "ru" ? "politika-cookie" : "politica-cookie" } }} className="nav-link">
               Cookie
             </Link>
+            {/* Retragerea acordului trebuie să fie la fel de la îndemână ca
+                acordarea lui — de asta stă lângă politici, nu ascuns. */}
+            <CookieSettingsLink locale={locale} />
           </nav>
         </div>
       </div>

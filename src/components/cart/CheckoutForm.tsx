@@ -243,6 +243,24 @@ export function CheckoutForm({ locale, phone, phoneE164, oras }: {
         <Button type="submit" variant="primary" size="lg" className="mt-[var(--sp-5)] w-full" disabled={trimite || !gata || items.length === 0}>
           {trimite ? t("checkout.submitting") : t("checkout.submit")}
         </Button>
+
+        {/* INFORMARE, nu bifă. Pentru livrarea unei comenzi temeiul e executarea
+            contractului, nu consimțământul; o casetă obligatorie „sunt de acord"
+            ar cere un acord care oricum nu poate fi refuzat, adică unul fals.
+            Ce datorăm omului aici e să-i spunem ce luăm și de ce, înainte să dea
+            clic — și un drum de o apăsare spre textul complet. */}
+        <p className="measure mt-[var(--sp-3)] text-100 text-[var(--ink-muted)]">
+          {t("checkout.privacy")}{" "}
+          <Link
+            href={{
+              pathname: "/[slug]",
+              params: { slug: locale === "ru" ? "politika-konfidencialnosti" : "politica-de-confidentialitate" },
+            }}
+            className="nav-link underline"
+          >
+            {t("checkout.privacyLink")}
+          </Link>
+        </p>
       </aside>
     </form>
   );

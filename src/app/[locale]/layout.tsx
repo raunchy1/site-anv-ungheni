@@ -8,6 +8,8 @@ import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { MobileBar } from "@/components/layout/MobileBar";
 import { CartProvider } from "@/lib/cart/store";
+import { ConsentProvider } from "@/lib/consent/store";
+import { CookieBanner } from "@/components/layout/CookieBanner";
 import { getSettings } from "@/lib/db/queries";
 import { SITE_URL } from "@/lib/format";
 import type { Locale } from "@/lib/types";
@@ -50,6 +52,9 @@ export default async function LocaleLayout({
         <NextIntlClientProvider>
          {/* Coșul trebuie citit și de antet, și de pagini: providerul stă
              deasupra amândurora. E singurul context global din site. */}
+         {/* Consimțământul stă deasupra a tot: și subsolul, și harta din pagini
+             îl citesc. E al doilea context global, după coș. */}
+         <ConsentProvider>
          <CartProvider>
           <a href="#continut" className="skip-link">
             {locale === "ru" ? "К содержимому" : "Sari la conținut"}
@@ -60,7 +65,9 @@ export default async function LocaleLayout({
           </main>
           <SiteFooter settings={settings} locale={locale as Locale} />
           <MobileBar settings={settings} />
+          <CookieBanner locale={locale as Locale} />
          </CartProvider>
+         </ConsentProvider>
         </NextIntlClientProvider>
       </body>
     </html>
