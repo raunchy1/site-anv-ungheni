@@ -36,6 +36,14 @@ export const config = {
     'industrialnye_industriale',
   ],
 
+  /*
+   * Secțiunea de motociclete. Sunt anvelope, dar nu de mașină: 4 bucăți
+   * Michelin și Metzeler, cu dimensiuni ca „120/70 R17", care în filtrele
+   * catalogului nostru ar sta lângă anvelope de autoturism. Se lasă afară până
+   * când cineva chiar vrea o secțiune de moto pe site.
+   */
+  respinse: ['moto'],
+
   /* Sitemap-ul lor e din noiembrie 2023 și nu conține produsele adăugate de
      atunci; listarea paginată conține doar ce au pe stoc azi. Niciuna singură nu
      e catalogul întreg — se iau amândouă și se reunesc. */

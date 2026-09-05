@@ -218,12 +218,12 @@ export async function ruleaza(opts = {}) {
 
   const rezultate = {
     gasite: [], candidati: [], ambigue: [], excluse: [],
-    importate: [], carantina: [], faraPret: [], erori: [],
+    importate: [], carantina: [], carantinaSursa: [], faraPret: [], erori: [],
   };
   const brandNecunoscut = new Map();
 
   const clasifica = () => {
-    rezultate.gasite = []; rezultate.candidati = []; rezultate.ambigue = []; rezultate.excluse = [];
+    rezultate.gasite = []; rezultate.candidati = []; rezultate.ambigue = []; rezultate.excluse = []; rezultate.carantinaSursa = [];
     brandNecunoscut.clear();
     for (const p of lor) {
       if (esteExclus(p.brandRaw)) { rezultate.excluse.push(p); continue; }
@@ -235,7 +235,7 @@ export async function ruleaza(opts = {}) {
         brandNecunoscut.set(brut, [...(brandNecunoscut.get(brut) ?? []), p]);
         continue;
       }
-      if (m.stare === 'dimensiune_neparsata') { rezultate.carantina.push({ p, motive: ['dimensiune neparsată'] }); continue; }
+      if (m.stare === 'dimensiune_neparsata') { rezultate.carantinaSursa.push({ p, motive: ['dimensiune neparsată'] }); continue; }
       /* `doar_la_ei`, dar poate fi o fișă de-a noastră căreia îi lipsesc indicii. */
       const relaxat = potrivireRelaxata(m.t, m.aproape);
       if (relaxat) { rezultate.gasite.push({ p, produs: relaxat, relaxat: true }); continue; }
@@ -298,15 +298,25 @@ export async function ruleaza(opts = {}) {
     if (++n % 200 === 0) spune(`  pregătite ${n}/${deImportat.length}…`);
   }
 
+  /*
+   * ÎNTRERUPĂTORUL SE UITĂ DOAR LA CE AM STRICAT NOI.
+   *
+   * „Dimensiune neparsată" e o proprietate a catalogului lor — anvelope agricole
+   * scrise „9.5-30", pe care parserul nostru nu le citește. Numărul ăla nu se
+   * schimbă de la o rulare la alta și n-are ce căuta într-un prag care trebuie
+   * să prindă un parser stricat. Se raportează separat, se scrie în carantină,
+   * dar pragul se calculează pe eșecurile de normalizare, din lotul curent.
+   */
   const rataCarantina = deImportat.length ? rezultate.carantina.length / deImportat.length : 0;
   spune(`\n${aplica ? 'APLIC' : 'DRY-RUN — nu se scrie nimic'}`);
   spune(`  de importat:  ${pregatite.length}`);
   spune(`  în carantină: ${rezultate.carantina.length}`);
+  spune(`  fără dimensiune parsabilă (rămân la ei): ${rezultate.carantinaSursa.length}`);
   spune(`  fără preț (intră ca indisponibile): ${rezultate.faraPret.length}`);
   spune(`  erori:        ${rezultate.erori.length}`);
 
   const peMotiv = {};
-  for (const c of rezultate.carantina) for (const m of c.motive) {
+  for (const c of [...rezultate.carantina, ...rezultate.carantinaSursa]) for (const m of c.motive) {
     const cheie = m.replace(/:.*$/, '');
     peMotiv[cheie] = (peMotiv[cheie] ?? 0) + 1;
   }
@@ -350,7 +360,7 @@ export async function ruleaza(opts = {}) {
     }
   }
 
-  for (const c of rezultate.carantina) {
+  for (const c of [...rezultate.carantina, ...rezultate.carantinaSursa]) {
     await insert('sync_quarantine', [{
       supplier: 'pneuexpert', pandashop_id: String(c.p.id), reason: c.motive.join('; '), raw: c.rand ?? c.p,
     }], { onConflict: 'supplier,pandashop_id,reason' });
@@ -386,12 +396,13 @@ function scrieRaport({ rezultate, pregatite, lor, brandNecunoscut, dryRun, creat
       candidati: rezultate.candidati.length,
       pregatite: pregatite.length,
       carantina: rezultate.carantina.length,
+      carantinaSursa: rezultate.carantinaSursa.length,
       faraPret: rezultate.faraPret.length,
       erori: rezultate.erori.length,
     },
     brandNecunoscut: [...brandNecunoscut.entries()].map(([n, l]) => ({ brand: n, produse: l.length, exemplu: l[0].titleRo })),
     ambigue: rezultate.ambigue.slice(0, 100).map(({ p, candidati }) => ({ id: p.id, titlu: p.titleRo, candidati: candidati.map((c) => `#${c.id} ${c.slug_ro}`) })),
-    carantina: rezultate.carantina.slice(0, 300).map((c) => ({ id: c.p.id, titlu: c.p.titleRo, motive: c.motive })),
+    carantina: [...rezultate.carantina, ...rezultate.carantinaSursa].slice(0, 400).map((c) => ({ id: c.p.id, titlu: c.p.titleRo, motive: c.motive })),
     erori: rezultate.erori.slice(0, 300),
     importate: pregatite.slice(0, 500).map((x) => ({ id: x.p.id, titlu: x.rand.title_ro, slug: x.rand.slug_ro, pret: x.rand.price_mdl, stoc: x.rand.stock_status, poze: x.imgs.length })),
   }, null, 1));

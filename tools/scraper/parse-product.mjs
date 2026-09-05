@@ -90,6 +90,30 @@ export function parseSize(raw) {
 
   const m2 = s.match(METRIC_NO_ASPECT);
   if (m2) {
+    /*
+     * O LATIME CU ZECIMALE NU E METRICA. „11.2 R24" e o anvelopa agricola
+     * masurata in toli — 11,2 toli latime pe janta de 24 — nu una de 11 mm.
+     * Distinctia nu e teoretica: `products.width` e coloana `int`, iar Postgres
+     * refuza randul cu 22P02 „invalid input syntax for type integer: 11.2".
+     * 86 de anvelope Petlas agricole au picat exact asa la importul din
+     * pneuexpert, dupa ce trecusera de toate cele sase verificari.
+     *
+     * Latimile metrice reale sunt numere intregi, de la 125 la 455; nu exista
+     * nicio anvelopa metrica de „11,2 mm". Cifra merge deci in `section_width_in`,
+     * unde coloana e `numeric` si unde e si adevarul.
+     */
+    const zecimala = /[.,]/.test(m2[1]);
+    if (zecimala) {
+      return {
+        size_system: 'imperial',
+        width: null,
+        aspect: null,
+        diameter: `R${m2[2].toUpperCase()}`,
+        overall_diameter_in: null,
+        section_width_in: num(m2[1]),
+        size_raw: `${num(m2[1])} R${m2[2].toUpperCase()}`,
+      };
+    }
     return {
       size_system: 'metric',
       width: num(m2[1]),

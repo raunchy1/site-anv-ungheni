@@ -6,7 +6,7 @@
  */
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { parseProprietati, parseSitemap, parseListare, refDinUrl, construiesteTitlu, parseProdus, imagini } from './html-source.mjs';
+import { parseProprietati, parseSitemap, parseListare, refDinUrl, construiesteTitlu, parseProdus, imagini, brandDinAdresa } from './html-source.mjs';
 
 const prop = (t, v) => `<div class="detail-property-item"> <div class="detail-property-title">${t}</div> <div class="detail-property-delimiter"></div> <div class="detail-property-value"> ${v} </div> </div>`;
 
@@ -132,4 +132,34 @@ test('indicele scris cu Т chirilic nu ajunge în model', () => {
     props: [['Brand', 'Laufenn'], ['Lățime anvelopa', '195'], ['Înălțime profil', '65'], ['Diametru', '15'], ['Indicele de greutate', '95'], ['Indicele de viteza', 'T']],
   }), { id: 'l', url: '/l/' });
   assert.ok(!/95/.test(p.modelRaw), `„95Т" cu Т rusesc trebuie recunoscut ca indice, nu ca model: ${p.modelRaw}`);
+});
+
+test('marca lipsă din tabel se ia din adresă, dar scrisă cum e pe pagină', () => {
+  /* Adresa lor scrie „comforcer", pagina scrie „Comforser". Pagina are dreptate. */
+  assert.equal(brandDinAdresa('comforcer_195_65_r16c_cf360_104_102r', 'Comforser 195/65 R16C 104/102R Cargo Snow CF360'), 'Comforser');
+  assert.equal(brandDinAdresa('supera_265_40_r21_105w_xl_sport_sa37', 'SUPERIA 265/40 R21 105W XL Sport SA37'), 'Superia');
+  /* Aici numele începe cu MODELUL, deci marca rămâne cea din adresă. */
+  assert.equal(brandDinAdresa('westlake_245_45_r18_100w_xl_zupereco_z_107', 'ZuperEco Z-107 245/45 R18 100W XL'), 'Westlake');
+  assert.equal(brandDinAdresa('195_65_r15', 'ceva'), null, 'o adresă care începe cu cifre nu dă marcă');
+});
+
+test('diametrul de camion, „R17,5", nu se lipește a doua oară', () => {
+  const p = parseProdus(pagina({
+    h1: 'Anvelopă OTANI OH-109 215/75 R17,5 135/133K All Position',
+    props: [['Brand', 'Otani'], ['Model', 'OH-109 All Position'], ['Lățime anvelopa', '215'], ['Înălțime profil', '75'], ['Diametru', 'R17,5'], ['Indicele de greutate', '135/133'], ['Indicele de viteza', 'K']],
+  }), { id: 'o', url: '/o/' });
+  assert.equal(p.sizeRaw, '215/75 R17.5');
+});
+
+test('„Mărime" fără diametru se completează din câmpul „Diametru"', () => {
+  const p = parseProdus(pagina({
+    h1: 'Anvelopă MICHELIN 215/55 R16 93H Alpin 6',
+    props: [['Brand', 'Michelin'], ['Model', 'Alpin 6'], ['Mărime', '215/55'], ['Diametru', '16'], ['Indicele de greutate', '93'], ['Indicele de viteza', 'H']],
+  }), { id: 'm', url: '/m/' });
+  assert.equal(p.sizeRaw, '215/55 R16');
+});
+
+test('o fișă vândută sub două mărci nu creează o a treia', () => {
+  assert.equal(brandDinAdresa('westlake_225_50_r17_98w_zupereco_z_107', 'Westlake/Goodride 225/50 R17 98W ZuperEco Z-107'), 'Westlake');
+  assert.equal(brandDinAdresa('goodride_225_50_r17_98w_zupereco_z_107', 'Westlake/Goodride 225/50 R17 98W ZuperEco Z-107'), 'Goodride');
 });

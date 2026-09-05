@@ -39,7 +39,10 @@ export const config = {
    * aici și se rulează `backfill.mjs --branduri`.
    */
   brands: {
-    excluse: ['rosava', 'centara', 'rotex', 'powertrac', 'charmhoo'],
+    /* `premiorri`/`premiorre` e linia de produse a Rosavei, scrisă de furnizori
+       și ca marcă de sine stătătoare. Fără ea în listă, aceleași anvelope ar fi
+       reintrat din alt catalog sub alt nume — exact ce s-a cerut să dispară. */
+    excluse: ['rosava', 'centara', 'rotex', 'powertrac', 'charmhoo', 'premiorri', 'premiorre'],
   },
 
   discovery: {

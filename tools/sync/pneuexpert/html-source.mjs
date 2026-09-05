@@ -71,6 +71,7 @@ export function refDinUrl(cale) {
   const id = bucati[bucati.length - 1];
   if (bucati.length === 1 && config.categorii.includes(id)) return null;
   if (id === 'filter' || id === 'tires') return null;
+  if (config.respinse.includes(id) || (bucati.length === 2 && config.respinse.includes(bucati[0]))) return null;
   return { id, url: `/catalog/tires/${bucati.join('/')}/` };
 }
 
@@ -184,18 +185,74 @@ export function construiesteTitlu({ brand, model, size, load, speed, xl, runflat
   return bucati.filter(Boolean).join(' ').replace(/\s+/g, ' ').trim();
 }
 
+/*
+ * Diametrul, așa cum îl scriu ei, în forma pe care o citește parserul nostru.
+ *
+ * Trei forme în același câmp: „18", „R17,5" și „17.5". La camioane pun litera R
+ * în valoare, iar zecimala cu virgulă — „R17,5" concatenat naiv dădea
+ * „215/75 RR17,5", pe care nicio expresie de dimensiune nu-l recunoaște. Erau
+ * 324 de anvelope de camion în carantină cu „dimensiune neparsată".
+ */
+const diametruNormalizat = (d) => String(d ?? '').trim().replace(/^r\s*/i, '').replace(',', '.');
+
 /** Dimensiunea, din câmpul lor gata format sau recompusă din cele trei numere. */
 function dimensiune(props, numeLor) {
+  const w = pick(props, P.width); const a = pick(props, P.aspect);
+  const d = diametruNormalizat(pick(props, P.diameter));
   const gata = pick(props, P.size);
+
   if (gata) {
-    /* Câmpul „Mărime" e „255/35 R18". Litera C a anvelopelor de marfă lipsește de
-       acolo, dar e în numele produsului — se ia de unde există. */
-    const c = new RegExp(`${gata.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*C\\b`, 'i').test(numeLor);
-    return c ? `${gata}C` : gata;
+    /* „Mărime" e uneori incomplet: „215/55" fără diametru, deși „Diametru" zice
+       16. Se completează din celălalt câmp — altfel produsul intră fără janta. */
+    const intreg = /r\s*\d/i.test(gata) || !d ? gata : `${gata} R${d}`;
+    /* Litera C a anvelopelor de marfă lipsește din „Mărime", dar e în numele
+       produsului — se ia de unde există. */
+    const c = new RegExp(`${intreg.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*C\\b`, 'i').test(numeLor);
+    return c ? `${intreg}C` : intreg;
   }
-  const w = pick(props, P.width); const a = pick(props, P.aspect); const d = pick(props, P.diameter);
+
   if (w && d) return a ? `${w}/${a} R${d}` : `${w} R${d}`;
   return null;
+}
+
+/*
+ * Marca, atunci când tabelul n-o are — 50 de fișe, unde câmpul e „—".
+ *
+ * Nu se ia din numele lor: acolo, exact la fișele astea, primul cuvânt e modelul
+ * („ZuperEco Z-107 245/45 R18"). Se ia din adresa produsului, care începe
+ * întotdeauna cu marca: `westlake_245_45_r18_100w_xl_zupereco_z_107`. Fără
+ * pasul ăsta, 50 de anvelope Westlake, Goodride, Fortuna și Kleber ar fi intrat
+ * cu marcă inventată din numele modelului, sau deloc.
+ */
+export function brandDinAdresa(id, numeLor = '') {
+  const dinAdresa = String(id ?? '').split('_')[0];
+  if (!dinAdresa || /^\d/.test(dinAdresa)) return null;
+
+  /*
+   * Adresa lor începe cu marca, dar uneori scrisă greșit: `comforcer_…` pentru
+   * Comforser, `supera_…` pentru Superia. Numele de pe pagină o are corect —
+   * doar că la fișele astea numele începe uneori cu MODELUL, nu cu marca
+   * („ZuperEco Z-107 245/45 R18", produs Westlake).
+   *
+   * Se ia din nume dacă primul cuvânt seamănă cu cel din adresă (aceleași patru
+   * litere): atunci sunt două scrieri ale aceleiași mărci și cea de pe pagină e
+   * cea bună. Dacă nu seamănă, primul cuvânt din nume e modelul, iar marca
+   * rămâne cea din adresă.
+   */
+  /* „Westlake/Goodride" e o singură fișă vândută sub două mărci. Se ia jumătatea
+     care se potrivește cu adresa, nu șirul cu bară cu tot — altfel s-ar fi creat
+     o marcă „Westlake/Goodride" lângă cele două care există deja. */
+  const primulCuvant = String(numeLor).trim().split(/\s+/)[0] ?? '';
+  const dinNume = primulCuvant.includes('/')
+    ? (primulCuvant.split('/').find((x) => x.slice(0, 4).toLowerCase() === dinAdresa.slice(0, 4).toLowerCase()) ?? primulCuvant.split('/')[0])
+    : primulCuvant;
+  const seamana = dinNume.length >= 4 && dinAdresa.slice(0, 4).toLowerCase() === dinNume.slice(0, 4).toLowerCase();
+  const ales = seamana ? dinNume : dinAdresa;
+
+  /* Numele lor e cu majuscule; în catalog mărcile se scriu normal. */
+  return ales === ales.toUpperCase()
+    ? ales.charAt(0) + ales.slice(1).toLowerCase()
+    : ales.charAt(0).toUpperCase() + ales.slice(1);
 }
 
 /**
@@ -227,7 +284,8 @@ export function parseProdus(html, ref) {
   const pozitie = numeLor.match(/\((front|rear|fata|față|spate)\)/i)?.[1]?.toLowerCase() ?? null;
 
   const size = dimensiune(props, numeLor);
-  const brand = pick(props, P.brand);
+  const brandTabel = pick(props, P.brand);
+  const brand = brandTabel && brandTabel !== '—' && brandTabel !== '-' ? brandTabel : brandDinAdresa(ref.id, numeLor);
   const load = pick(props, P.load);
   const speed = pick(props, P.speed);
   /* Tabelul întâi, numele lor doar ca rezervă: acolo modelul e cu majuscule. */
