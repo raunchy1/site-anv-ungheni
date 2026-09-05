@@ -23,7 +23,17 @@ function conexiune() {
  * `import.mjs`, care inserează rânduri noi; nu există în tot directorul ăsta
  * nicio operație de UPDATE sau DELETE pe produse existente.
  */
-const PERMISE = new Set(['pandashop_seen', 'sync_quarantine', 'import_runs', 'products', 'product_images']);
+/*
+ * `brands` a intrat la Gate D. Regula „un brand nu se creeaza automat" ramane in
+ * picioare acolo unde conteaza — importul obisnuit trimite in carantina orice
+ * brand necunoscut — dar recuperarea catalogului are nevoie sa poata crea marca
+ * atunci cand omul o cere explicit (`backfill.mjs --branduri`) si dupa ce a vazut
+ * lista tiparita. Fara asta, 22 de anvelope Comforser si Valleystone n-ar fi
+ * putut intra niciodata in catalog, desi sunt marci reale.
+ *
+ * `update` ramane interzis si pe `brands`: se pot adauga marci, nu redenumi.
+ */
+const PERMISE = new Set(['pandashop_seen', 'sync_quarantine', 'import_runs', 'products', 'product_images', 'brands']);
 
 function verifica(table) {
   if (!PERMISE.has(table)) {
@@ -58,7 +68,7 @@ export async function insert(table, rows, { onConflict = null, chunk = 500 } = {
 /** Actualizare țintită, pe o singură cheie. Folosită doar pe `pandashop_seen`. */
 export async function update(table, match, patch) {
   verifica(table);
-  if (table === 'products' || table === 'product_images') {
+  if (table === 'products' || table === 'product_images' || table === 'brands') {
     throw new Error(`update pe „${table}" nu e permis: sincronizarea adaugă, nu modifică`);
   }
   const { url, key } = conexiune();

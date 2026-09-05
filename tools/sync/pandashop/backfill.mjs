@@ -161,60 +161,86 @@ export async function recupereaza(opts = {}) {
     return { jurnal, importate: [], carantina: [], faraPret: [], erori: [], durata: Date.now() - t0 };
   }
 
-  /* ------------------------------------------------- faza 1: aducerea fiselor */
-  spune(`\n· aduc ${deLucru.length} fise complete (RO + RU)…`);
-  const brute = new Array(deLucru.length);
-  let adus = 0;
-  await http.map(deLucru, async (c, i) => {
-    try {
-      brute[i] = await source.fetchProduct(c.ref);
-    } catch (e) {
-      brute[i] = { _eroare: e.message, _id: c.ref.id };
-    }
-    if (++adus % 25 === 0) process.stdout.write(`  ${adus}/${deLucru.length}\r`);
-  });
-  spune(`\n  aduse: ${brute.filter((b) => b && !b._eroare).length}`);
-
-  /* ---------------------------------- faza 2: normalizare, poze, scriere */
+  /*
+   * PE LOTURI, nu dintr-o data.
+   *
+   * Prima incercare aducea toate cele 1.207 fise si abia apoi scria. La 575
+   * pandashop a inceput sa raspunda 500 pe categoria de anvelope, rularea a
+   * ramas blocata in reincercari si nu se scrisese NIMIC — o ora de cereri pe
+   * serverul lor, aruncata. Acum fiecare lot se aduce, se scrie, si abia apoi
+   * incepe urmatorul: o intrerupere costa cel mult un lot.
+   *
+   * Paginile aduse raman oricum in cache-ul de pe disc, deci o reluare cu
+   * `--cache` trece instant peste ce s-a facut deja.
+   */
+  const LOT = 40;
   const rezultate = { importate: [], carantina: [], faraPret: [], erori: [] };
+  let opritDeSursa = null;
 
-  for (const [i, sursa] of brute.entries()) {
-    const idRef = deLucru[i].ref.id;
-    if (!sursa) { rezultate.erori.push({ id: idRef, motiv: '404 la extragere' }); continue; }
-    if (sursa._eroare) { rezultate.erori.push({ id: sursa._id, motiv: sursa._eroare }); continue; }
+  for (let start = 0; start < deLucru.length; start += LOT) {
+    const lot = deLucru.slice(start, start + LOT);
+    const brute = new Array(lot.length);
 
-    try {
-      const { rand, motive, pret, faraPret } = normalizeaza(sursa, {
-        branduri, sluguriRo, sluguriRu, reguli: setari.pricing_rules,
-      });
-
-      if (faraPret && motive.length === 0) { rezultate.faraPret.push({ id: sursa.id, titlu: sursa.titleRo }); continue; }
-
-      const { imagini: imgs, erori: eImg } = await pregatesteImagini(sursa.images, hashuri, {
-        dryRun: !aplica, altRo: rand.title_ro, altRu: rand.title_ru,
-      });
-      if (imgs.length === 0) motive.push(`nicio imagine descarcata${eImg.length ? `: ${eImg[0]}` : ''}`);
-      if (eImg.length) rezultate.erori.push({ id: sursa.id, motiv: `imagini ratate (${eImg.length})` });
-
-      if (motive.length) { rezultate.carantina.push({ id: sursa.id, titlu: sursa.titleRo, motive, rand }); continue; }
-
-      rezultate.importate.push({ id: sursa.id, rand, imgs, pret });
-      sluguriRo.add(rand.slug_ro);
-      if (rand.slug_ru) sluguriRu.add(rand.slug_ru);
-
-      if (aplica) {
-        const [creat] = await insertReturning('products', [rand]);
-        if (imgs.length) await insert('product_images', imgs.map(({ refolosita, ...im }) => ({ ...im, product_id: creat.id })));
-        await insert('pandashop_seen', [{
-          pandashop_id: String(sursa.id), baseline: false, imported: true, product_id: creat.id,
-          status: 'imported', last_checked_at: new Date().toISOString(),
-        }], { onConflict: 'pandashop_id' });
-        if (rezultate.importate.length % 25 === 0) process.stdout.write(`  scrise ${rezultate.importate.length}\r`);
+    await http.map(lot, async (c, i) => {
+      try {
+        brute[i] = await source.fetchProduct(c.ref);
+      } catch (e) {
+        brute[i] = { _eroare: e.message, _id: c.ref.id };
       }
-    } catch (e) {
-      rezultate.erori.push({ id: idRef, motiv: e.message });
+    });
+
+    /*
+     * Sursa cedeaza? Ne oprim, nu insistam. Un lot intreg esuat inseamna ca ei
+     * au o problema, iar reincercarile noastre nu fac decat sa o adanceasca.
+     * Ce s-a scris pana aici ramane scris.
+     */
+    const esuate = brute.filter((b) => !b || b._eroare).length;
+    if (esuate >= lot.length * 0.8) {
+      opritDeSursa = `${esuate} din ${lot.length} fise n-au putut fi aduse — sursa nu raspunde, se opreste aici`;
+      break;
     }
+
+    for (const [i, sursa] of brute.entries()) {
+      const idRef = lot[i].ref.id;
+      if (!sursa) { rezultate.erori.push({ id: idRef, motiv: '404 la extragere' }); continue; }
+      if (sursa._eroare) { rezultate.erori.push({ id: sursa._id, motiv: sursa._eroare }); continue; }
+
+      try {
+        const { rand, motive, pret, faraPret } = normalizeaza(sursa, {
+          branduri, sluguriRo, sluguriRu, reguli: setari.pricing_rules,
+        });
+
+        if (faraPret && motive.length === 0) { rezultate.faraPret.push({ id: sursa.id, titlu: sursa.titleRo }); continue; }
+
+        const { imagini: imgs, erori: eImg } = await pregatesteImagini(sursa.images, hashuri, {
+          dryRun: !aplica, altRo: rand.title_ro, altRu: rand.title_ru,
+        });
+        if (imgs.length === 0) motive.push(`nicio imagine descarcata${eImg.length ? `: ${eImg[0]}` : ''}`);
+        if (eImg.length) rezultate.erori.push({ id: sursa.id, motiv: `imagini ratate (${eImg.length})` });
+
+        if (motive.length) { rezultate.carantina.push({ id: sursa.id, titlu: sursa.titleRo, motive, rand }); continue; }
+
+        if (aplica) {
+          const [creat] = await insertReturning('products', [rand]);
+          if (imgs.length) await insert('product_images', imgs.map(({ refolosita, ...im }) => ({ ...im, product_id: creat.id })));
+          await insert('pandashop_seen', [{
+            pandashop_id: String(sursa.id), baseline: false, imported: true, product_id: creat.id,
+            status: 'imported', last_checked_at: new Date().toISOString(),
+          }], { onConflict: 'pandashop_id' });
+        }
+
+        /* Se numara DUPA scriere, ca raportul sa spuna ce e in baza, nu ce s-a intentionat. */
+        rezultate.importate.push({ id: sursa.id, rand, imgs, pret });
+        sluguriRo.add(rand.slug_ro);
+        if (rand.slug_ru) sluguriRu.add(rand.slug_ru);
+      } catch (e) {
+        rezultate.erori.push({ id: idRef, motiv: e.message });
+      }
+    }
+
+    process.stdout.write(`  ${Math.min(start + LOT, deLucru.length)}/${deLucru.length} · importate ${rezultate.importate.length} · carantina ${rezultate.carantina.length} · erori ${rezultate.erori.length}\r`);
   }
+  if (opritDeSursa) spune(`\n  OPRIT: ${opritDeSursa}`);
 
   /* ------------------------------------------------------------- raportul */
   const peMotiv = {};
@@ -261,7 +287,7 @@ export async function recupereaza(opts = {}) {
   }
 
   spune(`gata in ${Math.round((Date.now() - t0) / 1000)}s · HTTP ${http.stats.fetched} cereri, ${http.stats.cached} din cache`);
-  return { ...rezultate, jurnal, dryRun: !aplica, durata: Date.now() - t0 };
+  return { ...rezultate, jurnal, dryRun: !aplica, opritDeSursa, ramase: candidati.length - rezultate.importate.length - rezultate.carantina.length - rezultate.faraPret.length, durata: Date.now() - t0 };
 }
 
 async function main() {

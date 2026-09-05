@@ -414,18 +414,87 @@ Argumentul, în ordinea importanței:
 
 ## 11. Actualizarea recurentă a prețurilor și stocurilor
 
-**Nu se proiectează încă.** Sursa feed-ului e necunoscută, iar diferența dintre „upload CSV manual"
-și „sincronizare programată cu un API" schimbă complet arhitectura importului și admin-ul.
+*Scris în Faza 0 ca „nu se proiectează încă". Rezolvat pe 5 septembrie 2026; textul de
+mai jos descrie ce rulează, nu ce se propune.*
 
-Dovezile strânse în Faza 0 (§5 din Raportul 2): niciun endpoint de feed public,
-ID-uri de imagine complet necorelate cu `product_id`-urile OpenCart, patru convenții de
-directoare, 8 descrieri la 15.010 produse. Catalogul e aproape sigur alimentat automat,
-dar mecanismul nu e vizibil din exterior.
+Sursa e **pandashop.md**, aceeași din care fusese alimentat și site-ul OpenCart. Nu există
+feed; se citește structura pe care o publică ei singuri (`application/ld+json` de tip
+Product pe fiecare fișă, plus tabelul de caracteristici). Contractul de sursă e izolat în
+`tools/sync/pandashop/source.mjs`, deci ziua în care apare un feed real schimbă o linie
+în `config.mjs`, nu pipeline-ul.
 
-Schema suportă deja **ambele scenarii fără migrație distructivă**:
-`import_runs.source`, `products.price_source`, `price_updated_at`, `price_locked`.
+### 11.1 Cele patru porți
 
-Cele 5 întrebări pentru dezvoltatorul actual rămân blocante pentru Faza 5.
+| | Ce face | Când |
+|---|---|---|
+| **A** `baseline.mjs` | Fotografiază ID-urile lor în `pandashop_seen`. Nu importă nimic. | o singură dată |
+| **B** `import.mjs` | Importă ID-urile apărute DUPĂ fotografie. | cron, zilnic 5:00 |
+| **C** `refresh.mjs` | Confruntă prețul și stocul celor ~15.000 ale noastre cu listarea lor. | cron, zilnic 3:00 |
+| **D** `backfill.mjs` | Importă ce au ei pe stoc și n-am avut niciodată. | manual, la nevoie |
+
+Gate C și D au fost adăugate pentru că A+B, singure, produceau o eroare tăcută și gravă:
+fotografia inițială marcase toate cele 25.440 de ID-uri drept „văzute", deci *„produs nou"*
+însemna doar *„ID apărut după fotografie"*. Consecințele, măsurate:
+
+- **6.944 de produse** rămăseseră pe `out_of_stock` cu preț `NULL` de la exportul din
+  OpenCart, iar catalogul le ascunde (§8). 1.239 dintre ele erau pe stoc la pandashop chiar
+  în ziua în care s-a măsurat.
+- **1.207 anvelope** pe care ei le au pe stoc nu existau deloc la noi și nu puteau intra
+  niciodată prin Gate B.
+
+### 11.2 Ce poate scrie sincronizarea
+
+`db-write.mjs` are o listă albă de tabele și refuză `update` pe `products`. Rămâne așa.
+Singura cale prin care un produs existent poate fi modificat e funcția
+`sync_refresh_products(jsonb)` (migrarea 0020), care atinge **exclusiv**:
+
+```
+pandashop_id · source_price_mdl · price_mdl · price_source · price_updated_at
+stock_status · synced_at
+```
+
+Titlul, slug-ul, dimensiunea, descrierea, imaginile și `is_active` sunt în afara razei ei de
+acțiune. `price_locked` e respectat în corpul funcției, nu în apelant: un preț pus cu mâna
+primește stocul și `source_price_mdl`, dar cifra afișată rămâne a omului.
+
+### 11.3 Potrivirea
+
+`match.mjs`, un singur modul, folosit de toate porțile — două definiții ale potrivirii ar
+diverge, iar când diverg rezultatul e un duplicat în catalog sau un preț pe produsul greșit.
+
+Cheia naturală e `brand · model · lățime · profil · diametru · sarcină · viteză · XL ·
+runflat · omologare`. Ultimul câmp a fost adăugat în septembrie: marcajul de fabrică („MO",
+„AO", „N0", „*") stă la noi lipit de model și la ei după indici, deci aceeași anvelopă avea
+două chei. 254 de fișe erau afectate.
+
+Se caută sub **două chei** pentru fiecare rând de-al nostru — cea din coloanele structurate
+și cea din titlu — pentru că 1.896 de fișe au titlul în dezacord cu coloanele, moștenire din
+atributele OpenCart. A treia trecere, relaxată, prinde fișele cărora le lipsesc indicii, dar
+numai când există un singur candidat și XL/runflat coincid. Când nu se știe, nu se ghicește:
+produsul rămâne nepotrivit și apare în raport.
+
+### 11.4 Prețul
+
+Măsurat pe 5.799 de perechi comparabile: mediana raportului preț-nostru / preț-pandashop e
+**1.000**, iar 3.264 de produse aveau prețul identic. Catalogul vindea 1:1 cu sursa.
+`settings.pricing_rules` avea totuși `default_margin_pct: 15`, valoare implicită nevalidată
+niciodată pe date; aplicată, ar fi ridicat ~5.800 de prețuri cu 15% peste ce afișează
+pandashop public. S-a pus pe `0` cu rotunjire `none`, adică exact comportamentul de până
+atunci. Marja se schimbă din admin, fără deploy.
+
+### 11.5 Întrerupătoarele
+
+Toate opresc rularea **fără să scrie**, nu o continuă cu avertisment:
+
+- enumerare sub 90% din totalul pe care îl declară ei — listare ciuntită;
+- peste 95% din catalog ar fi modificat de o singură rulare `refresh`;
+- peste 100 de produse noi într-o rulare `import`;
+- peste 30% carantină la import;
+- un lot de `backfill` cu peste 80% fișe neaduse — sursa e căzută, se oprește acolo unde a
+  ajuns, iar ce s-a scris rămâne scris.
+
+Ultimul a fost adăugat după ce pandashop a început să răspundă `500` pe tot catalogul în
+mijlocul primei recuperări.
 
 ---
 
