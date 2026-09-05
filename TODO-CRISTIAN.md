@@ -125,35 +125,42 @@ proprii, ele sunt de preferat: schimbi fișierul din `public/servicii/`, pui
 `sursa: "Anvelope Ungheni"`, `licenta: "Foto proprie"` și ștergi rândul din
 LICENSES.md. Atribuirea de sub imagine dispare singură.
 
-## 11. E-mailul de comandă — cheia Resend
+## 11. E-mailul de comandă — REZOLVAT (5 septembrie 2026)
 
-Comanda se salvează în bază și pleacă pe WhatsApp, dar **e-mailul către
-info@anvelope-ungheni.md nu pleacă încă**: `RESEND_API_KEY` e gol. Ai ales
-(30 august 2026) să rămână așa deocamdată — codul e scris și așteaptă cheia.
+Comenzile pleacă pe e-mail. Nu mai e nimic de făcut aici; secțiunea rămâne ca
+să se știe cum e legat.
 
-**Cât timp e așa, comenzile se citesc din baza de date.** Dacă un client nu
-apasă butonul de WhatsApp de pe ecranul de confirmare, singurul loc unde apare
-comanda e tabelul `orders`. Merită verificat zilnic până se pune cheia.
+Domeniul `anvelope-ungheni.md` e verificat în Resend — DKIM pe
+`resend._domainkey`, SPF pe subdomeniul `send`, ambele adăugate în DNS-ul de la
+Vercel. Sunt pe subdomenii, deci **nu ating MX-ul, SPF-ul și DMARC-ul poștei
+existente** de pe `mail.anvelope-ungheni.md`.
 
-Ce e de făcut, o singură dată:
+Expeditorul e `comenzi@anvelope-ungheni.md`. Destinatarii, în ordine, din
+`ORDER_NOTIFY_EMAIL`:
 
-1. Cont pe [resend.com](https://resend.com) (gratuit până la 3.000 de e-mailuri
-   pe lună — suficient).
-2. **Domains → Add Domain → `anvelope-ungheni.md`**, apoi cele trei înregistrări
-   DNS (SPF, DKIM, DMARC) la registrarul domeniului. Fără asta, e-mailurile ori
-   nu pleacă, ori ajung în spam.
-3. **API Keys → Create**, apoi:
-
-```bash
-npx vercel env add RESEND_API_KEY production   # lipești cheia
-npx vercel env add RESEND_FROM production      # Anvelope Ungheni <comenzi@anvelope-ungheni.md>
+```
+ermurachealex108@gmail.com     ← atelierul, prima
+cristiermurache@gmail.com
 ```
 
-4. Deploy și o comandă de test. `emailTrimis` din răspuns spune adevărul: dacă
-   e `false`, comanda a intrat oricum în bază.
+Ordinea nu e decorativă: dacă Resend refuză trimiterea în bloc — se întâmplă
+când **o singură** adresă din listă e invalidă sau suprimată — codul reia pe
+rând, în ordinea asta. O adresă stricată nu mai poate face comanda invizibilă și
+pentru cealaltă.
 
-Adresa destinatarului nu e scrisă în cod — vine din `settings.email`, deci se
-schimbă din baza de date, nu din repo.
+Adresele se schimbă fără deploy:
+
+```bash
+npx vercel env rm ORDER_NOTIFY_EMAIL production
+npx vercel env add ORDER_NOTIFY_EMAIL production   # adrese separate prin virgulă
+```
+
+Dacă vreodată nu mai ajung comenzi: verifică întâi în Resend → Emails dacă
+mesajul a plecat. Dacă scrie `delivered` și tot nu-l vezi, e la tine în Spam —
+apasă „Nu este spam" o dată și următoarele vin în Inbox.
+
+Comanda intră în `orders` **înainte** de e-mail și rămâne acolo orice s-ar
+întâmpla cu trimiterea.
 
 ## 12. WhatsApp: de ce e buton, nu trimitere automată
 
@@ -165,3 +172,47 @@ adică exact ce folosiți zilnic.
 
 Dacă vrei totuși trimitere automată, canalul corect e e-mailul (punctul 11) plus,
 eventual, un al doilea număr dedicat pentru API. Spune-mi și îl configurez.
+
+## 13. Marja de preț — decizie de luat, nu problemă de rezolvat
+
+De pe 5 septembrie 2026, prețurile din catalog se confruntă zilnic cu pandashop
+și se scriu **1:1**, fără adaos.
+
+Nu e o alegere făcută la întâmplare. Regula din admin era „+15%", o valoare
+implicită pusă la scrierea codului și nevalidată vreodată pe date reale. Am
+comparat 5.799 de anvelope pe care le aveam și noi, și ei: mediana raportului
+preț-nostru / preț-pandashop era **1.000**, iar 3.264 aveau prețul identic la
+leu. Catalogul vindea deja la prețul lor. Cei 15% ar fi ridicat ~5.800 de
+prețuri peste ce afișează pandashop public, unde le poate verifica orice client.
+
+Dacă vrei adaos, se schimbă dintr-un singur rând, fără deploy:
+
+```sql
+update settings set pricing_rules = jsonb_build_object(
+  'default_margin_pct', 10,          -- procentul
+  'rounding',           'end_9',     -- 1234 -> 1239; 'none' lasă cifra exactă
+  'by_brand',           '{}'::jsonb, -- excepții: {"Michelin": 8}
+  'by_price_range',     '[]'::jsonb  -- [{"max":1000,"pct":20},{"min":5000,"pct":8}]
+);
+```
+
+Se aplică la următoarea sincronizare, adică a doua zi la 3:00. Un preț pe care
+l-ai pus cu mâna și l-ai marcat `price_locked = true` **nu se atinge niciodată**,
+oricare ar fi regula.
+
+## 14. Cele 4.800 de anvelope pe care pandashop nu le mai are
+
+Catalogul conține ~4.800 de fișe moștenite din OpenCart care nu mai apar deloc
+la pandashop — nici pe stoc, nici fără stoc. Sincronizarea **nu le atinge**,
+deliberat: pot veni de la alt furnizor, iar stingerea lor e o decizie
+comercială, nu una tehnică. Majoritatea sunt oricum `out_of_stock`, deci
+ascunse din catalog.
+
+Dacă hotărăști că nu se mai aduc deloc, se sting toate dintr-o rulare:
+
+```bash
+node --env-file=.env.local tools/sync/pandashop/refresh.mjs --delisted        # arată ce ar face
+node --env-file=.env.local tools/sync/pandashop/refresh.mjs --delisted --apply
+```
+
+Nu se șterge nimic niciodată: URL-urile rămân `200`, ca să nu pierdem indexarea.
