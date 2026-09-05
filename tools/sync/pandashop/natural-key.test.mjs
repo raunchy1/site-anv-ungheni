@@ -7,7 +7,7 @@
  */
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { normalizeModel, normalizeBrand, naturalKey } from './natural-key.mjs';
+import { normalizeModel, normalizeBrand, naturalKey, extrageOE } from './natural-key.mjs';
 import { parseTitle } from './parse-title.mjs';
 
 const BRANDS = ['Centara', 'Ceat', 'Tracmax', 'Rockblade', 'Double Coin', 'Gt Radial', 'Michelin'];
@@ -42,6 +42,34 @@ test('aceeași anvelopă scrisă de ei și de noi dă aceeași cheie', () => {
     loadIndex: '79', speedIndex: 'T', isXl: false, isRunflat: false,
   });
   assert.equal(cheiaLor, cheiaNoastra);
+});
+
+test('omologarea de fabrică se citește din oricare poziție', () => {
+  // Cazul real: la noi marcajul e lipit de model, la ei stă după indici.
+  assert.equal(extrageOE('Pilot Alpin 5 MO'), 'mo');
+  assert.equal(extrageOE('Anvelopa Michelin Pilot Alpin 5 275/35 R19 100V MO'), 'mo');
+  assert.equal(extrageOE('Pilot Sport 4 245/40 R18 97Y XL *'), 'star');
+  assert.equal(extrageOE('Ventus Evo K137 225/45 R17 94Y XL'), '');
+});
+
+test('aceeași anvelopă omologată dă aceeași cheie din ambele părți', () => {
+  // Regresie: „Michelin Pilot Alpin 5 275/35 R19 MO" rămânea stinsă la noi, iar
+  // „…275/35 R19 100V MO" de la ei ar fi intrat în catalog ca produs nou.
+  const lor = parseTitle('Anvelopa Michelin Pilot Alpin 5 275/35 R19 100V MO', BRANDS);
+  const cheiaLor = naturalKey({
+    brand: lor.brand, model: lor.model, width: lor.width, aspect: lor.aspect, diameter: lor.diameter,
+    loadIndex: lor.loadIndex, speedIndex: lor.speedIndex, isXl: lor.isXl, isRunflat: lor.isRunflat, oe: lor.oe,
+  });
+  const cheiaNoastra = naturalKey({
+    brand: 'Michelin', model: 'Pilot Alpin 5 MO', width: 275, aspect: 35, diameter: 'R19',
+    loadIndex: '100', speedIndex: 'V', isXl: false, isRunflat: false, oe: extrageOE('Pilot Alpin 5 MO'),
+  });
+  assert.equal(cheiaLor, cheiaNoastra);
+});
+
+test('omologarea NU se aruncă: MO și fără MO rămân produse diferite', () => {
+  const baza = { brand: 'Michelin', model: 'Pilot Alpin 5', width: 275, aspect: 35, diameter: 'R19', loadIndex: '100', speedIndex: 'V' };
+  assert.notEqual(naturalKey({ ...baza, oe: 'mo' }), naturalKey({ ...baza, oe: '' }));
 });
 
 test('XL și runflat separă produse altfel identice', () => {

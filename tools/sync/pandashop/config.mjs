@@ -40,6 +40,11 @@ export const config = {
     maxNewPerRun: 100,
     maxQuarantineShare: 0.30,
     maxParseFailureRate: 0.05,
+    /* Gate C. Prima rulare atinge aproape tot catalogul — nimic n-a mai fost
+       confruntat cu sursa de la exportul din OpenCart — deci pragul e larg
+       intentionat. El pazeste altceva: o listare ciuntita sau un parser stricat,
+       care ar incerca sa rescrie 100% din randuri. */
+    maxRefreshShare: 0.95,
   },
 
   paths: {

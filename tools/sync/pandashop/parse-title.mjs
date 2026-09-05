@@ -11,7 +11,7 @@
  * prima anvelopă imperială.
  */
 import { parseSize } from '../../scraper/parse-product.mjs';
-import { foldDiacritics } from './natural-key.mjs';
+import { foldDiacritics, extrageOE } from './natural-key.mjs';
 
 const PREFIX = /^\s*(anvelopa|anvelope|anvelopă|cauciuc|шина|шины|автошина)\s+/i;
 
@@ -65,5 +65,8 @@ export function parseTitle(title, knownBrands = []) {
     isXl: /\b(XL|Extra\s*Load)\b/i.test(raw),
     isRunflat: /\b(run\s*flat|runflat|RFT|ZP|SSR|MOE|DSST)\b/i.test(raw),
     isStudded: /\b(шип|cu\s*crampoane|crampoane|studded)\b/i.test(raw),
+    /* Omologarea de fabrica se citeste din titlul INTREG: la ei sta la coada,
+       dupa indici, iar `model` de mai sus se opreste inainte de dimensiune. */
+    oe: extrageOE(raw),
   };
 }

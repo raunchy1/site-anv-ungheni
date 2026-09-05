@@ -1,15 +1,25 @@
 import { NextResponse } from "next/server";
 
 /**
- * Cronul de sincronizare cu pandashop.
+ * Cronul de sincronizare cu pandashop. Două treburi diferite, aceeași rută.
  *
- * Detectează anvelopele noi și le importă. NU atinge niciunul din produsele
- * existente: pipeline-ul din `tools/sync/pandashop/` nu conține nicio operație
- * de UPDATE sau DELETE pe `products`, iar modulul de scriere o refuză explicit.
+ *   `?mode=refresh`  — confruntă prețul și stocul celor ~15.000 de produse pe
+ *                      care le avem deja cu listarea lor de azi. Asta ține
+ *                      catalogul viu: fără ea, un produs care revine pe stoc la
+ *                      pandashop rămâne ascuns la noi pentru totdeauna, pentru
+ *                      că filtrul catalogului cere `stock_status` cumpărabil.
+ *                      Scrie prin `sync_refresh_products`, care poate atinge
+ *                      exclusiv preț și stoc.
  *
- * Ruta e apelată de Vercel Cron (vezi `vercel.json`). Autentificarea e stratul
- * dintre un job programat și o rută care scrie în catalog: Vercel trimite
- * `Authorization: Bearer $CRON_SECRET`, iar fără el ruta răspunde 401.
+ *   `?mode=new`      — importă anvelopele apărute la ei după fotografia
+ *                      inițială. Comportamentul dinainte, neschimbat.
+ *
+ * Fără `mode`, rămâne `new` — ca un cron vechi care încă apelează ruta să facă
+ * exact ce făcea înainte, nu altceva.
+ *
+ * Autentificarea e stratul dintre un job programat și o rută care scrie în
+ * catalog: Vercel trimite `Authorization: Bearer $CRON_SECRET`, iar fără el ruta
+ * răspunde 401.
  *
  * Node.js, nu edge: pipeline-ul citește fișiere și rulează zeci de secunde.
  */
@@ -30,26 +40,78 @@ export async function GET(request: Request) {
   }
 
   const url = new URL(request.url);
+  const mode = url.searchParams.get("mode") === "refresh" ? "refresh" : "new";
   const full = url.searchParams.get("full") === "1";
   /* `?dry=1` rulează fără să scrie — util ca să verifici ruta pe producție. */
   const apply = url.searchParams.get("dry") !== "1";
+  /* Sitemap-ul lor de produse fără stoc are 11 fișiere de ~25 MB. Nu intră într-o
+     rulare de 300 de secunde și nu aduce nimic zilnic; se cere explicit. */
+  const cuSitemap = url.searchParams.get("sitemap") === "1";
+
+  const inceput = Date.now();
+  const linii: string[] = [];
+  const log = (...a: unknown[]) => linii.push(a.join(" "));
 
   /* Importurile sunt în corp, nu în capul fișierului: ruta răspunde 401 fără să
      încarce tot pipeline-ul, iar o eroare de configurare din module nu poate
      transforma un 401 într-un 500. */
-  const { ruleazaCuLacat } = await import("../../../../../tools/sync/pandashop/import.mjs");
   const { alerta } = await import("../../../../../tools/sync/pandashop/alert.mjs");
   const { oreDeTacere } = await import("../../../../../tools/sync/pandashop/lock.mjs");
 
-  const inceput = Date.now();
-  const linii: string[] = [];
-
   try {
+    if (mode === "refresh") {
+      const { actualizeazaCuLacat } = await import("../../../../../tools/sync/pandashop/refresh.mjs");
+      /* Modulul e JS, deci tipul dedus e o reuniune de forme în care TypeScript
+         nu poate exclude ramura „oprit" pe baza comparațiilor de mai jos. Forma
+         de citit e declarată o dată, aici, în loc de un `as` la fiecare câmp. */
+      const r: {
+        oprit?: string;
+        actualizate?: number;
+        reactivate?: number;
+        stinse?: number;
+        pretSchimbat?: number;
+      } = await actualizeazaCuLacat({ apply, cuSitemap, actor: "cron:refresh", log });
+
+      if (r.oprit === "lacat_ocupat") return NextResponse.json({ ok: true, sarit: "o altă rulare e în curs" });
+      if (r.oprit === "din_admin") return NextResponse.json({ ok: true, sarit: "sincronizarea e oprită din admin" });
+
+      /* Se anunță doar când mișcarea e mare. O actualizare de preț pe câteva sute
+         de produse e rutina zilnică și n-are ce căuta în inbox; o reactivare de
+         peste 200 de fișe sau o stingere de peste 200 înseamnă că s-a întâmplat
+         ceva la ei și merită privit. */
+      if ((r.reactivate ?? 0) > 200 || (r.stinse ?? 0) > 200) {
+        await alerta(
+          `Sincronizare pandashop: ${r.reactivate} anvelope revenite pe stoc, ${r.stinse} stinse`,
+          [
+            `Actualizate: ${r.actualizate}`,
+            `Revenite pe stoc: ${r.reactivate}`,
+            `Stinse: ${r.stinse}`,
+            `Prețuri schimbate: ${r.pretSchimbat}`,
+            "",
+            linii.join("\n"),
+          ].join("\n"),
+        );
+      }
+
+      return NextResponse.json({
+        ok: true,
+        mode,
+        actualizate: r.actualizate ?? 0,
+        reactivate: r.reactivate ?? 0,
+        stinse: r.stinse ?? 0,
+        preturi: r.pretSchimbat ?? 0,
+        durata_s: Math.round((Date.now() - inceput) / 1000),
+        dryRun: !apply,
+      });
+    }
+
+    /* ------------------------------------------------------ produse noi */
+    const { ruleazaCuLacat } = await import("../../../../../tools/sync/pandashop/import.mjs");
     const r = await ruleazaCuLacat({
       apply,
       full,
       actor: full ? "cron:sync:full" : "cron:sync:new",
-      log: (...a: unknown[]) => linii.push(a.join(" ")),
+      log,
     });
 
     if (r.oprit === "lacat_ocupat") {
@@ -97,7 +159,7 @@ export async function GET(request: Request) {
     }
 
     return NextResponse.json({
-      ok: true, noi, carantina, faraPret,
+      ok: true, mode, noi, carantina, faraPret,
       erori: r.erori?.length ?? 0,
       durata_s: Math.round((Date.now() - inceput) / 1000),
       dryRun: !apply,
@@ -106,10 +168,10 @@ export async function GET(request: Request) {
     const mesaj = e instanceof Error ? e.message : String(e);
     /* Întrerupătorul ajunge aici. Se oprește FĂRĂ să scrie și anunță. */
     await alerta(
-      "Sincronizare pandashop: RULARE OPRITĂ",
+      `Sincronizare pandashop (${mode}): RULARE OPRITĂ`,
       `${mesaj}\n\nJurnalul rulării:\n${linii.join("\n")}`,
     ).catch(() => {});
     console.error("[sync] rulare eșuată:", mesaj);
-    return NextResponse.json({ ok: false, eroare: mesaj }, { status: 500 });
+    return NextResponse.json({ ok: false, mode, eroare: mesaj }, { status: 500 });
   }
 }
