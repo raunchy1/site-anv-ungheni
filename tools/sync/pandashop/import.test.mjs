@@ -191,12 +191,27 @@ test('aceeași fotografie nu se urcă de două ori', async () => {
   globalThis.fetch = async () => ({ ok: true, arrayBuffer: async () => buf });
   try {
     const cunoscute = new Set();
+
+    /* ÎN ACELAȘI PRODUS: a doua apariție se sare de tot.
+       `product_images` e unic pe (product_id, storage_path), deci două rânduri
+       cu aceeași poză pe același produs fac lotul să pice cu 23505 — iar
+       produsul rămâne fără NICIO imagine. S-a întâmplat în producție. */
     const { imagini } = await pregatesteImagini(
       [{ url: 'https://x/1.jpg' }, { url: 'https://x/2.jpg' }], cunoscute, { dryRun: true },
     );
-    assert.equal(imagini[0].content_hash, imagini[1].content_hash);
+    assert.equal(imagini.length, 1, 'aceeași poză, o singură dată pe produs');
     assert.equal(imagini[0].refolosita, false);
-    assert.equal(imagini[1].refolosita, true);
+    assert.equal(imagini[0].sort_order, 0);
+    assert.equal(cunoscute.size, 1);
+
+    /* ÎNTRE PRODUSE: fișierul se refolosește, nu se reurcă. Asta e
+       deduplicarea care ține 15.000 de referințe pe 1.749 de fișiere. */
+    const { imagini: alDoilea } = await pregatesteImagini(
+      [{ url: 'https://x/3.jpg' }], cunoscute, { dryRun: true },
+    );
+    assert.equal(alDoilea.length, 1);
+    assert.equal(alDoilea[0].content_hash, imagini[0].content_hash);
+    assert.equal(alDoilea[0].refolosita, true, 'al doilea produs nu reurcă fișierul');
     assert.equal(cunoscute.size, 1, 'un singur fișier, două referințe');
   } finally {
     globalThis.fetch = original;

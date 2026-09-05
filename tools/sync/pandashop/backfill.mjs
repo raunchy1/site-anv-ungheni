@@ -69,6 +69,22 @@ async function creeazaBranduri(nume, { apply, log }) {
   return new Map(create.map((b) => [b.name.toLowerCase(), b]));
 }
 
+/**
+ * Scoate din catalog o fisa care a intrat fara poze. Nu se sterge — ramane in
+ * baza, cu `pandashop_id`-ul ei, ca `repair-images.mjs` sa o poata gasi si
+ * completa. `is_active = false` o tine doar in afara vederii.
+ */
+async function dezactiveaza(id) {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.SUPABASE_SECRET_KEY ?? process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const res = await fetch(`${url}/rest/v1/products?id=eq.${id}`, {
+    method: 'PATCH',
+    headers: { apikey: key, Authorization: `Bearer ${key}`, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
+    body: JSON.stringify({ is_active: false }),
+  });
+  if (!res.ok) throw new Error(`dezactivare #${id}: HTTP ${res.status}`);
+}
+
 export async function recupereaza(opts = {}) {
   const {
     apply: aplica = false, limit = Infinity, branduriNoi = false, faraCache = true,
@@ -223,7 +239,31 @@ export async function recupereaza(opts = {}) {
 
         if (aplica) {
           const [creat] = await insertReturning('products', [rand]);
-          if (imgs.length) await insert('product_images', imgs.map(({ refolosita, ...im }) => ({ ...im, product_id: creat.id })));
+          /*
+           * SCRIEREA E IN DOI PASI si nu poate fi tranzactionala prin PostgREST:
+           * intai randul din `products`, apoi pozele. Daca al doilea pas pica,
+           * fisa ramane in catalog fara nicio imagine — s-a intamplat la 2 din
+           * primele 910 importate. O fisa de anvelopa fara poza nu e incompleta,
+           * e inutila.
+           *
+           * Se reincearca o data, iar daca tot nu merge produsul e marcat inactiv
+           * si nu apare in catalog. `repair-images.mjs` il gaseste dupa aceea si
+           * ii pune pozele; pana atunci, nimeni nu vede o fisa goala.
+           */
+          if (imgs.length) {
+            const randuriImg = imgs.map(({ refolosita, ...im }) => ({ ...im, product_id: creat.id }));
+            try {
+              await insert('product_images', randuriImg);
+            } catch (ePrima) {
+              try {
+                await insert('product_images', randuriImg);
+              } catch (eADoua) {
+                await dezactiveaza(creat.id);
+                rezultate.erori.push({ id: sursa.id, motiv: `pozele n-au intrat, fisa dezactivata: ${eADoua.message}` });
+                continue;
+              }
+            }
+          }
           await insert('pandashop_seen', [{
             pandashop_id: String(sursa.id), baseline: false, imported: true, product_id: creat.id,
             status: 'imported', last_checked_at: new Date().toISOString(),

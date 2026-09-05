@@ -45,7 +45,9 @@ export function createHttp({
       if (attempt > 0) {
         stats.retried++;
         /* Exponențial cu jitter. Dacă sunt încărcați, insistența e exact ce nu trebuie. */
-        await sleep(Math.min(30_000, 2 ** attempt * 1000) + jitter(0, 500));
+        /* Plafon 60s, nu 30: pandashop iese din 500 in cateva zeci de secunde,
+           iar o asteptare mai lunga costa mai putin decat o rulare pierduta. */
+        await sleep(Math.min(60_000, 2 ** attempt * 1000) + jitter(0, 1000));
       }
       try {
         const res = await fetch(url, {

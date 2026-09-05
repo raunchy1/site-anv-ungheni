@@ -137,7 +137,12 @@ export function createHtmlSource(http, { path = TYRES_PATH } = {}) {
     let lastPage = Infinity;   // se află de pe prima pagină, din totalul declarat
     const seen = new Set();
     for (let page = 1; page <= Math.min(maxPages, lastPage); page++) {
-      const url = `${ORIGIN}/ro${path}${page > 1 ? `?page_=page_${page}` : ''}`;
+      /* `path` poate purta deja un filtru („…/tyres/?Texts=2714_68375"), folosit
+         de `verify-parity.mjs` ca sa enumere pe sezon. Atunci separatorul
+         paginii e `&`, nu `?`; altfel a doua pagina ar cere `…?Texts=X?page_=…`
+         si ar intoarce catalogul nefiltrat, tacut. */
+      const sep = path.includes('?') ? '&' : '?';
+      const url = `${ORIGIN}/ro${path}${page > 1 ? `${sep}page_=page_${page}` : ''}`;
       const html = await http.get(url);
       if (page === 1) {
         total = declaredTotal(html);
@@ -190,10 +195,22 @@ export function createHtmlSource(http, { path = TYRES_PATH } = {}) {
     const construit = abs(ref.urlRu ?? ref.url.replace('/ro/', '/ru/'));
     if (!candidatiRu.includes(construit)) candidatiRu.push(construit);
 
+    /*
+     * FIECARE CANDIDAT SEPARAT, iar un esec nu-l omoara pe urmatorul.
+     *
+     * `hreflang`-ul lor da uneori un slug ciuntit — „shina-tracmax-…" devine
+     * „hina-tracmax-…" sau chiar „-tracmax-…" — iar serverul lor raspunde 500,
+     * nu 404, pe asa ceva. 500 e tratat drept eroare tranzitorie, deci `get`
+     * reincearca si pana la urma ARUNCA, ducand cu el tot produsul, desi al
+     * doilea candidat (URL-ul construit de noi) ar fi mers. Asa s-au pierdut 34
+     * de anvelope la recuperarea din 5 septembrie 2026.
+     */
     let ruUrl = construit; let ru = '';
     for (const u of candidatiRu) {
-      const h = await http.get(u);
-      if (h) { ru = h; ruUrl = u; break; }
+      try {
+        const h = await http.get(u);
+        if (h) { ru = h; ruUrl = u; break; }
+      } catch { /* candidatul asta e stricat la ei; se incearca urmatorul */ }
     }
     const dRu = ru ? (() => { try { return jsonLd(ru, ruUrl); } catch { return null; } })() : null;
     const tRu = ru ? paramTable(ru) : {};
@@ -206,7 +223,14 @@ export function createHtmlSource(http, { path = TYRES_PATH } = {}) {
       id: String(dRo.sku ?? ref.id),
       url: ref.url,
       titleRo: dRo.name ?? null,
-      titleRu: dRu?.name ?? null,
+      /*
+       * Fara pagina RU, titlul romanesc tine loc de cel rusesc — si nu e o
+       * aproximare: la anvelope titlul e brand + model + dimensiune, adica
+       * acelasi sir in ambele limbi dupa ce se taie cuvantul de categorie
+       * („Anvelopa" / „Шина"). Verificat pe cele importate: identice.
+       * Alternativa ar fi carantina, adica produsul lipseste de pe site.
+       */
+      titleRu: dRu?.name ?? dRo.name ?? null,
       descriptionRo: dRo.description ?? null,
       descriptionRu: dRu?.description ?? null,
       brandRaw: dRo.brand?.name ?? pick(tRo, P.brand) ?? null,

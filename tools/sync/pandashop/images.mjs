@@ -64,10 +64,21 @@ async function descarca(url) {
 export async function pregatesteImagini(imagini, hashuriCunoscute, { dryRun = true, max = 4, altRo = null, altRu = null } = {}) {
   const out = [];
   const erori = [];
-  for (const [i, im] of imagini.slice(0, max).entries()) {
+  /*
+   * ACELASI FISIER O SINGURA DATA PER PRODUS. Galeria lor repeta uneori aceeasi
+   * fotografie sub doua URL-uri diferite, iar dupa descarcare amandoua dau
+   * acelasi SHA-1, deci aceeasi `storage_path`. `product_images` are unic pe
+   * (product_id, storage_path): lotul intreg pica cu 23505, produsul ramane
+   * fara NICIO poza, si eroarea se vede doar in jurnal. S-a intamplat la 2 din
+   * primele 910 importate pe 5 septembrie 2026.
+   */
+  const inAcestProdus = new Set();
+  for (const im of imagini.slice(0, max)) {
     try {
       const buf = await descarca(im.url);
       const hash = sha1(buf);
+      if (inAcestProdus.has(hash)) continue;
+      inAcestProdus.add(hash);
       const cale = `${BUCKET}/${hash}.jpg`;
       const { width, height } = dimensiuniJpeg(buf);
       const refolosita = hashuriCunoscute.has(hash);
@@ -91,7 +102,9 @@ export async function pregatesteImagini(imagini, hashuriCunoscute, { dryRun = tr
            titlurile noastre nu-l au, iar `alt_ru` ar rămâne gol. */
         alt_ro: altRo ?? im.alt ?? null,
         alt_ru: altRu ?? altRo ?? im.alt ?? null,
-        sort_order: i,
+        /* Pozitia in galerie se numara dupa ce s-au sarit duplicatele, nu dupa
+           indexul din lista lor: altfel raman gauri in `sort_order`. */
+        sort_order: out.length,
         refolosita,
       });
     } catch (e) {
