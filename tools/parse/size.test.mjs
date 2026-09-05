@@ -154,3 +154,16 @@ test('literele chirilice din dimensiune nu opresc parsarea', () => {
   // С rusesc (U+0421) în loc de C latin, într-o dimensiune de marfă.
   assert.deepEqual(pick(parseSize('Anvelopa Ceva 195/70 R15\u0421 104/102R')), { w: 195, a: 70, d: 'R15C' });
 });
+
+test('indicele de sarcină urmat de pliuri nu e citit ca dimensiune', () => {
+  // Regresie: „185 R14C 102/100R 8PR" se citea „102/100 R8" — regexul sărea
+  // peste dimensiunea adevărată. Șapte anvelope ajunseseră într-un sertar de
+  // filtru inexistent. Jante de 8 țoli nu există în catalog; cea mai mică e R10.
+  assert.deepEqual(pick(parseSize('Triangle TR645 185 R14C 102/100R 8PR')), { w: 185, a: null, d: 'R14C' });
+  assert.deepEqual(pick(parseSize('Ovation V-02 195 R15C 106/104R 8PR')), { w: 195, a: null, d: 'R15C' });
+});
+
+test('diametrele mari cu zecimale rămân întregi', () => {
+  // `\\d{2}` nu trebuie să taie „R22.5" în „R22".
+  assert.deepEqual(pick(parseSize('Double Coin RLB1 315/80 R22.5 157/154L')), { w: 315, a: 80, d: 'R22.5' });
+});

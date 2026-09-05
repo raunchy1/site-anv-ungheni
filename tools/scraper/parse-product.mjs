@@ -31,12 +31,18 @@ const IMPERIAL = /(?<![\d.])(\d{2})\s*[x×\/]\s*(\d{1,2}[.,]\d{1,2})\s*R?\s*(\d{
  * viteza lipit de profil. Fara el, dimensiunea ramanea necitita si produsul
  * nepotrivit — 3 anvelope Laufenn.
  */
-const METRIC = /(\d{2,3}(?:[.,]\d+)?)\s*[/x]\s*(\d{2,3}(?:[.,]\d+)?)\s*Z?\s*(?:R|ZR)\s*(\d{1,2}(?:[.,]\d+)?C?)/i;
+const METRIC = /(\d{2,3}(?:[.,]\d+)?)\s*[/x]\s*(\d{2,3}(?:[.,]\d+)?)\s*Z?\s*(?:R|ZR)\s*(\d{2}(?:[.,]\d+)?C?)/i;
 /*
  * `\/?` inainte de R: „185/R14C" e o dimensiune de marfa fara profil, scrisa cu
  * bara desi nu urmeaza niciun numar. Apare la Petlas si Nereus.
+ *
+ * DIAMETRUL ARE EXACT DOUA CIFRE, nu una sau doua. Cu `\d{1,2}`, titlul
+ * „Triangle TR645 185 R14C 102/100R 8PR" se citea ca „102/100 R8": regexul
+ * sarea peste dimensiunea adevarata si prindea indicele de sarcina urmat de
+ * numarul de pliuri. Sapte anvelope au fost puse asa intr-un sertar de filtru
+ * inexistent. Jante de 8 tol nu exista in catalog — cea mai mica e R10.
  */
-const METRIC_NO_ASPECT = /(\d{2,3}(?:[.,]\d+)?)\s*\/?\s*(?:R|ZR)\s*(\d{1,2}C?)/i;
+const METRIC_NO_ASPECT = /(\d{2,3}(?:[.,]\d+)?)\s*\/?\s*(?:R|ZR)\s*(\d{2}C?)/i;
 
 const num = (v) => (v == null ? null : Number(String(v).replace(',', '.')));
 
