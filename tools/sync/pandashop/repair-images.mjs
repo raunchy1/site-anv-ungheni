@@ -59,16 +59,22 @@ export async function repara(opts = {}) {
   let reparate = 0;
   const esuate = [];
 
+  /*
+   * URL-UL LOR TREBUIE CAUTAT, nu construit. Prima varianta a scriptului punea
+   * un slug inventat („/ro/product/x-<id>/") pe motiv ca ID-ul de la coada e ce
+   * conteaza; nu e adevarat — paginile lor raspund 404 sau 500 pe un slug care
+   * nu le apartine. Se enumera listarea o data si se retine ID -> URL.
+   */
+  log('· caut URL-urile lor in listare…');
+  const urlDupaId = new Map();
+  for await (const ref of source.listProducts({})) urlDupaId.set(String(ref.id), ref);
+  log(`  ${urlDupaId.size} URL-uri`);
+
   for (const p of stricate) {
     try {
-      /* URL-ul lor nu e in baza noastra, dar slug-ul lor se reconstruieste din
-         ID: paginile de produs raspund pe orice slug, ID-ul e cel care conteaza.
-         Se cauta prin listare doar daca asta esueaza. */
-      const sursa = await source.fetchProduct({
-        id: p.pandashop_id,
-        url: `/ro/product/x-${p.pandashop_id}/`,
-        urlRu: `/ru/product/x-${p.pandashop_id}/`,
-      });
+      const ref = urlDupaId.get(String(p.pandashop_id));
+      if (!ref) { esuate.push({ id: p.id, motiv: 'nu mai e in listarea lor (probabil fara stoc azi)' }); continue; }
+      const sursa = await source.fetchProduct(ref);
       if (!sursa || !sursa.images?.length) { esuate.push({ id: p.id, motiv: 'sursa n-a dat imagini' }); continue; }
 
       const { imagini: imgs, erori } = await pregatesteImagini(sursa.images, hashuri, {
