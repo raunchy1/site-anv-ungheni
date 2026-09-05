@@ -37,6 +37,7 @@ import { normalizeaza } from './import.mjs';
 import { pregatesteImagini } from './images.mjs';
 import { slugRo, slugRu } from './slug.mjs';
 import { iaLacatul, elibereazaLacatul } from './lock.mjs';
+import { reimprospateazaContoarele } from './counters.mjs';
 
 const COLOANE = [
   'id', 'category', 'brand_name', 'model', 'width', 'aspect', 'diameter',
@@ -273,6 +274,8 @@ export async function recupereaza(opts = {}) {
     erori: rezultate.erori,
     importate: rezultate.importate.map((x) => ({ id: x.id, titlu: x.rand.title_ro, slug: x.rand.slug_ro, pret: x.rand.price_mdl, poze: x.imgs.length })),
   }, null, 2));
+
+  if (aplica && rezultate.importate.length > 0) await reimprospateazaContoarele(spune);
 
   if (aplica) {
     await insert('import_runs', [{

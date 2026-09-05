@@ -39,6 +39,7 @@ import { parseTitle } from './parse-title.mjs';
 import { calculeazaPret } from './pricing.mjs';
 import { tyreUrls, slugToTitle } from './sitemap.mjs';
 import { iaLacatul, elibereazaLacatul } from './lock.mjs';
+import { reimprospateazaContoarele } from './counters.mjs';
 
 /* Coloanele de care are nevoie potrivirea, plus cele pe care le comparam.
    Deliberat nu `select=*`: 15.000 de randuri cu descrieri si atribute inseamna
@@ -373,6 +374,10 @@ export async function actualizeaza(opts = {}) {
   spune(`\n· scriu ${deScris.length} randuri…`);
   const { actualizate, blocate } = await scrie(deScris);
   spune(`  actualizate: ${actualizate}  (din care ${blocate} cu pret blocat manual — li s-a scris doar stocul)`);
+
+  /* Fara asta, bara de filtre din catalog ramane pe cifrele de dinainte si un
+     brand revenit pe stoc nu mai apare deloc ca optiune. */
+  if (actualizate > 0) await reimprospateazaContoarele(spune);
 
   await import('./db-write.mjs').then(({ insert }) => insert('import_runs', [{
     source: 'pandashop_sync', actor: opts.actor ?? 'refresh', dry_run: false,

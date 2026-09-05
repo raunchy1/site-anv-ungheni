@@ -36,6 +36,7 @@ import { calculeazaPret } from './pricing.mjs';
 import { pregatesteImagini } from './images.mjs';
 import { detecteaza } from './detect.mjs';
 import { iaLacatul, elibereazaLacatul } from './lock.mjs';
+import { reimprospateazaContoarele } from './counters.mjs';
 
 /* Rutele care nu sunt produse. Un produs cu slug-ul `contact` ar înlocui tăcut
    pagina de contact — vezi tools/route-map/check-collisions.ts. */
@@ -299,6 +300,8 @@ export async function ruleaza(opts = {}) {
     rows_total: totalIncercate, rows_created: create, rows_skipped: rezultate.faraPret.length,
     errors: rezultate.erori, notes: `carantină: ${rezultate.carantina.length}`,
   }]);
+
+  if (create > 0) await reimprospateazaContoarele(spune);
 
   spune(`\n  create: ${create} produse`);
   spune(`gata în ${Math.round((Date.now() - t0) / 1000)}s`);
