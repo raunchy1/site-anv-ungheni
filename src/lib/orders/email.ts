@@ -17,7 +17,7 @@ import { SITE_URL } from "@/lib/format";
  */
 
 export type RezultatEmail =
-  | { trimis: true; id: string }
+  | { trimis: true; id: string; livrate?: string[]; ratate?: string[] }
   | { trimis: false; motiv: "neconfigurat" | "eroare"; detaliu?: string };
 
 /**
@@ -25,13 +25,22 @@ export type RezultatEmail =
  * pentru că adresa din `settings` e cea publică, afișată pe site la contact —
  * cine citește comenzile nu e neapărat aceeași persoană. Acceptă mai multe
  * adrese separate prin virgulă. Fără variabilă, rămâne comportamentul vechi.
+ *
+ * ORDINEA CONTEAZĂ. Prima adresă din listă e cea care primește comenzile în
+ * primul rând — atelierul. Dacă trimiterea în bloc e refuzată, `trimite` reia
+ * pe rând, în ordinea asta, ca o adresă stricată de la coadă să nu poată opri
+ * comanda de la prima.
  */
 export function destinatariComenzi(emailDinSettings: string): string[] {
   const brut = process.env.ORDER_NOTIFY_EMAIL ?? emailDinSettings;
-  const lista = brut
-    .split(",")
-    .map((a) => a.trim())
-    .filter(Boolean);
+  const lista = [
+    ...new Set(
+      brut
+        .split(",")
+        .map((a) => a.trim())
+        .filter(Boolean),
+    ),
+  ];
   return lista.length > 0 ? lista : [emailDinSettings];
 }
 
@@ -68,21 +77,52 @@ export async function trimiteEmailComanda(o: OrderData, catre: string | string[]
   const key = process.env.RESEND_API_KEY;
   if (!key) return { trimis: false, motiv: "neconfigurat" };
 
-  /* Expeditorul trebuie să fie pe un domeniu verificat în Resend. Până când
-     anvelope-ungheni.md e verificat, `onboarding@resend.dev` livrează doar către
-     adresa contului — de aceea e configurabil, nu scris în cod. */
+  /* Expeditorul trebuie să fie pe un domeniu verificat în Resend.
+     anvelope-ungheni.md e verificat (DKIM + SPF pe subdomeniul `send`), deci
+     `comenzi@anvelope-ungheni.md` livrează către orice adresă. Rămâne
+     configurabil, ca schimbarea căsuței să nu ceară deploy. */
   const from = process.env.RESEND_FROM ?? "Anvelope Ungheni <comenzi@anvelope-ungheni.md>";
   const lista = Array.isArray(catre) ? catre : [catre];
 
   const rezultat = await trimite(key, from, lista, o);
-  if (rezultat.trimis) return rezultat;
+  if (rezultat.trimis) return { ...rezultat, livrate: lista, ratate: [] };
 
-  /* PLASA DE SIGURANȚĂ, cât timp domeniul nu e încă verificat în Resend.
-     Atunci trimiterea de mai sus e refuzată din principiu, iar comanda ar rămâne
-     doar în bază, fără să anunțe pe nimeni. Dacă cele două variabile sunt puse,
-     mai încercăm o dată pe perechea care sigur trece — expeditorul de test al
-     Resend către adresa contului. Se scot amândouă în ziua verificării; fără
-     ele, codul se poartă exact ca înainte. */
+  /*
+   * TRIMITERE PE RÂND, când cea în bloc a fost refuzată.
+   *
+   * Resend refuză mesajul întreg dacă o singură adresă din `to` e invalidă sau
+   * pe lista lui de suprimare. Cu două destinații asta înseamnă că o adresă
+   * stricată ar face comanda invizibilă și pentru cealaltă — inclusiv pentru
+   * atelier, care e prima din listă și cea care chiar trebuie să o vadă.
+   * Se reia în ordinea din `ORDER_NOTIFY_EMAIL`, fiecare separat.
+   */
+  if (lista.length > 1) {
+    const livrate: string[] = [];
+    const ratate: string[] = [];
+    let primulId: string | null = null;
+    for (const adresa of lista) {
+      const r = await trimite(key, from, [adresa], o);
+      if (r.trimis) {
+        livrate.push(adresa);
+        primulId ??= r.id;
+      } else {
+        ratate.push(adresa);
+      }
+    }
+    if (livrate.length > 0) {
+      if (ratate.length > 0) {
+        console.error("[comandă] adrese care n-au primit comanda:", ratate.join(", "), o.orderNumber);
+      }
+      return { trimis: true, id: primulId ?? "—", livrate, ratate };
+    }
+  }
+
+  /* ULTIMA PLASĂ. Domeniul anvelope-ungheni.md e verificat în Resend din
+     5 septembrie 2026, deci ramura asta nu mai e calea normală — se ajunge aici
+     doar dacă TOATE adresele au picat una câte una, adică e ceva rupt la Resend
+     sau în cheie. Atunci mai încercăm perechea care trece oricum: expeditorul de
+     test al Resend către adresa contului. Mai bine o comandă citită de la altă
+     adresă decât o comandă pe care n-o vede nimeni. */
   const rezervaCatre = process.env.RESEND_FALLBACK_TO;
   const rezervaFrom = process.env.RESEND_FALLBACK_FROM;
   if (!rezervaCatre || !rezervaFrom) return rezultat;
