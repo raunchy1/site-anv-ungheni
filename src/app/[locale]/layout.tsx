@@ -12,6 +12,8 @@ import { ConsentProvider } from "@/lib/consent/store";
 import { CookieBanner } from "@/components/layout/CookieBanner";
 import { getSettings } from "@/lib/db/queries";
 import { SITE_URL } from "@/lib/format";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { atelierSchema, organizatieSchema, siteSchema } from "@/lib/seo/schema";
 import type { Locale } from "@/lib/types";
 import "../globals.css";
 
@@ -49,6 +51,15 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} data-theme="light" className={`${fontVarsFor(locale)} h-full`} suppressHydrationWarning>
       <body className="min-h-full bg-[var(--surface)] text-[var(--ink)] antialiased">
+        {/*
+          * Cine suntem, unde suntem și când suntem deschiși — o singură dată, în
+          * layout, deci pe fiecare pagină. Un asistent întrebat „unde cumpăr
+          * anvelope în Ungheni" citește blocurile astea; fără ele are doar text
+          * de prezentare, din care trebuie să ghicească adresa și programul.
+          */}
+        <JsonLd data={organizatieSchema(settings)} />
+        <JsonLd data={atelierSchema(settings, locale as Locale)} />
+        <JsonLd data={siteSchema(locale as Locale)} />
         <NextIntlClientProvider>
          {/* Coșul trebuie citit și de antet, și de pagini: providerul stă
              deasupra amândurora. E singurul context global din site. */}

@@ -498,6 +498,54 @@ mijlocul primei recuperări.
 
 ---
 
+## 11.5 SEO și citirea de către asistenți
+
+Adăugat pe 6 septembrie 2026. Împărțit în ce vede un motor de căutare și ce
+poate cita un model de limbaj — sunt aceleași date, dar cu cerințe diferite.
+
+### Ce era și ce lipsea
+
+Fundația era bună: rute curate, canonice, `hreflang` pe fiecare pagină, o
+strategie de indexare a filtrelor (§5) și `robots.txt` care se închide singur pe
+preview. Lipseau patru lucruri, toate măsurabile:
+
+| Problema | Efectul |
+|---|---|
+| Aceeași `<meta description>` pe toate rutele de filtru | câteva sute de pagini identice în rezultate; Google își alegea singur o propoziție, de obicei din bara de filtre |
+| Zero date structurate în afara fișei de produs și a paginii de contact | catalogul era, pentru un robot, treizeci de imagini și un titlu |
+| Cele 450 de pagini de dimensiune lipseau din `sitemap.xml` | exact paginile cu intenție de cumpărare („anvelope 205/55 R16") erau lăsate să fie descoperite prin linkuri |
+| Două fișe `AutoRepair` diferite, fără `@id` | pentru Google, două afaceri; una cu programul scris de mână în cod |
+
+### Ce s-a făcut
+
+**Datele structurate stau într-un singur fișier**, `lib/seo/schema.ts`, și se
+generează din `settings` și din rândurile bazei — niciodată scrise de mână.
+`Organization`, `AutoRepair` și `WebSite` se emit o dată, în layout, cu `@id`
+stabil, deci apar pe fiecare pagină și se leagă între ele. Fișa de produs are
+acum dimensiunea ca proprietăți separate, nu doar în titlu; firimiturile sunt
+citibile de mașină pe produs, catalog, marcă, servicii și contact; paginile de
+listă declară `ItemList`.
+
+**Fiecare pagină de filtru își are propria descriere**, construită din selecție
+(`lib/seo/catalog-meta.ts`), și un paragraf de deschidere generat din aceleași
+rânduri pe care le arată lista: câte anvelope sunt pe dimensiunea aia, de la ce
+preț încep, ce mărci le acoperă. E singurul conținut care deosebește o pagină de
+dimensiune de celelalte 449.
+
+**`/llms.txt`** descrie magazinul în text simplu pentru asistenți: contact,
+program, ce vindem, cum se compune o adresă de catalog după dimensiune. Cifrele
+se citesc din bază la fiecare regenerare, deci nu îmbătrânesc. `robots.txt`
+permite explicit roboții de AI, pe nume — o decizie comercială, scrisă acolo.
+
+### Regula care nu se încalcă
+
+**În datele structurate nu se declară nimic ce nu e scris pe site.** Livrarea în
+1–3 zile și garanția de 2 ani sunt afirmații pe care paginile le fac deja, deci
+se pot marca. Costul livrării și termenul de retur **lipsesc deliberat**, deși
+`hasMerchantReturnPolicy` ar deschide rezultatele îmbogățite de comerț: o
+politică scrisă în JSON-LD și nescrisă nicăieri de om e o promisiune făcută în
+numele atelierului. Ce lipsește e trecut în `TODO-CRISTIAN.md §15`.
+
 ## 12. Decizii deschise
 
 | # | Decizie | Blochează | Recomandarea mea |

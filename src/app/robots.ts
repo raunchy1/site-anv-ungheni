@@ -16,16 +16,39 @@ export default function robots(): MetadataRoute.Robots {
   if (PREVIEW) {
     return { rules: [{ userAgent: "*", disallow: "/" }] };
   }
+  // Rutele tranzacționale și cele interne n-au ce căuta în index.
+  const disallow = ["/admin", "/api/", "/cos", "/checkout", "/comanda/", "/design-system",
+    "/ru/korzina", "/ru/oformlenie-zakaza", "/favorite", "/comparare", "/ru/izbrannoe", "/ru/sravnenie"];
+
+  /*
+   * ROBOȚII DE AI SUNT LĂSAȚI SĂ INTRE, EXPLICIT.
+   *
+   * `User-agent: *` îi acoperă oricum — o regulă în plus nu deschide nimic ce nu
+   * era deschis. Dar jumătate din magazinele din regiune îi blochează, iar
+   * operatorii lor citesc absența unei reguli proprii ca pe o ambiguitate. Un
+   * rând scris pe numele fiecăruia e singurul mod de a spune „da, citiți-ne" în
+   * limba pe care o înțelege un crawler.
+   *
+   * Asta e o decizie comercială, nu tehnică: vrem ca un asistent întrebat „unde
+   * cumpăr anvelope în Moldova" să poată citi catalogul și să ne poată cita cu
+   * preț și disponibilitate. Cine vrea invers, șterge lista.
+   */
+  const aiCrawlers = [
+    "GPTBot", "OAI-SearchBot", "ChatGPT-User",           // OpenAI
+    "ClaudeBot", "Claude-User", "Claude-SearchBot",       // Anthropic
+    "PerplexityBot", "Perplexity-User",                   // Perplexity
+    "Google-Extended",                                    // Gemini / Vertex
+    "Applebot-Extended",                                  // Apple Intelligence
+    "meta-externalagent",                                 // Meta AI
+    "Amazonbot", "Bytespider", "cohere-ai", "YouBot", "Kimi-Bot", "Grok",
+  ];
+
   return {
     rules: [
-      {
-        userAgent: "*",
-        allow: "/",
-        // Rutele tranzacționale și cele interne n-au ce căuta în index.
-        disallow: ["/admin", "/api/", "/cos", "/checkout", "/comanda/", "/design-system",
-          "/ru/korzina", "/ru/oformlenie-zakaza", "/favorite", "/comparare", "/ru/izbrannoe", "/ru/sravnenie"],
-      },
+      { userAgent: "*", allow: "/", disallow },
+      ...aiCrawlers.map((userAgent) => ({ userAgent, allow: "/", disallow })),
     ],
     sitemap: `${SITE_URL}/sitemap.xml`,
+    host: SITE_URL,
   };
 }

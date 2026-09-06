@@ -1,6 +1,7 @@
 import type { MetadataRoute } from "next";
 import { db } from "@/lib/supabase/server";
 import { SITE_URL } from "@/lib/format";
+import { sizeTree } from "@/lib/size-tree";
 
 export const revalidate = 86400;
 
@@ -26,6 +27,30 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...both("/servicii", "/uslugi", 0.7, "monthly"),
     ...both("/contact", "/kontakty", 0.5, "monthly"),
   ];
+
+  /*
+   * PAGINILE DE DIMENSIUNE. Lipseau din hartă cu totul, deși sunt pre-generate
+   * la build și indexabile de la prima zi — iar „anvelope 205/55 R16" e exact
+   * ce tastează un om care știe ce vrea și e gata să cumpere. Google le-ar fi
+   * găsit oricum, prin linkurile din bara de filtre, dar „ar fi găsit" nu e
+   * același lucru cu „i s-au dat, cu data ultimei modificări".
+   *
+   * Intră doar dimensiunile COMPLETE — lățime, înălțime, diametru — plus cele
+   * trei sezoane. Lățimea singură („anvelope 205") e o pagină cu opt sute de
+   * rezultate din care nimeni nu cumpără; rămâne accesibilă, dar nu se trimite.
+   */
+  const filtre: MetadataRoute.Sitemap = [];
+  for (const [w, [, , aspecte]] of Object.entries(sizeTree)) {
+    for (const [a, [, , diametre]] of Object.entries(aspecte)) {
+      for (const d of Object.keys(diametre)) {
+        const seg = `latime_${w}/inaltime_${a}/diametru_${d.toLowerCase()}`;
+        filtre.push(...both(`/catalog-anvelope/${seg}`, `/katalog-shin/${seg}`, 0.8, "weekly"));
+      }
+    }
+  }
+  for (const s of ["vara", "iarna", "all-season"]) {
+    filtre.push(...both(`/catalog-anvelope/sezon_${s}`, `/katalog-shin/sezon_${s}`, 0.7, "weekly"));
+  }
 
   const products: MetadataRoute.Sitemap = [];
   for (let from = 0; ; from += 1000) {
@@ -71,6 +96,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [
     ...staticPages,
+    ...filtre,
     ...((brands ?? []) as { slug_ro: string; slug_ru: string | null }[]).flatMap((b) =>
       both(`/${b.slug_ro}`, `/${b.slug_ru ?? b.slug_ro}`, 0.7, "weekly")),
     ...((services ?? []) as { slug_ro: string; slug_ru: string | null }[]).flatMap((s) =>

@@ -24,6 +24,8 @@ export type Product = {
   season: Season | null;
   is_xl: boolean;
   is_runflat: boolean;
+  /** Cu crampoane. Contează în Moldova: „anvelope cu cuie" e o căutare de sezon. */
+  is_studded?: boolean;
   is_commercial: boolean;
   price_mdl: number | null;
   stock_status: StockStatus;

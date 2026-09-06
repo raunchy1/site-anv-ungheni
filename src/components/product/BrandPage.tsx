@@ -8,10 +8,22 @@ export function brandMetadata(b: Brand | null, locale: Locale): Metadata {
   const title = (locale === "ru" ? b.meta_title_ru : b.meta_title_ro) ?? `Anvelope ${b.name}`;
   const roPath = `/${b.slug_ro}`;
   const ruPath = `/${b.slug_ru ?? b.slug_ro}`;
+  /* Cele 22 de mărci fără meta-descriere în bază — cele create la importurile din
+     septembrie — ar fi moștenit descrierea paginii principale, adică ar fi arătat
+     identic în rezultate cu restul site-ului. Rezerva numește marca. */
+  const description = (locale === "ru" ? b.meta_desc_ru : b.meta_desc_ro)
+    ?? (locale === "ru"
+      ? `Шины ${b.name} в наличии: цены в MDL, все размеры, характеристики. Доставка по всей Молдове за 1–3 дня, шиномонтаж в мастерской в Унгенах.`
+      : `Anvelope ${b.name} în stoc: prețuri în MDL, toate dimensiunile, specificații complete. Livrare în toată Moldova în 1–3 zile, montaj în atelierul din Ungheni.`);
+
   return {
     title,
-    description: (locale === "ru" ? b.meta_desc_ru : b.meta_desc_ro) ?? undefined,
-    alternates: { canonical: locale === "ru" ? `/ru${ruPath}` : roPath, languages: { ro: roPath, ru: `/ru${ruPath}` } },
+    description,
+    alternates: {
+      canonical: locale === "ru" ? `/ru${ruPath}` : roPath,
+      languages: { ro: roPath, ru: `/ru${ruPath}`, "x-default": roPath },
+    },
+    openGraph: { title, description, url: locale === "ru" ? `/ru${ruPath}` : roPath, type: "website" },
   };
 }
 

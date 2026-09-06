@@ -8,6 +8,7 @@ import { toUiProduct } from "@/lib/adapt";
 import { formatCount, telLink } from "@/lib/format";
 import { sizeTree } from "@/lib/size-tree";
 import { MapEmbed } from "@/components/layout/MapEmbed";
+import { Faq } from "@/components/seo/Faq";
 import type { Locale } from "@/lib/types";
 
 export const revalidate = 3600;
@@ -105,6 +106,8 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
           ))}
         </ul>
       </section>
+
+      <Faq settings={settings} locale={l} />
 
       <section>
         <h2 className="text-500 font-semibold text-[var(--ink-strong)]">{t("home.whereTitle")}</h2>

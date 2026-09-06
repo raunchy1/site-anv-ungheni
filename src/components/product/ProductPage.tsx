@@ -16,6 +16,8 @@ import { absoluteUrl, sizeLabel, telLink } from "@/lib/format";
 import { t as dict } from "@/lib/i18n";
 import { MapEmbed } from "@/components/layout/MapEmbed";
 import type { Locale, Product } from "@/lib/types";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbSchema, produsSchema } from "@/lib/seo/schema";
 import { BuyBox } from "./BuyBox";
 import { WhatsAppButton } from "./WhatsAppButton";
 
@@ -62,7 +64,7 @@ export function productMetadata(p: Product | null, locale: Locale): Metadata {
     robots: unavailable ? { index: false, follow: true } : undefined,
     alternates: {
       canonical: locale === "ru" ? `/ru${ruPath}` : roPath,
-      languages: { ro: roPath, ru: `/ru${ruPath}` },
+      languages: { ro: roPath, ru: `/ru${ruPath}`, "x-default": roPath },
     },
     openGraph: { title, description, url: absoluteUrl(locale === "ru" ? ruPath : roPath, locale), images: p.image_url ? [p.image_url] : undefined },
   };
@@ -230,26 +232,51 @@ export async function ProductPage({ product, locale }: { product: Product; local
         </div>
       </section>
 
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Product",
-            name: title,
+      {/*
+        * Fișa, în forma pe care o citește un motor de căutare. Detaliile — de ce
+        * fiecare câmp e acolo și de ce politica de retur lipsește — sunt în
+        * `lib/seo/schema.ts`, lângă cod, nu aici.
+        */}
+      <JsonLd
+        data={produsSchema(
+          {
+            title,
+            url: productUrl,
             sku: String(product.legacy_product_id),
-            brand: product.brand_name ? { "@type": "Brand", name: product.brand_name } : undefined,
-            image: product.image_url ?? undefined,
-            offers: {
-              "@type": "Offer",
-              url: productUrl,
-              priceCurrency: "MDL",
-              price: product.price_mdl == null ? undefined : Number(product.price_mdl),
-              availability: unavailable ? "https://schema.org/OutOfStock" : "https://schema.org/InStock",
-              seller: { "@type": "AutoRepair", name: "anvelope-ungheni.md", telephone: settings.phone_e164, address: settings.address },
-            },
-          }),
-        }}
+            brand: product.brand_name,
+            images: (product.images?.length
+              ? product.images.map((i) => i.url)
+              : product.image_url
+                ? [product.image_url]
+                : []),
+            description: textSimplu(locale === "ru" ? product.description_ru : product.description_ro),
+            price: product.price_mdl == null ? null : Number(product.price_mdl),
+            disponibil: !unavailable,
+            width: product.width,
+            aspect: product.aspect,
+            diameter: product.diameter,
+            season: product.season,
+            loadIndex: product.load_index,
+            speedIndex: product.speed_index,
+            isXl: Boolean(product.is_xl),
+            isRunflat: Boolean(product.is_runflat),
+            isStudded: Boolean(product.is_studded),
+          },
+          settings,
+          locale,
+        )}
+      />
+      {/* Aceleași firimituri ca cele de sus, dar citibile de mașină: în rezultate
+          apar sub titlu, în locul adresei lungi. */}
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: t("nav.home"), url: locale === "ru" ? "/ru" : "/" },
+          { name: t("catalog.title"), url: locale === "ru" ? "/ru/katalog-shin" : "/catalog-anvelope" },
+          ...(product.brand_name && brandSlug
+            ? [{ name: product.brand_name, url: `${locale === "ru" ? "/ru" : ""}/${brandSlug}` }]
+            : []),
+          { name: title, url: productUrl },
+        ])}
       />
     </article>
   );

@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbSchema } from "@/lib/seo/schema";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { TreadRule } from "@/components/icons";
@@ -33,7 +35,7 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
         : "Toate serviciile atelierului: vulcanizare și echilibrare, azot, reparații anvelope, senzori TPMS, îndreptare și vopsire jante, aer condiționat, frâne, hotel anvelope.",
     alternates: {
       canonical: locale === "ru" ? "/ru/uslugi" : "/servicii",
-      languages: { ro: "/servicii", ru: "/ru/uslugi" },
+      languages: { ro: "/servicii", ru: "/ru/uslugi", "x-default": "/servicii" },
     },
   };
 }
@@ -48,6 +50,12 @@ export default async function ServiciiPage({ params }: { params: Promise<{ local
   return (
     <div className="shell py-[var(--sp-6)]">
       <Breadcrumb items={[{ label: t("nav.home"), href: l === "ru" ? "/ru" : "/" }, { label: t("services.title") }]} />
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: t("nav.home"), url: l === "ru" ? "/ru" : "/" },
+          { name: t("services.title"), url: l === "ru" ? "/ru/uslugi" : "/servicii" },
+        ])}
+      />
 
       <header className="mt-[var(--sp-4)]">
         <h1 className="optical-left text-700 font-semibold tracking-[var(--tr-title)] text-[var(--ink-strong)] sm:text-800">

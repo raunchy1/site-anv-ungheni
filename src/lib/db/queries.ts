@@ -7,7 +7,7 @@ import type {
 const PRODUCT_COLS = `
   id, legacy_product_id, slug_ro, slug_ru, category, brand_id, brand_name, model,
   size_system, width, aspect, overall_diameter_in, section_width_in, diameter, size_raw,
-  load_index, speed_index, season, is_xl, is_runflat, is_commercial,
+  load_index, speed_index, season, is_xl, is_runflat, is_commercial, is_studded,
   price_mdl, stock_status, title_ro, title_ru, description_ro, description_ru,
   meta_title_ro, meta_title_ru, meta_desc_ro, meta_desc_ru,
   product_images ( storage_path, alt_ro, alt_ru ),
@@ -170,6 +170,49 @@ export async function getCatalog(f: CatalogFilters): Promise<CatalogResult> {
     unavailableTotal: unavailableTotal ?? 0,
     page,
     pages: Math.max(1, Math.ceil(total / perPage)),
+  };
+}
+
+/**
+ * REZUMATUL UNEI SELECȚII, pentru textul și datele structurate ale paginii.
+ *
+ * De ce există. O pagină de catalog filtrată e, pentru un motor de căutare,
+ * treizeci de carduri și un titlu — aceeași structură pe toate cele câteva sute
+ * de rute de dimensiune. Ce o face să merite indexată e o propoziție care spune
+ * ceva ce nu scrie pe nicio altă pagină: câte anvelope sunt pe 205/55 R16, de la
+ * ce preț încep și ce mărci acoperă. Nu se scrie de mână și nu se inventează —
+ * se citește din aceleași rânduri pe care le arată lista de dedesubt.
+ *
+ * O singură cerere, pe coloane înguste: prețul și marca, atât. Se cheamă o dată
+ * per randare de pagină, iar pagina stă în cache 15 minute.
+ */
+export type CatalogSummary = {
+  total: number;
+  pretMin: number | null;
+  pretMax: number | null;
+  marci: string[];
+  sezoane: string[];
+};
+
+export async function getCatalogSummary(f: CatalogFilters): Promise<CatalogSummary> {
+  let q = db.from("products").select("price_mdl, brand_name, season")
+    .eq("is_active", true).eq("category", "anvelope").in("stock_status", AVAILABLE)
+    .not("price_mdl", "is", null);
+  for (const [col, val] of filterEntries(f)) q = q.eq(col, val);
+
+  /* Plafon deliberat: la catalogul întreg ar fi 10.000 de rânduri pentru o
+     propoziție. Pe o selecție reală — o dimensiune, o marcă — sunt zeci. */
+  const { data } = await q.limit(2000);
+  const rows = (data as { price_mdl: number | null; brand_name: string | null; season: string | null }[] | null) ?? [];
+  if (rows.length === 0) return { total: 0, pretMin: null, pretMax: null, marci: [], sezoane: [] };
+
+  const preturi = rows.map((r) => Number(r.price_mdl)).filter((n) => Number.isFinite(n) && n > 0);
+  return {
+    total: rows.length,
+    pretMin: preturi.length ? Math.min(...preturi) : null,
+    pretMax: preturi.length ? Math.max(...preturi) : null,
+    marci: [...new Set(rows.map((r) => r.brand_name).filter((b): b is string => Boolean(b)))].sort(),
+    sezoane: [...new Set(rows.map((r) => r.season).filter((s): s is string => Boolean(s)))],
   };
 }
 

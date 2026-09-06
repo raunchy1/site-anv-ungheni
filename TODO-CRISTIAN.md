@@ -216,3 +216,74 @@ node --env-file=.env.local tools/sync/pandashop/refresh.mjs --delisted --apply
 ```
 
 Nu se șterge nimic niciodată: URL-urile rămân `200`, ca să nu pierdem indexarea.
+
+## 15. SEO — cele șapte lucruri pe care nu le pot face eu
+
+Optimizarea tehnică e făcută (vezi `ARCHITECTURE.md §SEO`). Ce urmează sunt
+lucruri care cer ori o decizie comercială, ori un cont la care n-am acces. Le
+las în ordinea în care aduc trafic.
+
+### 15.1 Google Business Profile — cel mai mare câștig din listă
+
+Pentru „anvelope Ungheni" și „vulcanizare lângă mine", fișa de firmă din Google
+Maps bate orice optimizare de site. Trebuie **revendicată** și completată cu
+exact aceleași date ca pe site — literă cu literă, că așa le pune Google în
+pereche:
+
+```
+Nume:     Anvelope Ungheni
+Adresă:   Strada Decebal 62/1, Ungheni
+Telefon:  068 263 644
+Site:     https://anvelope-ungheni.md
+Program:  luni–sâmbătă 9:00–20:00   (duminica — vezi §3, e încă necompletată)
+Categorii: Magazin de anvelope (principală) + Atelier auto
+```
+
+Datele structurate de pe site declară deja aceleași valori, citite din
+`settings`. Dacă schimbi ceva în admin, schimbă și în Google, altfel cele două
+se contrazic.
+
+### 15.2 Search Console și Bing Webmaster Tools
+
+Adaugă domeniul în amândouă și trimite `https://anvelope-ungheni.md/sitemap.xml`
+(11.187 de adrese). Fără asta, indexarea celor 900 de pagini noi de dimensiune
+durează săptămâni în loc de zile. Bing contează dublu acum: ChatGPT caută prin
+indexul lui.
+
+### 15.3 Costul livrării — lipsește de pe site
+
+Site-ul spune „livrare în toată Moldova în 1–3 zile" și atât. Nu scrie nicăieri
+cât costă, de la ce sumă e gratuită, sau cine livrează. E prima întrebare a
+oricărui client și e singurul lucru care lipsește din răspunsurile de la
+„Întrebări frecvente".
+
+**N-am inventat un tarif.** Dă-mi cifrele și le pun și în text, și în datele
+structurate (`shippingRate`), unde Google le poate arăta direct în rezultate.
+
+### 15.4 Termenul de retur — la fel
+
+Google cere o politică de retur declarată ca să arate fișele de produs cu preț
+și disponibilitate în rezultatele de cumpărături. Am lăsat câmpul gol
+deliberat: o politică scrisă de mine în numele atelierului e o promisiune pe
+care n-o pot face. Îmi trebuie **termenul în zile** și condițiile; pagina
+„Retur și garanție" (§5) are oricum nevoie de textul ăsta.
+
+### 15.5 Pagina de Facebook — pentru `sameAs`
+
+Dacă atelierul are pagină de Facebook sau Instagram, dă-mi adresele: intră în
+datele structurate ca `sameAs` și leagă site-ul de profilurile sociale. E felul
+în care Google confirmă că firma din Maps, pagina de Facebook și site-ul sunt
+aceeași entitate.
+
+### 15.6 Recenziile
+
+`aggregateRating` — stelele de sub rezultat — nu se poate inventa și nu se poate
+copia din Google. Dacă vrei stele în rezultate, trebuie recenzii scrise pe site,
+cu nume și dată. Se poate face, dar cere o pagină de recenzii și moderare.
+Spune dacă merită.
+
+### 15.7 Programul de duminică
+
+Repet §3 pentru că acum are un al doilea efect: apare în datele structurate, în
+`llms.txt` și în fișa de Google. Cât timp e necompletat, duminica pur și simplu
+lipsește din program peste tot — ceea ce un client citește ca „închis".

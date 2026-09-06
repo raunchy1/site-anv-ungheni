@@ -12,12 +12,22 @@ export const revalidate = 3600;
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "nav" });
+  const description =
+    locale === "ru"
+      ? "Датчики давления в шинах (TPMS): продажа, программирование и установка в Унгенах. Совместимость с большинством марок, доставка по всей Молдове."
+      : "Senzori de presiune în anvelope (TPMS): vânzare, programare și montaj în Ungheni. Compatibili cu majoritatea mărcilor, livrare în toată Moldova.";
   return {
     title: t("tpms"),
+    description,
     alternates: {
       canonical: locale === "ru" ? "/ru/datchiki-davleniya-v-shinah" : "/senzori-presiune-anvelope",
-      languages: { ro: "/senzori-presiune-anvelope", ru: "/ru/datchiki-davleniya-v-shinah" },
+      languages: {
+        ro: "/senzori-presiune-anvelope",
+        ru: "/ru/datchiki-davleniya-v-shinah",
+        "x-default": "/senzori-presiune-anvelope",
+      },
     },
+    openGraph: { title: t("tpms"), description, type: "website" },
   };
 }
 

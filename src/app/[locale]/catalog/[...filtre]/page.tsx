@@ -3,6 +3,8 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { CatalogView } from "@/components/catalog/CatalogView";
 import { parseFilterSegments, canonicalSegments, activeFilterCount } from "@/lib/catalog-filters";
 import { sizeTree } from "@/lib/size-tree";
+import { getBrands } from "@/lib/db/queries";
+import { descriereCatalogSeo, titluCatalogSeo } from "@/lib/seo/catalog-meta";
 import type { Locale } from "@/lib/types";
 
 export const revalidate = 900;
@@ -46,24 +48,34 @@ export async function generateMetadata({
 }: { params: Promise<{ locale: string; filtre: string[] }> }): Promise<Metadata> {
   const { locale, filtre } = await params;
   const t = await getTranslations({ locale, namespace: "catalog" });
-  const tAll = await getTranslations({ locale });
   const f = parseFilterSegments(filtre);
   /* Canonicul arată spre selecția fără sortare și fără pagină. */
   const canonical = canonicalSegments(f);
   const roPath = canonical.length ? `/catalog-anvelope/${canonical.join("/")}` : "/catalog-anvelope";
   const ruPath = canonical.length ? `/ru/katalog-shin/${canonical.join("/")}` : "/ru/katalog-shin";
 
-  const bits = [
-    f.width && f.aspect && f.diameter ? `${f.width}/${f.aspect} ${f.diameter}` : null,
-    f.season ? tAll(`season.${f.season}`) : null,
-  ].filter(Boolean);
+  /* Numele mărcii, nu slug-ul: „Michelin", nu „michelin". Titlul e citit de om. */
+  const numeMarca = f.brand
+    ? (await getBrands()).find((b) => b.slug_ro === f.brand || b.slug_ru === f.brand)?.name
+    : undefined;
+
+  const title = titluCatalogSeo(f, numeMarca, locale as Locale, t("title"));
 
   return {
-    title: bits.length ? `${t("title")} ${bits.join(" ")}` : t("title"),
+    title,
+    /* Fără asta, toate rutele de filtru moștenesc descrierea paginii principale
+       — adică toate arată identic în rezultate. */
+    description: descriereCatalogSeo(f, numeMarca, locale as Locale),
     robots: isIndexable(f) ? undefined : { index: false, follow: true },
     alternates: {
       canonical: locale === "ru" ? ruPath : roPath,
-      languages: { ro: roPath, ru: ruPath },
+      languages: { ro: roPath, ru: ruPath, "x-default": roPath },
+    },
+    openGraph: {
+      title,
+      description: descriereCatalogSeo(f, numeMarca, locale as Locale),
+      url: locale === "ru" ? ruPath : roPath,
+      type: "website",
     },
   };
 }

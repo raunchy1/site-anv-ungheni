@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { TreadRule, IconPin, IconPhone, IconClock } from "@/components/icons";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbSchema } from "@/lib/seo/schema";
 import { getSettings } from "@/lib/db/queries";
 import { telLink } from "@/lib/format";
 import { WhatsAppButton } from "@/components/product/WhatsAppButton";
@@ -78,15 +80,20 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
           />
       </div>
 
-      <script type="application/ld+json" dangerouslySetInnerHTML={{
-        __html: JSON.stringify({
-          "@context": "https://schema.org", "@type": "AutoRepair",
-          name: "anvelope-ungheni.md", telephone: s.phone_e164, email: s.email,
-          address: { "@type": "PostalAddress", streetAddress: s.address, addressLocality: s.city, addressCountry: "MD" },
-          geo: { "@type": "GeoCoordinates", latitude: s.lat, longitude: s.lng },
-          openingHours: "Mo-Sa 09:00-20:00", url: "https://anvelope-ungheni.md",
-        }),
-      }} />
+      {/*
+        * Blocul `AutoRepair` care stătea aici s-a mutat în layout, cu un `@id`
+        * stabil, ca să fie pe fiecare pagină și ca să existe UNA singură. Două
+        * fișe de afacere locală, cu nume diferite („anvelope-ungheni.md" aici,
+        * „Anvelope Ungheni" în rest) și cu programul scris de mână într-una din
+        * ele, înseamnă pentru Google două afaceri, iar pentru panoul local un
+        * program care poate fi cel greșit.
+        */}
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: locale === "ru" ? "Главная" : "Acasă", url: locale === "ru" ? "/ru" : "/" },
+          { name: t("contact.title"), url: locale === "ru" ? "/ru/kontakty" : "/contact" },
+        ])}
+      />
     </div>
   );
 }

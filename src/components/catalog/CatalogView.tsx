@@ -6,7 +6,11 @@ import { TireFinderPanel } from "@/components/ui/TireFinderPanel";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { BrandLogo } from "@/components/ui/BrandLogo";
 import { TreadRule, IconWhatsApp } from "@/components/icons";
-import { getCatalog, getBrands } from "@/lib/db/queries";
+import { getCatalog, getBrands, getCatalogSummary } from "@/lib/db/queries";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { breadcrumbSchema, itemListSchema } from "@/lib/seo/schema";
+import { CatalogIntro } from "./CatalogIntro";
+import { etichetaFiltru } from "@/lib/seo/catalog-meta";
 import { toUiProduct } from "@/lib/adapt";
 import { whatsappLink } from "@/lib/format";
 import { activeFilterCount, buildFilterSegments, type ParsedFilters } from "@/lib/catalog-filters";
@@ -31,13 +35,15 @@ export async function CatalogView({
   const includeUnavailable = filters.includeUnavailable === true;
   const sort = filters.sort ?? "default";
 
-  const [result, brands] = await Promise.all([
-    getCatalog({
-      width: filters.width, aspect: filters.aspect, diameter: filters.diameter,
-      season: filters.season, brand: filters.brand ? brandName(await getBrands(), filters.brand) : undefined,
-      includeUnavailable, sort, page, perPage: PER_PAGE,
-    }),
+  const numeMarca = filters.brand ? brandName(await getBrands(), filters.brand) : undefined;
+  const criterii = {
+    width: filters.width, aspect: filters.aspect, diameter: filters.diameter,
+    season: filters.season, brand: numeMarca,
+  };
+  const [result, brands, summary] = await Promise.all([
+    getCatalog({ ...criterii, includeUnavailable, sort, page, perPage: PER_PAGE }),
     getBrands(),
+    getCatalogSummary(criterii),
   ]);
 
   /**
@@ -74,6 +80,9 @@ export async function CatalogView({
           {t("catalog.results", { count: result.total })}
         </p>
       </div>
+      {/* Rezumatul selecției, din aceleași rânduri care se afișează dedesubt. */}
+      <CatalogIntro summary={summary} eticheta={etichetaFiltru(filters, numeMarca, locale)} locale={locale} />
+
       <TreadRule variant="full" className="mt-[var(--sp-3)] text-[var(--line)]" />
 
       <div className="mt-[var(--sp-6)] grid gap-[var(--sp-6)] lg:grid-cols-[240px_1fr]">
@@ -144,8 +153,35 @@ export async function CatalogView({
           )}
         </div>
       </div>
+
+      {/*
+        * Lista, citibilă de mașină. `ItemList` spune ce produse conține pagina
+        * asta, în ce ordine; fără el, o pagină de dimensiune e pentru un robot
+        * treizeci de imagini și un titlu. Firimiturile îi spun unde stă pagina
+        * în site — apar în rezultate sub titlu, în locul adresei lungi.
+        */}
+      <JsonLd
+        data={itemListSchema(
+          result.items.map((p: Product) => `/${locale === "ru" ? "ru/" : ""}${(locale === "ru" ? p.slug_ru : p.slug_ro) ?? p.slug_ro}`),
+          heading,
+        )}
+      />
+      <JsonLd
+        data={breadcrumbSchema([
+          { name: t("nav.home"), url: locale === "ru" ? "/ru" : "/" },
+          { name: t("catalog.title"), url: locale === "ru" ? "/ru/katalog-shin" : "/catalog-anvelope" },
+          ...(heading !== t("catalog.title") ? [{ name: heading, url: caleCurenta(locale, filters) }] : []),
+        ])}
+      />
     </div>
   );
+}
+
+/** Calea canonică a selecției curente, pentru firimituri. */
+function caleCurenta(locale: Locale, filters: ParsedFilters): string {
+  const segs = buildFilterSegments({ ...filters, sort: undefined, page: undefined });
+  const baza = locale === "ru" ? "/ru/katalog-shin" : "/catalog-anvelope";
+  return segs.length ? `${baza}/${segs.join("/")}` : baza;
 }
 
 /** Slug de brand -> numele exact stocat pe produse. */
