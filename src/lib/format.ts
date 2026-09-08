@@ -93,6 +93,18 @@ export const SEASONS: Season[] = ["vara", "iarna", "all_season"];
  */
 const WA_NUMBER = "37368263644";
 
+/**
+ * Telefonul, ca text și ca `tel:`, fără drum până la bază.
+ *
+ * Peste tot pe site numărul vine din `settings`, și așa trebuie să rămână. Dar
+ * granița de eroare (`error.tsx`) e o componentă de client care se afișează
+ * TOCMAI fiindcă interogarea a eșuat — acolo, „sună-ne la {phone}" citit din
+ * bază ar fi o promisiune care nu se poate ține. Aceleași cifre, scrise o
+ * singură dată.
+ */
+export const TELEFON_AFISAT = "068 263 644";
+export const TELEFON_E164 = "+37368263644";
+
 export const whatsappLink = (message: string): string =>
   `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(message)}`;
 

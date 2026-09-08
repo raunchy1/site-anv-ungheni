@@ -132,7 +132,8 @@
     "notFoundTitle": "Pagina nu există",
     "notFoundBody": "Caută anvelopa după dimensiune:",
     "serverTitle": "Ceva n-a mers",
-    "serverBody": "Reîncearcă sau sună-ne la {phone}."
+    "serverBody": "Reîncearcă sau sună-ne la {phone}.",
+    "retry": "Încearcă din nou"
   },
   "wa": {
     "product": "Bună ziua! Sunt interesat de:\n{title}\nCod: {code}\nCantitate: {qty}\n{url}",
