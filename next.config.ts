@@ -11,32 +11,20 @@ const nextConfig: NextConfig = {
   agentRules: false,
   images: {
     /**
-     * Fotografiile de catalog raman, pana la migrarea in Supabase Storage,
-     * pe host-ul vechi. Un singur pattern, cat mai ingust posibil.
+     * Imaginile NU mai trec prin `/_next/image`. Redimensionarea o face
+     * Supabase, prin `render/image`, si tot el le serveste de pe CDN-ul lui.
+     * Motivul complet e in `src/lib/image-loader.ts`; pe scurt, cele 23.099 de
+     * fotografii de catalog nu incap in cele 5.000 de transformari pe luna pe
+     * care le da planul Hobby.
+     *
+     * Odata cu loader-ul propriu devin inerte optiunile care configurau
+     * optimizatorul Vercel — `remotePatterns`, `formats`, `dangerouslyAllowSVG`,
+     * `contentDispositionType`, `contentSecurityPolicy` — si au fost scoase ca
+     * sa nu para ca mai apara ceva. Formatul se negociaza acum din `Accept`,
+     * deci WebP-ul ramane; iar SVG-urile le lasa loader-ul neatinse.
      */
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "anvelope-ungheni.md",
-        pathname: "/image/**",
-      },
-      {
-        protocol: "https",
-        hostname: "tzzycvsbnlurypfstisc.supabase.co",
-        pathname: "/storage/v1/object/public/**",
-      },
-    ],
-    formats: ["image/avif", "image/webp"],
-    /**
-     * Logo-urile de marcă vin în SVG din media kit-urile producătorilor.
-     * Riscul obișnuit al SVG-ului (script inline) nu se aplică aici: în bucket
-     * scrie exclusiv `tools/seed/upload-brand-logos.mjs`, cu service role, din
-     * fișiere puse manual — nu există încărcare de la utilizatori. Peste asta,
-     * CSP-ul de mai jos le randează fără scripturi și fără pluginuri.
-     */
-    dangerouslyAllowSVG: true,
-    contentDispositionType: "attachment",
-    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    loader: "custom",
+    loaderFile: "./src/lib/image-loader.ts",
     /**
      * Cardurile au maximum 280px pe desktop si ~45vw pe mobil.
      * Lista implicita a Next genereaza 8 variante pe care nu le cere nimeni.
