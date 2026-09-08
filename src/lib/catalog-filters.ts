@@ -62,8 +62,11 @@ export function parseFilterSegments(segments: string[] = []): ParsedFilters {
       }
       case "pagina": {
         const n = Number(value);
-        /* Pagina 1 nu are segment: ar da doua URL-uri pentru acelasi continut. */
-        if (Number.isInteger(n) && n > 1) out.page = n; else out.unknown.push(seg);
+        /* Pagina 1 nu are segment: ar da doua URL-uri pentru acelasi continut.
+           `pagina_1` nu e insa o greseala, ci o adresa veche — se ignora aici si
+           se rescrie in canonic de catre ruta, care redirectioneaza 308. */
+        if (Number.isInteger(n) && n > 1) out.page = n;
+        else if (n !== 1) out.unknown.push(seg);
         break;
       }
       default: out.unknown.push(seg);
@@ -99,3 +102,21 @@ export function canonicalSegments(f: Omit<ParsedFilters, "unknown">): string[] {
 
 export const activeFilterCount = (f: ParsedFilters): number =>
   [f.width, f.aspect, f.diameter, f.season, f.brand, f.onlyAvailable].filter(Boolean).length;
+
+/**
+ * Segmentele primite sunt EXACT forma canonica?
+ *
+ * `/catalog-anvelope/inaltime_55/latime_205` arata aceeasi marfa ca
+ * `/catalog-anvelope/latime_205/inaltime_55`, iar `pagina_1` o arata inca o
+ * data. Fiecare varianta era o randare noua si o intrare noua in cache; pentru
+ * un robot, un catalog de cateva sute de rute devenea unul de cateva mii.
+ * Ruta compara ce a primit cu ce ar fi construit ea si, daca difera,
+ * redirectioneaza definitiv spre forma unica.
+ */
+export function isCanonicalPath(segments: string[], f: ParsedFilters): boolean {
+  const canonical = buildFilterSegments(f);
+  return (
+    segments.length === canonical.length &&
+    segments.every((s, i) => decodeURIComponent(s).toLowerCase() === canonical[i])
+  );
+}

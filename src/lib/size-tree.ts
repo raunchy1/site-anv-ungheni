@@ -64,3 +64,40 @@ export function countFor(
   if (!diameter) return [a[0], a[1]];
   return a[2][diameter] ?? ZERO;
 }
+
+/**
+ * Dimensiunea cerută există în catalog?
+ *
+ * Se verifică ÎNAINTE de a randa o rută de filtru. Până acum
+ * `/catalog-anvelope/latime_9999` răspundea 200, cu catalogul gol — adică orice
+ * număr inventat de un robot devenea o pagină reală, cu patru interogări în bază
+ * și un loc în cache-ul ISR. Spațiul ăla e infinit; arborele de dimensiuni e
+ * singurul care știe unde se termină catalogul, deci tot el spune ce e adresă și
+ * ce e zgomot.
+ *
+ * Selecțiile parțiale rămân valide, fiindcă sunt rute pre-generate: numai
+ * lățimea, numai înălțimea, numai diametrul. Se caută prin tot arborele când
+ * lipsește nivelul de deasupra.
+ */
+export function sizeExists(
+  width: number | null | undefined,
+  aspect: number | null | undefined,
+  diameter: string | null | undefined,
+): boolean {
+  const w = width != null ? String(width) : null;
+  const a = aspect != null ? String(aspect) : null;
+  const d = diameter ?? null;
+  if (w === null && a === null && d === null) return true;
+
+  for (const [widthKey, [, , aspects]] of Object.entries(sizeTree)) {
+    if (w !== null && widthKey !== w) continue;
+    for (const [aspectKey, [, , diameters]] of Object.entries(aspects)) {
+      if (a !== null && aspectKey !== a) continue;
+      if (d === null) return true;
+      if (d in diameters) return true;
+    }
+    // Lățimea cerută există, dar înălțimea nu: nu mai are rost restul arborelui.
+    if (w !== null) return false;
+  }
+  return false;
+}

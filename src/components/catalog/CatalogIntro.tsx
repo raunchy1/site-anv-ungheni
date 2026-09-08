@@ -18,15 +18,23 @@ import type { Locale } from "@/lib/types";
  * trei anvelope pe dimensiunea asta, propoziția o spune.
  */
 export async function CatalogIntro({
-  summary, eticheta, locale,
+  summary, total, eticheta, locale,
 }: {
   summary: CatalogSummary;
+  /**
+   * Numărul EXACT de anvelope disponibile din selecție, din contorul
+   * catalogului. Rezumatul citește doar un eșantion — cele mai ieftine 500 —
+   * ca să nu care mii de rânduri pentru o propoziție; dacă tot de acolo ar veni
+   * și cifra, „În catalog sunt 500 de anvelope" ar fi scris pe o pagină cu
+   * 10.016.
+   */
+  total: number;
   /** „205/55 R16", „Michelin", „iarnă" — ce anume s-a filtrat. */
   eticheta: string | null;
   locale: Locale;
 }) {
   const t = await getTranslations();
-  if (summary.total === 0) return null;
+  if (total === 0) return null;
 
   const ru = locale === "ru";
   const numeSezon = (s: string) => t(`season.${s}`).toLowerCase();
@@ -37,8 +45,8 @@ export async function CatalogIntro({
 
   bucati.push(
     ru
-      ? `${eticheta ? `Шины ${eticheta}: ` : "В каталоге "}${summary.total} ${summary.total === 1 ? "позиция" : "позиций"} в наличии`
-      : `${eticheta ? `Anvelope ${eticheta}: ` : "În catalog sunt "}${summary.total} ${summary.total === 1 ? "anvelopă disponibilă" : "de anvelope disponibile"}`,
+      ? `${eticheta ? `Шины ${eticheta}: ` : "В каталоге "}${total} ${total === 1 ? "позиция" : "позиций"} в наличии`
+      : `${eticheta ? `Anvelope ${eticheta}: ` : "În catalog sunt "}${total} ${total === 1 ? "anvelopă disponibilă" : "de anvelope disponibile"}`,
   );
 
   if (summary.pretMin != null) {

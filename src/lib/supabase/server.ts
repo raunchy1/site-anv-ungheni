@@ -17,8 +17,43 @@ import { createClient } from "@supabase/supabase-js";
  * golește la finalul fiecărei sincronizări, așa că datele proaspete ajung în
  * catalog imediat după import, nu la următoarea expirare.
  */
+/**
+ * O SINGURĂ ÎNCERCARE RATATĂ NU E UN RĂSPUNS.
+ *
+ * Gateway-ul Supabase răspunde 502/504/522 când baza e sub presiune — câteva
+ * secunde, apoi trece. Fără reîncercare, fiecare astfel de secundă însemna:
+ * la randare, o excepție (deci pagina veche din cache, acceptabil); la BUILD,
+ * un deploy întreg pierdut, fiindcă o singură rută pre-generată care aruncă
+ * oprește exportul. Pe 8 septembrie 2026 exact asta a blocat repararea:
+ * build-ul nu putea porni cât timp baza clipea.
+ *
+ * Două reîncercări, cu pauză crescătoare și puțin zgomot ca să nu plece toate
+ * odată. Nu mai multe: o bază în genunchi nu are nevoie să fie lovită de cinci
+ * ori pentru aceeași pagină.
+ */
+const RETRY_STATUS = new Set([429, 500, 502, 503, 504, 520, 521, 522, 524]);
+
+async function withRetry(input: RequestInfo | URL, init: RequestInit): Promise<Response> {
+  let last: Response | undefined;
+  for (let attempt = 0; attempt < 3; attempt++) {
+    if (attempt > 0) {
+      const pauza = 400 * 2 ** (attempt - 1) + Math.random() * 200;
+      await new Promise((r) => setTimeout(r, pauza));
+    }
+    try {
+      const res = await fetch(input, init);
+      if (!RETRY_STATUS.has(res.status)) return res;
+      last = res;
+    } catch (e) {
+      /* Rețea căzută sau cerere anulată: ultima încercare o lasă să iasă. */
+      if (attempt === 2) throw e;
+    }
+  }
+  return last!;
+}
+
 const cachedFetch: typeof fetch = (input, init) =>
-  fetch(input, { ...init, next: { revalidate: 86400, tags: ["catalog"] } });
+  withRetry(input, { ...init, next: { revalidate: 86400, tags: ["catalog"] } } as RequestInit);
 
 export const db = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,

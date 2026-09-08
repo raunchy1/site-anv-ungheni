@@ -85,7 +85,10 @@ export const getServices = cache(async (): Promise<Service[]> => {
 });
 
 export const getBrands = cache(async (): Promise<Brand[]> => {
-  const { data } = await db.from("brands").select("*").order("name");
+  const { data, error } = await db.from("brands").select("*").order("name");
+  /* Lista de marci goala inseamna panou de filtre gol si, mai rau, rute de
+     marca declarate inexistente. Mai bine o eroare decat un catalog fara marci. */
+  if (error) throw new Error(`marci: ${error.message}`);
   return (data as Brand[]) ?? [];
 });
 
@@ -144,10 +147,19 @@ export async function getCatalog(f: CatalogFilters): Promise<CatalogResult> {
     for (const [col, val] of filterEntries(f)) q = q.eq(col, val);
     return q;
   };
-  const [{ count: availableTotal }, { count: unavailableTotal }] = await Promise.all([
+  const [disponibile, indisponibile] = await Promise.all([
     base().in("stock_status", AVAILABLE),
     base().eq("stock_status", "out_of_stock"),
   ]);
+  /* O eroare NU e „zero anvelope". Cat timp erorile se inghiteau, o baza care
+     raspundea 522 producea o pagina de catalog goala, perfect valida — si ISR o
+     tinea asa 24 de ore dupa ce baza isi revenea. Asta a vazut clientul pe 8
+     septembrie 2026: „nu se vad anvelopele cand caut o dimensiune". Aruncata,
+     eroarea lasa in loc ultima pagina buna din cache. */
+  if (disponibile.error) throw new Error(`catalog (disponibile): ${disponibile.error.message}`);
+  if (indisponibile.error) throw new Error(`catalog (indisponibile): ${indisponibile.error.message}`);
+  const availableTotal = disponibile.count;
+  const unavailableTotal = indisponibile.count;
 
   let q = db.from("products").select(PRODUCT_COLS).eq("is_active", true).eq("category", "anvelope");
   for (const [col, val] of filterEntries(f)) q = q.eq(col, val);
@@ -161,7 +173,8 @@ export async function getCatalog(f: CatalogFilters): Promise<CatalogResult> {
   }
 
   const total = (f.includeUnavailable ? (availableTotal ?? 0) + (unavailableTotal ?? 0) : availableTotal) ?? 0;
-  const { data } = await q.range((page - 1) * perPage, page * perPage - 1);
+  const { data, error } = await q.range((page - 1) * perPage, page * perPage - 1);
+  if (error) throw new Error(`catalog (randuri): ${error.message}`);
 
   return {
     items: ((data as unknown as Row[]) ?? []).map(withImage),
@@ -200,9 +213,16 @@ export async function getCatalogSummary(f: CatalogFilters): Promise<CatalogSumma
     .not("price_mdl", "is", null);
   for (const [col, val] of filterEntries(f)) q = q.eq(col, val);
 
-  /* Plafon deliberat: la catalogul întreg ar fi 10.000 de rânduri pentru o
-     propoziție. Pe o selecție reală — o dimensiune, o marcă — sunt zeci. */
-  const { data } = await q.limit(2000);
+  /* CELE MAI IEFTINE 500, nu primele 2.000 la întâmplare.
+     Ordinea contează: propoziția spune „de la X MDL", iar fără `order` X era
+     minimul unui eșantion arbitrar, adică putea fi peste prețul real de start.
+     500 în loc de 2.000 fiindcă restul nu schimbă nici prețul minim, nici
+     primele șase mărci — dar 2.000 de rânduri treceau prin rețea la FIECARE
+     randare de catalog, inclusiv la cele câteva mii cerute de roboți pe oră.
+     Numărul afișat nu mai vine de aici, ci din contorul exact al catalogului
+     (vezi `CatalogIntro`), deci plafonul nu mai poate minți o cifră. */
+  const { data, error } = await q.order("price_mdl", { ascending: true }).limit(500);
+  if (error) throw new Error(`rezumat catalog: ${error.message}`);
   const rows = (data as { price_mdl: number | null; brand_name: string | null; season: string | null }[] | null) ?? [];
   if (rows.length === 0) return { total: 0, pretMin: null, pretMax: null, marci: [], sezoane: [] };
 
@@ -319,7 +339,17 @@ export type RootMatch =
  * Produsele, brandurile și serviciile stau toate pe rădăcină.
  * Ordinea de rezolvare e fixă: serviciu -> brand -> produs -> 404.
  */
+/**
+ * Un slug de-al nostru are o formă: litere mici, cifre și cratime, sub 300 de
+ * caractere. `/admin/sp_cron.php`, `/wp-login.php` și restul scanărilor
+ * automate nu o au — și, până acum, fiecare dintre ele costa PATRU interogări
+ * în bază înainte de 404. Erau ~640 de 404-uri pe oră. Filtrul de mai jos e o
+ * expresie regulată în memorie și le oprește pe toate înainte de rețea.
+ */
+const SLUG_VALID = /^[a-z0-9](?:[a-z0-9-]{0,298}[a-z0-9])?$/;
+
 export const resolveRootSlug = cache(async (slug: string, locale: Locale): Promise<RootMatch> => {
+  if (!SLUG_VALID.test(slug)) return null;
   const col = locale === "ru" ? "slug_ru" : "slug_ro";
   const [legal, svc, brand, product] = await Promise.all([
     db.from("legal_pages").select("id").or(`${col}.eq.${slug},slug_ro.eq.${slug}`).limit(1),
@@ -361,7 +391,8 @@ export const getSizeFacets = cache(async (
   if (picked.aspect) q = q.eq("aspect", picked.aspect);
   if (picked.diameter) q = q.eq("diameter", picked.diameter);
 
-  const [{ data }, brands] = await Promise.all([q.limit(20000), getBrands()]);
+  const [{ data, error }, brands] = await Promise.all([q.limit(20000), getBrands()]);
+  if (error) throw new Error(`facete dimensiune: ${error.message}`);
   const slugById = new Map(brands.map((b) => [b.id, b.slug_ro]));
 
   type Row = { season: Season | null; brand_id: number | null; brand_name: string | null; stock_status: StockStatus };
@@ -412,19 +443,30 @@ function bump(
 const slugify = (s: string) =>
   s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
-/** Contoarele celor trei plăci de sezon de pe pagina principală. */
+/**
+ * Contoarele celor trei plăci de sezon de pe pagina principală.
+ *
+ * O SINGURĂ cerere, din vederea materializată, nu trei `COUNT(*)` pe 15.000 de
+ * rânduri. Cele trei numărători erau, pe 8 septembrie 2026, 472.000 din cele
+ * ~1.000.000 de interogări pe care le-a primit baza în 24 de ore — pentru trei
+ * cifre care se schimbă o dată pe zi, la import. `facet_counts` numără fiecare
+ * anvelopă o dată pe lățime, deci suma pe sezon a rândurilor de lățime e exact
+ * numărul de anvelope al sezonului.
+ *
+ * Eroarea se aruncă, nu se rotunjeşte la zero: un zero ajunge în selector ca
+ * „nu avem anvelope de iarnă", iar ISR îl ține așa o zi. Exact așa a rămas
+ * pagina principală cu toate cele trei sezoane pe 0 și cu lista de sezon goală.
+ */
 export const getSeasonCounts = cache(async (): Promise<Record<Season, number>> => {
-  const seasons: Season[] = ["vara", "iarna", "all_season"];
-  const counts = await Promise.all(
-    seasons.map((s) =>
-      /* GET, nu HEAD — vezi comentariul din getCatalog. */
-      db.from("products").select("id", { count: "exact" }).limit(1)
-        .eq("is_active", true).eq("category", "anvelope").eq("season", s)
-        .in("stock_status", AVAILABLE)
-        .then(({ count }) => count ?? 0),
-    ),
-  );
-  return Object.fromEntries(seasons.map((s, i) => [s, counts[i]])) as Record<Season, number>;
+  const { data, error } = await db.from("facet_counts")
+    .select("season, n").eq("facet", "width").in("stock_status", AVAILABLE);
+  if (error) throw new Error(`contoare sezon: ${error.message}`);
+
+  const counts: Record<Season, number> = { vara: 0, iarna: 0, all_season: 0 };
+  for (const r of (data as { season: Season | null; n: number }[] | null) ?? []) {
+    if (r.season && r.season in counts) counts[r.season] += Number(r.n);
+  }
+  return counts;
 });
 
 /**
@@ -433,10 +475,11 @@ export const getSeasonCounts = cache(async (): Promise<Record<Season, number>> =
  * `facet_counts`, nu din `brands.product_count` (care numără și indisponibilele).
  */
 export const getBrandOptions = cache(async (): Promise<{ slug: string; name: string; count: number }[]> => {
-  const [{ data }, brands] = await Promise.all([
+  const [{ data, error }, brands] = await Promise.all([
     db.from("facet_counts").select("value, stock_status, n").eq("facet", "brand").in("stock_status", AVAILABLE),
     getBrands(),
   ]);
+  if (error) throw new Error(`marci (facete): ${error.message}`);
 
   const slugByName = new Map(brands.map((b) => [b.name, b.slug_ro]));
   const totals = new Map<string, number>();

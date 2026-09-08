@@ -1,8 +1,9 @@
+import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { ProductCard } from "@/components/ui/ProductCard";
 import { EmptyState } from "@/components/ui/EmptyState";
-import { TireFinderPanel } from "@/components/ui/TireFinderPanel";
+import { SizeShortcuts } from "./SizeShortcuts";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { BrandLogo } from "@/components/ui/BrandLogo";
 import { TreadRule, IconWhatsApp } from "@/components/icons";
@@ -46,6 +47,10 @@ export async function CatalogView({
     getCatalogSummary(criterii),
   ]);
 
+  /* `pagina_9999` raspundea 200 cu o lista goala, si tot asa pana la infinit.
+     O pagina care nu exista e un 404, nu o randare cu patru interogari in baza. */
+  if (page > result.pages) notFound();
+
   /**
    * Orice legătură din pagină e o rută, nu un query. `hrefFor` primește ce se
    * schimbă față de starea curentă și returnează calea completă; când nu mai
@@ -81,7 +86,7 @@ export async function CatalogView({
         </p>
       </div>
       {/* Rezumatul selecției, din aceleași rânduri care se afișează dedesubt. */}
-      <CatalogIntro summary={summary} eticheta={etichetaFiltru(filters, numeMarca, locale)} locale={locale} />
+      <CatalogIntro summary={summary} total={result.availableTotal} eticheta={etichetaFiltru(filters, numeMarca, locale)} locale={locale} />
 
       <TreadRule variant="full" className="mt-[var(--sp-3)] text-[var(--line)]" />
 
@@ -119,7 +124,7 @@ export async function CatalogView({
           </div>
 
           {result.items.length === 0 ? (
-            <EmptyStateWithWhatsApp locale={locale} filters={filters} unavailableTotal={result.unavailableTotal} />
+            <EmptyStateWithWhatsApp filters={filters} unavailableTotal={result.unavailableTotal} />
           ) : (
             <>
               <h2 className="sr-only-abs">{t("catalog.results", { count: result.total })}</h2>
@@ -208,14 +213,18 @@ function pageWindow(page: number, pages: number): number[] {
 /**
  * Zero rezultate nu e capăt de drum: mereu o cale înainte.
  *
- * Sub explicație stă panoul de căutare, același de peste tot. Filtrele din
- * stânga rafinează o listă care nu mai există; panoul pornește o căutare nouă,
- * cu contoare care spun dinainte unde e marfă. E singurul loc din catalog unde
- * apar amândouă, și e locul unde asta ajută.
+ * Sub explicație stau dimensiunile cele mai acoperite. Filtrele din stânga
+ * rafinează o listă care nu mai există; linkurile de dedesubt pornesc o căutare
+ * nouă, cu numere care spun dinainte unde e marfă.
+ *
+ * Aici stătea panoul de căutare, cu cele patru interogări ale lui. Erau exact
+ * interogările pe care le cerea o pagină goală, adică fix cazul în care baza era
+ * deja în genunchi. Arborele de dimensiuni spune același lucru fără să întrebe
+ * nimic. Vezi SizeShortcuts.
  */
 async function EmptyStateWithWhatsApp({
-  locale, filters, unavailableTotal,
-}: { locale: Locale; filters: ParsedFilters; unavailableTotal: number }) {
+  filters, unavailableTotal,
+}: { filters: ParsedFilters; unavailableTotal: number }) {
   const t = await getTranslations();
   const size = [filters.width, filters.aspect].filter(Boolean).join("/") + (filters.diameter ? ` ${filters.diameter}` : "");
   const wa = whatsappLink(t("wa.catalog", { size: size || "—", season: filters.season ? t(`season.${filters.season}`) : "—" }));
@@ -238,7 +247,7 @@ async function EmptyStateWithWhatsApp({
         </div>
       }
     />
-      <div className="max-w-[380px]"><TireFinderPanel locale={locale} /></div>
+      <SizeShortcuts />
     </div>
   );
 }

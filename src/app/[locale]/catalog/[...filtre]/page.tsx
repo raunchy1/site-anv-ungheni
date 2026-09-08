@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
+import { notFound, permanentRedirect } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { CatalogView } from "@/components/catalog/CatalogView";
-import { parseFilterSegments, canonicalSegments, activeFilterCount } from "@/lib/catalog-filters";
-import { sizeTree } from "@/lib/size-tree";
+import {
+  parseFilterSegments, canonicalSegments, activeFilterCount,
+  buildFilterSegments, isCanonicalPath, type ParsedFilters,
+} from "@/lib/catalog-filters";
+import { sizeExists, sizeTree } from "@/lib/size-tree";
 import { getBrands } from "@/lib/db/queries";
 import { descriereCatalogSeo, titluCatalogSeo } from "@/lib/seo/catalog-meta";
 import type { Locale } from "@/lib/types";
@@ -54,6 +58,30 @@ function isIndexable(f: ReturnType<typeof parseFilterSegments>): boolean {
   return activeFilterCount(f) <= 3;
 }
 
+/**
+ * O ADRESA DE CATALOG E O ADRESA, NU ORICE SIR DE SEGMENTE.
+ *
+ * Pana acum, ruta accepta absolut orice: `/catalog-anvelope/blabla` raspundea
+ * 200 cu tot catalogul, `/catalog-anvelope/latime_9999` raspundea 200 cu zero
+ * rezultate, iar `pagina_9999` raspundea 200 cu o lista goala. Fiecare era o
+ * pagina reala — patru interogari in Supabase si o intrare noua in cache-ul ISR
+ * — si erau infinit de multe. Pe 8 septembrie 2026 asta a insemnat ~7.300 de
+ * adrese distincte la fiecare jumatate de ora si un milion de interogari pe zi,
+ * pana cand baza a inceput sa raspunda 522 si catalogul s-a golit pe site.
+ *
+ * De aici incolo: segment nerecunoscut sau dimensiune inexistenta -> 404, o
+ * pagina ieftina si finita. Marca se verifica in bază, fiindca lista de marci
+ * nu e in cod.
+ */
+async function ensureRealRoute(f: ParsedFilters): Promise<void> {
+  if (f.unknown.length) notFound();
+  if (!sizeExists(f.width, f.aspect, f.diameter)) notFound();
+  if (f.brand) {
+    const brands = await getBrands();
+    if (!brands.some((b) => b.slug_ro === f.brand || b.slug_ru === f.brand)) notFound();
+  }
+}
+
 export async function generateMetadata({
   params,
 }: { params: Promise<{ locale: string; filtre: string[] }> }): Promise<Metadata> {
@@ -99,10 +127,17 @@ export default async function FilteredCatalogPage({
   const { locale, filtre } = await params;
   setRequestLocale(locale);
 
-  return (
-    <CatalogView
-      locale={locale as Locale}
-      filters={parseFilterSegments(filtre)}
-    />
-  );
+  const filters = parseFilterSegments(filtre);
+  await ensureRealRoute(filters);
+
+  /* Aceeasi selectie, o singura adresa: ordinea segmentelor e fixa, `pagina_1`
+     nu se scrie, `sezon_all_season` se scrie `sezon_all-season`. Restul se muta
+     acolo cu 308, ca sa nu existe doua pagini cu aceeasi marfa. */
+  if (!isCanonicalPath(filtre, filters)) {
+    const segments = buildFilterSegments(filters);
+    const root = locale === "ru" ? "/ru/katalog-shin" : "/catalog-anvelope";
+    permanentRedirect(segments.length ? `${root}/${segments.join("/")}` : root);
+  }
+
+  return <CatalogView locale={locale as Locale} filters={filters} />;
 }
