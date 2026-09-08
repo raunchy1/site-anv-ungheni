@@ -18,7 +18,31 @@ export default function robots(): MetadataRoute.Robots {
   }
   // Rutele tranzacționale și cele interne n-au ce căuta în index.
   const disallow = ["/admin", "/api/", "/cos", "/checkout", "/comanda/", "/design-system",
-    "/ru/korzina", "/ru/oformlenie-zakaza", "/favorite", "/comparare", "/ru/izbrannoe", "/ru/sravnenie"];
+    "/ru/korzina", "/ru/oformlenie-zakaza", "/favorite", "/comparare", "/ru/izbrannoe", "/ru/sravnenie",
+    /*
+     * SORTAREA, PAGINAREA ȘI „ARATĂ ȘI INDISPONIBILELE" SE ÎNCHID LA CRAWLARE.
+     *
+     * `isIndexable` le dădea deja `noindex` — dar `noindex` se află abia DUPĂ ce
+     * pagina a fost randată, iar randarea e exact ce costă. Fiecare combinație
+     * de filtre se înmulțea cu trei sortări, cu numărul de pagini și cu două
+     * variante de disponibilitate; spațiul rezultat e practic infinit, și era
+     * deschis tuturor.
+     *
+     * Ce a ieșit din asta, măsurat în logurile Supabase pe 7 septembrie 2026:
+     * ~125.000 de interogări pe oră, nouă ore la rând, adică ~20.000 de randări
+     * pe oră cerute de roboți. Aia a golit bugetul de Fast Origin Transfer de la
+     * Vercel și a pus originea Supabase pe 521/522.
+     *
+     * Nu se pierde nimic din index: astea erau `noindex` oricum, iar produsele
+     * intră în sitemap pe cont propriu, nu prin paginarea catalogului.
+     */
+    "/catalog-anvelope/*sortare_",
+    "/catalog-anvelope/*pagina_",
+    "/catalog-anvelope/*indisponibile",
+    "/ru/katalog-shin/*sortare_",
+    "/ru/katalog-shin/*pagina_",
+    "/ru/katalog-shin/*indisponibile",
+  ];
 
   /*
    * ROBOȚII DE AI SUNT LĂSAȚI SĂ INTRE, EXPLICIT.
