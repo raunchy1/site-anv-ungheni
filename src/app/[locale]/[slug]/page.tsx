@@ -11,7 +11,8 @@ import { ServicePage, serviceMetadata } from "@/components/product/ServicePage";
 import { LegalPageView, legalMetadata } from "@/components/product/LegalPageView";
 import type { Locale } from "@/lib/types";
 
-export const revalidate = 900;
+/** O zi, nu 15 minute: vezi nota din `catalog/[...filtre]/page.tsx`. */
+export const revalidate = 86400;
 /** Slug-urile negenerate la build se randează la prima cerere și rămân în cache. */
 export const dynamicParams = true;
 

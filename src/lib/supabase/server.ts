@@ -11,13 +11,14 @@ import { createClient } from "@supabase/supabase-js";
  * ecranul stă neschimbat. Cu `revalidate`, a doua vizită pe aceeași combinație
  * răspunde din cache.
  *
- * 15 minute e cât ține și `revalidate` al rutelor de catalog; prețurile și
- * stocurile vin din același import zilnic, deci nu se învechește nimic ce nu
- * era deja de 15 minute vechi. Eticheta `catalog` permite golirea imediată
- * dintr-o acțiune de server, dacă va fi nevoie.
+ * O zi e cât ține și `revalidate` al rutelor de catalog; prețurile și stocurile
+ * vin din același import zilnic, deci nu se învechește nimic ce nu era deja
+ * vechi de o zi. Eticheta `catalog` nu mai e o rezervă teoretică: cronul o
+ * golește la finalul fiecărei sincronizări, așa că datele proaspete ajung în
+ * catalog imediat după import, nu la următoarea expirare.
  */
 const cachedFetch: typeof fetch = (input, init) =>
-  fetch(input, { ...init, next: { revalidate: 900, tags: ["catalog"] } });
+  fetch(input, { ...init, next: { revalidate: 86400, tags: ["catalog"] } });
 
 export const db = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,

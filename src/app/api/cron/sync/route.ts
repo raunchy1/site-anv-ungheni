@@ -1,3 +1,4 @@
+import { revalidateTag } from "next/cache";
 import { NextResponse } from "next/server";
 
 /**
@@ -157,6 +158,23 @@ export async function GET(request: Request) {
         `Ultima rulare reușită a fost acum ${Number.isFinite(tacere) ? `${Math.round(tacere)} ore` : "— niciodată"}.\nVerifică jobul din Vercel Cron și jurnalul din import_runs.`,
       );
     }
+
+    /* Catalogul se ține acum o zi în cache (`revalidate = 86400`), nu 15 minute:
+       la 830 KB pagina, revalidarea deasă era ce a ars bugetul de Fast Origin
+       Transfer. Prospețimea vine de aici — importul tocmai a schimbat prețuri
+       și stocuri, deci golim eticheta și lăsăm paginile atinse să se
+       re-randeze la următoarea cerere. Fără asta, o modificare de preț ar sta
+       nevăzută până a doua zi.
+
+       Doar la rulările care chiar scriu: un `?dry=1` n-a schimbat nimic, iar
+       invalidarea l-ar pune pe utilizator să plătească randări degeaba.
+
+       `expire: 0` fiindcă în Next 16 `revalidateTag` cere un profil de
+       `cacheLife`: intrările tocmai au devenit greșite, nu doar bătrâne, deci
+       fereastra de învechire acceptată e zero. `updateTag`, varianta cu
+       citește-ce-ai-scris, merge doar din Server Actions — aici suntem
+       într-o rută. */
+    if (apply) revalidateTag("catalog", { expire: 0 });
 
     return NextResponse.json({
       ok: true, mode, noi, carantina, faraPret,

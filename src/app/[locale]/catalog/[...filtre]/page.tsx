@@ -7,7 +7,18 @@ import { getBrands } from "@/lib/db/queries";
 import { descriereCatalogSeo, titluCatalogSeo } from "@/lib/seo/catalog-meta";
 import type { Locale } from "@/lib/types";
 
-export const revalidate = 900;
+/**
+ * O zi, nu 15 minute. Fiecare regenerare ISR trimite pagina randată de la
+ * funcție spre CDN, iar o pagină de catalog are ~830 KB. La 900 de secunde,
+ * cele 380 de rute de filtru puteau produce zeci de GB pe zi de Fast Origin
+ * Transfer — exact ce a blocat contul pe 8 septembrie 2026.
+ *
+ * Prospețimea nu se pierde: prețurile și stocurile vin dintr-un singur import
+ * zilnic, iar cronul golește eticheta `catalog` la finalul rulării, deci
+ * catalogul se împrospătează imediat DUPĂ sync, nu întrebând din 15 în 15
+ * minute dacă s-a schimbat ceva.
+ */
+export const revalidate = 86400;
 export const dynamicParams = true;
 
 /**

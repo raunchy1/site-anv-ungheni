@@ -42,7 +42,16 @@ const nextConfig: NextConfig = {
      * Lista implicita a Next genereaza 8 variante pe care nu le cere nimeni.
      */
     imageSizes: [96, 128, 192, 256, 350],
-    deviceSizes: [640, 828, 1080, 1440],
+    /**
+     * 1440 a fost scos. Nimic pe site nu se afiseaza mai lat de 760 px CSS
+     * (lightbox-ul fisei de produs); 1080 acopera si asta la 2x. Cat timp a
+     * stat in lista, `sizes="(min-width: 1024px) 280px, 45vw"` de pe cardul de
+     * catalog il tinea si ca `src` de rezerva — adica o fotografie randata la
+     * 1440 px pentru o caseta de 280. Cinci variante in srcset inseamna ~1,3 KB
+     * de URL-uri per imagine, ori 52 de imagini pe pagina de catalog, in HTML
+     * si inca o data in payload-ul RSC.
+     */
+    deviceSizes: [640, 828, 1080],
   },
 };
 

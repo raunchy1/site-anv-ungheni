@@ -73,13 +73,20 @@ export function BrandLogo({
         className,
       )}
     >
+      {/* Latime si inaltime explicite, nu `fill`. `fill` cere un `sizes`, iar un
+          `sizes` fara unitate de viewport il face pe Next sa emita srcSet cu
+          TOATE lungimile configurate — opt variante, pana la 1080 px, pentru o
+          caseta de cel mult 300. Erau opt randari facturabile per logo si ~900
+          de octeti de URL-uri in fiecare pagina de catalog, unde logo-urile
+          apar de 30 de ori. Cu dimensiuni fixe, Next emite exact doua intrari,
+          1x si 2x, care e tot ce poate folosi un desen de latime cunoscuta. */}
       <Image
         src={src}
         alt={name}
-        fill
-        sizes="224px"
+        width={w}
+        height={h}
         className={cn(
-          "object-contain object-center p-[6%]",
+          "h-full w-full object-contain object-center p-[6%]",
           // `multiply` lipește fotografia de placa deschisă; pe placa închisă
           // ar înnegri exact desenul alb pe care vrem să-l vedem.
           !onDark && "[mix-blend-mode:var(--img-blend)]",
