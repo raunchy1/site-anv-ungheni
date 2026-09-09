@@ -72,6 +72,20 @@ function isIndexable(f: ReturnType<typeof parseFilterSegments>): boolean {
  * De aici incolo: segment nerecunoscut sau dimensiune inexistenta -> 404, o
  * pagina ieftina si finita. Marca se verifica in bază, fiindca lista de marci
  * nu e in cod.
+ *
+ * DE CE NU MAI EXISTA `loading.tsx` PE RUTA ASTA. `notFound()` si
+ * `permanentRedirect()` pot schimba statusul raspunsului doar cat timp acesta
+ * n-a plecat inca. Un `loading.tsx` deschide o granita Suspense, iar Suspense
+ * trimite invelisul paginii IMEDIAT, cu 200 in antet, inainte ca functia
+ * paginii sa fie macar asteptata. Masurat: cu `loading.tsx`, si
+ * `/catalog-anvelope/blabla`, si `/catalog-anvelope/inaltime_55/latime_205`
+ * raspundeau 200 — prima cu continut de 404 lipit peste (soft 404, exact ce
+ * numara Google drept pagina subtire), a doua fara sa redirectioneze deloc.
+ * Fara granita: 404, respectiv 308 catre forma canonica.
+ *
+ * Scheletul de incarcare s-a pierdut odata cu ele. Se vedea oricum doar la
+ * randarile care rateaza cache-ul, adica rar, si nu face cat doua statusuri
+ * HTTP gresite pe tot spatiul de filtre.
  */
 async function ensureRealRoute(f: ParsedFilters): Promise<void> {
   if (f.unknown.length) notFound();
