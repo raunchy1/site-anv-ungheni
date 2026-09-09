@@ -449,9 +449,13 @@ const slugify = (s: string) =>
  * O SINGURĂ cerere, din vederea materializată, nu trei `COUNT(*)` pe 15.000 de
  * rânduri. Cele trei numărători erau, pe 8 septembrie 2026, 472.000 din cele
  * ~1.000.000 de interogări pe care le-a primit baza în 24 de ore — pentru trei
- * cifre care se schimbă o dată pe zi, la import. `facet_counts` numără fiecare
- * anvelopă o dată pe lățime, deci suma pe sezon a rândurilor de lățime e exact
- * numărul de anvelope al sezonului.
+ * cifre care se schimbă o dată pe zi, la import.
+ *
+ * Se citește faceta `season`, adăugată în migrarea 0028 exact pentru asta.
+ * Prima variantă însuma faceta de LĂȚIME pe sezon, fiindcă alta nu era; ieșea
+ * aproape corect, dar `facet='width'` cere `width is not null`, iar cele 16
+ * anvelope imperiale fără lățime metrică lipseau din contor. Scria 4.892 acolo
+ * unde lista de pe pagina de sezon arăta 4.894.
  *
  * Eroarea se aruncă, nu se rotunjeşte la zero: un zero ajunge în selector ca
  * „nu avem anvelope de iarnă", iar ISR îl ține așa o zi. Exact așa a rămas
@@ -459,7 +463,7 @@ const slugify = (s: string) =>
  */
 export const getSeasonCounts = cache(async (): Promise<Record<Season, number>> => {
   const { data, error } = await db.from("facet_counts")
-    .select("season, n").eq("facet", "width").in("stock_status", AVAILABLE);
+    .select("season, n").eq("facet", "season").in("stock_status", AVAILABLE);
   if (error) throw new Error(`contoare sezon: ${error.message}`);
 
   const counts: Record<Season, number> = { vara: 0, iarna: 0, all_season: 0 };
