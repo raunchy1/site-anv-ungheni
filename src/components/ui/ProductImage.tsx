@@ -38,10 +38,7 @@ export function ProductImage({
   const d = t(locale);
   return (
     <div
-      className={cn(
-        "relative aspect-square w-full overflow-hidden rounded-[var(--radius-xs)] bg-[var(--img-plate)]",
-        className,
-      )}
+      className={cn("img-plate", className)}
     >
       {src ? (
         <Image
@@ -56,7 +53,7 @@ export function ProductImage({
              tag. Fotografia produsului E elementul LCP pe fisa, iar browserul o
              cere altfel in coada decat CSS-ul si fonturile daca nu i se spune. */
           fetchPriority={priority ? "high" : undefined}
-          className="object-contain p-[10%] [mix-blend-mode:var(--img-blend)]"
+          className="img-plate-fill"
         />
       ) : (
         /* 10 produse din 15.010 n-au fotografie. Nu un patrat gri gol:

@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
-import { IconAllSeason, IconCommercial, IconExtraLoad, IconRunFlat, IconSummer, IconWinter } from "@/components/icons";
+import { SpriteIcon, type SpriteId } from "@/components/icons";
 import type { Product, Season } from "@/lib/sample-products";
 import type { Locale } from "@/lib/i18n";
 import { t } from "@/lib/i18n";
@@ -21,24 +21,18 @@ export type BadgeProps = {
  * suprafata coloratului sub 1%.
  */
 const tones: Record<BadgeTone, string> = {
-  neutral: "border-[var(--line-strong)] text-[var(--ink)]",
-  quiet: "border-[var(--line)] text-[var(--ink-muted)]",
-  summer: "border-[var(--season-summer)]/45 text-[var(--season-summer)]",
-  winter: "border-[var(--season-winter)]/45 text-[var(--season-winter)]",
-  allSeason: "border-[var(--season-all)]/45 text-[var(--season-all)]",
-  accent: "border-[var(--accent)]/50 text-[var(--accent-ink)]",
+  neutral: "",
+  quiet: "badge-quiet",
+  summer: "badge-summer",
+  winter: "badge-winter",
+  allSeason: "badge-all-season",
+  accent: "badge-accent",
 };
 
 export function Badge({ tone = "neutral", icon, className, children }: BadgeProps) {
   return (
     <span
-      className={cn(
-        "inline-flex items-center gap-[var(--sp-1)] rounded-[var(--radius-xs)] border",
-        "px-[var(--sp-2)] py-[2px] text-100 font-semibold",
-        "uppercase tracking-[var(--tr-label)] leading-none",
-        tones[tone],
-        className,
-      )}
+      className={cn("badge", tones[tone], className)}
     >
       {icon}
       {children}
@@ -46,11 +40,13 @@ export function Badge({ tone = "neutral", icon, className, children }: BadgeProp
   );
 }
 
+/* Desenele vin din sprite, nu inline: insigna asta apare pe fiecare card din
+   grila. Vezi nota din `components/icons`. */
 const seasonMap = {
-  vara: { tone: "summer", Icon: IconSummer, key: "summer" },
-  iarna: { tone: "winter", Icon: IconWinter, key: "winter" },
-  all_season: { tone: "allSeason", Icon: IconAllSeason, key: "allSeason" },
-} as const;
+  vara: { tone: "summer", icon: "summer", key: "summer" },
+  iarna: { tone: "winter", icon: "winter", key: "winter" },
+  all_season: { tone: "allSeason", icon: "all-season", key: "allSeason" },
+} as const satisfies Record<string, { tone: BadgeTone; icon: SpriteId; key: string }>;
 
 export function SeasonBadge({
   season,
@@ -68,7 +64,7 @@ export function SeasonBadge({
   const label =
     cfg.key === "summer" ? d.summer : cfg.key === "winter" ? d.winter : d.allSeason;
   return (
-    <Badge tone={cfg.tone} icon={<cfg.Icon size={13} />} className={className}>
+    <Badge tone={cfg.tone} icon={<SpriteIcon id={cfg.icon} size={13} />} className={className}>
       {label}
     </Badge>
   );
@@ -80,17 +76,18 @@ export function SeasonBadge({
  * fel ca `205/55 R16`. Produsele fara niciunul nu lasa rand gol.
  */
 export function SpecBadges({ product, className }: { product: Product; className?: string }) {
-  const marks = [
-    product.isXl ? { key: "XL", Icon: IconExtraLoad } : null,
-    product.isRunflat ? { key: "Run Flat", Icon: IconRunFlat } : null,
-    product.isCommercial ? { key: "C", Icon: IconCommercial } : null,
-  ].filter((m): m is { key: string; Icon: typeof IconExtraLoad } => m !== null);
+  type Mark = { key: string; icon: SpriteId };
+  const marks = ([
+    product.isXl ? { key: "XL", icon: "xl" } : null,
+    product.isRunflat ? { key: "Run Flat", icon: "runflat" } : null,
+    product.isCommercial ? { key: "C", icon: "commercial" } : null,
+  ] as (Mark | null)[]).filter((m): m is Mark => m !== null);
 
   if (!marks.length) return null;
   return (
     <div className={cn("flex flex-wrap gap-[var(--sp-1)]", className)}>
-      {marks.map(({ key, Icon }) => (
-        <Badge key={key} tone="quiet" icon={<Icon size={13} />}>{key}</Badge>
+      {marks.map(({ key, icon }) => (
+        <Badge key={key} tone="quiet" icon={<SpriteIcon id={icon} size={13} />}>{key}</Badge>
       ))}
     </div>
   );

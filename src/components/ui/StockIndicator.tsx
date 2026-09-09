@@ -31,20 +31,11 @@ export function StockIndicator({
   // „Disponibil" fara termen ar fi vag, „In stoc" ar fi neadevarat: marfa e la furnizor.
   const note = status === "supplier" ? d.supplierNote : status === "in_stock" ? d.inStockNote : null;
 
-  const mark =
-    status === "out_of_stock"
-      ? "border border-[var(--ink-muted)] bg-transparent"
-      : "border border-[var(--ok)] bg-[var(--ok)]";
-
   return (
     <span
-      className={cn(
-        "inline-flex items-center gap-[var(--sp-2)] text-200 leading-none",
-        status === "out_of_stock" ? "text-[var(--ink-muted)]" : "text-[var(--ink)]",
-        className,
-      )}
+      className={cn("stock", status === "out_of_stock" && "stock-out", className)}
     >
-      <span className={cn("size-2 shrink-0 rounded-[1px]", mark)} aria-hidden="true" />
+      <span className="stock-mark" aria-hidden="true" />
       {variant === "full" ? (
         <span>
           {label}

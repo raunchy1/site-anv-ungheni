@@ -115,18 +115,11 @@ export async function FilterPanel({
                     href={linkTo({ brand: active ? undefined : slug })}
                     rel={relFor({ brand: slug })}
                     prefetch={false}
-                    className={`flex items-baseline justify-between gap-[var(--sp-2)] rounded-[var(--radius-sm)] px-[var(--sp-2)] py-[var(--sp-1)] text-200 transition-colors duration-[var(--dur-1)] ${
-                      active ? "bg-[var(--ink-strong)] text-[var(--surface)]" : "text-[var(--ink-muted)] hover:text-[var(--ink-strong)]"
-                    }`}
+                    className={active ? "brand-filter is-active" : "brand-filter"}
                   >
-                    <span className="truncate">{b.name}</span>
-                    {/* Contorul păstrează `opacity` doar pe fundal închis, unde
-                        raportul rămâne peste 4,5:1. Pe fundal deschis, 70% din
-                        `--ink-muted` cădea la 2,98:1 — sub pragul AA (verificat
-                        cu Lighthouse pe catalog). */}
-                    <span className={`num shrink-0 text-100 ${active ? "opacity-70" : "text-[var(--ink)]"}`}>
-                      {b.product_count}
-                    </span>
+                    <span className="brand-filter-name">{b.name}</span>
+                    {/* Regula de contrast a contorului stă acum lângă clasă, în globals.css. */}
+                    <span className="num brand-filter-count">{b.product_count}</span>
                   </Link>
                 </li>
               );
@@ -170,14 +163,10 @@ function FilterChip({ href, active, label, count, rel }: { href: React.Component
       rel={rel}
       prefetch={false}
       aria-current={active ? "true" : undefined}
-      className={`num inline-flex min-h-[36px] items-center gap-[var(--sp-2)] rounded-[var(--radius-sm)] border px-[var(--sp-3)] text-200 transition-colors duration-[var(--dur-1)] ${
-        active
-          ? "border-[var(--ink-strong)] bg-[var(--ink-strong)] text-[var(--surface)]"
-          : "border-[var(--line)] text-[var(--ink-strong)] hover:border-[var(--line-strong)]"
-      }`}
+      className={active ? "num filter-chip is-active" : "num filter-chip"}
     >
       {label}
-      {count != null && <span className={`text-100 ${active ? "opacity-70" : "text-[var(--ink-muted)]"}`}>{count}</span>}
+      {count != null && <span className="filter-chip-count">{count}</span>}
     </Link>
   );
 }

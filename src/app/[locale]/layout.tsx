@@ -13,6 +13,7 @@ import { CookieBanner } from "@/components/layout/CookieBanner";
 import { getSettings } from "@/lib/db/queries";
 import { SITE_URL } from "@/lib/format";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { IconSprite } from "@/components/icons";
 import { atelierSchema, organizatieSchema, siteSchema } from "@/lib/seo/schema";
 import type { Locale } from "@/lib/types";
 import "../globals.css";
@@ -51,6 +52,9 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} data-theme="light" className={`${fontVarsFor(locale)} h-full`} suppressHydrationWarning>
       <body className="min-h-full bg-[var(--surface)] text-[var(--ink)] antialiased">
+        {/* Desenele insignelor de sezon si de flanc, o singura data pe pagina.
+            Vezi nota din `components/icons`. */}
+        <IconSprite />
         {/*
           * Cine suntem, unde suntem și când suntem deschiși — o singură dată, în
           * layout, deci pe fiecare pagină. Un asistent întrebat „unde cumpăr

@@ -17,24 +17,29 @@ export const revalidate = 86400;
 export const dynamicParams = true;
 
 /**
- * Pre-generăm rutele care aduc trafic: cele 134 de branduri, cele 9 servicii,
- * cele 4 pagini legale și primele 400 de produse disponibile, cele mai ieftine —
- * adică exact ce vede un client care caută preț. Restul de 14.600 de fișe se
- * randează la prima cerere și rămân în cache; a le pre-genera pe toate ar face
- * build-ul să dureze zeci de minute pentru pagini pe care nu le cere nimeni.
+ * Pre-generăm rutele PUȚINE ȘI STABILE: cele 134 de branduri, cele 9 servicii,
+ * cele 4 pagini legale. Fișele de produs NU se mai pre-generează, niciuna.
+ *
+ * Pana acum se pre-generau si primele 400 de produse dupa pret. Cantareau 200 MB
+ * de HTML si de payload RSC PER LIMBA, adica 400 MB din cei ~1 GB pe care ii urca
+ * fiecare deploy — iar Deployment Storage aduna toate deploy-urile pastrate, nu
+ * doar ultimul. La 10 GB, contul se umplea in opt deploy-uri.
+ *
+ * Nu se pierde nimic in afara de prima randare. Ruta are `dynamicParams` si
+ * `revalidate = 86400`, deci fisa se randeaza la prima cerere si ramane in
+ * cache-ul ISR o zi — exact regimul in care traiau deja celelalte 14.600 de
+ * fise. Iar cache-ul ISR se masoara separat de Deployment Storage, si acolo
+ * avem loc: 64.000 de scrieri din 200.000.
  */
 export async function generateStaticParams() {
-  const [{ data: products }, { data: brands }, { data: services }, { data: legal }] = await Promise.all([
-    db.from("products").select("slug_ro, slug_ru")
-      .eq("is_active", true).in("stock_status", ["in_stock", "supplier"])
-      .not("price_mdl", "is", null).order("price_mdl", { ascending: true }).limit(400),
+  const [{ data: brands }, { data: services }, { data: legal }] = await Promise.all([
     db.from("brands").select("slug_ro, slug_ru").gt("product_count", 0),
     db.from("services").select("slug_ro, slug_ru").eq("is_active", true),
     db.from("legal_pages").select("slug_ro, slug_ru"),
   ]);
 
   type Pair = { slug_ro: string; slug_ru: string | null };
-  const all = [...(products ?? []), ...(brands ?? []), ...(services ?? []), ...(legal ?? [])] as Pair[];
+  const all = [...(brands ?? []), ...(services ?? []), ...(legal ?? [])] as Pair[];
   return all.flatMap((r) => [
     { locale: "ro", slug: r.slug_ro },
     { locale: "ru", slug: r.slug_ru ?? r.slug_ro },

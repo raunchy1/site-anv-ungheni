@@ -42,6 +42,118 @@ function Icon({ size = 20, title, children, ...svg }: IconBaseProps) {
   );
 }
 
+/* ------------------------------------------------------------- spriteul --
+ * SASE DESENE CARE SE REPETA PE FIECARE CARD.
+ *
+ * Insigna de sezon apare o data pe card, marcajele de flanc pana la trei ori.
+ * Pe o pagina de catalog cu 30 de carduri asta inseamna ~50 de SVG-uri inline,
+ * fiecare cu conturul lui, si fiecare trimis de doua ori — o data in HTML, o
+ * data in payload-ul RSC — plus inca o data in fisierele de segment. Masurat:
+ * ~20 KB pe pagina, pentru sase desene distincte.
+ *
+ * Desenele stau acum o singura data, intr-un `<symbol>` pus in layout, iar
+ * insignele le refolosesc cu `<use>`. Culoarea si grosimea conturului se
+ * mostenesc in arborele shadow al lui `<use>`, deci `currentColor` continua sa
+ * ia culoarea insignei — nu se pierde nimic din felul in care se coloreaza.
+ *
+ * `Icon...` de mai jos randeaza ACELEASI fragmente inline: sunt folosite si in
+ * locuri unde apar o singura data (fisa de produs, placile de pe prima
+ * pagina), unde un `<use>` ar cere spriteul in pagina degeaba.
+ * -------------------------------------------------------------------------- */
+
+export type SpriteId = "summer" | "winter" | "all-season" | "xl" | "runflat" | "commercial";
+
+const sprite: Record<SpriteId, ReactNode> = {
+  /* Trei semnale, aceeasi geometrie: un disc de raza 3.6 in centru, marcaje
+     intre raza 5.4 si 8.4. Diferenta e in marcaje, nu in scara. */
+  summer: (
+    <>
+      <circle cx="12" cy="12" r="3.6" />
+      <path d="M12 3.6v2.6M12 17.8v2.6M3.6 12h2.6M17.8 12h2.6" />
+      <path d="M6.06 6.06l1.84 1.84M16.1 16.1l1.84 1.84M17.94 6.06L16.1 7.9M7.9 16.1l-1.84 1.84" />
+    </>
+  ),
+  winter: (
+    <>
+      <path d="M12 3v18M4.2 7.5l15.6 9M19.8 7.5l-15.6 9" />
+      <path d="M9.8 5.2L12 7.4l2.2-2.2M9.8 18.8L12 16.6l2.2 2.2" />
+      <path d="M5.1 11.1l.8-3l3 .8M18.9 12.9l-.8 3l-3-.8" />
+      <path d="M18.9 11.1l-.8-3l-3 .8M5.1 12.9l.8 3l3-.8" />
+    </>
+  ),
+  "all-season": (
+    <>
+      <circle cx="12" cy="12" r="3.6" />
+      {/* stanga: trei raze scurte, drepte — soarele */}
+      <path d="M6.4 12H3.8M9.45 9.45L7.2 7.2M9.45 14.55L7.2 16.8" />
+      {/* dreapta: trei brate lungi terminate in furca — fulgul */}
+      <path d="M17.6 12h3.4M21 12l-1.4-1.2M21 12l-1.4 1.2" />
+      <path d="M14.9 7.5l2.4-3.4M17.3 4.1l-1.6.3M17.3 4.1l-.3 1.6" />
+      <path d="M14.9 16.5l2.4 3.4M17.3 19.9l-1.6-.3M17.3 19.9l-.3-1.6" />
+    </>
+  ),
+  /* Marcajele de constructie: anvelopa desenata din fata, plus un singur semn. */
+  xl: (
+    <>
+      <rect x="8.25" y="8.25" width="7.5" height="12.5" rx="3.5" />
+      <path d="M10.1 8.6v11.8M12 8.3v12.4M13.9 8.6v11.8" />
+      <path d="M12 2.5v4M9.8 4.6L12 2.4l2.2 2.2" />
+    </>
+  ),
+  runflat: (
+    <>
+      <rect x="4.25" y="3.25" width="7.5" height="17.5" rx="3.5" />
+      <path d="M6.1 3.6v16.8M8 3.3v17.4M9.9 3.6v16.8" />
+      <path d="M14.5 7.5v9M17 5.5v13" />
+    </>
+  ),
+  commercial: (
+    <>
+      <path d="M2.75 6.25h11v9.5h-11z" />
+      <path d="M13.75 9.25h4l3.5 3.5v3h-7.5z" />
+      <circle cx="7" cy="18" r="2.25" />
+      <circle cx="17" cy="18" r="2.25" />
+    </>
+  ),
+};
+
+/**
+ * Spriteul, o singura data in document. Sta in layout, inaintea continutului.
+ * `display: none` ar rupe `<use>` in Safari; de aceea e ascuns prin dimensiune
+ * zero si `aria-hidden`, tiparul care functioneaza in toate browserele.
+ */
+export function IconSprite() {
+  return (
+    <svg width="0" height="0" aria-hidden="true" focusable="false" style={{ position: "absolute" }}>
+      {(Object.keys(sprite) as SpriteId[]).map((id) => (
+        <symbol key={id} id={`i-${id}`} viewBox="0 0 24 24">
+          {sprite[id]}
+        </symbol>
+      ))}
+    </svg>
+  );
+}
+
+/** Iconita luata din sprite. Aceleasi reguli de contur ca `Icon`. */
+export function SpriteIcon({ id, size = 20, ...svg }: IconProps & { id: SpriteId }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.5}
+      strokeLinecap="butt"
+      strokeLinejoin="miter"
+      aria-hidden="true"
+      focusable="false"
+      {...svg}
+    >
+      <use href={`#i-${id}`} />
+    </svg>
+  );
+}
+
 /* ---------------------------------------------------------------- produs -- */
 
 /** Sectiune de anvelopa: flanc, umar, patru blocuri de banda. */
@@ -60,34 +172,9 @@ export const IconTyre = (p: IconProps) => (
    ca un set, nu ca trei iconite separate.
    -------------------------------------------------------------------------- */
 
-export const IconSummer = (p: IconProps) => (
-  <Icon {...p}>
-    <circle cx="12" cy="12" r="3.6" />
-    <path d="M12 3.6v2.6M12 17.8v2.6M3.6 12h2.6M17.8 12h2.6" />
-    <path d="M6.06 6.06l1.84 1.84M16.1 16.1l1.84 1.84M17.94 6.06L16.1 7.9M7.9 16.1l-1.84 1.84" />
-  </Icon>
-);
-
-export const IconWinter = (p: IconProps) => (
-  <Icon {...p}>
-    <path d="M12 3v18M4.2 7.5l15.6 9M19.8 7.5l-15.6 9" />
-    <path d="M9.8 5.2L12 7.4l2.2-2.2M9.8 18.8L12 16.6l2.2 2.2" />
-    <path d="M5.1 11.1l.8-3l3 .8M18.9 12.9l-.8 3l-3-.8" />
-    <path d="M18.9 11.1l-.8-3l-3 .8M5.1 12.9l.8 3l3-.8" />
-  </Icon>
-);
-
-export const IconAllSeason = (p: IconProps) => (
-  <Icon {...p}>
-    <circle cx="12" cy="12" r="3.6" />
-    {/* stanga: trei raze scurte, drepte — soarele */}
-    <path d="M6.4 12H3.8M9.45 9.45L7.2 7.2M9.45 14.55L7.2 16.8" />
-    {/* dreapta: trei brate lungi terminate in furca — fulgul */}
-    <path d="M17.6 12h3.4M21 12l-1.4-1.2M21 12l-1.4 1.2" />
-    <path d="M14.9 7.5l2.4-3.4M17.3 4.1l-1.6.3M17.3 4.1l-.3 1.6" />
-    <path d="M14.9 16.5l2.4 3.4M17.3 19.9l-1.6-.3M17.3 19.9l-.3-1.6" />
-  </Icon>
-);
+export const IconSummer = (p: IconProps) => <Icon {...p}>{sprite.summer}</Icon>;
+export const IconWinter = (p: IconProps) => <Icon {...p}>{sprite.winter}</Icon>;
+export const IconAllSeason = (p: IconProps) => <Icon {...p}>{sprite["all-season"]}</Icon>;
 
 /* ------------------------------------------------- anvelopa cu sezon ------
    Cele trei placi de sezon de pe pagina principala cer altceva decat iconitele
@@ -147,32 +234,13 @@ export const TyreSeasonMark = ({
    -------------------------------------------------------------------------- */
 
 /** XL / sarcina intarita: sageata care apasa pe anvelopa. */
-export const IconExtraLoad = (p: IconProps) => (
-  <Icon {...p}>
-    <rect x="8.25" y="8.25" width="7.5" height="12.5" rx="3.5" />
-    <path d="M10.1 8.6v11.8M12 8.3v12.4M13.9 8.6v11.8" />
-    <path d="M12 2.5v4M9.8 4.6L12 2.4l2.2 2.2" />
-  </Icon>
-);
+export const IconExtraLoad = (p: IconProps) => <Icon {...p}>{sprite.xl}</Icon>;
 
 /** Run Flat: flanc dublu, adica peretele care tine masina fara aer. */
-export const IconRunFlat = (p: IconProps) => (
-  <Icon {...p}>
-    <rect x="4.25" y="3.25" width="7.5" height="17.5" rx="3.5" />
-    <path d="M6.1 3.6v16.8M8 3.3v17.4M9.9 3.6v16.8" />
-    <path d="M14.5 7.5v9M17 5.5v13" />
-  </Icon>
-);
+export const IconRunFlat = (p: IconProps) => <Icon {...p}>{sprite.runflat}</Icon>;
 
 /** C — anvelopa comerciala, adica pentru furgonete. */
-export const IconCommercial = (p: IconProps) => (
-  <Icon {...p}>
-    <path d="M2.75 6.25h11v9.5h-11z" />
-    <path d="M13.75 9.25h4l3.5 3.5v3h-7.5z" />
-    <circle cx="7" cy="18" r="2.25" />
-    <circle cx="17" cy="18" r="2.25" />
-  </Icon>
-);
+export const IconCommercial = (p: IconProps) => <Icon {...p}>{sprite.commercial}</Icon>;
 
 /* -------------------------------------------------------------- comert ---- */
 

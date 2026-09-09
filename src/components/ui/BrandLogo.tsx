@@ -67,11 +67,7 @@ export function BrandLogo({
   return (
     <div
       style={{ width: w, height: h }}
-      className={cn(
-        "relative shrink-0 overflow-hidden rounded-[var(--radius-xs)]",
-        onDark ? "bg-[var(--panel)]" : "bg-[var(--img-plate)]",
-        className,
-      )}
+      className={cn("brand-plate", onDark && "brand-plate-dark", className)}
     >
       {/* Latime si inaltime explicite, nu `fill`. `fill` cere un `sizes`, iar un
           `sizes` fara unitate de viewport il face pe Next sa emita srcSet cu
@@ -85,12 +81,7 @@ export function BrandLogo({
         alt={name}
         width={w}
         height={h}
-        className={cn(
-          "h-full w-full object-contain object-center p-[6%]",
-          // `multiply` lipește fotografia de placa deschisă; pe placa închisă
-          // ar înnegri exact desenul alb pe care vrem să-l vedem.
-          !onDark && "[mix-blend-mode:var(--img-blend)]",
-        )}
+        /* Incadrarea si `mix-blend-mode` stau in `.brand-plate > img`. */
       />
     </div>
   );

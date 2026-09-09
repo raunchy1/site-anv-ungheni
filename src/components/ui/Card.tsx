@@ -16,9 +16,9 @@ export type CardProps = HTMLAttributes<HTMLDivElement> & {
  * in 90ms, fara translatie.
  */
 const tones = {
-  flat: "border border-[var(--line)] bg-[var(--surface)]",
-  raised: "border border-[var(--line)] bg-[var(--surface)] shadow-[var(--shadow-1)]",
-  sunken: "border border-transparent bg-[var(--bg-sunken)]",
+  flat: "",
+  raised: "card-raised",
+  sunken: "card-sunken",
 } as const;
 
 export function Card({
@@ -30,15 +30,7 @@ export function Card({
 }: CardProps) {
   return (
     <div
-      className={cn(
-        "rounded-[var(--radius-sm)]",
-        tones[tone],
-        interactive &&
-          "transition-[background-color,border-color] duration-[var(--dur-1)] ease-[var(--ease-out)] " +
-            "hover:border-[var(--line-strong)] hover:bg-[var(--surface-2)] " +
-            "focus-within:border-[var(--line-strong)]",
-        className,
-      )}
+      className={cn("card", tones[tone], interactive && "card-interactive", className)}
       {...rest}
     >
       {children}

@@ -32,16 +32,11 @@ export function Price({
   return (
     <p className={cn("flex items-baseline gap-[var(--sp-2)]", className)}>
       <span
-        className={cn(
-          "num optical-left font-semibold tracking-[var(--tr-title)] text-[var(--ink-strong)]",
-          scale,
-        )}
+        className={cn("num optical-left price-amount", scale)}
       >
         {formatPrice(value)}
       </span>
-      <span className="text-200 font-medium uppercase tracking-[var(--tr-label)] text-[var(--ink-muted)]">
-        MDL
-      </span>
+      <span className="price-currency">MDL</span>
       <span className="sr-only-abs">{d.perTyre}</span>
     </p>
   );

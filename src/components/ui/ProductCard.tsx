@@ -55,13 +55,13 @@ export function ProductCard({
         className={cn(unavailable && "opacity-70")}
       />
 
-      <div className="mt-[var(--sp-4)] flex flex-1 flex-col">
+      <div className="card-body">
         <BrandLogo name={product.brand} src={product.brandLogo} onDark={product.brandLogoOnDark} ratio={product.brandLogoRatio} />
 
-        <h3 className="mt-[var(--sp-1)] text-300 font-medium leading-snug text-[var(--ink-strong)]">
+        <h3 className="card-name">
           <a
             href={href}
-            className="line-clamp-2 min-h-[2.44em] decoration-[var(--line-strong)] decoration-1 underline-offset-[4px] group-hover:underline"
+            className="card-title-link"
           >
             {/* Zona de atingere acopera tot cardul, nu doar textul. */}
             <span className="absolute inset-0" aria-hidden="true" />
@@ -70,26 +70,20 @@ export function ProductCard({
         </h3>
 
         {size ? (
-          <p className="mt-[var(--sp-3)] flex flex-wrap items-baseline gap-x-[var(--sp-2)] gap-y-[var(--sp-1)]">
-            <span className="num font-mono text-300 font-semibold text-[var(--ink-strong)]">
-              {size}
-            </span>
-            {idx ? (
-              <span className="num font-mono text-200 text-[var(--ink-muted)]">
-                {idx}
-              </span>
-            ) : null}
+          <p className="card-size">
+            <span className="num card-size-main">{size}</span>
+            {idx ? <span className="num card-size-index">{idx}</span> : null}
           </p>
         ) : null}
 
         {product.season || product.isXl || product.isRunflat || product.isCommercial ? (
-          <div className="mt-[var(--sp-3)] flex flex-wrap items-center gap-[var(--sp-1)]">
+          <div className="card-marks">
             <SeasonBadge season={product.season} locale={locale} />
             <SpecBadges product={product} />
           </div>
         ) : null}
 
-        <div className="mt-auto pt-[var(--sp-4)]">
+        <div className="card-foot">
           {unavailable || product.price === null ? (
             <PriceOnRequest locale={locale} size="sm" withPhone={false} />
           ) : (
