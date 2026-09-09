@@ -61,3 +61,6 @@ reports/sync/*.json
 # inapoi pentru randuri care nu mai exista in baza, deci intra in git chiar daca
 # sunt JSON de un megaoctet.
 !reports/sync/scoatere-branduri-*.json
+
+# Copiile originalelor dinainte de recomprimare (sute de MB, se refac din bucket).
+/data/originale-inainte-de-slabire/
