@@ -67,6 +67,23 @@ export default function supabaseImageLoader({
     /* 75 e implicitul lui Next; il pastram ca sa nu schimbam calitatea odata
        cu furnizorul. Supabase accepta 20-100. */
     quality: String(quality ?? 75),
+    /*
+     * `contain`, NU implicitul `cover`. Fara el, Supabase nu redimensioneaza —
+     * DECUPEAZA. Cand primeste doar `width`, pastreaza inaltimea originalului si
+     * taie lateral pana la latimea ceruta:
+     *
+     *     logo Kapsen  576x86   --width=192-->  192x86    „KAPSEN" -> „IPS("
+     *     foto produs  944x1600 --width=350--> 350x1600   o fasie verticala
+     *     foto produs  944x1600 --width=96 -->  96x1600   o dunga
+     *
+     * `object-contain` din CSS nu putea salva nimic: fisierul sosea deja taiat,
+     * iar browserul incadra cuminte decupajul. Cu `contain`, aceleasi cereri dau
+     * 192x29, 350x593, 96x163 — adica raportul originalului, pastrat.
+     *
+     * Bug-ul e vechi de cand e loader-ul, dar s-a vazut abia acum: pana la
+     * migrarea pe contul nou, in productie rula tot optimizatorul Vercel.
+     */
+    resize: "contain",
   });
   return `${base}/storage/v1/render/image/public/${path}?${params}`;
 }
