@@ -19,7 +19,7 @@ import { SITE_URL, formatCount } from "@/lib/format";
  * de anvelope" la un an după ce catalogul a ajuns la 9.000 e mai rău decât unul
  * care nu spune nimic.
  */
-export const revalidate = 86400;
+export const revalidate = 604800;
 
 export async function GET() {
   const settings = await getSettings();

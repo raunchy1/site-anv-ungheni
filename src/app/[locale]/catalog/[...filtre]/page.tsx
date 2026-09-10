@@ -22,7 +22,7 @@ import type { Locale } from "@/lib/types";
  * catalogul se împrospătează imediat DUPĂ sync, nu întrebând din 15 în 15
  * minute dacă s-a schimbat ceva.
  */
-export const revalidate = 86400;
+export const revalidate = 604800;
 export const dynamicParams = true;
 
 /**

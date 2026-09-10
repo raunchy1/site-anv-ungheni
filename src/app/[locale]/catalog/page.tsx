@@ -6,7 +6,7 @@ import { descriereCatalogSeo } from "@/lib/seo/catalog-meta";
 import type { Locale } from "@/lib/types";
 
 /** O zi, nu 15 minute: vezi nota din `catalog/[...filtre]/page.tsx`. */
-export const revalidate = 86400;
+export const revalidate = 604800;
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;

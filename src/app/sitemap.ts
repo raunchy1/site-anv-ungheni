@@ -3,7 +3,7 @@ import { db } from "@/lib/supabase/server";
 import { SITE_URL } from "@/lib/format";
 import { sizeTree } from "@/lib/size-tree";
 
-export const revalidate = 86400;
+export const revalidate = 604800;
 
 /**
  * 15.010 produse depășesc limita de 50.000 de URL-uri doar dacă am indexa și
