@@ -52,7 +52,7 @@
     },
     {
       "path": "/api/cron/sync?mode=new&full=1",
-      "schedule": "0 5 * * *"
+      "schedule": "0 5 * * 1,3,5"
     }
   ]
 }

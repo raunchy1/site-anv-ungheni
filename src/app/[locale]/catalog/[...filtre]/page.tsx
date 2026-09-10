@@ -22,7 +22,10 @@ import type { Locale } from "@/lib/types";
  * catalogul se împrospătează imediat DUPĂ sync, nu întrebând din 15 în 15
  * minute dacă s-a schimbat ceva.
  */
-export const revalidate = 604800;
+/* O lună, nu o săptămână. Prospețimea vine de la golirea etichetei `catalog`
+   la finalul fiecărei sincronizări — de acum eticheta acoperă listările fără să
+   atingă cele ~37.000 de fișe de produs. Ceasul rămâne doar ca plasă. */
+export const revalidate = 2592000;
 export const dynamicParams = true;
 
 /**

@@ -52,13 +52,95 @@ async function withRetry(input: RequestInfo | URL, init: RequestInit): Promise<R
   return last!;
 }
 
+/**
+ * O ETICHETĂ PENTRU TOT CATALOGUL ERA O ETICHETĂ PENTRU NIMIC.
+ *
+ * Până aici, fiecare citire din Supabase primea `tags: ["catalog"]`. Layout-ul
+ * rădăcină cheamă `getSettings()`, deci eticheta ajungea pe absolut fiecare
+ * pagină — cele 18.373 de fișe de produs × 2 limbi, plus catalogul. Un singur
+ * `revalidateTag("catalog")` expira ~37.000 de intrări din cache, iar fiecare
+ * pagină atinsă după aceea de un robot se re-randa și se rescria: o scriere ISR
+ * bucata.
+ *
+ * Cronul o golea în fiecare zi. Iar jurnalul de sincronizări arată pentru ce:
+ * pe 10 septembrie se schimbaseră 3 produse; pe 9 septembrie, 58. Aruncam tot
+ * catalogul ca să împrospătăm trei fișe. De aici cele 325.000 de scrieri ISR
+ * dintr-un buget de 200.000.
+ *
+ * Acum eticheta se deduce din interogare:
+ *
+ *   `products` căutat după un slug   ->  `produs:<slug>` (+ `produse-toate`)
+ *   orice altceva                    ->  `catalog`
+ *
+ * Așa `revalidateTag("produs:michelin-…")` atinge exact fișa aceea și nimic
+ * altceva. `catalog` rămâne, dar acoperă doar listările, paginile de marcă și
+ * cele statice — nu și fișele de produs, fiindcă citirea lor după slug nu mai
+ * poartă eticheta. `produse-toate` e frâna de mână: se golește doar când chiar
+ * s-a schimbat aproape tot.
+ */
+function eticheteDinInterogare(input: RequestInfo | URL): string[] {
+  const href =
+    typeof input === "string" ? input : input instanceof URL ? input.href : input.url;
+  const i = href.indexOf("/rest/v1/");
+  if (i < 0) return ["catalog"];
+
+  const [tabel, interogare = ""] = href.slice(i + "/rest/v1/".length).split("?");
+  if (tabel !== "products") return ["catalog"];
+
+  /* `getProductBySlug` filtrează `slug_ro=eq.X`; `resolveRootSlug` întreabă
+     `or=(slug_ru.eq.X,slug_ro.eq.X)`. Ambele caută o singură fișă și amândouă
+     trebuie să dea aceeași etichetă — altfel una din cele două citiri ale
+     paginii ar rămâne legată de `catalog` și ar reînvia exact problema. */
+  let clar = interogare;
+  try {
+    clar = decodeURIComponent(interogare);
+  } catch {
+    /* Secvență procentuală stricată: se caută pe forma brută. O etichetă
+       greșită ar fi mai rea decât o excepție aici — rămâne `catalog`. */
+  }
+  const m = clar.match(/slug_r[ou](?:=|\.)eq\.([^&,)]+)/);
+  return m ? [`produs:${m[1]}`, "produse-toate"] : ["catalog"];
+}
+
+/**
+ * O lună, nu o zi. Prospețimea nu mai vine de la ceas, ci de la etichete:
+ * sincronizarea golește exact fișele pe care le-a schimbat. Ceasul e doar plasa
+ * de siguranță pentru ce s-ar schimba pe lângă cron — și o plasă care se lasă
+ * zilnic peste 37.000 de pagini costă singură mai mult decât tot bugetul.
+ */
+const O_LUNA = 2592000;
+
 const cachedFetch: typeof fetch = (input, init) =>
-  withRetry(input, { ...init, next: { revalidate: 86400, tags: ["catalog"] } } as RequestInit);
+  withRetry(input, {
+    ...init,
+    next: { revalidate: O_LUNA, tags: eticheteDinInterogare(input) },
+  } as RequestInit);
 
 export const db = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
   process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
   { auth: { persistSession: false }, global: { fetch: cachedFetch } },
+);
+
+/**
+ * Client pentru CE E ÎN JURUL fișei, nu pentru fișă: „alternative", „măsuri
+ * apropiate", „recomandate".
+ *
+ * Sunt listări de produse, deci prin `db` ar primi eticheta `catalog` — și
+ * atunci fișa de produs ar purta-o și ea, prin ele, iar golirea listărilor ar
+ * expira din nou toate cele 37.000 de pagini. Exact ocolul pe care fixul de mai
+ * sus îl închide pe ușa din față.
+ *
+ * Blocurile astea sunt sugestii, nu prețul de pe pagină. Se pot învechi cu o
+ * lună fără să deranjeze pe nimeni, iar `secundar` nu se golește din cron.
+ */
+const cachedFetchSecundar: typeof fetch = (input, init) =>
+  withRetry(input, { ...init, next: { revalidate: O_LUNA, tags: ["secundar"] } } as RequestInit);
+
+export const dbSecundar = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL!,
+  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+  { auth: { persistSession: false }, global: { fetch: cachedFetchSecundar } },
 );
 
 /**

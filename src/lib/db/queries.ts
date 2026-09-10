@@ -1,5 +1,5 @@
 import { cache } from "react";
-import { db, imageUrl } from "@/lib/supabase/server";
+import { db, dbSecundar, imageUrl } from "@/lib/supabase/server";
 import type {
   Brand, FacetOption, Locale, Product, Season, SeasonBreakdown, Service, Settings, SizeFacets, StockStatus,
 } from "@/lib/types";
@@ -272,7 +272,7 @@ export const getSizeOptions = cache(async (
 /** Aceeași dimensiune exactă, disponibile, cele mai ieftine întâi. */
 export async function getAlternatives(p: Product, limit = 6): Promise<Product[]> {
   if (!p.width || !p.diameter) return [];
-  let q = db.from("products").select(PRODUCT_COLS)
+  let q = dbSecundar.from("products").select(PRODUCT_COLS)
     .eq("is_active", true).eq("width", p.width).eq("diameter", p.diameter)
     .in("stock_status", AVAILABLE).neq("id", p.id)
     .order("price_mdl", { ascending: true, nullsFirst: false }).limit(limit);
@@ -284,7 +284,7 @@ export async function getAlternatives(p: Product, limit = 6): Promise<Product[]>
 /** Fără potriviri exacte: același diametru, ±10 la lățime, ±5 la înălțime. */
 export async function getNearAlternatives(p: Product, limit = 6): Promise<Product[]> {
   if (!p.width || !p.diameter) return [];
-  let q = db.from("products").select(PRODUCT_COLS)
+  let q = dbSecundar.from("products").select(PRODUCT_COLS)
     .eq("is_active", true).eq("diameter", p.diameter)
     .gte("width", p.width - 10).lte("width", p.width + 10)
     .in("stock_status", AVAILABLE).neq("id", p.id)
@@ -296,10 +296,10 @@ export async function getNearAlternatives(p: Product, limit = 6): Promise<Produc
 
 /** Recomandările curatoriate de sistemul vechi. */
 export async function getRelated(productId: number, limit = 6): Promise<Product[]> {
-  const { data: rel } = await db.from("product_related").select("related_product_id").eq("product_id", productId).order("sort_order").limit(limit);
+  const { data: rel } = await dbSecundar.from("product_related").select("related_product_id").eq("product_id", productId).order("sort_order").limit(limit);
   const ids = (rel ?? []).map((r) => (r as { related_product_id: number }).related_product_id);
   if (!ids.length) return [];
-  const { data } = await db.from("products").select(PRODUCT_COLS).in("id", ids).eq("is_active", true);
+  const { data } = await dbSecundar.from("products").select(PRODUCT_COLS).in("id", ids).eq("is_active", true);
   return ((data as unknown as Row[]) ?? []).map(withImage);
 }
 

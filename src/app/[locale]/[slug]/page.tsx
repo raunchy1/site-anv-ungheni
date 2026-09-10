@@ -11,8 +11,24 @@ import { ServicePage, serviceMetadata } from "@/components/product/ServicePage";
 import { LegalPageView, legalMetadata } from "@/components/product/LegalPageView";
 import type { Locale } from "@/lib/types";
 
-/** O zi, nu 15 minute: vezi nota din `catalog/[...filtre]/page.tsx`. */
-export const revalidate = 604800;
+/**
+ * O LUNĂ. Ceasul nu mai e ce ține fișele proaspete — etichetele sunt.
+ *
+ * Ruta asta ține ~18.400 de fișe de produs × 2 limbi. La `revalidate` de o
+ * săptămână, un robot care le parcurge pe toate producea singur ~159.000 de
+ * scrieri ISR pe lună, din bugetul de 200.000, fără ca vreun preț să se fi
+ * schimbat: pagina expira, robotul o cerea, pagina se rescria.
+ *
+ * De la fixul din `supabase/server.ts`, sincronizarea golește `produs:<slug>`
+ * exact pentru fișele pe care le-a atins. O fișă cu preț nou se împrospătează
+ * în minutele următoare, nu peste o săptămână — deci ceasul poate fi lung. E
+ * plasa de siguranță pentru ce s-ar schimba pe lângă cron, nu mecanismul.
+ *
+ * Mărcile, serviciile și paginile legale stau tot aici și n-au etichetă pe
+ * slug — pe ele le împrospătează golirea `catalog`, care de acum acoperă
+ * listările fără să atingă fișele.
+ */
+export const revalidate = 2592000;
 /** Slug-urile negenerate la build se randează la prima cerere și rămân în cache. */
 export const dynamicParams = true;
 

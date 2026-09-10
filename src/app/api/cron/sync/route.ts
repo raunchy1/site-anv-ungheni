@@ -71,6 +71,7 @@ export async function GET(request: Request) {
         reactivate?: number;
         stinse?: number;
         pretSchimbat?: number;
+        slugSchimbate?: string[];
       } = await actualizeazaCuLacat({ apply, cuSitemap, actor: "cron:refresh", log });
 
       if (r.oprit === "lacat_ocupat") return NextResponse.json({ ok: true, sarit: "o altă rulare e în curs" });
@@ -94,21 +95,42 @@ export async function GET(request: Request) {
         );
       }
 
-      /* Aici se golește eticheta, nu în ramura „produse noi". Asta e rularea
-         care rescrie prețuri și stocuri, deci ea e cea care face intrările din
-         cache greșite — dar `return`-ul de mai jos o scotea din funcție cu mult
-         înainte de `revalidateTag`, așa că schimbările de preț nu se propagau
-         până a doua zi.
-
-         Golirea e condiționată de o schimbare vizibilă. `cachedFetch` pune
-         eticheta "catalog" pe FIECARE citire Supabase, iar layout-ul rădăcină
-         cheamă getSettings() — deci eticheta acoperă tot site-ul, iar golirea
-         ei expiră ISR-ul fiecărei pagini. Într-o zi fără schimbări de preț sau
-         de stoc, golirea nu propagă nimic și pune întregul site să se
-         re-randeze la următoarea vizită, pe gratis. */
+      /*
+       * SE GOLESC FIȘELE SCHIMBATE, NU CATALOGUL.
+       *
+       * Varianta de dinainte golea `catalog` ori de câte ori se mișcase ceva.
+       * Eticheta aia stătea, prin `getSettings()` din layout, pe toate cele
+       * ~37.000 de pagini — deci o zi cu trei prețuri schimbate expira tot
+       * site-ul, și fiecare pagină atinsă apoi de un robot se rescria. Jurnalul
+       * de sincronizări arată zilele: 10 sept — 3 fișe; 9 sept — 58; 6 sept — 5.
+       * Pentru atât, 37.000 de scrieri ISR de fiecare dată.
+       *
+       * Acum `refresh.mjs` întoarce slug-urile atinse, iar citirea unei fișe
+       * după slug poartă eticheta `produs:<slug>` (vezi supabase/server.ts).
+       * Golim exact fișele acelea: 3 fișe schimbate = 3 goliri.
+       *
+       * `catalog` rămâne golit o dată, dar de la fixul din server.ts eticheta
+       * nu mai atinge fișele de produs: doar listările, paginile de marcă și
+       * cele statice. Alea chiar trebuie să arate prețul nou, sunt câteva sute,
+       * și se re-randează o singură dată.
+       */
+      const schimbate = r.slugSchimbate ?? [];
       const schimbat =
         (r.pretSchimbat ?? 0) > 0 || (r.stinse ?? 0) > 0 || (r.reactivate ?? 0) > 0;
-      if (apply && schimbat) revalidateTag("catalog", { expire: 0 });
+
+      /* Peste prag, golirea una câte una costă mai mult decât cea în bloc — și
+         o zi în care se schimbă 3.000 de fișe nu mai e rutină, e o mișcare mare
+         la furnizor. Atunci se golește `produse-toate`, eticheta pe care o
+         poartă toate fișele. Sub prag nu se atinge niciodată. */
+      const PRAG_BLOC = 1500;
+      if (apply) {
+        if (schimbate.length > PRAG_BLOC) {
+          revalidateTag("produse-toate", { expire: 0 });
+        } else {
+          for (const slug of schimbate) revalidateTag(`produs:${slug}`, { expire: 0 });
+        }
+        if (schimbat) revalidateTag("catalog", { expire: 0 });
+      }
 
       return NextResponse.json({
         ok: true,
@@ -117,6 +139,8 @@ export async function GET(request: Request) {
         reactivate: r.reactivate ?? 0,
         stinse: r.stinse ?? 0,
         preturi: r.pretSchimbat ?? 0,
+        fise_golite: apply ? schimbate.length : 0,
+        golit_in_bloc: apply && schimbate.length > PRAG_BLOC,
         golit: apply && schimbat,
         durata_s: Math.round((Date.now() - inceput) / 1000),
         dryRun: !apply,
@@ -185,6 +209,11 @@ export async function GET(request: Request) {
 
        Doar la rulările care chiar scriu: un `?dry=1` n-a schimbat nimic, iar
        invalidarea l-ar pune pe utilizator să plătească randări degeaba.
+
+       Aici golirea în bloc e cea corectă și e ieftină: produsele NOI n-au încă
+       fișă în cache — n-are ce fi golit pentru ele — dar trebuie să apară în
+       listări, iar `catalog` exact listările le acoperă acum, nu și cele 37.000
+       de fișe.
 
        `expire: 0` fiindcă în Next 16 `revalidateTag` cere un profil de
        `cacheLife`: intrările tocmai au devenit greșite, nu doar bătrâne, deci

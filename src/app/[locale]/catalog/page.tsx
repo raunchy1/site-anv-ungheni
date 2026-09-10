@@ -6,7 +6,10 @@ import { descriereCatalogSeo } from "@/lib/seo/catalog-meta";
 import type { Locale } from "@/lib/types";
 
 /** O zi, nu 15 minute: vezi nota din `catalog/[...filtre]/page.tsx`. */
-export const revalidate = 604800;
+/* O lună, nu o săptămână. Prospețimea vine de la golirea etichetei `catalog`
+   la finalul fiecărei sincronizări — de acum eticheta acoperă listările fără să
+   atingă cele ~37.000 de fișe de produs. Ceasul rămâne doar ca plasă. */
+export const revalidate = 2592000;
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;

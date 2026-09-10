@@ -48,6 +48,9 @@ const COLOANE = [
   'id', 'category', 'brand_name', 'model', 'width', 'aspect', 'diameter',
   'load_index', 'speed_index', 'is_xl', 'is_runflat', 'title_ro',
   'pandashop_id', 'price_mdl', 'source_price_mdl', 'price_locked', 'stock_status', 'synced_at',
+  /* Nu pentru potrivire, ci ca sa stim ce sa golim din cache: cronul
+     goleste `produs:<slug>` fisa cu fisa, nu tot catalogul. */
+  'slug_ro', 'slug_ru',
 ].join(',');
 
 /**
@@ -216,6 +219,19 @@ export async function actualizeaza(opts = {}) {
     ambigue: 0,
   };
   const exemple = { reactivate: [], stinse: [], pret: [] };
+  /*
+   * SLUG-URILE FISELOR CARE CHIAR S-AU SCHIMBAT.
+   *
+   * Cronul le primeste inapoi si goleste din cache exact paginile lor. Inainte
+   * golea eticheta `catalog`, adica toate cele ~37.000 de pagini, pentru ca in
+   * ziua aia se schimbasera trei preturi. Ambele limbi, fiindca fisa are doua
+   * adrese si amandoua tin o intrare separata in cache.
+   */
+  const slugSchimbate = new Set();
+  const marcheaza = (p) => {
+    if (p.slug_ro) slugSchimbate.add(p.slug_ro);
+    if (p.slug_ru && p.slug_ru !== p.slug_ro) slugSchimbate.add(p.slug_ru);
+  };
 
   /*
    * UN `pandashop_id` PE UN SINGUR RAND. `products_pandashop_id_uidx` e unic, iar
@@ -273,13 +289,13 @@ export async function actualizeaza(opts = {}) {
         rezumat.neschimbate++;
       } else {
         if (schimbaStoc && stocNou !== 'out_of_stock') {
-          rezumat.reactivate++;
+          rezumat.reactivate++; marcheaza(p);
           if (exemple.reactivate.length < 15) exemple.reactivate.push(`${p.title_ro} → ${pretNou} MDL`);
         } else if (schimbaStoc) {
-          rezumat.stinse++;
+          rezumat.stinse++; marcheaza(p);
           if (exemple.stinse.length < 10) exemple.stinse.push(p.title_ro);
         } else if (schimbaPret) {
-          rezumat.pretSchimbat++;
+          rezumat.pretSchimbat++; marcheaza(p);
           if (exemple.pret.length < 10) exemple.pret.push(`${p.title_ro}: ${p.price_mdl} → ${pretNou} MDL`);
         }
       }
@@ -307,7 +323,7 @@ export async function actualizeaza(opts = {}) {
      */
     if (p.pandashop_id) {
       if (p.stock_status !== 'out_of_stock') {
-        rezumat.stinse++;
+        rezumat.stinse++; marcheaza(p);
         if (exemple.stinse.length < 10) exemple.stinse.push(p.title_ro);
         deScris.push({ id: p.id, pandashop_id: p.pandashop_id, source_price_mdl: null, price_mdl: null, stock_status: 'out_of_stock' });
       } else {
@@ -319,7 +335,7 @@ export async function actualizeaza(opts = {}) {
     const chei = cheiProdus(p, brandNames);
     if (chei.some((k) => faraStocChei.has(k))) {
       if (p.stock_status !== 'out_of_stock') {
-        rezumat.stinse++;
+        rezumat.stinse++; marcheaza(p);
         if (exemple.stinse.length < 10) exemple.stinse.push(p.title_ro);
         deScris.push({ id: p.id, pandashop_id: p.pandashop_id ?? null, source_price_mdl: null, price_mdl: null, stock_status: 'out_of_stock' });
       } else {
@@ -333,7 +349,7 @@ export async function actualizeaza(opts = {}) {
     /* Produs pe care ei nu-l mai au deloc. Implicit nu se atinge: poate fi adus
        de la alt furnizor si stingerea a 5.000 de fise e o decizie comerciala. */
     if (delisted && p.stock_status !== 'out_of_stock') {
-      rezumat.stinse++;
+      rezumat.stinse++; marcheaza(p);
       deScris.push({ id: p.id, pandashop_id: p.pandashop_id ?? null, source_price_mdl: null, price_mdl: null, stock_status: 'out_of_stock' });
     }
   }
@@ -368,7 +384,7 @@ export async function actualizeaza(opts = {}) {
 
   if (!aplica) {
     spune('\nNimic scris. Adauga --apply.');
-    return { ...rezumat, jurnal, dryRun: true, deScris: deScris.length, durata: Date.now() - t0 };
+    return { ...rezumat, jurnal, dryRun: true, deScris: deScris.length, slugSchimbate: [...slugSchimbate], durata: Date.now() - t0 };
   }
 
   spune(`\n· scriu ${deScris.length} randuri…`);
@@ -388,7 +404,7 @@ export async function actualizeaza(opts = {}) {
   }]));
 
   spune(`gata in ${Math.round((Date.now() - t0) / 1000)}s`);
-  return { ...rezumat, jurnal, dryRun: false, actualizate, blocate, durata: Date.now() - t0 };
+  return { ...rezumat, jurnal, dryRun: false, actualizate, blocate, slugSchimbate: [...slugSchimbate], durata: Date.now() - t0 };
 }
 
 /** Cu lacat, ca doua rulari sa nu se calce. Cronul foloseste varianta asta. */
