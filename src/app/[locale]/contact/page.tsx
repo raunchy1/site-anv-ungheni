@@ -10,7 +10,7 @@ import { WhatsAppButton } from "@/components/product/WhatsAppButton";
 import { MapEmbed } from "@/components/layout/MapEmbed";
 import type { Locale } from "@/lib/types";
 
-export const revalidate = 3600;
+export const revalidate = 86400;
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;

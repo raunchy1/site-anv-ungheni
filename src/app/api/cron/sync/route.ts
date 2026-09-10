@@ -94,6 +94,22 @@ export async function GET(request: Request) {
         );
       }
 
+      /* Aici se golește eticheta, nu în ramura „produse noi". Asta e rularea
+         care rescrie prețuri și stocuri, deci ea e cea care face intrările din
+         cache greșite — dar `return`-ul de mai jos o scotea din funcție cu mult
+         înainte de `revalidateTag`, așa că schimbările de preț nu se propagau
+         până a doua zi.
+
+         Golirea e condiționată de o schimbare vizibilă. `cachedFetch` pune
+         eticheta "catalog" pe FIECARE citire Supabase, iar layout-ul rădăcină
+         cheamă getSettings() — deci eticheta acoperă tot site-ul, iar golirea
+         ei expiră ISR-ul fiecărei pagini. Într-o zi fără schimbări de preț sau
+         de stoc, golirea nu propagă nimic și pune întregul site să se
+         re-randeze la următoarea vizită, pe gratis. */
+      const schimbat =
+        (r.pretSchimbat ?? 0) > 0 || (r.stinse ?? 0) > 0 || (r.reactivate ?? 0) > 0;
+      if (apply && schimbat) revalidateTag("catalog", { expire: 0 });
+
       return NextResponse.json({
         ok: true,
         mode,
@@ -101,6 +117,7 @@ export async function GET(request: Request) {
         reactivate: r.reactivate ?? 0,
         stinse: r.stinse ?? 0,
         preturi: r.pretSchimbat ?? 0,
+        golit: apply && schimbat,
         durata_s: Math.round((Date.now() - inceput) / 1000),
         dryRun: !apply,
       });
@@ -174,7 +191,7 @@ export async function GET(request: Request) {
        fereastra de învechire acceptată e zero. `updateTag`, varianta cu
        citește-ce-ai-scris, merge doar din Server Actions — aici suntem
        într-o rută. */
-    if (apply) revalidateTag("catalog", { expire: 0 });
+    if (apply && noi > 0) revalidateTag("catalog", { expire: 0 });
 
     return NextResponse.json({
       ok: true, mode, noi, carantina, faraPret,

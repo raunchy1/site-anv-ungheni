@@ -9,7 +9,7 @@ import { SERVICII, text } from "@/content/servicii";
 import { getSettings } from "@/lib/db/queries";
 import type { Locale } from "@/lib/types";
 
-export const revalidate = 3600;
+export const revalidate = 86400;
 
 /**
  * CATALOGUL DE SERVICII, într-o singură pagină.

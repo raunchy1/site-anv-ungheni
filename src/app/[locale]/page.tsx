@@ -11,7 +11,7 @@ import { MapEmbed } from "@/components/layout/MapEmbed";
 import { Faq } from "@/components/seo/Faq";
 import type { Locale } from "@/lib/types";
 
-export const revalidate = 3600;
+export const revalidate = 86400;
 
 /** Cele mai bine acoperite dimensiuni din catalog — calculate, nu alese pe gust. */
 function topSizes(limit = 8) {

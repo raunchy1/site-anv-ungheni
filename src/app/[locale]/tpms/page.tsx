@@ -7,7 +7,7 @@ import { db, imageUrl } from "@/lib/supabase/server";
 import { toUiProduct } from "@/lib/adapt";
 import type { Locale, Product } from "@/lib/types";
 
-export const revalidate = 3600;
+export const revalidate = 86400;
 
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
