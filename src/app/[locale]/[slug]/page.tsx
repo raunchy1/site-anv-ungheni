@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import {
@@ -104,6 +104,18 @@ export default async function RootSlugPage({
     case "product": {
       const product = await getProductBySlug(slug, l);
       if (!product) notFound();
+      /* `getProductBySlug` cade inapoi pe `slug_ro` cand cauta in rusa
+         (queries.ts:55-58), ca sa serveasca produsele fara slug RU. Doar ca
+         nu mai exista niciunul: toate au `slug_ru`, iar la 16.918 dintre ele
+         acesta difera de cel romanesc. Fallback-ul nu mai acopera cazul pentru
+         care a fost scris — produce doar o a doua adresa RU care raspunde 200
+         cu aceeasi marfa, si o a doua intrare in cache pentru fiecare produs.
+
+         Adresa veche continua sa functioneze; pleaca in 308 spre cea canonica,
+         iar redirectul nu se scrie in cache. */
+      if (l === "ru" && product.slug_ru && product.slug_ru !== slug) {
+        permanentRedirect(`/ru/${product.slug_ru}`);
+      }
       return <ProductPage product={product} locale={l} />;
     }
   }

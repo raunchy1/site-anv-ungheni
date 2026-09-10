@@ -115,8 +115,20 @@ export const activeFilterCount = (f: ParsedFilters): number =>
  */
 export function isCanonicalPath(segments: string[], f: ParsedFilters): boolean {
   const canonical = buildFilterSegments(f);
+  /* Comparatia e pe octeti, nu pe forma normalizata. `parseFilterSegments`
+     aplica deja `decodeURIComponent().toLowerCase()` (linia 46), asa ca
+     normalizand si aici judecam drept canonica orice varianta de scriere a
+     aceleiasi selectii: `LATIME_205`, `latime_%32%30%35`, `latime_0205` si
+     `latime_205.0` treceau toate, si fiecare se randa si se salva ca intrare
+     separata in cache in loc sa fie mutata cu 308 pe adresa unica.
+
+     Byte-exact, doar forma pe care o construieste `buildFilterSegments` se
+     randeaza; restul pleaca in redirect, iar un redirect nu scrie in cache.
+     Nu se pierde nimic la indexare — 308 consolideaza spre canonic, care ramane
+     neschimbat — si nu se poate bucla, fiindca tinta redirectului e chiar
+     iesirea builder-ului, care la a doua trecere se compara egal cu sine. */
   return (
     segments.length === canonical.length &&
-    segments.every((s, i) => decodeURIComponent(s).toLowerCase() === canonical[i])
+    segments.every((s, i) => s === canonical[i])
   );
 }
