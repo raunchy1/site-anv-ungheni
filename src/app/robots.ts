@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/format";
+import { AGENTI_LA_CERERE, CRAWLERE_DE_ANTRENAMENT, CRAWLERE_SEO } from "@/lib/crawlers";
 
 /**
  * Cât timp site-ul nou stă pe un URL `*.vercel.app`, indexarea e închisă
@@ -45,32 +46,31 @@ export default function robots(): MetadataRoute.Robots {
   ];
 
   /*
-   * ROBOȚII DE AI SUNT LĂSAȚI SĂ INTRE, EXPLICIT.
+   * ROBOȚII CARE COPIAZĂ CATALOGUL ÎNTREG SE ÎNCHID. CEI CARE ADUC OMUL, NU.
    *
-   * `User-agent: *` îi acoperă oricum — o regulă în plus nu deschide nimic ce nu
-   * era deschis. Dar jumătate din magazinele din regiune îi blochează, iar
-   * operatorii lor citesc absența unei reguli proprii ca pe o ambiguitate. Un
-   * rând scris pe numele fiecăruia e singurul mod de a spune „da, citiți-ne" în
-   * limba pe care o înțelege un crawler.
+   * Regula de dinainte îi invita pe toți pe nume, ca să poată un asistent
+   * întrebat „unde cumpăr anvelope în Moldova" să ne citeze cu preț și stoc.
+   * Intenția rămâne — se schimbă doar cine plătește pentru ea.
    *
-   * Asta e o decizie comercială, nu tehnică: vrem ca un asistent întrebat „unde
-   * cumpăr anvelope în Moldova" să poată citi catalogul și să ne poată cita cu
-   * preț și disponibilitate. Cine vrea invers, șterge lista.
+   * Catalogul are ~37.000 de adrese. O parcurgere completă costă ~37.000 de
+   * randări, fiecare o scriere ISR din bugetul lunar de 200.000. Nouă roboți
+   * care parcurg tot înseamnă nouă parcurgeri: 333.000. Contul ajunsese la
+   * 325.000, iar Vercel oprește servirea, nu trimite factură.
+   *
+   * Deci: agenții care cer O pagină fiindcă tocmai a întrebat un om rămân
+   * (`AGENTI_LA_CERERE`) — ei aduc clientul și costă cât un vizitator. Pleacă
+   * cei care copiază tot pentru antrenament și roboții de SEO, care parcurg tot
+   * și nu aduc pe nimeni. Vezi `src/lib/crawlers.ts` pentru cifrele măsurate.
+   *
+   * Googlebot, Bingbot, YandexBot și Applebot nu sunt atinși: `User-agent: *`
+   * de mai jos îi lasă să intre exact ca înainte.
    */
-  const aiCrawlers = [
-    "GPTBot", "OAI-SearchBot", "ChatGPT-User",           // OpenAI
-    "ClaudeBot", "Claude-User", "Claude-SearchBot",       // Anthropic
-    "PerplexityBot", "Perplexity-User",                   // Perplexity
-    "Google-Extended",                                    // Gemini / Vertex
-    "Applebot-Extended",                                  // Apple Intelligence
-    "meta-externalagent",                                 // Meta AI
-    "Amazonbot", "Bytespider", "cohere-ai", "YouBot", "Kimi-Bot", "Grok",
-  ];
-
   return {
     rules: [
       { userAgent: "*", allow: "/", disallow },
-      ...aiCrawlers.map((userAgent) => ({ userAgent, allow: "/", disallow })),
+      ...AGENTI_LA_CERERE.map((userAgent) => ({ userAgent, allow: "/", disallow })),
+      ...CRAWLERE_DE_ANTRENAMENT.map((userAgent) => ({ userAgent, disallow: "/" })),
+      ...CRAWLERE_SEO.map((userAgent) => ({ userAgent, disallow: "/" })),
     ],
     sitemap: `${SITE_URL}/sitemap.xml`,
     host: SITE_URL,

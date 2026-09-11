@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import createMiddleware from "next-intl/middleware";
 import { routing } from "@/i18n/routing";
+import { eDeOprit } from "@/lib/crawlers";
 
 const intl = createMiddleware(routing);
 
@@ -41,8 +42,24 @@ function legacyQueryRedirect(req: NextRequest): NextResponse | null {
   return NextResponse.redirect(url, 308);
 }
 
+/*
+ * robots.txt e o rugăminte, iar o parte din roboții de mai sus o ignoră de ani
+ * de zile. Aici cererea lor se oprește ÎNAINTE de randare: rămâne o cerere la
+ * margine, din bugetul de 1.000.000, în loc de o randare cu scriere ISR, din
+ * cel de 200.000 care e deja depășit.
+ *
+ * 403 și nu 404: nu mințim că pagina nu există, spunem că nu îi servim lui.
+ */
+function opresteCrawlerul(req: NextRequest): NextResponse | null {
+  if (!eDeOprit(req.headers.get("user-agent"))) return null;
+  return new NextResponse("Not available to automated crawlers.", {
+    status: 403,
+    headers: { "cache-control": "public, max-age=86400", "content-type": "text/plain" },
+  });
+}
+
 export default function middleware(req: NextRequest) {
-  return legacyQueryRedirect(req) ?? intl(req);
+  return opresteCrawlerul(req) ?? legacyQueryRedirect(req) ?? intl(req);
 }
 
 export const config = {
