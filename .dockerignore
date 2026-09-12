@@ -1,0 +1,27 @@
+# Ce nu are ce cauta in imagine. `.next` mai ales: un build local intrat in
+# context ar suprascrie build-ul facut in container si ar publica altceva
+# decat s-a construit.
+.git
+.github
+node_modules
+.next
+.env*
+*.log
+
+# Specifice catalogului: date de migrare si rapoarte, aceleasi excluse si in
+# .vercelignore. `tools/sync` NU se exclude — cronul il importa la executie.
+data
+reports
+docs
+supabase
+logos-sursa
+logos-candidate
+tools/logos
+tools/preview
+tools/perf
+tools/seed
+tools/db
+tools/check
+tools/route-map
+tools/build
+tools/parse

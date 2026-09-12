@@ -4,6 +4,22 @@ import createNextIntlPlugin from "next-intl/plugin";
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
+  /**
+   * Imagine de container in loc de functii Vercel. `standalone` scrie in
+   * `.next/standalone` un server cu doar pachetele pe care le atinge codul —
+   * ~200 MB in loc de 1,2 GB, si nimic de instalat la pornire.
+   */
+  output: "standalone",
+  /**
+   * Cronul isi importa pipeline-ul din `tools/sync/pandashop/` prin `import()`
+   * cu cale relativa, calculata la executie. Urmaritorul de fisiere al lui Next
+   * vede importuri statice, nu si calea asta — fara linia de mai jos, modulele
+   * nu ajung in imagine si sincronizarea cade cu „Cannot find module" abia la
+   * prima rulare de la 03:00, cand nu se uita nimeni.
+   */
+  outputFileTracingIncludes: {
+    "/api/cron/sync": ["./tools/sync/pandashop/**/*", "./tools/scraper/**/*"],
+  },
   /** Indicatorul de dev acopera coltul din stanga-jos in capturile de ecran. */
   devIndicators: false,
   /** Nu generam AGENTS.md / CLAUDE.md in radacina: instructiunile proiectului
