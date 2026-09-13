@@ -54,7 +54,7 @@ COPY --from=build --chown=nextjs:nodejs /app/.next/static ./.next/static
 # (`/app/.next/cache`). Fara volum, fiecare repornire goleste cele ~37.000 de
 # pagini si toate se randeaza din nou — exact risipa de care fugim de pe
 # Vercel, doar ca fara factura.
-RUN mkdir -p .next/cache && chown -R nextjs:nodejs .next
+RUN mkdir -p .next/cache data/sync/cache data/sync/locks reports/sync && chown -R nextjs:nodejs .next data reports
 
 USER nextjs
 EXPOSE 3000
