@@ -3,15 +3,29 @@ import { SITE_URL } from "@/lib/format";
 import { AGENTI_LA_CERERE, CRAWLERE_DE_ANTRENAMENT, CRAWLERE_SEO } from "@/lib/crawlers";
 
 /**
- * Cât timp site-ul nou stă pe un URL `*.vercel.app`, indexarea e închisă
- * complet.
+ * Oriunde în afară de domeniul real, indexarea e închisă complet.
  *
  * Motivul: e aceeași marfă, aceleași texte și aceleași prețuri ca pe
- * anvelope-ungheni.md. Lăsat la vedere, Google alege singur care versiune e
- * „originalul" — și poate alege preview-ul. Se deschide automat când
- * NEXT_PUBLIC_SITE_URL arată spre domeniul real.
+ * anvelope-ungheni.md. Lăsată la vedere, o a doua copie pune Google să aleagă
+ * singur care versiune e „originalul" — și poate alege copia.
+ *
+ * REGULA ERA SCRISĂ PE GAZDA GREȘITĂ. Verifica dacă adresa se termină în
+ * `vercel.app`, fiindcă atunci singurul loc unde putea sta o copie era un
+ * preview Vercel. La mutarea pe server propriu, copia de probă a ajuns pe
+ * `…sslip.io` — care nu se termină în `vercel.app`, deci trecea drept
+ * producție și `robots.txt` se deschidea larg. Cele 18.441 de fișe de produs
+ * ar fi fost oferite spre indexare de două ori, de pe două adrese.
+ *
+ * Întrebarea e pusă acum invers, și e cea corectă: nu „e asta o copie
+ * cunoscută?", ci „e asta chiar adresa de producție?". Orice altceva —
+ * `vercel.app`, `sslip.io`, un IP gol, un domeniu de test de mâine — se închide
+ * din construcție, fără o listă care trebuie ținută la zi.
  */
-const PREVIEW = /vercel\.app$/.test(new URL(SITE_URL).hostname);
+const GAZDA_PRODUCTIE = "anvelope-ungheni.md";
+const PREVIEW = (() => {
+  const gazda = new URL(SITE_URL).hostname.toLowerCase();
+  return gazda !== GAZDA_PRODUCTIE && gazda !== `www.${GAZDA_PRODUCTIE}`;
+})();
 
 export default function robots(): MetadataRoute.Robots {
   if (PREVIEW) {
