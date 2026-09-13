@@ -12,8 +12,8 @@ RUN corepack enable
 # ------------------------------------------------------------------ pachete
 FROM base AS deps
 WORKDIR /app
-COPY package.json pnpm-lock.yaml ./
-RUN pnpm install --frozen-lockfile
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+RUN pnpm install --frozen-lockfile --config.dangerouslyAllowAllBuilds=true
 
 # ----------------------------------------------------------------- build-ul
 FROM base AS build

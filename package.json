@@ -45,13 +45,5 @@
     "tailwindcss": "4",
     "typescript": "5"
   },
-  "packageManager": "pnpm@11.22.0",
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "@parcel/watcher",
-      "@swc/core",
-      "sharp",
-      "unrs-resolver"
-    ]
-  }
+  "packageManager": "pnpm@11.22.0"
 }
