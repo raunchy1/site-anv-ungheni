@@ -2,6 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import createMiddleware from "next-intl/middleware";
 import { routing } from "@/i18n/routing";
 import { eDeOprit } from "@/lib/crawlers";
+import { adminGate } from "@/lib/supabase/middleware";
 
 const intl = createMiddleware(routing);
 
@@ -59,6 +60,10 @@ function opresteCrawlerul(req: NextRequest): NextResponse | null {
 }
 
 export default function middleware(req: NextRequest) {
+  /* Panoul trăiește în afara segmentului [locale] — next-intl n-are ce căuta
+     acolo, i-ar rescrie `/admin` în `/ro/admin` și ar da 404. Gardul de
+     autentificare e complet separat de restul middleware-ului. */
+  if (req.nextUrl.pathname.startsWith("/admin")) return adminGate(req);
   return opresteCrawlerul(req) ?? legacyQueryRedirect(req) ?? intl(req);
 }
 
@@ -66,6 +71,7 @@ export const config = {
   /* Tot, mai puțin: API, fișierele Next, /design-system (intern), rutele de
      metadate generate de Next (`/icon`, `/apple-icon`, `/opengraph-image` —
      n-au extensie, deci nu le prinde regula de mai jos, iar prefixarea cu
-     limba le-ar trimite în 404) și orice cale cu extensie. */
+     limba le-ar trimite în 404) și orice cale cu extensie. `/admin` rămâne
+     prins de regulă — trece prin gardul de mai sus, nu prin `intl()`. */
   matcher: ["/((?!api|_next|_vercel|design-system|icon|apple-icon|opengraph-image|.*\\..*).*)"],
 };
