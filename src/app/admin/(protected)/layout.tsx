@@ -7,6 +7,11 @@ const NAV = [
   { href: "/admin/comenzi", label: "Comenzi" },
   { href: "/admin/programari", label: "Programări" },
   { href: "/admin/recenzii", label: "Recenzii" },
+  { href: "/admin/marci", label: "Mărci" },
+  { href: "/admin/servicii", label: "Servicii" },
+  { href: "/admin/pagini-legale", label: "Pagini" },
+  { href: "/admin/setari", label: "Setări" },
+  { href: "/admin/sincronizare", label: "Sincronizare" },
 ] as const;
 
 export default async function ProtectedAdminLayout({ children }: { children: React.ReactNode }) {
@@ -16,10 +21,12 @@ export default async function ProtectedAdminLayout({ children }: { children: Rea
   return (
     <div className="min-h-screen">
       <header className="border-b border-[var(--line-strong)] bg-[var(--surface)]">
-        <div className="mx-auto flex h-14 max-w-[1400px] items-center justify-between px-[var(--sp-4)]">
-          <div className="flex items-center gap-[var(--sp-6)]">
-            <span className="text-300 font-semibold text-[var(--ink-strong)]">Anvelope Ungheni · Admin</span>
-            <nav className="flex items-center gap-[var(--sp-4)]">
+        <div className="mx-auto flex h-14 max-w-[1400px] items-center justify-between gap-[var(--sp-4)] px-[var(--sp-4)]">
+          <div className="flex min-w-0 items-center gap-[var(--sp-4)]">
+            <span className="shrink-0 text-300 font-semibold text-[var(--ink-strong)]">
+              Anvelope Ungheni · Admin
+            </span>
+            <nav className="flex flex-wrap items-center gap-x-[var(--sp-3)] gap-y-[var(--sp-1)]">
               {NAV.map((item) => (
                 <Link
                   key={item.href}
@@ -31,8 +38,8 @@ export default async function ProtectedAdminLayout({ children }: { children: Rea
               ))}
             </nav>
           </div>
-          <div className="flex items-center gap-[var(--sp-4)]">
-            <span className="text-200 text-[var(--ink-muted)]">{user.email}</span>
+          <div className="flex shrink-0 items-center gap-[var(--sp-4)]">
+            <span className="hidden text-200 text-[var(--ink-muted)] sm:inline">{user.email}</span>
             <form action={logout}>
               <button
                 type="submit"
