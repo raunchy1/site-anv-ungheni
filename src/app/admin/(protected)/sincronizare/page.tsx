@@ -128,7 +128,7 @@ export default async function SincronizarePage({ searchParams }: { searchParams:
       <DryRunButtons />
 
       <section>
-        <div className="flex items-baseline justify-between gap-[var(--sp-4)]">
+        <div className="flex flex-wrap items-baseline justify-between gap-[var(--sp-4)]">
           <h2 className="text-400 font-semibold text-[var(--ink-strong)]">Istoric rulări</h2>
           <p className="text-200 text-[var(--ink-muted)]">{formatCount(runsRes.count ?? 0)} rulări</p>
         </div>

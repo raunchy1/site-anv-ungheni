@@ -94,7 +94,7 @@ export default async function ProgramariPage({ searchParams }: { searchParams: P
 
   return (
     <div>
-      <div className="flex items-baseline justify-between gap-[var(--sp-4)]">
+      <div className="flex flex-wrap items-baseline justify-between gap-[var(--sp-4)]">
         <h1 className="text-500 font-semibold text-[var(--ink-strong)]">Programări</h1>
         <p className="text-200 text-[var(--ink-muted)]">{formatCount(count ?? 0)} programări</p>
       </div>

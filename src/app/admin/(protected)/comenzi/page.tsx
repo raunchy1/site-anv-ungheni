@@ -92,7 +92,7 @@ export default async function ComenziPage({ searchParams }: { searchParams: Prom
 
   return (
     <div>
-      <div className="flex items-baseline justify-between gap-[var(--sp-4)]">
+      <div className="flex flex-wrap items-baseline justify-between gap-[var(--sp-4)]">
         <h1 className="text-500 font-semibold text-[var(--ink-strong)]">Comenzi</h1>
         <p className="text-200 text-[var(--ink-muted)]">{formatCount(count ?? 0)} comenzi</p>
       </div>
