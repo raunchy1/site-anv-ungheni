@@ -118,7 +118,15 @@ export default async function ProdusePage({ searchParams }: { searchParams: Prom
     <div>
       <div className="flex items-baseline justify-between gap-[var(--sp-4)]">
         <h1 className="text-500 font-semibold text-[var(--ink-strong)]">Produse</h1>
-        <p className="text-200 text-[var(--ink-muted)]">{formatCount(count ?? 0)} produse găsite</p>
+        <div className="flex items-center gap-[var(--sp-4)]">
+          <p className="text-200 text-[var(--ink-muted)]">{formatCount(count ?? 0)} produse găsite</p>
+          <Link
+            href="/admin/produse/nou"
+            className="inline-flex h-10 items-center rounded-[var(--radius-xs)] bg-[var(--accent)] px-[var(--sp-4)] text-300 font-semibold text-[var(--on-accent)] hover:bg-[var(--accent-hover)]"
+          >
+            Produs nou
+          </Link>
+        </div>
       </div>
 
       <form
