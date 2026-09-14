@@ -12,7 +12,7 @@ export function LoginForm() {
     <form action={formAction} className="mt-[var(--sp-8)] flex flex-col gap-[var(--sp-5)]">
       <div className="flex flex-col gap-[var(--sp-2)]">
         <label htmlFor="email" className="text-200 font-medium text-[var(--ink-muted)]">
-          Email
+          Utilizator
         </label>
         <input
           id="email"
