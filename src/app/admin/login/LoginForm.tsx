@@ -17,9 +17,10 @@ export function LoginForm() {
         <input
           id="email"
           name="email"
-          type="email"
+          type="text"
           required
           autoComplete="username"
+          placeholder="admin"
           className="h-11 rounded-[var(--radius-sm)] border border-[var(--field-line)] bg-[var(--field-bg)] px-[var(--sp-3)] text-300 text-[var(--ink-strong)] outline-none focus:border-[var(--accent)]"
         />
       </div>
