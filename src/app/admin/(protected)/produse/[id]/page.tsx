@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { adminDb } from "@/lib/supabase/server";
+import { adminDb, imageUrl } from "@/lib/supabase/server";
 import type { Season } from "@/lib/types";
 import { ProductEditForm } from "./ProductEditForm";
+import { ImagesPanel } from "./ImagesPanel";
+import type { ProductImageRow } from "./images-actions";
 
 export const metadata: Metadata = { title: "Editează produs" };
 
@@ -44,17 +46,38 @@ export default async function EditeazaProdusPage({ params }: { params: Promise<{
   if (!Number.isInteger(productId)) notFound();
 
   const db = adminDb();
-  const [{ data: product, error }, { data: brands }] = await Promise.all([
+  const [{ data: product, error }, { data: brands }, { data: images }] = await Promise.all([
     db.from("products").select(COLUMNS).eq("id", productId).single(),
     db.from("brands").select("id, name").eq("is_active", true).order("name"),
+    db
+      .from("product_images")
+      .select(
+        "id, product_id, storage_path, original_path, content_hash, width, height, alt_ro, alt_ru, sort_order",
+      )
+      .eq("product_id", productId)
+      .order("sort_order", { ascending: true }),
   ]);
 
   if (error || !product) notFound();
 
+  const rows = (images ?? []) as ProductImageRow[];
+  const imageUrls: Record<number, string | null> = {};
+  for (const img of rows) {
+    imageUrls[img.id] = imageUrl(img.storage_path);
+  }
+
+  const detail = product as unknown as ProductDetail;
+  const canApplyToModel = detail.brand_id != null && Boolean(detail.model?.trim());
+
   return (
-    <ProductEditForm
-      product={product as unknown as ProductDetail}
-      brands={(brands ?? []) as { id: number; name: string }[]}
-    />
+    <div className="flex flex-col gap-[var(--sp-4)]">
+      <ProductEditForm product={detail} brands={(brands ?? []) as { id: number; name: string }[]} />
+      <ImagesPanel
+        productId={productId}
+        images={rows}
+        imageUrls={imageUrls}
+        canApplyToModel={canApplyToModel}
+      />
+    </div>
   );
 }
