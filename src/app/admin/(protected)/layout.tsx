@@ -3,6 +3,7 @@ import { requireAdminUser } from "@/lib/supabase/auth";
 import { logout } from "../actions";
 
 const NAV = [
+  { href: "/admin/analiza", label: "Analiză" },
   { href: "/admin/produse", label: "Produse" },
   { href: "/admin/comenzi", label: "Comenzi" },
   { href: "/admin/programari", label: "Programări" },
