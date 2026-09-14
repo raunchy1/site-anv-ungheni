@@ -2,6 +2,13 @@ import Link from "next/link";
 import { requireAdminUser } from "@/lib/supabase/auth";
 import { logout } from "../actions";
 
+const NAV = [
+  { href: "/admin/produse", label: "Produse" },
+  { href: "/admin/comenzi", label: "Comenzi" },
+  { href: "/admin/programari", label: "Programări" },
+  { href: "/admin/recenzii", label: "Recenzii" },
+] as const;
+
 export default async function ProtectedAdminLayout({ children }: { children: React.ReactNode }) {
   // Al doilea gard, pe lângă middleware — vezi nota din requireAdminUser().
   const user = await requireAdminUser();
@@ -13,9 +20,15 @@ export default async function ProtectedAdminLayout({ children }: { children: Rea
           <div className="flex items-center gap-[var(--sp-6)]">
             <span className="text-300 font-semibold text-[var(--ink-strong)]">Anvelope Ungheni · Admin</span>
             <nav className="flex items-center gap-[var(--sp-4)]">
-              <Link href="/admin/produse" className="text-300 text-[var(--ink)] hover:text-[var(--accent)]">
-                Produse
-              </Link>
+              {NAV.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="text-300 text-[var(--ink)] hover:text-[var(--accent)]"
+                >
+                  {item.label}
+                </Link>
+              ))}
             </nav>
           </div>
           <div className="flex items-center gap-[var(--sp-4)]">
