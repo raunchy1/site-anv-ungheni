@@ -253,9 +253,13 @@ export default async function ProdusePage({ searchParams }: { searchParams: Prom
                       )}
                     </td>
                     <td className="max-w-[280px] px-[var(--sp-3)] py-[var(--sp-2)] text-300 text-[var(--ink-strong)]">
-                      <div className="truncate" title={p.title_ro}>
+                      <Link
+                        href={`/admin/produse/${p.id}`}
+                        className="block truncate underline-offset-2 hover:text-[var(--accent)] hover:underline"
+                        title={p.title_ro}
+                      >
                         {p.title_ro}
-                      </div>
+                      </Link>
                       {!p.is_active ? (
                         <span className="text-100 font-medium uppercase tracking-wide text-[var(--warn)]">Inactiv</span>
                       ) : null}
