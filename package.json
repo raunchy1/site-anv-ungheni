@@ -30,7 +30,8 @@
     "react-dom": "19.2.8",
     "react-hook-form": "7.85.0",
     "resend": "6.21.0",
-    "zod": "4.4.3"
+    "zod": "4.4.3",
+    "sharp": "^0.35.4"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "4",
@@ -41,7 +42,6 @@
     "eslint": "9",
     "eslint-config-next": "16.3.2",
     "pg": "8.23.0",
-    "sharp": "^0.35.4",
     "tailwindcss": "4",
     "typescript": "5"
   },
