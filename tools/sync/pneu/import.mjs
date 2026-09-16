@@ -42,6 +42,7 @@ import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { config } from './config.mjs';
 import { citesteFotografia, citesteRespinse } from './snapshot.mjs';
+import { titluMarca, maiBunDintre } from './json-source.mjs';
 import { scrieSurse, citesteSursa } from './sources.mjs';
 import { readAll, readBrands } from '../pandashop/db.mjs';
 import { insert, insertReturning } from '../pandashop/db-write.mjs';
@@ -243,8 +244,16 @@ export async function ruleaza(opts = {}) {
       if (m.stare === 'gasit') { rezultate.gasite.push({ p, produs: m.produs }); continue; }
       if (m.stare === 'ambiguu') { rezultate.ambigue.push({ p, candidati: m.candidati }); continue; }
       if (m.stare === 'brand_necunoscut') {
-        const brut = (p.brandRaw ?? '—').trim();
-        brandNecunoscut.set(brut, [...(brandNecunoscut.get(brut) ?? []), p]);
+        /*
+         * Marca se creează cu scrierea din titlu, nu cu cea din API-ul lor.
+         * Ei scriu „BF GOODRICH"; catalogul nostru scrie „Hankook", „Pirelli".
+         * O marcă creată cu majuscule ar arăta strident pe site — dar, mai rău,
+         * `construiesteTitlu` produce oricum forma îmblânzită, deci numele mărcii
+         * și titlul produsului ar spune două lucruri diferite despre același
+         * brand. Se ia exact ce produce `titluMarca`, ca să nu poată diverge.
+         */
+        const nume = titluMarca(p.brandRaw ?? '') || '—';
+        brandNecunoscut.set(nume, [...(brandNecunoscut.get(nume) ?? []), p]);
         continue;
       }
       if (m.stare === 'dimensiune_neparsata') { rezultate.carantinaSursa.push({ p, motive: ['dimensiune neparsată'] }); continue; }
@@ -274,10 +283,63 @@ export async function ruleaza(opts = {}) {
   }
 
   /* Ce aduce legarea, dincolo de numere: produse care azi n-au niciun furnizor. */
+  /*
+   * DOUĂ FIȘE DE-ALE LOR PENTRU UN PRODUS DE-AL NOSTRU.
+   *
+   * `product_sources` are cheia primară (product_id, source), deci un produs
+   * poate avea o singură legătură cu pneu. La ei există însă aceeași anvelopă
+   * scrisă în două feluri — „Quatrac PRO" și „Quatrac PRO+", „ECOCONTACT-6" și
+   * „Ecocontact 6", „Alpin 6" și „Alpin-6" — iar cheia noastră naturală, care
+   * normalizează, le vede pe amândouă ca fiind produsul nostru. Trimise în
+   * aceeași cerere, Postgres refuză lotul întreg cu 21000.
+   *
+   * Se păstrează una singură, după aceeași regulă ca la dublurile lor: stocul
+   * bate prețul, prețul bate vechimea. Cealaltă NU se aruncă în tăcere — intră
+   * în raport, la `conflicte`, pentru că uneori chiar sunt două anvelope
+   * diferite („Pro" și „Pro+" sunt modele Vredestein distincte) și atunci
+   * catalogul nostru e cel care are o fișă lipsă, nu ei una în plus.
+   */
+  const pePro = new Map();
+  for (const g of rezultate.gasite) {
+    const vechi = pePro.get(g.produs.id);
+    pePro.set(g.produs.id, vechi ? { ...g, p: maiBunDintre(vechi.p, g.p) } : g);
+  }
+  rezultate.conflicte = [];
+  for (const g of rezultate.gasite) {
+    const castigator = pePro.get(g.produs.id);
+    if (castigator.p.id !== g.p.id) rezultate.conflicte.push({ p: g.p, produs: g.produs, inLocul: castigator.p.id });
+  }
+  rezultate.gasite = [...pePro.values()];
+  if (rezultate.conflicte.length) {
+    spune(`· două fișe de-ale lor pentru același produs de-al nostru: ${rezultate.conflicte.length} (se leagă una, restul în raport)`);
+  }
+
   const fantomeAcoperite = rezultate.gasite.filter(({ produs }) => !cuSursa.has(produs.id));
   const legaturiNoi = rezultate.gasite.filter(({ p }) => !legateDeja.has(String(p.id)));
   spune(`· dintre cele potrivite, fără niciun furnizor până acum: ${fantomeAcoperite.length}`);
   spune(`· legături noi față de rularea trecută: ${legaturiNoi.length}`);
+
+  /*
+   * LEGAREA SE SCRIE ÎNAINTEA POZELOR, nu după.
+   *
+   * Pregătirea produselor noi înseamnă câteva mii de poze descărcate una câte
+   * una — ore de rulare. Prima oară legarea era la final și a picat acolo, iar
+   * orele alea s-au pierdut degeaba. Legarea nu depinde de poze, nu atinge
+   * niciun preț și nu creează nimic: scrie doar rânduri în `product_sources`.
+   * Deci se face prima, cât e ieftină, iar dacă importul se împiedică mai
+   * târziu, cele 1.750 de legături — și cele 908 produse care până acum n-aveau
+   * niciun furnizor — rămân câștigate.
+   */
+  let legate = 0;
+  if (aplica) {
+    legate = await scrieSurse(rezultate.gasite.map(({ p, produs }) => ({
+      product_id: produs.id,
+      source: SURSA,
+      external_id: p.id,
+      available: p.stockStatus === 'supplier',
+    })));
+    spune(`· legate de produsele existente: ${legate}`);
+  }
 
   const deImportat = rezultate.candidati.slice(0, limit === Infinity ? undefined : limit);
 
@@ -292,7 +354,7 @@ export async function ruleaza(opts = {}) {
 
     try {
       const { imagini: imgs, erori: eImg } = await pregatesteImagini(p.images, hashuri, {
-        dryRun: !aplica, altRo: rand.title_ro, altRu: rand.title_ru,
+        dryRun: !aplica, max: config.imagini.max, altRo: rand.title_ro, altRu: rand.title_ru,
       });
       if (imgs.length === 0) motive.push(`nicio imagine descărcată${eImg.length ? `: ${eImg[0]}` : ''}`);
       if (eImg.length) rezultate.erori.push({ id: p.id, motiv: `imagini ratate (${eImg.length})` });
@@ -340,20 +402,8 @@ export async function ruleaza(opts = {}) {
   }
 
   /* ---------------------------------------------------------------- scrierea */
-  /*
-   * PASUL 1 — legarea a ce avem deja. Se scrie DOAR rândul din `product_sources`.
-   * Prețul, stocul și `primary_source` ale produsului rămân neatinse: dacă
-   * anvelopa e deja a lui pandashop, pandashop îi dictează prețul mai departe.
-   */
-  const legate = await scrieSurse(rezultate.gasite.map(({ p, produs }) => ({
-    product_id: produs.id,
-    source: SURSA,
-    external_id: p.id,
-    available: p.stockStatus === 'supplier',
-  })));
-  spune(`· legate de produsele existente: ${legate}`);
-
-  /* PASUL 2 — produsele noi. Fiecare primește și rândul lui în `product_sources`. */
+  /* Legăturile s-au scris deja, mai sus. Aici rămân doar produsele noi, fiecare
+     cu rândul lui în `product_sources`. */
   let create = 0;
   const surseNoi = [];
   for (const x of pregatite) {
@@ -426,10 +476,15 @@ function scrieRaport({ rezultate, pregatite, lor, brandNecunoscut, fantomeAcoper
       pregatite: pregatite.length,
       carantina: rezultate.carantina.length,
       carantinaSursa: rezultate.carantinaSursa.length,
+      conflicte: (rezultate.conflicte ?? []).length,
       erori: rezultate.erori.length,
     },
     brandNecunoscut: [...brandNecunoscut.entries()].map(([n, l]) => ({ brand: n, produse: l.length, exemplu: l[0].titleRo })),
     fantomeAcoperite: fantomeAcoperite.slice(0, 300).map(({ p, produs }) => ({ produs: produs.id, slug: produs.slug_ro, laEi: p.id, titlu: p.titleRo })),
+    conflicte: (rezultate.conflicte ?? []).map(({ p, produs, inLocul }) => ({
+      produsulNostru: produs.id, titluNostru: produs.title_ro,
+      nelegata: p.id, titluLor: p.titleRo, pretLor: p.priceMdl, legataInSchimb: inLocul,
+    })),
     ambigue: rezultate.ambigue.slice(0, 100).map(({ p, candidati }) => ({ id: p.id, titlu: p.titleRo, candidati: candidati.map((c) => `#${c.id} ${c.slug_ro}`) })),
     carantina: [...rezultate.carantina, ...rezultate.carantinaSursa].slice(0, 400).map((c) => ({ id: c.p.id, titlu: c.p.titleRo, motive: c.motive })),
     erori: rezultate.erori.slice(0, 300),

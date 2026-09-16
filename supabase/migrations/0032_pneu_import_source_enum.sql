@@ -1,0 +1,11 @@
+-- Jurnalul de rulări, pentru pneu.md.
+--
+-- `products.source` și `import_runs.source` sunt DOUĂ enumerări diferite —
+-- `product_source` și `import_source` — cu etichete care seamănă destul cât să
+-- pară una singură. Migrarea 0031 a adăugat-o doar pe prima, iar importul din
+-- 16 septembrie 2026 a scris toate cele 4.275 de produse și a picat abia la
+-- ultima linie, când a vrut să-și noteze rularea în jurnal.
+--
+-- Precedentul există: pandashop și pneuexpert au avut, fiecare, două migrări
+-- exact din acelasi motiv (`..._sync_schema` și `..._sync_import_source_enum`).
+alter type import_source add value if not exists 'pneu_sync';

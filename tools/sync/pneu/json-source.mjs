@@ -235,12 +235,17 @@ export function alegeDintreDuplicate(randuri) {
   for (const r of randuri) {
     const vechi = peCheie.get(r.cheieSursa);
     if (!vechi) { peCheie.set(r.cheieSursa, r); continue; }
-    peCheie.set(r.cheieSursa, maiBun(vechi, r));
+    peCheie.set(r.cheieSursa, maiBunDintre(vechi, r));
   }
   return [...peCheie.values()];
 }
 
-function maiBun(a, b) {
+/**
+ * Care dintre două fișe de-ale lor rămâne, când amândouă sunt aceeași anvelopă.
+ * Folosit în două locuri: la dublurile din catalogul lor, și la importul unde
+ * două fișe de-ale lor revendică același produs de-al nostru.
+ */
+export function maiBunDintre(a, b) {
   const stocA = a.stocNumeric > 0;
   const stocB = b.stocNumeric > 0;
   if (stocA !== stocB) return stocA ? a : b;

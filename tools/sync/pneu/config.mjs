@@ -56,6 +56,20 @@ export const config = {
     maxBranduriNoi: 20,
   },
 
+  /*
+   * CÂTE POZE PE PRODUS. Celelalte două surse urcă până la patru; aici ar
+   * însemna 18.977 de fișiere distincte, ~3,7 GB, într-un bucket care azi are
+   * 416 MB. Pozele lor nu se dedublează aproape deloc: fiecare dimensiune are
+   * fotografia ei, pe o cale proprie în S3-ul lor.
+   *
+   * Decis cu atelierul pe 16 septembrie 2026: o poză per produs, ~1 GB. Fiecare
+   * anvelopă are poza ei, iar galeria se completează la faza 4, după ce pozele
+   * se mută pe Contabo și spațiul nu mai e o constrângere.
+   */
+  imagini: {
+    max: Number(process.env.PNEU_IMAGINI_MAX ?? 1),
+  },
+
   paths: {
     reports: 'reports/sync',
     state: path.join(radacina, 'data/sync/pneu'),

@@ -36,10 +36,27 @@ export async function scrieSurse(randuri, { chunk = 500 } = {}) {
   if (randuri.length === 0) return 0;
   const { url, key } = conexiune();
 
+  /*
+   * O SINGURĂ LINIE PER (produs, furnizor), ÎNAINTE DE A PLECA CEREREA.
+   *
+   * Postgres refuză lotul ÎNTREG cu 21000 — „ON CONFLICT DO UPDATE command
+   * cannot affect row a second time" — dacă două rânduri din aceeași cerere
+   * ating aceeași linie. S-a întâmplat pe 16 septembrie 2026: două fișe de-ale
+   * lui pneu revendicau același produs de-al nostru, iar 4.498 de produse
+   * pregătite în trei ore și jumătate n-au mai apucat să fie scrise.
+   *
+   * Cine trimite rândurile ar trebui să le aleagă el, ca să știe pe care o
+   * pierde — și chiar o face. Plasa asta e aici ca aceeași greșeală să nu mai
+   * poată dărâma o rulare întreagă, niciodată.
+   */
+  const peCheie = new Map();
+  for (const r of randuri) peCheie.set(`${r.product_id}|${r.source}`, r);
+  const unice = [...peCheie.values()];
+
   const acum = new Date().toISOString();
   let scrise = 0;
-  for (let i = 0; i < randuri.length; i += chunk) {
-    const lot = randuri.slice(i, i + chunk).map((r) => ({
+  for (let i = 0; i < unice.length; i += chunk) {
+    const lot = unice.slice(i, i + chunk).map((r) => ({
       product_id: r.product_id,
       source: r.source,
       external_id: String(r.external_id),
