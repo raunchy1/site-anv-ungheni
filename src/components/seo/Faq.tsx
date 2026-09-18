@@ -1,4 +1,5 @@
 import { JsonLd } from "@/components/seo/JsonLd";
+import { programAfisat } from "@/lib/format";
 import { faqSchema } from "@/lib/seo/schema";
 import { TreadRule } from "@/components/icons";
 import type { Locale, Settings } from "@/lib/types";
@@ -24,8 +25,7 @@ import type { Locale, Settings } from "@/lib/types";
  */
 export function intrebari(settings: Settings, locale: Locale): { q: string; a: string }[] {
   const ru = locale === "ru";
-  const program = settings.opening_hours.mon_sat;
-  const duminica = settings.opening_hours.sun;
+  const program = programAfisat(settings.opening_hours, locale);
 
   const lista: { q: string; a: string }[] = [
     ru
@@ -67,11 +67,11 @@ export function intrebari(settings: Settings, locale: Locale): { q: string; a: s
     ru
       ? {
           q: "Какой у вас график работы?",
-          a: `Понедельник–суббота, ${program}${duminica ? `, воскресенье ${duminica}` : ""}. Адрес: ${settings.address}. Телефон: ${settings.phone_display}.`,
+          a: `${program}. Адрес: ${settings.address}. Телефон: ${settings.phone_display}.`,
         }
       : {
           q: "Care e programul atelierului?",
-          a: `Luni–sâmbătă, ${program}${duminica ? `, duminică ${duminica}` : ""}. Adresa: ${settings.address}. Telefon: ${settings.phone_display}.`,
+          a: `${program}. Adresa: ${settings.address}. Telefon: ${settings.phone_display}.`,
         },
   ];
 

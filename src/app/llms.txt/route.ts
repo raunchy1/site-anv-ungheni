@@ -1,6 +1,6 @@
 import { db } from "@/lib/supabase/server";
 import { getSettings } from "@/lib/db/queries";
-import { SITE_URL, formatCount } from "@/lib/format";
+import { SITE_URL, formatCount, programAfisat } from "@/lib/format";
 
 /**
  * /llms.txt — fișa magazinului, scrisă pentru un asistent, nu pentru un om.
@@ -32,7 +32,6 @@ export async function GET() {
   ]);
 
   const numeMarci = ((marci.data ?? []) as { name: string }[]).map((b) => b.name);
-  const duminica = settings.opening_hours.sun ?? null;
 
   const text = `# Anvelope Ungheni (anvelope-ungheni.md)
 
@@ -45,7 +44,7 @@ export async function GET() {
 - Adresă: ${settings.address}
 - Telefon: ${settings.phone_display} (${settings.phone_e164})
 - E-mail: ${settings.email}
-- Program: luni–sâmbătă ${settings.opening_hours.mon_sat}${duminica ? `, duminică ${duminica}` : ""}
+- Program: ${programAfisat(settings.opening_hours, "ro")}
 - Coordonate: ${settings.lat}, ${settings.lng}
 - Limbi: română, rusă
 - Monedă: MDL (lei moldovenești)

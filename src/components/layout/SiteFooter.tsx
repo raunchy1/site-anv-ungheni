@@ -4,7 +4,7 @@ import { IconPin, IconPhone, IconClock } from "@/components/icons";
 import { TreadRule } from "@/components/icons";
 import { Logo } from "@/components/brand/Logo";
 import { CookieSettingsLink } from "@/components/layout/CookieBanner";
-import { telLink } from "@/lib/format";
+import { telLink, programAfisat } from "@/lib/format";
 import { getBrands, getServices } from "@/lib/db/queries";
 import type { Locale, Settings } from "@/lib/types";
 
@@ -43,11 +43,9 @@ export async function SiteFooter({ settings, locale }: { settings: Settings; loc
             <li className="flex gap-[var(--sp-2)]">
               <IconClock size={16} className="mt-[2px] shrink-0" />
               <span>
-                {t("contact.hoursValue")}
-                {/* Cand `opening_hours.sun` se completeaza in admin, programul de
-                    duminica apare aici. Pana atunci nu se afiseaza nimic: o nota
-                    de lucru pe subsolul fiecarei pagini o citeste clientul, nu
-                    programatorul. */}
+                {/* Din baza, nu din traduceri: vezi `programAfisat`. Panoul de
+                    administrare scrie aici, deci ce se schimba acolo se vede. */}
+                {programAfisat(hours, locale)}
               </span>
             </li>
           </ul>

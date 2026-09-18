@@ -29,9 +29,11 @@ const RO = (l: Locale) => l === "ro";
 /**
  * Programul, în forma cerută de schema.org.
  *
- * Duminica e `null` în `settings` până o confirmă atelierul (TODO-CRISTIAN §3).
- * Un program inventat e mai rău decât unul lipsă: clientul care vine duminica
- * degeaba nu se mai întoarce, iar Google arată ore greșite în panoul local.
+ * Două intervale de când atelierul a confirmat weekendul: luni–vineri și
+ * sâmbătă–duminică, cu ore diferite. Câmpul de weekend poate fi gol, și atunci
+ * nu se declară nimic pentru sâmbătă și duminică — un program inventat e mai
+ * rău decât unul lipsă: clientul care vine degeaba nu se mai întoarce, iar
+ * Google arată ore greșite în panoul local.
  */
 function program(settings: Settings) {
   const intervale: Array<{ "@type": "OpeningHoursSpecification"; dayOfWeek: string[]; opens: string; closes: string }> = [];
@@ -39,16 +41,16 @@ function program(settings: Settings) {
     const m = v.match(/(\d{1,2}:\d{2})\s*[-–]\s*(\d{1,2}:\d{2})/);
     return m ? { opens: m[1].padStart(5, "0"), closes: m[2].padStart(5, "0") } : null;
   };
-  const lv = parse(settings.opening_hours.mon_sat ?? "");
+  const lv = parse(settings.opening_hours.mon_fri ?? "");
   if (lv) {
     intervale.push({
       "@type": "OpeningHoursSpecification",
-      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
       ...lv,
     });
   }
-  const d = settings.opening_hours.sun ? parse(settings.opening_hours.sun) : null;
-  if (d) intervale.push({ "@type": "OpeningHoursSpecification", dayOfWeek: ["Sunday"], ...d });
+  const we = settings.opening_hours.sat_sun ? parse(settings.opening_hours.sat_sun) : null;
+  if (we) intervale.push({ "@type": "OpeningHoursSpecification", dayOfWeek: ["Saturday", "Sunday"], ...we });
   return intervale;
 }
 

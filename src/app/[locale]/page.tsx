@@ -5,7 +5,7 @@ import { ProductCard } from "@/components/ui/ProductCard";
 import { TreadRule, IconArrowRight, IconPin, IconClock, IconPhone } from "@/components/icons";
 import { getBrandOptions, getSeasonCounts, getServices, getSettings, getShowcase } from "@/lib/db/queries";
 import { toUiProduct } from "@/lib/adapt";
-import { formatCount, telLink } from "@/lib/format";
+import { formatCount, telLink, programAfisat } from "@/lib/format";
 import { sizeTree } from "@/lib/size-tree";
 import { MapEmbed } from "@/components/layout/MapEmbed";
 import { Faq } from "@/components/seo/Faq";
@@ -124,7 +124,7 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
             </li>
             <li className="flex gap-[var(--sp-3)]">
               <IconClock size={18} className="mt-[2px] shrink-0 text-[var(--ink-muted)]" />
-              <span className="text-[var(--ink-strong)]">{t("contact.hoursValue")}</span>
+              <span className="text-[var(--ink-strong)]">{programAfisat(settings.opening_hours, l)}</span>
             </li>
           </ul>
           <MapEmbed

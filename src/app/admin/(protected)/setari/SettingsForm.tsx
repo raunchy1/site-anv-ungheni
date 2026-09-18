@@ -40,7 +40,7 @@ export type SettingsValues = {
   credit_badge_ro: string | null;
   credit_badge_ru: string | null;
   sync_enabled: boolean;
-  opening_hours: { mon_sat?: string; sun?: string | null; note?: string | null };
+  opening_hours: { mon_fri?: string; sat_sun?: string | null; note?: string | null };
   pricing_rules: { default_margin_pct?: number } | null;
 };
 
@@ -103,11 +103,11 @@ export function SettingsForm({
       </Section>
 
       <Section title="Program">
-        <Field label="Luni–Sâmbătă" htmlFor="hours_mon_sat">
-          <input id="hours_mon_sat" name="hours_mon_sat" defaultValue={hours.mon_sat ?? ""} className={inputClass} />
+        <Field label="Luni–Vineri" htmlFor="hours_mon_fri">
+          <input id="hours_mon_fri" name="hours_mon_fri" defaultValue={hours.mon_fri ?? ""} className={inputClass} />
         </Field>
-        <Field label="Duminică (gol = închis)" htmlFor="hours_sun">
-          <input id="hours_sun" name="hours_sun" defaultValue={hours.sun ?? ""} className={inputClass} />
+        <Field label="Sâmbătă–duminică (gol = închis)" htmlFor="hours_sat_sun">
+          <input id="hours_sat_sun" name="hours_sat_sun" defaultValue={hours.sat_sun ?? ""} className={inputClass} />
         </Field>
         <div className="sm:col-span-2">
           <Field label="Notă program" htmlFor="hours_note">

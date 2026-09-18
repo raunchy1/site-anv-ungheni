@@ -5,7 +5,7 @@ import { TreadRule, IconPin, IconPhone, IconClock } from "@/components/icons";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { breadcrumbSchema } from "@/lib/seo/schema";
 import { getSettings } from "@/lib/db/queries";
-import { telLink } from "@/lib/format";
+import { telLink, programAfisat } from "@/lib/format";
 import { WhatsAppButton } from "@/components/product/WhatsAppButton";
 import { MapEmbed } from "@/components/layout/MapEmbed";
 import type { Locale } from "@/lib/types";
@@ -55,7 +55,7 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
               <IconClock size={18} className="mt-[3px] shrink-0 text-[var(--ink-muted)]" />
               <div>
                 <dt className="label">{t("contact.hours")}</dt>
-                <dd className="mt-[var(--sp-1)] text-300 text-[var(--ink-strong)]">{t("contact.hoursValue")}</dd>
+                <dd className="mt-[var(--sp-1)] text-300 text-[var(--ink-strong)]">{programAfisat(s.opening_hours, locale as Locale)}</dd>
               </div>
             </div>
           </dl>

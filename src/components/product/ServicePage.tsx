@@ -5,7 +5,7 @@ import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { TreadRule, IconPin, IconPhone, IconClock } from "@/components/icons";
 import { getServices, getSettings } from "@/lib/db/queries";
 import { Link } from "@/i18n/navigation";
-import { telLink } from "@/lib/format";
+import { telLink, programAfisat } from "@/lib/format";
 import { WhatsAppButton } from "./WhatsAppButton";
 import { serviciuPentruSlug, text as sText } from "@/content/servicii";
 import { BookingForm } from "./BookingForm";
@@ -106,7 +106,7 @@ export async function ServicePage({ service, locale }: { service: Service; local
 
           <ul className="mt-[var(--sp-6)] flex flex-wrap gap-x-[var(--sp-6)] gap-y-[var(--sp-2)] text-200 text-[var(--ink-muted)]">
             <li className="flex items-center gap-[var(--sp-2)]"><IconPin size={15} />{settings.address}</li>
-            <li className="flex items-center gap-[var(--sp-2)]"><IconClock size={15} />{t("contact.hoursValue")}</li>
+            <li className="flex items-center gap-[var(--sp-2)]"><IconClock size={15} />{programAfisat(settings.opening_hours, locale)}</li>
           </ul>
         </div>
 

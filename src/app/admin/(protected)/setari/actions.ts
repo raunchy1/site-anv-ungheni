@@ -61,8 +61,8 @@ export async function updateSettings(_prev: SettingsFormState, formData: FormDat
     credit_badge_ru: str(formData, "credit_badge_ru"),
     sync_enabled: formData.get("sync_enabled") === "on",
     opening_hours: {
-      mon_sat: str(formData, "hours_mon_sat") ?? "9:00-20:00",
-      sun: str(formData, "hours_sun"),
+      mon_fri: str(formData, "hours_mon_fri") ?? "8:00-18:00",
+      sat_sun: str(formData, "hours_sat_sun"),
       note: str(formData, "hours_note"),
     },
     pricing_rules: rules,

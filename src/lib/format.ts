@@ -63,7 +63,7 @@ export function normalizeSpeedIndex(speed: string | null): string | null {
 
 /* ------------------------------------------------------------- comerț */
 
-import type { Locale, Product, Season } from "./types";
+import type { Locale, Product, Season, Settings } from "./types";
 
 /** „4 285 MDL" cu unitate, sau `null` când produsul n-are preț. */
 export const money = (value: number | null | undefined, withUnit = true): string | null =>
@@ -119,3 +119,36 @@ export const absoluteUrl = (path: string, locale: Locale): string => {
   const clean = path.startsWith("/") ? path : `/${path}`;
   return locale === "ru" ? `${SITE_URL}/ru${clean}` : `${SITE_URL}${clean}`;
 };
+
+/* ----------------------------------------------------------------- program */
+
+/**
+ * PROGRAMUL SE SCRIE ÎNTR-UN SINGUR LOC.
+ *
+ * Până acum se scria în două: `settings.opening_hours` în bază, de unde îl luau
+ * întrebările pentru Google și `llms.txt`, și `contact.hoursValue` în fișierele
+ * de traduceri, de unde îl luau subsolul, pagina de contact, pagina principală
+ * și fișele de serviciu.
+ *
+ * Două locuri pentru același fapt înseamnă că se pot contrazice — și chiar se
+ * contraziceau: panoul de administrare edita baza, dar subsolul citea
+ * traducerea. Proprietarul schimba programul din panou, vedea că nu se schimbă
+ * nimic pe site, și nu avea cum să înțeleagă de ce.
+ *
+ * Acum e doar în bază. Traducerile păstrează eticheta („Program" / „Режим
+ * работы"), nu și ora.
+ *
+ * Cratima se normalizează la linie de dialog: în panou se tastează „8:00-18:00",
+ * pe site se citește „8:00–18:00", fără ca cineva să trebuiască să știe asta.
+ */
+const liniuta = (interval: string): string => interval.replace(/\s*-\s*/g, "–");
+
+export function programAfisat(
+  ore: Settings["opening_hours"],
+  locale: Locale,
+): string {
+  const ru = locale === "ru";
+  const saptamana = `${ru ? "Понедельник–пятница" : "Luni–Vineri"}, ${liniuta(ore.mon_fri)}`;
+  if (!ore.sat_sun) return saptamana;
+  return `${saptamana} · ${ru ? "суббота–воскресенье" : "Sâmbătă–Duminică"}, ${liniuta(ore.sat_sun)}`;
+}

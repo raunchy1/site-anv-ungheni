@@ -107,7 +107,7 @@ export type Settings = {
   email: string;
   address: string;
   city: string;
-  opening_hours: { mon_sat: string; sun: string | null; note?: string };
+  opening_hours: { mon_fri: string; sat_sun: string | null; note?: string };
   maps_url: string;
   lat: number;
   lng: number;
