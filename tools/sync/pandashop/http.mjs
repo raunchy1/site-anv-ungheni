@@ -22,6 +22,47 @@ export const UA =
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 const jitter = (min, max) => min + Math.random() * (max - min);
 
+/**
+ * CACHE-UL SE GOLEA NICIODATĂ.
+ *
+ * Fiecare pagină descărcată se scrie aici, cu numele dat de hash-ul adresei, și
+ * până acum nimic nu o ștergea. Importul complet trage ~18.000 de fișe de trei
+ * ori pe săptămână; fiecare rulare adăuga, niciuna nu scădea. Pe 19 septembrie
+ * 2026 serverul a trimis prima alertă de disc — 81% dintr-un disc pe care, cu
+ * cinci zile înainte, se foloseau 18 GB din 193.
+ *
+ * Șapte zile e mai mult decât are nevoie oricare rulare: cache-ul există ca să
+ * nu se ceară de două ori aceeași pagină ÎN ACEEAȘI rulare, și ca o rulare
+ * reluată după o eroare să nu ia totul de la capăt. O pagină de acum o
+ * săptămână oricum n-ar fi de încredere pentru preț.
+ *
+ * Curățarea se face la pornire, nu la final: o rulare întreruptă lăsa altfel
+ * gunoiul în urmă exact în cazul în care se întrerupea des.
+ *
+ * Erorile se înghit. Un cache pe care nu l-am putut curăța e o problemă de
+ * spațiu; o sincronizare care refuză să pornească fiindcă n-a putut șterge un
+ * fișier e o problemă de prețuri.
+ */
+function curataCache(dir, zile) {
+  if (!zile || zile <= 0) return;
+  const prag = Date.now() - zile * 24 * 60 * 60 * 1000;
+  let sterse = 0;
+  try {
+    for (const sub of fs.readdirSync(dir, { withFileTypes: true })) {
+      if (!sub.isDirectory()) continue;
+      const cale = path.join(dir, sub.name);
+      for (const f of fs.readdirSync(cale)) {
+        const fisier = path.join(cale, f);
+        try {
+          if (fs.statSync(fisier).mtimeMs < prag) { fs.unlinkSync(fisier); sterse++; }
+        } catch { /* fișier dispărut între listare și citire */ }
+      }
+      try { fs.rmdirSync(cale); } catch { /* nu e gol, rămâne */ }
+    }
+  } catch { /* directorul nu există încă, sau nu se poate citi */ }
+  if (sterse) console.log(`  cache: ${sterse} fișiere mai vechi de ${zile} zile, șterse`);
+}
+
 export function createHttp({
   cacheDir = 'data/sync/cache',
   concurrency = 4,
@@ -30,8 +71,10 @@ export function createHttp({
   retries = 4,
   timeoutMs = 45_000,
   useCache = true,
+  cacheZile = 7,
 } = {}) {
   fs.mkdirSync(cacheDir, { recursive: true });
+  curataCache(cacheDir, cacheZile);
   const stats = { fetched: 0, cached: 0, retried: 0, failed: 0, bytes: 0 };
 
   const cachePath = (url) => {
