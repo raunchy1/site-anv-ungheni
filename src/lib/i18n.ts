@@ -43,6 +43,8 @@ export type Dict = {
   brand: string;
   addToCart: string;
   priceOnRequest: string;
+  /** Eticheta reducerii: „economisești 630 MDL”. */
+  youSave: string;
   callToOrder: string;
   inStock: string;
   supplierStock: string;
@@ -121,6 +123,7 @@ const ro: Dict = {
   brand: "Marcă",
   addToCart: "Adaugă în coș",
   priceOnRequest: "Preț la cerere",
+  youSave: "economisești",
   callToOrder: "068 263 644",
   inStock: "În stoc",
   supplierStock: "Disponibil",
@@ -195,6 +198,7 @@ const ru: Dict = {
   brand: "Марка",
   addToCart: "В корзину",
   priceOnRequest: "Цена по запросу",
+  youSave: "экономия",
   callToOrder: "068 263 644",
   inStock: "В наличии",
   supplierStock: "Доступно",

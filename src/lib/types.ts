@@ -28,6 +28,7 @@ export type Product = {
   is_studded?: boolean;
   is_commercial: boolean;
   price_mdl: number | null;
+  old_price_mdl: number | null;
   stock_status: StockStatus;
   title_ro: string;
   title_ru: string | null;

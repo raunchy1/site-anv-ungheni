@@ -20,6 +20,7 @@ export function toUiProduct(p: DbProduct): UiProduct {
     title: p.title_ro,
     titleRu: p.title_ru ?? p.title_ro,
     price: p.price_mdl == null ? null : Number(p.price_mdl),
+    oldPrice: p.old_price_mdl == null ? null : Number(p.old_price_mdl),
     stock: p.stock_status,
     season: p.season,
     sizeSystem: p.size_system,

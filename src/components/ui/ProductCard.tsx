@@ -87,7 +87,7 @@ export function ProductCard({
           {unavailable || product.price === null ? (
             <PriceOnRequest locale={locale} size="sm" withPhone={false} />
           ) : (
-            <Price value={product.price} locale={locale} size="sm" />
+            <Price value={product.price} oldValue={product.oldPrice} locale={locale} size="sm" />
           )}
           <StockIndicator
             status={product.stock}

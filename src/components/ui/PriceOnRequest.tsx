@@ -9,16 +9,23 @@ import { formatPrice } from "@/lib/format";
  * catalog, ajung in `PriceOnRequest`. De aceea nu e o „stare de eroare”
  * inghesuita: are aceeasi greutate tipografica si acelasi loc in grila ca pretul.
  *
- * Fara „0 MDL”, fara pret barat inventat, fara semn de exclamare.
+ * Fara „0 MDL”, fara semn de exclamare, si mai ales fara pret barat INVENTAT.
+ * `oldValue` se afiseaza doar cand exista un pret vechi real, mai mare decat
+ * cel curent — adica atunci cand cineva chiar a lasat pretul in jos. Un pret
+ * taiat scos din burta e minciuna, si o recunoaste oricine a cumparat vreodata
+ * ceva online.
  */
 
 export function Price({
   value,
+  oldValue = null,
   locale,
   size = "md",
   className,
 }: {
   value: number;
+  /** Pretul dinainte de reducere. Ignorat daca nu e mai mare decat `value`. */
+  oldValue?: number | null;
   locale: Locale;
   size?: "sm" | "md" | "lg";
   className?: string;
@@ -29,16 +36,23 @@ export function Price({
     md: "text-700",
     lg: "text-900",
   }[size];
+  const redus = oldValue != null && oldValue > value;
   return (
-    <p className={cn("flex items-baseline gap-[var(--sp-2)]", className)}>
-      <span
-        className={cn("num optical-left price-amount", scale)}
-      >
-        {formatPrice(value)}
-      </span>
-      <span className="price-currency">MDL</span>
-      <span className="sr-only-abs">{d.perTyre}</span>
-    </p>
+    <div className={cn("flex flex-col gap-[var(--sp-1)]", className)}>
+      <p className="flex items-baseline gap-[var(--sp-2)]">
+        <span className={cn("num optical-left price-amount", scale)}>{formatPrice(value)}</span>
+        <span className="price-currency">MDL</span>
+        <span className="sr-only-abs">{d.perTyre}</span>
+      </p>
+      {redus ? (
+        <p className="flex items-baseline gap-[var(--sp-2)] text-200">
+          <s className="num text-[var(--ink-muted)]">{formatPrice(oldValue)} MDL</s>
+          <span className="font-medium text-[var(--accent)]">
+            {d.youSave} {formatPrice(oldValue - value)} MDL
+          </span>
+        </p>
+      ) : null}
+    </div>
   );
 }
 

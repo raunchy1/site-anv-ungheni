@@ -164,6 +164,7 @@ export async function ProductPage({ product, locale }: { product: Product; local
               <BuyBox
                 locale={locale}
                 price={Number(product.price_mdl)}
+                oldPrice={product.old_price_mdl == null ? null : Number(product.old_price_mdl)}
                 title={title}
                 code={product.legacy_product_id}
                 url={productUrl}

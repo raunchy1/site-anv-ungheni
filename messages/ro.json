@@ -83,7 +83,8 @@
     "similar": "Produse similare",
     "whereToBuy": "Unde poți cumpăra",
     "unavailableNote": "Produsul nu e disponibil acum. Îl putem comanda — sună sau scrie-ne.",
-    "creditBadge": "Credit 0% | 6 luni"
+    "creditBadge": "Credit 0% | 6 luni",
+    "youSave": "economisești {amount} MDL"
   },
   "stock": {
     "supplier": "Disponibil",

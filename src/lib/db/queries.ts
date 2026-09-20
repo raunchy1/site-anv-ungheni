@@ -8,7 +8,7 @@ const PRODUCT_COLS = `
   id, legacy_product_id, slug_ro, slug_ru, category, brand_id, brand_name, model,
   size_system, width, aspect, overall_diameter_in, section_width_in, diameter, size_raw,
   load_index, speed_index, season, is_xl, is_runflat, is_commercial, is_studded,
-  price_mdl, stock_status, title_ro, title_ru, description_ro, description_ru,
+  price_mdl, old_price_mdl, stock_status, title_ro, title_ru, description_ro, description_ru,
   meta_title_ro, meta_title_ru, meta_desc_ro, meta_desc_ru,
   product_images ( storage_path, alt_ro, alt_ru ),
   brands ( slug_ro, slug_ru, name, logo_url, logo_on_dark, logo_ratio )

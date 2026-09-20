@@ -19,10 +19,12 @@ const QUANTITIES = [1, 2, 4] as const;
  * preselectat, nu un câmp numeric.
  */
 export function BuyBox({
-  locale, price, title, code, url, phone, phoneHref, item,
+  locale, price, oldPrice = null, title, code, url, phone, phoneHref, item,
 }: {
   locale: Locale;
   price: number;
+  /** Pretul dinainte de reducere. Aratat barat doar cand e mai mare — niciodata inventat. */
+  oldPrice?: number | null;
   title: string;
   code: number;
   url: string;
@@ -51,6 +53,15 @@ export function BuyBox({
           <span className="text-200 text-[var(--ink-muted)]">{t("product.setOfFour")}</span>
         </p>
       </div>
+
+      {oldPrice != null && oldPrice > price ? (
+        <p className="flex flex-wrap items-baseline gap-x-[var(--sp-3)] gap-y-[var(--sp-1)] text-300">
+          <s className="num text-[var(--ink-muted)]">{formatPrice(oldPrice)} MDL</s>
+          <span className="font-semibold text-[var(--accent)]">
+            {t("product.youSave", { amount: formatPrice(oldPrice - price) })}
+          </span>
+        </p>
+      ) : null}
 
       <div>
         <p className="label mb-[var(--sp-2)]">{t("product.quantity")}</p>

@@ -29,6 +29,8 @@ export type Product = {
   title: string;
   titleRu: string;
   price: number | null;
+  /** Pretul dinainte de reducere. Null cand nu e nicio reducere. */
+  oldPrice?: number | null;
   stock: StockStatus;
   season: Season | null;
   sizeSystem: SizeSystem | null;
