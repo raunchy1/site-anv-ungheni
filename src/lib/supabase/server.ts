@@ -27,26 +27,134 @@ import { createClient } from "@supabase/supabase-js";
  * oprește exportul. Pe 8 septembrie 2026 exact asta a blocat repararea:
  * build-ul nu putea porni cât timp baza clipea.
  *
- * Două reîncercări, cu pauză crescătoare și puțin zgomot ca să nu plece toate
- * odată. Nu mai multe: o bază în genunchi nu are nevoie să fie lovită de cinci
- * ori pentru aceeași pagină.
+ * O singură reîncercare, cu pauză și puțin zgomot ca să nu plece toate odată.
+ *
+ * ERA DOUĂ, ȘI ASTA A DOBORÂT BAZA PE 22 SEPTEMBRIE 2026.
+ *
+ * Reîncercarea oarbă e un amplificator: cât timp baza răspunde, nu se vede; dar
+ * din clipa în care încetinește, fiecare interogare pleacă de trei ori, deci
+ * sarcina se triplează exact în minutul în care baza avea nevoie de mai puțină.
+ * Bucla se închide singură — 522 aduce reîncercări, reîncercările aduc 522 — și
+ * nu se mai deschide, fiindcă nimic din lanț nu scade când lucrurile merg prost.
+ * Dovada că nu se deschide: peste noapte traficul a scăzut de douăzeci de ori,
+ * iar baza tot răspundea 522 la fiecare cerere, până la repornire.
+ *
+ * Commitul dinainte a scos cauza acelei zile — cele 106.694 de apeluri ale lui
+ * `getCatalogSummary`. Limitele de aici sunt pentru următoarea cauză, care va fi
+ * alta: ce ține baza în viață nu e politețea codului care o interoghează, ci
+ * faptul că nu O POATE lovi mai tare decât atât.
+ *
+ *   TIMP    fiecare încercare moare la 8 secunde. Înainte nu exista nicio
+ *           limită, deci o cerere agățată aștepta cele ~20 de secunde după care
+ *           Cloudflare răspunde 522 — ori 60 cu tot cu reîncercări. De acolo
+ *           veneau fișele de produs care dădeau 404 după 22 de secunde.
+ *
+ *   LĂȚIME  cel mult 12 interogări simultane din tot procesul. E singura
+ *           protecție care nu depinde de cine ne vizitează: oricâte cereri ar
+ *           trimite un crawler peste navigarea pe filtre, baza vede tot 12.
+ *           Restul așteaptă la rând, iar dacă rândul nu se mișcă în 8 secunde,
+ *           cererea pică — ISR servește pagina veche, ceea ce e răspunsul corect.
+ *
+ *   SIGURANȚĂ  după 5 eșecuri de gateway la rând, oprim complet interogările
+ *           pentru 30 de secunde. O bază care se îneacă are nevoie de liniște ca
+ *           să-și revină, nu de încă un val. Când siguranța e sărită, cererile
+ *           pică instantaneu, fără să atingă rețeaua.
  */
 const RETRY_STATUS = new Set([429, 500, 502, 503, 504, 520, 521, 522, 524]);
 
+const TIMEOUT_MS = 8_000;
+const CONCURENTA_MAX = 12;
+const PRAG_SIGURANTA = 5;
+const RACIRE_MS = 30_000;
+
+/** Semafor simplu: ține numărul de interogări în zbor sub `CONCURENTA_MAX`. */
+let inZbor = 0;
+const laRand: Array<() => void> = [];
+
+function elibereaza() {
+  inZbor--;
+  laRand.shift()?.();
+}
+
+async function ocupaLoc(semnal: AbortSignal): Promise<void> {
+  if (inZbor < CONCURENTA_MAX) { inZbor++; return; }
+  /* Un semnal deja anulat nu mai emite „abort", deci l-am aștepta la nesfârșit. */
+  if (semnal.aborted) throw new Error("Supabase: timp expirat înainte de rând");
+  await new Promise<void>((rezolva, respinge) => {
+    const pornim = () => { inZbor++; rezolva(); };
+    laRand.push(pornim);
+    /* Cine a așteptat degeaba iese din rând, ca rândul să nu crească la infinit. */
+    semnal.addEventListener("abort", () => {
+      const i = laRand.indexOf(pornim);
+      if (i !== -1) { laRand.splice(i, 1); respinge(new Error("Supabase: rând plin")); }
+    }, { once: true });
+  });
+}
+
+/**
+ * LIMITELE SUNT PENTRU CINE SERVEȘTE TRAFIC, NU PENTRU BUILD.
+ *
+ * Nota de sus spune de ce exista reîncercarea: un build pierdut, fiindcă o
+ * singură rută pre-generată care aruncă oprește exportul. Siguranța ar strica
+ * exact asta — cinci clipiri la rând ale bazei în timpul exportului și deploy-ul
+ * cade, de data asta fără nicio reîncercare care să-l salveze.
+ *
+ * Deci la build se întoarce regimul vechi: trei încercări, fără siguranță. E
+ * sigur, fiindcă build-ul e o sarcină mărginită și controlată — randează cele
+ * ~294 de pagini de marcă, serviciu și pagină legală, și atât. Crawlerul de care
+ * ne aparăm nu există acolo.
+ *
+ * Semaforul rămâne pornit în ambele regimuri: la build nu strică nimănui, iar
+ * dacă vreodată pre-generăm din nou mii de pagini, e singurul lucru care ține
+ * exportul de la a deschide o mie de conexiuni deodată.
+ */
+const LA_BUILD = process.env.NEXT_PHASE === "phase-production-build";
+
+/** Siguranța: cât timp `sariPanaLa` e în viitor, nu atingem deloc rețeaua. */
+let esecuriLaRand = 0;
+let sariPanaLa = 0;
+
+function inregistreaza(reusit: boolean) {
+  if (LA_BUILD) return;
+  if (reusit) { esecuriLaRand = 0; return; }
+  if (++esecuriLaRand >= PRAG_SIGURANTA) sariPanaLa = Date.now() + RACIRE_MS;
+}
+
+async function oIncercare(input: RequestInfo | URL, init: RequestInit): Promise<Response> {
+  /* La build, răbdare: `getSizeFacets` cere 20.000 de rânduri, iar o tăiere la
+     8 secunde ar transforma o interogare grea într-un deploy pierdut. */
+  const ceas = AbortSignal.timeout(LA_BUILD ? 30_000 : TIMEOUT_MS);
+  await ocupaLoc(ceas);
+  try {
+    const res = await fetch(input, { ...init, signal: ceas });
+    inregistreaza(!RETRY_STATUS.has(res.status));
+    return res;
+  } catch (e) {
+    inregistreaza(false);
+    throw e;
+  } finally {
+    elibereaza();
+  }
+}
+
 async function withRetry(input: RequestInfo | URL, init: RequestInit): Promise<Response> {
+  const incercari = LA_BUILD ? 3 : 2;
   let last: Response | undefined;
-  for (let attempt = 0; attempt < 3; attempt++) {
+  for (let attempt = 0; attempt < incercari; attempt++) {
+    if (!LA_BUILD && Date.now() < sariPanaLa) {
+      throw new Error("Supabase: siguranța e sărită, baza se odihnește");
+    }
     if (attempt > 0) {
       const pauza = 400 * 2 ** (attempt - 1) + Math.random() * 200;
       await new Promise((r) => setTimeout(r, pauza));
     }
     try {
-      const res = await fetch(input, init);
+      const res = await oIncercare(input, init);
       if (!RETRY_STATUS.has(res.status)) return res;
       last = res;
     } catch (e) {
-      /* Rețea căzută sau cerere anulată: ultima încercare o lasă să iasă. */
-      if (attempt === 2) throw e;
+      /* Rețea căzută, timp expirat sau rând plin: ultima încercare o lasă să iasă. */
+      if (attempt === incercari - 1) throw e;
     }
   }
   return last!;
