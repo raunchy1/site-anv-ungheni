@@ -57,6 +57,24 @@ export default function robots(): MetadataRoute.Robots {
     "/ru/katalog-shin/*sortare_",
     "/ru/katalog-shin/*pagina_",
     "/ru/katalog-shin/*indisponibile",
+    /*
+     * PATRU FILTRE SAU MAI MULTE NU SE MAI PARCURG.
+     *
+     * `isIndexable` le da deja `noindex` la peste trei filtre — dar `noindex`
+     * se citeste DUPA randare, iar randarea e exact ce costa. Fiecare
+     * combinatie latime+inaltime+diametru+sezon e o pagina care face patru
+     * interogari in baza.
+     *
+     * Masurat pe 23 septembrie 2026, in jurnalele Supabase: mii de combinatii
+     * distincte, fiecare ceruta de ~800 de ori in 24 de ore. Baza a incetat sa
+     * accepte conexiuni, 82.781 de cereri au primit 522, si fiecare pagina de
+     * catalog a devenit 500 pentru vizitatori.
+     *
+     * Nu se pierde nimic la indexare: erau `noindex` oricum. Combinatiile de
+     * pana la trei filtre — cele care aduc cautarile reale — raman deschise.
+     */
+    "/catalog-anvelope/*/*/*/*",
+    "/ru/katalog-shin/*/*/*/*",
   ];
 
   /*

@@ -86,7 +86,17 @@ export async function CatalogView({
         </p>
       </div>
       {/* Rezumatul selecției, din aceleași rânduri care se afișează dedesubt. */}
-      <CatalogIntro summary={summary} total={result.availableTotal} eticheta={etichetaFiltru(filters, numeMarca, locale)} locale={locale} />
+      {/* Marcile si sezoanele vin din produsele chiar afisate, nu dintr-o a
+          doua interogare peste 500 de randuri — vezi nota din
+          `getCatalogSummary`. */}
+      <CatalogIntro
+        summary={summary}
+        marci={[...new Set(result.items.map((p) => p.brand_name).filter((b): b is string => Boolean(b)))].sort()}
+        sezoane={[...new Set(result.items.map((p) => p.season).filter(Boolean))] as string[]}
+        total={result.availableTotal}
+        eticheta={etichetaFiltru(filters, numeMarca, locale)}
+        locale={locale}
+      />
 
       <TreadRule variant="full" className="mt-[var(--sp-3)] text-[var(--line)]" />
 

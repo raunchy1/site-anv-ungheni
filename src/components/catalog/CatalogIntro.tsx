@@ -18,9 +18,12 @@ import type { Locale } from "@/lib/types";
  * trei anvelope pe dimensiunea asta, propoziția o spune.
  */
 export async function CatalogIntro({
-  summary, total, eticheta, locale,
+  summary, marci, sezoane, total, eticheta, locale,
 }: {
   summary: CatalogSummary;
+  /** Marcile si sezoanele produselor chiar afisate pe pagina. */
+  marci: string[];
+  sezoane: string[];
   /**
    * Numărul EXACT de anvelope disponibile din selecție, din contorul
    * catalogului. Rezumatul citește doar un eșantion — cele mai ieftine 500 —
@@ -38,8 +41,7 @@ export async function CatalogIntro({
 
   const ru = locale === "ru";
   const numeSezon = (s: string) => t(`season.${s}`).toLowerCase();
-  const sezoane = summary.sezoane.map(numeSezon);
-  const marci = summary.marci;
+  const sezoaneNume = sezoane.map(numeSezon);
 
   const bucati: string[] = [];
 
@@ -66,8 +68,8 @@ export async function CatalogIntro({
     );
   }
 
-  if (sezoane.length > 1) {
-    bucati.push(ru ? `сезоны: ${sezoane.join(", ")}` : `pentru ${sezoane.join(", ")}`);
+  if (sezoaneNume.length > 1) {
+    bucati.push(ru ? `сезоны: ${sezoaneNume.join(", ")}` : `pentru ${sezoaneNume.join(", ")}`);
   }
 
   return (

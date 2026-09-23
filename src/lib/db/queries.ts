@@ -200,40 +200,44 @@ export async function getCatalog(f: CatalogFilters): Promise<CatalogResult> {
  * per randare de pagină, iar pagina stă în cache 15 minute.
  */
 export type CatalogSummary = {
-  total: number;
   pretMin: number | null;
-  pretMax: number | null;
-  marci: string[];
-  sezoane: string[];
 };
 
 export async function getCatalogSummary(f: CatalogFilters): Promise<CatalogSummary> {
-  let q = db.from("products").select("price_mdl, brand_name, season")
+  /*
+   * UN RÂND, NU 500.
+   *
+   * Aici se cereau cele mai ieftine 500 de anvelope din selecție, ca să iasă
+   * trei lucruri: prețul minim, lista de mărci și lista de sezoane. Măsurat în
+   * jurnalele Supabase pe 23 septembrie 2026: **106.694 de apeluri în 24 de
+   * ore**, adică peste 53 de milioane de rânduri citite și sortate într-o zi,
+   * pentru o propoziție care spune „de la 1.290 MDL bucata".
+   *
+   * În aceeași zi baza a încetat să accepte conexiuni. 82.781 de cereri au
+   * primit 522 și fiecare randare de catalog a devenit 500 — pentru că, pe
+   * bună dreptate, `getCatalog` aruncă în loc să arate un catalog gol.
+   *
+   * Prețul minim se cere acum cu `order` + `limit(1)`: un singur rând, exact
+   * aceeași cifră, fiindcă minimul unei liste sortate crescător e primul ei
+   * element.
+   *
+   * Mărcile și sezoanele nu se mai cer deloc. Pagina a încărcat deja produsele
+   * pe care le afișează; `CatalogView` le trimite de acolo. Erau oricum mărcile
+   * celor mai ieftine 500, nu ale întregii selecții — iar cele afișate sunt mai
+   * oneste decât cele dintr-un eșantion.
+   *
+   * `pretMax` nu era folosit nicăieri. A fost scos.
+   */
+  let q = db.from("products").select("price_mdl")
     .eq("is_active", true).eq("category", "anvelope").in("stock_status", AVAILABLE)
     .not("price_mdl", "is", null);
   for (const [col, val] of filterEntries(f)) q = q.eq(col, val);
 
-  /* CELE MAI IEFTINE 500, nu primele 2.000 la întâmplare.
-     Ordinea contează: propoziția spune „de la X MDL", iar fără `order` X era
-     minimul unui eșantion arbitrar, adică putea fi peste prețul real de start.
-     500 în loc de 2.000 fiindcă restul nu schimbă nici prețul minim, nici
-     primele șase mărci — dar 2.000 de rânduri treceau prin rețea la FIECARE
-     randare de catalog, inclusiv la cele câteva mii cerute de roboți pe oră.
-     Numărul afișat nu mai vine de aici, ci din contorul exact al catalogului
-     (vezi `CatalogIntro`), deci plafonul nu mai poate minți o cifră. */
-  const { data, error } = await q.order("price_mdl", { ascending: true }).limit(500);
+  const { data, error } = await q.order("price_mdl", { ascending: true }).limit(1);
   if (error) throw new Error(`rezumat catalog: ${error.message}`);
-  const rows = (data as { price_mdl: number | null; brand_name: string | null; season: string | null }[] | null) ?? [];
-  if (rows.length === 0) return { total: 0, pretMin: null, pretMax: null, marci: [], sezoane: [] };
-
-  const preturi = rows.map((r) => Number(r.price_mdl)).filter((n) => Number.isFinite(n) && n > 0);
-  return {
-    total: rows.length,
-    pretMin: preturi.length ? Math.min(...preturi) : null,
-    pretMax: preturi.length ? Math.max(...preturi) : null,
-    marci: [...new Set(rows.map((r) => r.brand_name).filter((b): b is string => Boolean(b)))].sort(),
-    sezoane: [...new Set(rows.map((r) => r.season).filter((s): s is string => Boolean(s)))],
-  };
+  const pret = (data as { price_mdl: number | null }[] | null)?.[0]?.price_mdl;
+  const pretMin = pret != null && Number(pret) > 0 ? Number(pret) : null;
+  return { pretMin };
 }
 
 /* ------------------------------------------------------- selectorul de dimensiune */
