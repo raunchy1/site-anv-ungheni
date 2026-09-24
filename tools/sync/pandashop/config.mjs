@@ -23,7 +23,11 @@ export const config = {
     concurrency: Number(process.env.SYNC_CONCURRENCY ?? 4),
     delayMin: 400,
     delayMax: 800,
-    retries: 4,
+    /* 7, nu 4. Pe 24 septembrie 2026 pandashop a început să dea 500 după ~100
+       de pagini de listare la rând și și-a revenit abia după un minut sau două;
+       4 reîncercări însemnau ~30s de răbdare, deci rularea cădea la pagina 100.
+       Cu 7 (plafon 60s fiecare) sunt ~3 minute pe pagină înainte de renunțare. */
+    retries: Number(process.env.SYNC_RETRIES ?? 7),
   },
 
   /*
