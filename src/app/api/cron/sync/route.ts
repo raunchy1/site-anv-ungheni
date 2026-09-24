@@ -57,6 +57,10 @@ export async function GET(request: Request) {
   /* Sitemap-ul lor de produse fără stoc are 11 fișiere de ~25 MB. Nu intră într-o
      rulare de 300 de secunde și nu aduce nimic zilnic; se cere explicit. */
   const cuSitemap = url.searchParams.get("sitemap") === "1";
+  /* `?delisted=1`: fișele fără furnizor (`primary_source` NULL) pe care nici
+     pandashop nu le mai are ies din stoc. Pneu și pneuexpert își sting singure
+     fișele lor; asta prinde restul, moștenit din OpenCart. */
+  const delisted = url.searchParams.get("delisted") === "1";
 
   const inceput = Date.now();
   const linii: string[] = [];
@@ -108,7 +112,7 @@ export async function GET(request: Request) {
         stinse?: number;
         pretSchimbat?: number;
         slugSchimbate?: string[];
-      } = await actualizeazaCuLacat({ apply, cuSitemap, actor: "cron:refresh", log });
+      } = await actualizeazaCuLacat({ apply, cuSitemap, delisted, actor: "cron:refresh", log });
 
       if (r.oprit === "lacat_ocupat") return NextResponse.json({ ok: true, sarit: "o altă rulare e în curs" });
       if (r.oprit === "din_admin") return NextResponse.json({ ok: true, sarit: "sincronizarea e oprită din admin" });
