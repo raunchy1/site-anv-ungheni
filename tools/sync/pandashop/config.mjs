@@ -21,12 +21,12 @@ export const config = {
   http: {
     cacheDir: path.join(radacina, 'data/sync/cache'),
     concurrency: Number(process.env.SYNC_CONCURRENCY ?? 4),
-    /* 1,5–2,5 s, nu 0,4–0,8 s. Pe 24 septembrie 2026 pandashop a început să
-       blocheze cu 500 după ~100 de pagini cerute în ritmul vechi — la fiecare
-       încercare, exact la pagina 100–101. În ritmul ăsta listarea completă ține
-       ~5 minute, adică nimic pentru o rulare de noapte. */
-    delayMin: Number(process.env.SYNC_DELAY_MIN ?? 1500),
-    delayMax: Number(process.env.SYNC_DELAY_MAX ?? 2500),
+    /* 8–12 s între cereri. Pe 24 septembrie 2026 pandashop bloca adresa cu 500
+       pe TOT catalogul după ~100 de pagini la 0,4–0,8 s și după ~64 la 1,5–2,5 s,
+       iar blocajul ținea 20–30 de minute. La 8–12 s listarea completă (138 de
+       pagini) a trecut curat, în ~25 de minute — pentru o rulare de noapte, nimic. */
+    delayMin: Number(process.env.SYNC_DELAY_MIN ?? 8000),
+    delayMax: Number(process.env.SYNC_DELAY_MAX ?? 12000),
     /* 7, nu 4. Pe 24 septembrie 2026 pandashop a început să dea 500 după ~100
        de pagini de listare la rând și și-a revenit abia după un minut sau două;
        4 reîncercări însemnau ~30s de răbdare, deci rularea cădea la pagina 100.
