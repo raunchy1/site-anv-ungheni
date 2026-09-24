@@ -37,6 +37,8 @@ import { pregatesteImagini } from './images.mjs';
 import { detecteaza } from './detect.mjs';
 import { iaLacatul, elibereazaLacatul } from './lock.mjs';
 import { reimprospateazaContoarele } from './counters.mjs';
+import { indexeazaCatalogul, potriveste, potrivireRelaxata } from './match.mjs';
+import { scrieSurse } from '../pneu/sources.mjs';
 
 /* Rutele care nu sunt produse. Un produs cu slug-ul `contact` ar înlocui tăcut
    pagina de contact — vezi tools/route-map/check-collisions.ts. */
@@ -100,6 +102,7 @@ export function normalizeaza(sursa, { branduri, sluguriRo, sluguriRu, reguli }) 
     legacy_product_id: -Math.abs(hashNumeric(sursa.id)),
     pandashop_id: String(sursa.id),
     source: 'pandashop_sync',
+    primary_source: 'pandashop',
     slug_ro,
     slug_ru: slug_ru || null,
     category: 'anvelope',
@@ -175,6 +178,9 @@ function hashNumeric(id) {
  */
 export async function ruleaza(opts = {}) {
   const { apply: aplica = false, limit = Infinity, full = false, simuleaza = 0, actor = 'manual' } = opts;
+  /* Pragul se poate ridica explicit pentru O rulare — după o pauză lungă a
+     cronului, când restanța e reală, nu un semn că s-a stricat ceva. */
+  const maxNoi = opts.maxNoi ?? config.breakers.maxNewPerRun;
   const log = opts.log ?? console.log;
   const t0 = Date.now();
   const jurnal = [];
@@ -188,8 +194,22 @@ export async function ruleaza(opts = {}) {
 
   spune('· citesc catalogul nostru…');
   const [branduri, produse, imagini, vazute] = await Promise.all([
-    readBrands(), readAll('products', 'slug_ro,slug_ru'), readAll('product_images', 'content_hash'), readAll('pandashop_seen', 'pandashop_id'),
+    readBrands(),
+    readAll('products', 'id,category,brand_name,model,width,aspect,diameter,load_index,speed_index,is_xl,is_runflat,title_ro,slug_ro,slug_ru,pandashop_id'),
+    readAll('product_images', 'content_hash'), readAll('pandashop_seen', 'pandashop_id'),
   ]);
+  /*
+   * ANVELOPELE PE CARE LE AVEM DEJA DE LA ALT FURNIZOR.
+   *
+   * „Nou la pandashop" nu înseamnă „nou la noi": de când există pneu.md și
+   * pneuexpert, o anvelopă apărută azi la pandashop e adesea una pe care o avem
+   * deja, scrisă altfel („Bluearth WINT.V905" / „BluEarth Winter V905"). Doar
+   * coliziunea de slug n-o prinde, deci ar intra a doua oară — două fișe, două
+   * prețuri. Se caută după cheia naturală, ca la importul pneu, iar ce se
+   * găsește se LEAGĂ (product_sources), nu se creează.
+   */
+  const numeBranduri = branduri.map((b) => b.name).filter(Boolean).sort((a, b) => b.length - a.length);
+  const index = indexeazaCatalogul(produse, numeBranduri);
   const sluguriRo = new Set(produse.map((p) => p.slug_ro));
   const sluguriRu = new Set(produse.map((p) => p.slug_ru).filter(Boolean));
   const hashuri = new Set(imagini.map((i) => i.content_hash).filter(Boolean));
@@ -213,8 +233,8 @@ export async function ruleaza(opts = {}) {
   spune(`· produse noi detectate: ${noi.length}`);
 
   /* Întrerupătorul, înainte de orice scriere. */
-  if (noi.length > config.breakers.maxNewPerRun) {
-    throw new Error(`${noi.length} produse noi, peste pragul de ${config.breakers.maxNewPerRun} — se oprește fără să scrie`);
+  if (noi.length > maxNoi) {
+    throw new Error(`${noi.length} produse noi, peste pragul de ${maxNoi} — se oprește fără să scrie`);
   }
   if (noi.length === 0) {
     spune('  nimic de făcut');
@@ -222,7 +242,7 @@ export async function ruleaza(opts = {}) {
   }
 
   const deImportat = noi.slice(0, limit);
-  const rezultate = { importate: [], carantina: [], faraPret: [], erori: [], excluse: [] };
+  const rezultate = { importate: [], carantina: [], faraPret: [], erori: [], excluse: [], legate: [] };
 
   for (const ref of deImportat) {
     try {
@@ -232,6 +252,14 @@ export async function ruleaza(opts = {}) {
       const { rand, motive, pret, faraPret, exclus } = normalizeaza(sursa, { branduri, sluguriRo, sluguriRu, reguli: setari.pricing_rules });
 
       if (exclus) { rezultate.excluse.push({ id: ref.id, titlu: sursa.titleRo, brand: exclus }); continue; }
+
+      const m = potriveste(sursa.titleRo, index, numeBranduri);
+      const existent = m.stare === 'gasit' ? m.produs
+        : m.stare === 'doar_la_ei' ? potrivireRelaxata(m.t, m.aproape) : null;
+      if (existent) {
+        rezultate.legate.push({ id: ref.id, titlu: sursa.titleRo, produs: existent.id, disponibil: !faraPret });
+        continue;
+      }
 
       if (faraPret && motive.length === 0) { rezultate.faraPret.push({ id: ref.id, titlu: sursa.titleRo }); continue; }
 
@@ -260,6 +288,7 @@ export async function ruleaza(opts = {}) {
 
   spune(`\n${aplica ? 'APLIC' : 'DRY-RUN — nu se scrie nimic'}`);
   spune(`  de importat:      ${rezultate.importate.length}`);
+  spune(`  le avem deja (se leagă, nu se creează): ${rezultate.legate.length}`);
   spune(`  în carantină:     ${rezultate.carantina.length}`);
   spune(`  fără preț (așteptare): ${rezultate.faraPret.length}`);
   spune(`  erori:            ${rezultate.erori.length}`);
@@ -306,6 +335,17 @@ export async function ruleaza(opts = {}) {
       status: 'imported', last_checked_at: new Date().toISOString(),
     }], { onConflict: 'pandashop_id' });
     create++;
+  }
+  if (rezultate.legate.length) {
+    await scrieSurse(rezultate.legate.map((l) => ({
+      product_id: l.produs, source: 'pandashop', external_id: l.id, available: l.disponibil,
+    })));
+    for (const l of rezultate.legate) {
+      await insert('pandashop_seen', [{
+        pandashop_id: l.id, baseline: false, imported: false, product_id: l.produs, status: 'skipped',
+        note: `exista deja la noi: #${l.produs}`, last_checked_at: new Date().toISOString(),
+      }], { onConflict: 'pandashop_id' });
+    }
   }
   for (const c of rezultate.carantina) {
     await insert('sync_quarantine', [{ pandashop_id: c.id, reason: c.motive.join('; '), raw: c.rand }], { onConflict: 'pandashop_id,reason' });

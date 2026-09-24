@@ -189,9 +189,13 @@ export async function GET(request: Request) {
 
     /* ------------------------------------------------------ produse noi */
     const { ruleazaCuLacat } = await import("../../../../../tools/sync/pandashop/import.mjs");
+    /* `?max=N` ridică pragul de produse noi pentru O rulare — după o pauză a
+       cronului, când restanța e reală. */
+    const max = Number(url.searchParams.get("max")) || undefined;
     const r = await ruleazaCuLacat({
       apply,
       full,
+      maxNoi: max,
       actor: full ? "cron:sync:full" : "cron:sync:new",
       log,
     });
