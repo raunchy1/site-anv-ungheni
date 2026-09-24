@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import path from "node:path";
 import createNextIntlPlugin from "next-intl/plugin";
 
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
@@ -10,6 +11,14 @@ const nextConfig: NextConfig = {
    * ~200 MB in loc de 1,2 GB, si nimic de instalat la pornire.
    */
   output: "standalone",
+  /**
+   * Cache-ul ISR care nu mai poate umple discul cu combinatii de filtre din
+   * catalog — de ce, in `cache-handler.cjs`. LRU-ul din memorie creste de la
+   * 50 MB (implicit) la 256 MB, fiindca acolo stau acum paginile de catalog
+   * adanci (~0,8 MB fiecare).
+   */
+  cacheHandler: path.resolve("./cache-handler.cjs"),
+  cacheMaxMemorySize: 256 * 1024 * 1024,
   /**
    * Cronul isi importa pipeline-ul din `tools/sync/pandashop/` prin `import()`
    * cu cale relativa, calculata la executie. Urmaritorul de fisiere al lui Next
