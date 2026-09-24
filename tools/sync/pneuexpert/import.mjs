@@ -104,6 +104,9 @@ export function normalizeaza(sursa, { branduri, sluguriRo, sluguriRu, reguli, fo
     legacy_product_id: idLiber(`pneuexpert:${sursa.id}`, folosite),
     pneuexpert_id: String(sursa.id),
     source: 'pneuexpert_sync',
+    /* Cine dictează prețul (migrarea 0030). Fără el, fișa nouă n-ar avea stăpân
+       și `?delisted=1` de la pandashop ar stinge-o în prima noapte. */
+    primary_source: 'pneuexpert',
     slug_ro,
     slug_ru: slug_ru || null,
     category: 'anvelope',
