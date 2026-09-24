@@ -17,6 +17,12 @@
  *
  *   node --env-file=.env.local tools/sync/pneuexpert/snapshot.mjs
  *   node --env-file=.env.local tools/sync/pneuexpert/snapshot.mjs --limit 50
+ *   node --env-file=.env.local tools/sync/pneuexpert/snapshot.mjs --proaspat
+ *
+ * `--proaspat` e rularea pentru ACTUALIZAREA PREȚURILOR: reface enumerarea,
+ * ocolește cache-ul de pe disc și începe o fotografie nouă. Fără el, reluarea
+ * citește paginile din cache, adică prețurile din ziua primei fotografii — iar
+ * un preț vechi scris azi în bază e o minciună cu dată nouă.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -39,14 +45,20 @@ export function citesteFotografia(fisier = FISIER) {
   return out;
 }
 
-async function main() {
+export async function faFotografia({ limit = Infinity, proaspat = false, reenumera: reenumeraCerut = false, log = console.log } = {}) {
   const t0 = Date.now();
-  const iLimit = process.argv.indexOf('--limit');
-  const limit = iLimit > 0 ? Number(process.argv[iLimit + 1]) : Infinity;
-  const reenumera = process.argv.includes('--reenumera');
+  const console = { log };
+  const reenumera = proaspat || reenumeraCerut;
 
   fs.mkdirSync(config.paths.state, { recursive: true });
-  const http = createHttp({ ...config.http });
+  if (proaspat) {
+    /* Fotografia veche se păstrează alături, nu se șterge: dacă rularea nouă
+       pică la jumătate, importul are încă de unde citi. */
+    for (const f of [FISIER, path.join(config.paths.state, 'checkpoint.ndjson')]) {
+      if (fs.existsSync(f)) fs.renameSync(f, `${f}.anterior`);
+    }
+  }
+  const http = createHttp({ ...config.http, useCache: !proaspat });
   const source = createPneuexpertSource(http);
 
   /* Enumerarea se ține pe disc: e partea care depinde de paginarea lor, iar o
@@ -103,6 +115,16 @@ async function main() {
   console.log(`\nFotografia: ${total} produse în ${FISIER}`);
   console.log(`HTTP: ${http.stats.fetched} cereri, ${http.stats.cached} din cache, ${http.stats.retried} reîncercări, ${http.stats.failed} eșecuri`);
   console.log(`gata în ${Math.round((Date.now() - t0) / 1000)}s`);
+  return { total, ...cifre };
+}
+
+async function main() {
+  const iLimit = process.argv.indexOf('--limit');
+  await faFotografia({
+    limit: iLimit > 0 ? Number(process.argv[iLimit + 1]) : Infinity,
+    proaspat: process.argv.includes('--proaspat'),
+    reenumera: process.argv.includes('--reenumera'),
+  });
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {

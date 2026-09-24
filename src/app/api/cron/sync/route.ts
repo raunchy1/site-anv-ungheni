@@ -15,6 +15,14 @@ import { NextResponse } from "next/server";
  *   `?mode=new`      — importă anvelopele apărute la ei după fotografia
  *                      inițială. Comportamentul dinainte, neschimbat.
  *
+ *   `?mode=pneu`       — pneu.md: fotografia API-ului lor, anvelopele noi, apoi
+ *   `?mode=pneuexpert`   prețul și stocul fișelor care le aparțin
+ *                      (`tools/sync/surse-cron.mjs`). Pneuexpert durează ~90 de
+ *                      minute — cronul de pe server așteaptă cu `--max-time`.
+ *
+ * Fiecare furnizor scrie doar pe fișele cu `primary_source` al lui, deci
+ * rulările nu se calcă între ele.
+ *
  * Fără `mode`, rămâne `new` — ca un cron vechi care încă apelează ruta să facă
  * exact ce făcea înainte, nu altceva.
  *
@@ -41,7 +49,8 @@ export async function GET(request: Request) {
   }
 
   const url = new URL(request.url);
-  const mode = url.searchParams.get("mode") === "refresh" ? "refresh" : "new";
+  const cerut = url.searchParams.get("mode");
+  const mode = cerut === "refresh" || cerut === "pneu" || cerut === "pneuexpert" ? cerut : "new";
   const full = url.searchParams.get("full") === "1";
   /* `?dry=1` rulează fără să scrie — util ca să verifici ruta pe producție. */
   const apply = url.searchParams.get("dry") !== "1";
@@ -60,6 +69,33 @@ export async function GET(request: Request) {
   const { oreDeTacere } = await import("../../../../../tools/sync/pandashop/lock.mjs");
 
   try {
+    if (mode === "pneu" || mode === "pneuexpert") {
+      const { ruleazaSursa } = await import("../../../../../tools/sync/surse-cron.mjs");
+      const r = await ruleazaSursa(mode, { apply, log });
+      const schimbate: string[] = r.pret?.slugSchimbate ?? [];
+      if (apply) {
+        if (schimbate.length > 1500) revalidateTag("produse-toate", { expire: 0 });
+        else for (const slug of schimbate) revalidateTag(`produs:${slug}`, { expire: 0 });
+        if (schimbate.length > 0 || (r.noi ?? 0) > 0) revalidateTag("catalog", { expire: 0 });
+      }
+      if (r.erori.length) {
+        await alerta(`Sincronizare ${mode}: rulare cu erori`, `${r.erori.join("\n")}\n\n${linii.slice(-40).join("\n")}`);
+      }
+      return NextResponse.json({
+        ok: r.erori.length === 0,
+        mode,
+        noi: r.noi ?? 0,
+        carantina: r.carantina ?? 0,
+        scumpite: r.pret?.scumpite ?? 0,
+        ieftinite: r.pret?.ieftinite ?? 0,
+        reactivate: r.pret?.reactivate ?? 0,
+        stinse: r.pret?.stinse ?? 0,
+        erori: r.erori,
+        durata_s: Math.round((Date.now() - inceput) / 1000),
+        dryRun: !apply,
+      });
+    }
+
     if (mode === "refresh") {
       const { actualizeazaCuLacat } = await import("../../../../../tools/sync/pandashop/refresh.mjs");
       /* Modulul e JS, deci tipul dedus e o reuniune de forme în care TypeScript
@@ -232,7 +268,7 @@ export async function GET(request: Request) {
     const mesaj = e instanceof Error ? e.message : String(e);
     /* Întrerupătorul ajunge aici. Se oprește FĂRĂ să scrie și anunță. */
     await alerta(
-      `Sincronizare pandashop (${mode}): RULARE OPRITĂ`,
+      `Sincronizare ${mode === "pneu" || mode === "pneuexpert" ? mode : `pandashop (${mode})`}: RULARE OPRITĂ`,
       `${mesaj}\n\nJurnalul rulării:\n${linii.join("\n")}`,
     ).catch(() => {});
     console.error("[sync] rulare eșuată:", mesaj);

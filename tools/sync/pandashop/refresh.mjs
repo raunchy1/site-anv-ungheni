@@ -51,6 +51,8 @@ const COLOANE = [
   /* Nu pentru potrivire, ci ca sa stim ce sa golim din cache: cronul
      goleste `produs:<slug>` fisa cu fisa, nu tot catalogul. */
   'slug_ro', 'slug_ru',
+  /* Cine dicteaza pretul: vezi filtrul de mai jos. */
+  'primary_source',
 ].join(',');
 
 /**
@@ -115,7 +117,18 @@ export async function actualizeaza(opts = {}) {
   spune('· citesc catalogul nostru…');
   const [produse, branduri] = await Promise.all([readAll('products', COLOANE), readBrands()]);
   const brandNames = branduri.map((b) => b.name).filter(Boolean).sort((a, b) => b.length - a.length);
-  const anvelope = produse.filter((p) => p.category === 'anvelope');
+  /*
+   * DOAR ANVELOPELE CARE II APARTIN LUI PANDASHOP (sau inca nimanui).
+   *
+   * Cu trei furnizori, aceeasi anvelopa e adesea la mai multi. Regula din
+   * migrarea 0030 e un singur furnizor pe produs, cel din `primary_source`.
+   * Fara filtrul asta, rularea de noapte rescria cu pretul pandashop fisele
+   * importate de la pneu.md sau pneuexpert, iar refresh-ul lor le scria inapoi
+   * — pretul ar fi sarit intre doi furnizori de la o noapte la alta.
+   * Indexul de potrivire ramane pe tot catalogul: doar scrierea se restrange.
+   */
+  const anvelope = produse.filter((p) => p.category === 'anvelope'
+    && (p.primary_source == null || p.primary_source === 'pandashop'));
   const index = indexeazaCatalogul(produse, brandNames);
   spune(`  ${anvelope.length} anvelope, ${branduri.length} branduri, ${index.faraCheie} fara cheie completa`);
 

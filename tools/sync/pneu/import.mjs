@@ -330,9 +330,24 @@ export async function ruleaza(opts = {}) {
    * târziu, cele 1.750 de legături — și cele 908 produse care până acum n-aveau
    * niciun furnizor — rămân câștigate.
    */
+  /*
+   * UN COD DE-AL LOR RĂMÂNE LA PRODUSUL LA CARE A FOST LEGAT PRIMA DATĂ.
+   *
+   * `(source, external_id)` e unic. Când catalogul nostru a primit între timp o
+   * fișă care se potrivește mai bine pe hârtie, potrivirea de azi poate arăta
+   * spre alt produs — iar lotul întreg pica cu 23505. Mutarea legăturii ar
+   * schimba cine dictează prețul unei fișe existente; nu e treaba unui import.
+   */
+  const legaturaMutata = ({ p, produs }) => {
+    const vechi = legateDeja.get(String(p.id));
+    return vechi && vechi.product_id !== produs.id;
+  };
+  const mutate = rezultate.gasite.filter(legaturaMutata);
+  if (mutate.length) spune(`· coduri deja legate de alt produs, lăsate cum erau: ${mutate.length}`);
+
   let legate = 0;
   if (aplica) {
-    legate = await scrieSurse(rezultate.gasite.map(({ p, produs }) => ({
+    legate = await scrieSurse(rezultate.gasite.filter((g) => !legaturaMutata(g)).map(({ p, produs }) => ({
       product_id: produs.id,
       source: SURSA,
       external_id: p.id,
@@ -373,7 +388,11 @@ export async function ruleaza(opts = {}) {
    * o proprietate a catalogului lor și se raportează separat; pragul se
    * calculează pe eșecurile de normalizare din lotul curent.
    */
-  const rataCarantina = deImportat.length ? rezultate.carantina.length / deImportat.length : 0;
+  /* „Nicio imagine" e tot o lipsă a lor, nu o greșeală a noastră: la actualizare
+     ~40% din anvelopele noi n-au poză la ei. Merg în carantină ca oricare, iar
+     `poze-din-catalog.mjs` le dă apoi fotografia modelului, dacă o avem. */
+  const stricateDeNoi = rezultate.carantina.filter((c) => c.motive.some((m) => !/^nicio imagine/.test(m)));
+  const rataCarantina = deImportat.length ? stricateDeNoi.length / deImportat.length : 0;
   spune(`\n${aplica ? 'APLIC' : 'DRY-RUN — nu se scrie nimic'}`);
   spune(`  de legat (le avem deja):  ${rezultate.gasite.length} (${legaturiNoi.length} legături noi)`);
   spune(`  de importat:              ${pregatite.length}`);
@@ -391,7 +410,8 @@ export async function ruleaza(opts = {}) {
     for (const [m, k] of Object.entries(peMotiv).sort((a, b) => b[1] - a[1])) spune(`    ${String(k).padStart(4)}  ${m}`);
   }
 
-  if (rataCarantina > config.breakers.maxQuarantineShare) {
+  /* Fără nimic de creat nu e nimic de protejat: se scrie doar carantina. */
+  if (pregatite.length > 0 && rataCarantina > config.breakers.maxQuarantineShare) {
     throw new Error(`carantină ${(rataCarantina * 100).toFixed(0)}%, peste pragul de ${config.breakers.maxQuarantineShare * 100}% — se oprește fără să scrie`);
   }
 
