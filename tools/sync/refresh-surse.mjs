@@ -104,8 +104,11 @@ export async function actualizeazaSursa(sursa, opts = {}) {
     throw new Error(`fotografia ${sursa} are ${foto.length} anvelope, sub pragul de ${def.minim} — nu se scrie nimic`);
   }
   const lor = new Map(foto.map((r) => [String(r.id), r]));
+  /* Codurile pierzătoare dintre dublurile lor duc la rândul ales, nu în gol:
+     altfel produsul legat de un cod vechi s-ar stinge, deși anvelopa există. */
+  for (const r of foto) for (const a of r.aliasuri ?? []) if (!lor.has(String(a))) lor.set(String(a), r);
   const cuEroare = def.cuEroare();
-  log(`· fotografia ${sursa}: ${lor.size} anvelope${cuEroare.size ? `, ${cuEroare.size} coduri cu eroare (nu se ating)` : ''}`);
+  log(`· fotografia ${sursa}: ${foto.length} anvelope${cuEroare.size ? `, ${cuEroare.size} coduri cu eroare (nu se ating)` : ''}`);
 
   const [produse, legaturi] = await Promise.all([
     readAll('products', 'id,brand_name,title_ro,price_mdl,stock_status,price_locked,slug_ro,slug_ru,pneuexpert_id', `&primary_source=eq.${sursa}`),

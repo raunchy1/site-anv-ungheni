@@ -145,6 +145,17 @@ test('dublurile lor se colapsează: stocul bate prețul, prețul bate vechimea',
   assert.deepEqual(alegeDintreDuplicate([c, d]).map((r) => r.id), ['300']);
 });
 
+test('dublurile lor: rândul din depozit bate rândul vechi, mai ieftin, fără depozit', () => {
+  /* Kumho WP72 235/40 R19, 25 septembrie 2026: 3.300 pe rândul vechi, 3.360 pe cel real. */
+  const vechi = normalizeazaRand(rand({ id: 7941877, price: 3300, stock: 0, invoiceStock: 4 }));
+  const nou = normalizeazaRand(rand({ id: 16712165, price: 3360, stock: 4, invoiceStock: 4 }));
+  const [ales] = alegeDintreDuplicate([vechi, nou]);
+  assert.equal(ales.id, '16712165');
+  assert.equal(ales.priceMdl, 3360);
+  /* Produsul legat de codul vechi își găsește prețul prin alias. */
+  assert.deepEqual(ales.aliasuri, ['7941877']);
+});
+
 test('anvelope diferite NU se colapsează, oricât de asemănătoare ar fi', () => {
   /* Același model, aceeași dimensiune, alt indice de viteză: două produse. */
   const h = normalizeazaRand(rand({ id: 1, speedIndex: 'H', price: 1450 }));

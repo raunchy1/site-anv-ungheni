@@ -216,6 +216,9 @@ export function normalizeazaRand(brut) {
       size, loadIndex, speedIndex, xl ? 'XL' : '', runflat ? 'RF' : '', oe ?? '',
     ].join('|'),
     stocNumeric: Math.max(Number(x.stock ?? 0), Number(x.invoiceStock ?? 0)),
+    /* Doar ce e fizic în depozitul lor. `invoiceStock` fără `stock` e, la
+       dubluri, rândul vechi rămas în urmă — vezi `maiBunDintre`. */
+    stocFizic: Number(x.stock ?? 0),
   };
 }
 
@@ -226,18 +229,25 @@ export function normalizeazaRand(brut) {
  * care există `product_sources`: o anvelopă, un preț, un furnizor.
  *
  * Se alege un singur rând, în ordinea asta:
- *   1. cel care se poate obține (stoc > 0) — un preț bun la ceva ce n-au nu e un preț;
- *   2. la stoc egal, cel mai ieftin — clientul plătește mai puțin;
- *   3. la preț egal, `id`-ul mai mare — la ei, fișa mai nouă.
+ *   1. cel care e fizic în depozitul lor (`stock` > 0);
+ *   2. apoi cel care se poate obține (stoc > 0) — un preț bun la ceva ce n-au nu e un preț;
+ *   3. la stoc egal, cel mai ieftin — clientul plătește mai puțin;
+ *   4. la preț egal, `id`-ul mai mare — la ei, fișa mai nouă.
+ *
+ * Câștigătorul poartă în `aliasuri` codurile celorlalte, ca un produs legat
+ * de un cod pierzător să-și găsească prețul în continuare (`refresh-surse.mjs`).
  */
 export function alegeDintreDuplicate(randuri) {
   const peCheie = new Map();
   for (const r of randuri) {
-    const vechi = peCheie.get(r.cheieSursa);
-    if (!vechi) { peCheie.set(r.cheieSursa, r); continue; }
-    peCheie.set(r.cheieSursa, maiBunDintre(vechi, r));
+    const grup = peCheie.get(r.cheieSursa);
+    if (!grup) { peCheie.set(r.cheieSursa, { castig: r, toate: [r] }); continue; }
+    grup.toate.push(r);
+    grup.castig = maiBunDintre(grup.castig, r);
   }
-  return [...peCheie.values()];
+  return [...peCheie.values()].map(({ castig, toate }) => (toate.length === 1 ? castig : {
+    ...castig, aliasuri: toate.filter((r) => r.id !== castig.id).map((r) => r.id),
+  }));
 }
 
 /**
@@ -246,6 +256,16 @@ export function alegeDintreDuplicate(randuri) {
  * două fișe de-ale lor revendică același produs de-al nostru.
  */
 export function maiBunDintre(a, b) {
+  /*
+   * DEPOZITUL BATE PREȚUL. Pe 25 septembrie 2026 pneu.md afișa Kumho WP72
+   * 235/40 R19 la 3.360 de lei, iar noi la 3.300: ei au două rânduri pentru
+   * ea — cel nou, cu 4 bucăți în depozit, și cel vechi, cu `stock` 0 și doar
+   * `invoiceStock`, rămas la prețul de dinainte. Regula „cel mai ieftin" îl lua
+   * pe cel vechi. La fel la 46 de anvelope din 172 de dubluri.
+   */
+  const fizicA = (a.stocFizic ?? 0) > 0;
+  const fizicB = (b.stocFizic ?? 0) > 0;
+  if (fizicA !== fizicB) return fizicA ? a : b;
   const stocA = a.stocNumeric > 0;
   const stocB = b.stocNumeric > 0;
   if (stocA !== stocB) return stocA ? a : b;
