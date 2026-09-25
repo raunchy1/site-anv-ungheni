@@ -348,7 +348,7 @@ export async function ruleaza(opts = {}) {
     }
   }
   for (const c of rezultate.carantina) {
-    await insert('sync_quarantine', [{ pandashop_id: c.id, reason: c.motive.join('; '), raw: c.rand }], { onConflict: 'pandashop_id,reason' });
+    await insert('sync_quarantine', [{ supplier: 'pandashop', pandashop_id: c.id, reason: c.motive.join('; '), raw: c.rand }], { onConflict: 'supplier,pandashop_id,reason' });
     await insert('pandashop_seen', [{ pandashop_id: c.id, baseline: false, imported: false, status: 'quarantined', last_checked_at: new Date().toISOString() }], { onConflict: 'pandashop_id' });
   }
   /* ID-ul unei mărci scoase se scrie în `pandashop_seen` ca 'skipped': altfel

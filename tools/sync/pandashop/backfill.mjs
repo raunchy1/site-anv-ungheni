@@ -335,7 +335,7 @@ export async function recupereaza(opts = {}) {
       errors: rezultate.erori.slice(0, 200), notes: `backfill: ${rezultate.carantina.length} in carantina`,
     }]);
     for (const c of rezultate.carantina) {
-      await insert('sync_quarantine', [{ pandashop_id: String(c.id), reason: c.motive.join('; '), raw: c.rand }], { onConflict: 'pandashop_id,reason' });
+      await insert('sync_quarantine', [{ supplier: 'pandashop', pandashop_id: String(c.id), reason: c.motive.join('; '), raw: c.rand }], { onConflict: 'supplier,pandashop_id,reason' });
     }
   }
 
