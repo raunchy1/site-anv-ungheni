@@ -26,7 +26,7 @@ if (cheie.trim() !== KEY) throw new Error(`fișierul-cheie nu e publicat la ${SI
 const xml = await fetch(`${SITE}/sitemap.xml`).then((r) => r.text());
 let urls = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
 /* Fișele de produs au prioritatea 0.6 și stau la rădăcină; restul au prefixe cunoscute. */
-const PAGINI = /\/(ru\/?)?$|\/(catalog-anvelope|katalog-shin|anvelope-moldova|shiny-moldova|servicii|uslugi|contact|kontakty|senzori-presiune-anvelope|datchiki-davleniya-v-shinah)(\/|$)/;
+const PAGINI = /\/(ru\/?)?$|\/(catalog-anvelope|katalog-shin|anvelope-moldova|shiny-moldova|ghid-anvelope|gid-po-shinam|servicii|uslugi|contact|kontakty|senzori-presiune-anvelope|datchiki-davleniya-v-shinah)(\/|$)/;
 if (!toate) urls = urls.filter((u) => PAGINI.test(u));
 if (doar) urls = urls.filter((u) => u.includes(doar));
 
