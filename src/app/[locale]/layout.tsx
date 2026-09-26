@@ -25,11 +25,41 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: { params: Promise<{ locale: string }> }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "home" });
+  const s = await getSettings();
+  /*
+   * Codurile de verificare din Search Console, Bing Webmaster și Yandex
+   * Webmaster. Stau în mediu, nu în cod: se iau din fiecare panou și se pun în
+   * Coolify. Fără ele, eticheta pur și simplu nu se scrie.
+   */
+  const bing = process.env.BING_SITE_VERIFICATION;
   return {
     metadataBase: new URL(SITE_URL),
     title: { default: t("title"), template: "%s · anvelope-ungheni.md" },
     description: t("metaDescription"),
+    applicationName: "Anvelope Ungheni",
     alternates: { canonical: locale === "ru" ? "/ru" : "/", languages: { ro: "/", ru: "/ru", "x-default": "/" } },
+    openGraph: {
+      type: "website",
+      siteName: "Anvelope Ungheni",
+      locale: locale === "ru" ? "ru_MD" : "ro_MD",
+      alternateLocale: locale === "ru" ? ["ro_MD"] : ["ru_MD"],
+    },
+    /* Fără limită la fragmentul de text și la imaginea din rezultat: Google
+       arată fișa cu fotografie mare, nu miniatura implicită. */
+    robots: { index: true, follow: true, googleBot: { "max-image-preview": "large", "max-snippet": -1 } },
+    verification: {
+      google: process.env.GOOGLE_SITE_VERIFICATION,
+      yandex: process.env.YANDEX_VERIFICATION,
+      ...(bing ? { other: { "msvalidate.01": bing } } : {}),
+    },
+    /* Unde e magazinul, pentru motoarele care încă citesc etichetele geo
+       (Bing, Yandex, agregatoarele locale). Coordonatele sunt cele din setări. */
+    other: {
+      "geo.region": "MD-UN",
+      "geo.placename": s.city,
+      "geo.position": `${s.lat};${s.lng}`,
+      ICBM: `${s.lat}, ${s.lng}`,
+    },
   };
 }
 

@@ -16,6 +16,7 @@
  */
 import type { Locale, Settings } from "@/lib/types";
 import { SITE_URL } from "@/lib/format";
+import { LOCALITATI, type Localitate } from "@/content/localitati";
 
 /** Identificatorii stabili. Un `@id` care se schimbă rupe legăturile dintre entități. */
 export const ID = {
@@ -85,9 +86,16 @@ export function atelierSchema(settings: Settings, locale: Locale) {
     geo: { "@type": "GeoCoordinates", latitude: settings.lat, longitude: settings.lng },
     hasMap: settings.maps_url,
     openingHoursSpecification: program(settings),
+    /* Țara, apoi fiecare raion pe nume: un motor care caută „anvelope Soroca"
+       găsește Soroca scrisă ca zonă deservită, nu dedusă din „toată Moldova". */
     areaServed: [
       { "@type": "Country", name: RO(locale) ? "Republica Moldova" : "Республика Молдова" },
       { "@type": "City", name: settings.city },
+      ...LOCALITATI.map((l) => ({
+        "@type": "AdministrativeArea",
+        name: RO(locale) ? l.unitateRo : l.unitateRu,
+        url: `${SITE_URL}${RO(locale) ? "" : "/ru"}/${RO(locale) ? "anvelope-moldova" : "shiny-moldova"}/${l.slug}`,
+      })),
     ],
     knowsLanguage: ["ro", "ru"],
     parentOrganization: { "@id": ID.organizatie },
@@ -167,6 +175,31 @@ export function itemListSchema(urls: string[], name: string) {
       position: i + 1,
       url: url.startsWith("http") ? url : `${SITE_URL}${url}`,
     })),
+  };
+}
+
+/**
+ * Livrarea într-un raion, ca serviciu al atelierului.
+ *
+ * Prețul și termenul sunt cele din coș (`COST_LIVRARE`, „1–3 zile"), nu altele:
+ * pagina de raion nu are voie să promită altceva decât comanda.
+ */
+export function livrareSchema(l: Localitate, locale: Locale, url: string, cost: number) {
+  const ro = RO(locale);
+  return {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    name: ro ? `Livrare anvelope ${l.inRo}` : `Доставка шин ${l.inRu}`,
+    serviceType: ro ? "Livrare anvelope" : "Доставка шин",
+    url: url.startsWith("http") ? url : `${SITE_URL}${url}`,
+    provider: { "@id": ID.atelier },
+    areaServed: {
+      "@type": "AdministrativeArea",
+      name: ro ? l.unitateRo : l.unitateRu,
+      geo: { "@type": "GeoCoordinates", latitude: l.lat, longitude: l.lng },
+      containedInPlace: { "@type": "Country", name: ro ? "Republica Moldova" : "Республика Молдова" },
+    },
+    offers: { "@type": "Offer", price: cost, priceCurrency: "MDL" },
   };
 }
 

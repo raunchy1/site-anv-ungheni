@@ -35,6 +35,17 @@ export const AGENTI_LA_CERERE = [
   "OAI-SearchBot", "ChatGPT-User",      // OpenAI, căutare și navigare la cerere
   "Claude-User", "Claude-SearchBot",    // Anthropic, idem
   "Perplexity-User",                    // Perplexity, la cererea unui om
+  /*
+   * PerplexityBot stătea mai jos, printre crawlerele de antrenament. Nu e unul:
+   * Perplexity îl folosește ca să-și construiască indexul de CĂUTARE — cel din
+   * care citează răspunsurile, cu link. Blocat, magazinul nu putea apărea deloc
+   * când cineva întreba Perplexity „unde cumpăr anvelope în Chișinău".
+   * Parcurge ca un motor de căutare, deci primește aceleași interdicții pe
+   * filtrele adânci ca Googlebot.
+   */
+  "PerplexityBot",
+  "DuckAssistBot",                      // DuckDuckGo, răspunsurile AI din căutare
+  "MistralAI-User",                     // Le Chat, la cererea unui om
 ];
 
 /**
@@ -47,7 +58,7 @@ export const AGENTI_LA_CERERE = [
  * jos, fiindcă nicio cerere nu vine vreodată cu numele ăsta.
  */
 export const CRAWLERE_DE_ANTRENAMENT = [
-  "GPTBot", "ClaudeBot", "PerplexityBot", "Google-Extended", "Applebot-Extended",
+  "GPTBot", "ClaudeBot", "Google-Extended", "Applebot-Extended",
   "meta-externalagent", "Amazonbot", "Bytespider", "cohere-ai", "YouBot",
   "Kimi-Bot", "CCBot", "Diffbot", "omgili", "ImagesiftBot", "Timpibot",
 ];

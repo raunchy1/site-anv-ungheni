@@ -6,6 +6,7 @@ import { Logo } from "@/components/brand/Logo";
 import { CookieSettingsLink } from "@/components/layout/CookieBanner";
 import { telLink, programAfisat } from "@/lib/format";
 import { getBrands, getServices } from "@/lib/db/queries";
+import { LOCALITATI } from "@/content/localitati";
 import type { Locale, Settings } from "@/lib/types";
 
 /** Brandurile cu cele mai multe produse — utile, nu decorative. */
@@ -92,6 +93,25 @@ export async function SiteFooter({ settings, locale }: { settings: Settings; loc
             ))}
           </ul>
         </div>
+      </div>
+
+      {/* Fiecare raion, pe fiecare pagină: omul își vede orașul, robotul găsește
+          drumul spre toate paginile de livrare fără să treacă prin hub. */}
+      <div className="border-t border-[var(--line)]">
+        <nav aria-label={locale === "ru" ? "Доставка по районам" : "Livrare pe raioane"} className="shell py-[var(--sp-5)]">
+          <Link href="/livrare" className="label nav-link">
+            {locale === "ru" ? "Доставка шин по Молдове" : "Livrare anvelope în Moldova"}
+          </Link>
+          <ul className="mt-[var(--sp-3)] flex flex-wrap gap-x-[var(--sp-4)] gap-y-[var(--sp-2)] text-[var(--fs-100)]">
+            {LOCALITATI.map((x) => (
+              <li key={x.slug}>
+                <Link href={{ pathname: "/livrare/[raion]", params: { raion: x.slug } }} className="nav-link">
+                  {locale === "ru" ? x.ru : x.ro}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
       </div>
 
       <div className="border-t border-[var(--line)]">

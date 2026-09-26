@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 import { db } from "@/lib/supabase/server";
 import { SITE_URL } from "@/lib/format";
 import { sizeTree } from "@/lib/size-tree";
+import { LOCALITATI } from "@/content/localitati";
 
 export const revalidate = 604800;
 
@@ -26,6 +27,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...both("/senzori-presiune-anvelope", "/datchiki-davleniya-v-shinah", 0.5, "monthly"),
     ...both("/servicii", "/uslugi", 0.7, "monthly"),
     ...both("/contact", "/kontakty", 0.5, "monthly"),
+    ...both("/anvelope-moldova", "/shiny-moldova", 0.7, "monthly"),
+    /* O pagină pe raion: „anvelope Cahul", „шины Бельцы". */
+    ...LOCALITATI.flatMap((l) => both(`/anvelope-moldova/${l.slug}`, `/shiny-moldova/${l.slug}`, 0.7, "weekly")),
   ];
 
   /*

@@ -6,25 +6,13 @@ import { TreadRule, IconArrowRight, IconPin, IconClock, IconPhone } from "@/comp
 import { getBrandOptions, getSeasonCounts, getServices, getSettings, getShowcase } from "@/lib/db/queries";
 import { toUiProduct } from "@/lib/adapt";
 import { formatCount, telLink, programAfisat } from "@/lib/format";
-import { sizeTree } from "@/lib/size-tree";
+import { topSizes } from "@/lib/dimensiuni-populare";
+import { LOCALITATI } from "@/content/localitati";
 import { MapEmbed } from "@/components/layout/MapEmbed";
 import { Faq } from "@/components/seo/Faq";
 import type { Locale } from "@/lib/types";
 
 export const revalidate = 86400;
-
-/** Cele mai bine acoperite dimensiuni din catalog — calculate, nu alese pe gust. */
-function topSizes(limit = 8) {
-  const out: { width: string; aspect: string; diameter: string; available: number }[] = [];
-  for (const [width, [, , aspects]] of Object.entries(sizeTree)) {
-    for (const [aspect, [, , diameters]] of Object.entries(aspects)) {
-      for (const [diameter, [, available]] of Object.entries(diameters)) {
-        out.push({ width, aspect, diameter, available });
-      }
-    }
-  }
-  return out.sort((a, b) => b.available - a.available).slice(0, limit);
-}
 
 export default async function Home({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params;
@@ -108,6 +96,34 @@ export default async function Home({ params }: { params: Promise<{ locale: strin
       </section>
 
       <Faq settings={settings} locale={l} />
+
+      {/* Răspunsul la „livrați și la mine?", cu numele localității scris. Omul
+          din Soroca își găsește raionul dintr-o privire, iar motorul de căutare
+          găsește de aici drumul spre fiecare pagină de raion. */}
+      <section>
+        <div className="flex flex-wrap items-baseline justify-between gap-[var(--sp-3)]">
+          <h2 className="text-500 font-semibold text-[var(--ink-strong)]">
+            {l === "ru" ? "Доставляем шины по всей Молдове" : "Livrăm anvelope în toată Moldova"}
+          </h2>
+          <Link href="/livrare" className="nav-link inline-flex items-center gap-[var(--sp-2)] text-200">
+            {l === "ru" ? "Условия доставки" : "Condițiile de livrare"}
+            <IconArrowRight size={15} />
+          </Link>
+        </div>
+        <TreadRule variant="full" className="mt-[var(--sp-3)] text-[var(--line)]" />
+        <ul className="mt-[var(--sp-5)] flex flex-wrap gap-[var(--sp-2)]">
+          {LOCALITATI.map((loc) => (
+            <li key={loc.slug}>
+              <Link
+                href={{ pathname: "/livrare/[raion]", params: { raion: loc.slug } }}
+                className="inline-flex rounded-[var(--radius-sm)] border border-[var(--line)] px-[var(--sp-3)] py-[var(--sp-2)] text-200 text-[var(--ink-strong)] transition-colors duration-[var(--dur-1)] hover:border-[var(--line-strong)]"
+              >
+                {l === "ru" ? loc.ru : loc.ro}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </section>
 
       <section>
         <h2 className="text-500 font-semibold text-[var(--ink-strong)]">{t("home.whereTitle")}</h2>

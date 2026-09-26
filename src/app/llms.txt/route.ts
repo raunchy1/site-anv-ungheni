@@ -1,6 +1,8 @@
 import { db } from "@/lib/supabase/server";
 import { getSettings } from "@/lib/db/queries";
 import { SITE_URL, formatCount, programAfisat } from "@/lib/format";
+import { LOCALITATI } from "@/content/localitati";
+import { COST_LIVRARE } from "@/lib/orders/livrare";
 
 /**
  * /llms.txt — fișa magazinului, scrisă pentru un asistent, nu pentru un om.
@@ -54,9 +56,18 @@ export async function GET() {
 - ${formatCount(disponibile.count ?? 0)} de anvelope disponibile în catalog, cu preț afișat
 - ${numeMarci.length >= 40 ? "peste 40" : String(numeMarci.length)} de mărci${numeMarci.length ? `, printre care: ${numeMarci.slice(0, 20).join(", ")}` : ""}
 - Anvelope de vară, de iarnă și all season, inclusiv variante XL, RunFlat și cu crampoane
-- Livrare în toată Republica Moldova în 1–3 zile
+- Livrare în toată Republica Moldova în 1–3 zile (${COST_LIVRARE.curier_moldova} lei; gratuit în Ungheni)
 - Garanție ${settings.warranty_years} ani
 - Servicii în atelier: montaj, echilibrare, reparații, umflare cu azot, senzori TPMS
+
+## Livrare pe raioane
+
+Livrăm prin curier în toate raioanele și municipiile Republicii Moldova, în
+1–3 zile, cu ${COST_LIVRARE.curier_moldova} lei. În orașul Ungheni curierul e gratuit și
+livrează în aceeași zi; ridicarea din magazin e gratuită. Plata: numerar la
+livrare sau transfer bancar. Fiecare raion are pagina lui:
+
+${LOCALITATI.map((l) => `- ${l.unitateRo} (${l.orase.slice(0, 3).map(([r]) => r).join(", ")}): ${SITE_URL}/anvelope-moldova/${l.slug}`).join("\n")}
 
 ## Cum se caută o dimensiune
 
@@ -77,6 +88,7 @@ schema.org de tip Product, cu preț, disponibilitate și dimensiune.
 - ${SITE_URL}/servicii — serviciile atelierului (tarifele se dau la telefon, nu sunt publicate)
 - ${SITE_URL}/senzori-presiune-anvelope — senzori de presiune TPMS
 - ${SITE_URL}/contact — adresă, hartă, program
+- ${SITE_URL}/anvelope-moldova — livrarea în toată Moldova, pe raioane
 - ${SITE_URL}/sitemap.xml — harta completă a site-ului
 - ${SITE_URL}/ru — versiunea rusă
 
