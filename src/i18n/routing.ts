@@ -20,6 +20,8 @@ export const routing = defineRouting({
     "/contact": { ro: "/contact", ru: "/kontakty" },
     "/livrare": { ro: "/anvelope-moldova", ru: "/shiny-moldova" },
     "/livrare/[raion]": { ro: "/anvelope-moldova/[raion]", ru: "/shiny-moldova/[raion]" },
+    "/ghid": { ro: "/ghid-anvelope", ru: "/gid-po-shinam" },
+    "/ghid/[articol]": { ro: "/ghid-anvelope/[articol]", ru: "/gid-po-shinam/[articol]" },
     "/cos": { ro: "/cos", ru: "/korzina" },
     "/checkout": { ro: "/checkout", ru: "/oformlenie-zakaza" },
     "/favorite": { ro: "/favorite", ru: "/izbrannoe" },

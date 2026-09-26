@@ -97,10 +97,24 @@ export default function robots(): MetadataRoute.Robots {
    * Googlebot, Bingbot, YandexBot și Applebot nu sunt atinși: `User-agent: *`
    * de mai jos îi lasă să intre exact ca înainte.
    */
+  /*
+   * EXCEPȚIA: DIMENSIUNE + SEZON. „Anvelope de iarnă 205/55 R16" are patru
+   * segmente (lățime, înălțime, diametru, sezon), deci cădea sub regula de mai
+   * sus — deși e pagina pe care o caută omul în septembrie și singura pe care
+   * concurenții o aveau și noi nu. Regula mai lungă câștigă în fața celei mai
+   * scurte (Google, Bing), iar `$` le deschide DOAR pe cele care se termină în
+   * sezon: marca, sortarea sau pagina adăugate după rămân închise. Sunt câteva
+   * mii de adrese finite, nu spațiul infinit care a pus baza jos.
+   */
+  const allow = ["/", ...["vara", "iarna", "all-season"].flatMap((sz) => [
+    `/catalog-anvelope/latime_*/inaltime_*/diametru_*/sezon_${sz}$`,
+    `/ru/katalog-shin/latime_*/inaltime_*/diametru_*/sezon_${sz}$`,
+  ])];
+
   return {
     rules: [
-      { userAgent: "*", allow: "/", disallow },
-      ...AGENTI_LA_CERERE.map((userAgent) => ({ userAgent, allow: "/", disallow })),
+      { userAgent: "*", allow, disallow },
+      ...AGENTI_LA_CERERE.map((userAgent) => ({ userAgent, allow, disallow })),
       ...CRAWLERE_DE_ANTRENAMENT.map((userAgent) => ({ userAgent, disallow: "/" })),
       ...CRAWLERE_SEO.map((userAgent) => ({ userAgent, disallow: "/" })),
     ],

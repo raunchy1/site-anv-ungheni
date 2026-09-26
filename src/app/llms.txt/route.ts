@@ -3,6 +3,7 @@ import { getSettings } from "@/lib/db/queries";
 import { SITE_URL, formatCount, programAfisat } from "@/lib/format";
 import { LOCALITATI } from "@/content/localitati";
 import { COST_LIVRARE } from "@/lib/orders/livrare";
+import { GHIDURI } from "@/content/ghiduri";
 
 /**
  * /llms.txt — fișa magazinului, scrisă pentru un asistent, nu pentru un om.
@@ -69,6 +70,10 @@ livrare sau transfer bancar. Fiecare raion are pagina lui:
 
 ${LOCALITATI.map((l) => `- ${l.unitateRo} (${l.orase.slice(0, 3).map(([r]) => r).join(", ")}): ${SITE_URL}/anvelope-moldova/${l.slug}`).join("\n")}
 
+## Ghiduri
+
+${GHIDURI.map((g) => `- [${g.titlu.ro}](${SITE_URL}/ghid-anvelope/${g.slug}): ${g.descriere.ro}`).join("\n")}
+
 ## Cum se caută o dimensiune
 
 Adresele de catalog sunt stabile și compuse din segmente. Pentru o anvelopă
@@ -78,7 +83,8 @@ Adresele de catalog sunt stabile și compuse din segmente. Pentru o anvelopă
 - rusă: ${SITE_URL}/ru/katalog-shin/latime_205/inaltime_55/diametru_r16
 
 Se pot adăuga sezonul (\`sezon_vara\`, \`sezon_iarna\`, \`sezon_all-season\`) și
-marca (\`marca_michelin\`). Fiecare pagină de produs are date structurate
+marca (\`marca_michelin\`). Anvelope de iarnă 205/55 R16:
+${SITE_URL}/catalog-anvelope/latime_205/inaltime_55/diametru_r16/sezon_iarna Fiecare pagină de produs are date structurate
 schema.org de tip Product, cu preț, disponibilitate și dimensiune.
 
 ## Pagini principale

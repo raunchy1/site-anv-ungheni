@@ -3,6 +3,7 @@ import { db } from "@/lib/supabase/server";
 import { SITE_URL } from "@/lib/format";
 import { sizeTree } from "@/lib/size-tree";
 import { LOCALITATI } from "@/content/localitati";
+import { GHIDURI } from "@/content/ghiduri";
 
 export const revalidate = 604800;
 
@@ -30,6 +31,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...both("/anvelope-moldova", "/shiny-moldova", 0.7, "monthly"),
     /* O pagină pe raion: „anvelope Cahul", „шины Бельцы". */
     ...LOCALITATI.flatMap((l) => both(`/anvelope-moldova/${l.slug}`, `/shiny-moldova/${l.slug}`, 0.7, "weekly")),
+    ...both("/ghid-anvelope", "/gid-po-shinam", 0.5, "monthly"),
+    ...GHIDURI.flatMap((g) => both(`/ghid-anvelope/${g.slug}`, `/gid-po-shinam/${g.slug}`, 0.5, "monthly")),
   ];
 
   /*
@@ -54,6 +57,36 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
   for (const s of ["vara", "iarna", "all-season"]) {
     filtre.push(...both(`/catalog-anvelope/sezon_${s}`, `/katalog-shin/sezon_${s}`, 0.7, "weekly"));
+  }
+
+  /*
+   * DIMENSIUNE + SEZON: „anvelope de iarnă 205/55 R16".
+   *
+   * Asta tastează omul în septembrie, și exact pe asta câștigau concurenții la
+   * verificarea din 27 septembrie 2026 — cu pagini dedicate fiecărei perechi.
+   * Paginile existau și la noi, indexabile, dar nu erau în hartă.
+   *
+   * Intră doar perechile cu cel puțin trei anvelope disponibile: o pagină
+   * „de iarnă" cu o singură anvelopă e o pagină subțire, iar una cu zero ar fi
+   * o promisiune goală trimisă direct lui Google.
+   */
+  const perechi = new Map<string, number>();
+  for (let from = 0; ; from += 1000) {
+    const { data } = await db.from("products")
+      .select("width, aspect, diameter, season")
+      .eq("is_active", true).eq("category", "anvelope")
+      .in("stock_status", ["in_stock", "supplier"]).not("price_mdl", "is", null)
+      .not("season", "is", null).not("width", "is", null).not("aspect", "is", null).not("diameter", "is", null)
+      .order("id").range(from, from + 999);
+    if (!data?.length) break;
+    for (const r of data as { width: number; aspect: number; diameter: string; season: string }[]) {
+      const k = `latime_${r.width}/inaltime_${r.aspect}/diametru_${r.diameter.toLowerCase()}/sezon_${r.season === "all_season" ? "all-season" : r.season}`;
+      perechi.set(k, (perechi.get(k) ?? 0) + 1);
+    }
+    if (data.length < 1000) break;
+  }
+  for (const [k, n] of perechi) {
+    if (n >= 3) filtre.push(...both(`/catalog-anvelope/${k}`, `/katalog-shin/${k}`, 0.8, "weekly"));
   }
 
   const products: MetadataRoute.Sitemap = [];

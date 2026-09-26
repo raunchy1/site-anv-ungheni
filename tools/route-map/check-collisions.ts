@@ -10,11 +10,11 @@ import { createClient } from "@supabase/supabase-js";
 const RESERVED = [
   "catalog-anvelope", "senzori-presiune-anvelope", "servicii", "contact", "cos", "checkout",
   "comanda", "favorite", "comparare", "admin", "api", "ru", "cont", "cautare", "design-system",
-  "anvelope-moldova", "llms.txt", "sitemap.xml", "robots.txt", "_next", "image", "opengraph-image", "icon", "favicon.ico",
+  "anvelope-moldova", "ghid-anvelope", "llms.txt", "sitemap.xml", "robots.txt", "_next", "image", "opengraph-image", "icon", "favicon.ico",
 ];
 const RESERVED_RU = [
   "katalog-shin", "datchiki-davleniya-v-shinah", "uslugi", "kontakty", "korzina",
-  "oformlenie-zakaza", "zakaz", "izbrannoe", "sravnenie", "admin", "api", "poisk", "shiny-moldova",
+  "oformlenie-zakaza", "zakaz", "izbrannoe", "sravnenie", "admin", "api", "poisk", "shiny-moldova", "gid-po-shinam",
 ];
 
 type Row = { slug_ro: string; slug_ru: string | null };

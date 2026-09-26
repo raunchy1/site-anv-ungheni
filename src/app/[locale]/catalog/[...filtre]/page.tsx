@@ -7,7 +7,7 @@ import {
   buildFilterSegments, isCanonicalPath, type ParsedFilters,
 } from "@/lib/catalog-filters";
 import { sizeExists, sizeTree } from "@/lib/size-tree";
-import { getBrands } from "@/lib/db/queries";
+import { getBrands, getCatalogSummary } from "@/lib/db/queries";
 import { descriereCatalogSeo, titluCatalogSeo } from "@/lib/seo/catalog-meta";
 import type { Locale } from "@/lib/types";
 
@@ -58,6 +58,10 @@ function isIndexable(f: ReturnType<typeof parseFilterSegments>): boolean {
   const fullSize = Boolean(f.width && f.aspect && f.diameter);
   const partial = [f.width, f.aspect, f.diameter].filter(Boolean).length;
   if (partial > 0 && !fullSize && partial > 1) return false;
+  /* Dimensiune completă + sezon: „anvelope de iarnă 205/55 R16". Dimensiunea
+     numără trei filtre, deci pragul de mai jos o închidea — deși e exact pagina
+     pe care o caută omul în sezon. Robots.txt o deschide explicit, la fel. */
+  if (fullSize && f.season && !f.brand && !f.onlyAvailable) return true;
   return activeFilterCount(f) <= 3;
 }
 
@@ -115,13 +119,20 @@ export async function generateMetadata({
     ? (await getBrands()).find((b) => b.slug_ro === f.brand || b.slug_ru === f.brand)?.name
     : undefined;
 
-  const title = titluCatalogSeo(f, numeMarca, locale as Locale, t("title"));
+  /* Aceeași interogare de un rând pe care o face și pagina (`CatalogView`),
+     cu aceeași adresă — deci servită din cache, nu încă un drum la bază. */
+  const pretMin = isIndexable(f)
+    ? (await getCatalogSummary({ width: f.width, aspect: f.aspect, diameter: f.diameter, season: f.season, brand: numeMarca })
+      .catch(() => ({ pretMin: null }))).pretMin
+    : null;
+  const title = titluCatalogSeo(f, numeMarca, locale as Locale, t("title"), pretMin);
+  const description = descriereCatalogSeo(f, numeMarca, locale as Locale, pretMin);
 
   return {
     title,
     /* Fără asta, toate rutele de filtru moștenesc descrierea paginii principale
        — adică toate arată identic în rezultate. */
-    description: descriereCatalogSeo(f, numeMarca, locale as Locale),
+    description,
     robots: isIndexable(f) ? undefined : { index: false, follow: true },
     alternates: {
       canonical: locale === "ru" ? ruPath : roPath,
@@ -129,7 +140,7 @@ export async function generateMetadata({
     },
     openGraph: {
       title,
-      description: descriereCatalogSeo(f, numeMarca, locale as Locale),
+      description,
       url: locale === "ru" ? ruPath : roPath,
       type: "website",
     },

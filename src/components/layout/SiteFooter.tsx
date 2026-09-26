@@ -120,6 +120,9 @@ export async function SiteFooter({ settings, locale }: { settings: Settings; loc
             {t("trust.warranty")} · {t("trust.mounting")} · {t("trust.delivery")}
           </p>
           <nav className="flex flex-wrap gap-[var(--sp-4)]">
+            <Link href="/ghid" className="nav-link">
+              {locale === "ru" ? "Гид по шинам" : "Ghid anvelope"}
+            </Link>
             <Link href={{ pathname: "/[slug]", params: { slug: locale === "ru" ? "usloviya-ispolzovaniya" : "termeni-si-conditii" } }} className="nav-link">
               {locale === "ru" ? "Условия" : "Termeni"}
             </Link>

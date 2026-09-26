@@ -203,6 +203,23 @@ export function livrareSchema(l: Localitate, locale: Locale, url: string, cost: 
   };
 }
 
+/** Un ghid, ca articol al firmei. Data e cea a textului, nu a randării. */
+export function articolSchema(a: { titlu: string; descriere: string; url: string; data: string }, locale: Locale) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: a.titlu,
+    description: a.descriere,
+    url: a.url.startsWith("http") ? a.url : `${SITE_URL}${a.url}`,
+    inLanguage: locale,
+    datePublished: a.data,
+    dateModified: a.data,
+    author: { "@id": ID.organizatie },
+    publisher: { "@id": ID.organizatie },
+    image: `${SITE_URL}/opengraph-image`,
+  };
+}
+
 /** Întrebări și răspunsuri. Textul trebuie să fie ȘI pe pagină, vizibil — altfel e spam. */
 export function faqSchema(qa: Array<{ q: string; a: string }>) {
   return {
