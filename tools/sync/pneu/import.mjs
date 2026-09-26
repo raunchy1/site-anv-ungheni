@@ -356,7 +356,27 @@ export async function ruleaza(opts = {}) {
     spune(`· legate de produsele existente: ${legate}`);
   }
 
-  const deImportat = rezultate.candidati.slice(0, limit === Infinity ? undefined : limit);
+  /*
+   * UN COD DEJA LEGAT NU DEVINE FIȘĂ NOUĂ.
+   *
+   * pneu.md își rescrie uneori rândurile pe loc: pe 26 septembrie 2026 codul
+   * 3131764, legat de „Platin RP 70 Winter 235/55 R18 104H XL" (fișa 1621), a
+   * apărut întâi fără XL, apoi ca „RP-110 Allseason 100V". Potrivirea n-a mai
+   * recunoscut fișa, codul a trecut la candidați, s-a creat o fișă nouă, iar
+   * legarea ei a picat pe unicitatea (source, external_id) — și a luat cu ea
+   * legăturile tuturor celorlalte 19 fișe create în aceeași rulare, rămase fără
+   * furnizor și deci cu prețul înghețat.
+   *
+   * Codul rămâne unde a fost legat (aceeași regulă ca `legaturaMutata`); ce s-a
+   * schimbat la ei intră în raport, nu în catalog.
+   */
+  rezultate.codLegatDeja = rezultate.candidati.filter(({ p }) => legateDeja.has(String(p.id)));
+  if (rezultate.codLegatDeja.length) {
+    spune(`· candidați al căror cod e deja legat de o fișă (nu se creează): ${rezultate.codLegatDeja.length}`);
+  }
+  const deImportat = rezultate.candidati
+    .filter(({ p }) => !legateDeja.has(String(p.id)))
+    .slice(0, limit === Infinity ? undefined : limit);
 
   /* ------------------------------------------------------------- normalizare */
   const pregatite = [];
