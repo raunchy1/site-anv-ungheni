@@ -39,7 +39,14 @@ export async function SiteFooter({ settings, locale }: { settings: Settings; loc
             </li>
             <li className="flex gap-[var(--sp-2)]">
               <IconPhone size={16} className="mt-[2px] shrink-0" />
-              <a href={telLink(settings.phone_e164)} className="num text-[var(--ink-strong)]">{settings.phone_display}</a>
+              {/* Ambele linii, aici si pe pagina de contact — nu si pe butoanele
+                  de apel, care au o singura actiune. */}
+              <span className="flex flex-wrap gap-x-[var(--sp-2)]">
+                <a href={telLink(settings.phone_e164)} className="num text-[var(--ink-strong)]">{settings.phone_display}</a>
+                {settings.phone2_display && settings.phone2_e164 ? (
+                  <a href={telLink(settings.phone2_e164)} className="num text-[var(--ink-strong)]">{settings.phone2_display}</a>
+                ) : null}
+              </span>
             </li>
             <li className="flex gap-[var(--sp-2)]">
               <IconClock size={16} className="mt-[2px] shrink-0" />

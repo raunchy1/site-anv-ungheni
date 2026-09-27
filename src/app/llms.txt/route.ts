@@ -45,7 +45,7 @@ export async function GET() {
 ## Date de contact și program
 
 - Adresă: ${settings.address}
-- Telefon: ${settings.phone_display} (${settings.phone_e164})
+- Telefon: ${settings.phone_display} (${settings.phone_e164})${settings.phone2_display ? `, ${settings.phone2_display} (${settings.phone2_e164})` : ""}
 - E-mail: ${settings.email}
 - Program: ${programAfisat(settings.opening_hours, "ro")}
 - Coordonate: ${settings.lat}, ${settings.lng}

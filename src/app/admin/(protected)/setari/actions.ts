@@ -52,6 +52,8 @@ export async function updateSettings(_prev: SettingsFormState, formData: FormDat
     phone_e164: phoneE164,
     email,
     address,
+    phone2_display: str(formData, "phone2_display"),
+    phone2_e164: str(formData, "phone2_e164"),
     city,
     maps_url: mapsUrl,
     lat,

@@ -30,6 +30,8 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 export type SettingsValues = {
   phone_display: string;
   phone_e164: string;
+  phone2_display?: string | null;
+  phone2_e164?: string | null;
   email: string;
   address: string;
   city: string;
@@ -77,6 +79,12 @@ export function SettingsForm({
         </Field>
         <Field label="Telefon E.164 *" htmlFor="phone_e164">
           <input id="phone_e164" name="phone_e164" required defaultValue={settings.phone_e164} className={inputClass} />
+        </Field>
+        <Field label="Telefon 2 — afișat (gol = o singură linie)" htmlFor="phone2_display">
+          <input id="phone2_display" name="phone2_display" defaultValue={settings.phone2_display ?? ""} className={inputClass} />
+        </Field>
+        <Field label="Telefon 2 — E.164" htmlFor="phone2_e164">
+          <input id="phone2_e164" name="phone2_e164" defaultValue={settings.phone2_e164 ?? ""} className={inputClass} />
         </Field>
         <Field label="E-mail *" htmlFor="email">
           <input id="email" name="email" type="email" required defaultValue={settings.email} className={inputClass} />

@@ -105,6 +105,9 @@ export type Service = {
 export type Settings = {
   phone_display: string;
   phone_e164: string;
+  /** A doua linie a atelierului. Null cand e una singura. */
+  phone2_display: string | null;
+  phone2_e164: string | null;
   email: string;
   address: string;
   city: string;

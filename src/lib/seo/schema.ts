@@ -56,6 +56,15 @@ function program(settings: Settings) {
 }
 
 /**
+ * Ambele linii, cand exista. `telephone` accepta si un sir, si o lista —
+ * Google le arata pe amandoua in panoul local. Cu o singura linie, ramane un
+ * sir simplu, ca pana acum.
+ */
+function telefoane(settings: Settings): string | string[] {
+  return settings.phone2_e164 ? [settings.phone_e164, settings.phone2_e164] : settings.phone_e164;
+}
+
+/**
  * Atelierul, ca afacere locală.
  *
  * `AutoRepair` și nu `Store`: vindem anvelope, dar le și montăm, iar căutarea
@@ -71,7 +80,7 @@ export function atelierSchema(settings: Settings, locale: Locale) {
     name: "Anvelope Ungheni",
     alternateName: "anvelope-ungheni.md",
     url: RO(locale) ? SITE_URL : `${SITE_URL}/ru`,
-    telephone: settings.phone_e164,
+    telephone: telefoane(settings),
     email: settings.email,
     image: `${SITE_URL}/opengraph-image`,
     logo: `${SITE_URL}/icon.svg`,
@@ -112,7 +121,7 @@ export function organizatieSchema(settings: Settings) {
     url: SITE_URL,
     logo: { "@type": "ImageObject", url: `${SITE_URL}/icon.svg` },
     image: `${SITE_URL}/opengraph-image`,
-    telephone: settings.phone_e164,
+    telephone: telefoane(settings),
     email: settings.email,
     address: {
       "@type": "PostalAddress",
@@ -120,13 +129,13 @@ export function organizatieSchema(settings: Settings) {
       addressLocality: settings.city,
       addressCountry: "MD",
     },
-    contactPoint: [{
-      "@type": "ContactPoint",
-      telephone: settings.phone_e164,
+    contactPoint: [settings.phone_e164, ...(settings.phone2_e164 ? [settings.phone2_e164] : [])].map((tel) => ({
+      "@type": "ContactPoint" as const,
+      telephone: tel,
       contactType: "customer service",
       availableLanguage: ["ro", "ru"],
       areaServed: "MD",
-    }],
+    })),
   };
 }
 

@@ -48,6 +48,9 @@ export default async function ContactPage({ params }: { params: Promise<{ locale
               <div>
                 <dt className="label">{t("contact.phone")}</dt>
                 <dd className="mt-[var(--sp-1)]"><a href={telLink(s.phone_e164)} className="num text-400 font-medium text-[var(--ink-strong)]">{s.phone_display}</a></dd>
+                {s.phone2_display && s.phone2_e164 ? (
+                  <dd className="mt-[var(--sp-1)]"><a href={telLink(s.phone2_e164)} className="num text-400 font-medium text-[var(--ink-strong)]">{s.phone2_display}</a></dd>
+                ) : null}
                 <dd className="mt-[var(--sp-1)] text-200 text-[var(--ink-muted)]"><a href={`mailto:${s.email}`}>{s.email}</a></dd>
               </div>
             </div>

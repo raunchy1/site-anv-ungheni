@@ -9,7 +9,7 @@ export default async function SetariPage() {
   const { data, error } = await adminDb()
     .from("settings")
     .select(
-      "phone_display, phone_e164, email, address, city, maps_url, lat, lng, warranty_years, credit_badge_ro, credit_badge_ru, sync_enabled, opening_hours, pricing_rules",
+      "phone_display, phone_e164, phone2_display, phone2_e164, email, address, city, maps_url, lat, lng, warranty_years, credit_badge_ro, credit_badge_ru, sync_enabled, opening_hours, pricing_rules",
     )
     .eq("id", true)
     .single();
