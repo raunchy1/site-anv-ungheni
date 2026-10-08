@@ -72,6 +72,10 @@ export function createHttp({
   timeoutMs = 45_000,
   useCache = true,
   cacheZile = 7,
+  /* Antete în plus sau în locul celor implicite. Autodoctor dă pagina goală
+     oricărui User-Agent care conține „bot", deci acolo se trimite altul,
+     tot cu numele nostru. Implicitul rămâne cel de mai sus. */
+  headers = {},
 } = {}) {
   fs.mkdirSync(cacheDir, { recursive: true });
   curataCache(cacheDir, cacheZile);
@@ -94,7 +98,7 @@ export function createHttp({
       }
       try {
         const res = await fetch(url, {
-          headers: { 'User-Agent': UA, 'Accept-Language': 'ro,ru;q=0.8', Accept: 'text/html,application/xhtml+xml' },
+          headers: { 'User-Agent': UA, 'Accept-Language': 'ro,ru;q=0.8', Accept: 'text/html,application/xhtml+xml', ...headers },
           signal: AbortSignal.timeout(timeoutMs),
         });
 

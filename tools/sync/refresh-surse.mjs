@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * ACTUALIZAREA PREȚULUI ȘI A STOCULUI PENTRU PNEU.MD ȘI PNEUEXPERT.
+ * ACTUALIZAREA PREȚULUI ȘI A STOCULUI PENTRU PNEU.MD, PNEUEXPERT ȘI AUTODOCTOR.
  *
  * Echivalentul lui `pandashop/refresh.mjs` pentru sursele care se citesc dintr-o
  * fotografie (`catalog.ndjson`). Până acum prețurile lor se scriau o singură
@@ -25,6 +25,7 @@
  *   node --env-file=.env.local tools/sync/refresh-surse.mjs --sursa pneu              # dry-run
  *   node --env-file=.env.local tools/sync/refresh-surse.mjs --sursa pneu --apply
  *   node --env-file=.env.local tools/sync/refresh-surse.mjs --sursa pneuexpert --apply
+ *   node --env-file=.env.local tools/sync/refresh-surse.mjs --sursa autodoctor --apply
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -36,8 +37,10 @@ import { reimprospateazaContoarele } from './pandashop/counters.mjs';
 import { scrieSurse } from './pneu/sources.mjs';
 import { config as cfgPneu } from './pneu/config.mjs';
 import { config as cfgPneuexpert } from './pneuexpert/config.mjs';
+import { config as cfgAutodoctor } from './autodoctor/config.mjs';
 import { citesteFotografia as fotoPneu } from './pneu/snapshot.mjs';
 import { citesteFotografia as fotoPneuexpert } from './pneuexpert/snapshot.mjs';
+import { citesteFotografia as fotoAutodoctor } from './autodoctor/snapshot.mjs';
 
 /** Peste atâtea produse stinse dintr-o rulare, se oprește fără să scrie. */
 const PRAG_STINSE = 0.35;
@@ -66,6 +69,14 @@ const SURSE = {
       return out;
     },
   },
+  autodoctor: {
+    enumSursa: 'autodoctor_sync',
+    fotografie: fotoAutodoctor,
+    minim: cfgAutodoctor.breakers.minEnumerate,
+    /* Fotografia se scrie doar întreagă (vezi `snapshot.mjs`): ce lipsește din
+       ea nu mai e la ei. */
+    cuEroare: () => new Set(),
+  },
 };
 
 async function scriePreturi(randuri, { chunk = 500 } = {}) {
@@ -88,7 +99,7 @@ async function scriePreturi(randuri, { chunk = 500 } = {}) {
 
 export async function actualizeazaSursa(sursa, opts = {}) {
   const def = SURSE[sursa];
-  if (!def) throw new Error(`sursă necunoscută: ${sursa} (pneu | pneuexpert)`);
+  if (!def) throw new Error(`sursă necunoscută: ${sursa} (pneu | pneuexpert | autodoctor)`);
   const { apply: aplica = false, actor = 'cli' } = opts;
   const log = opts.log ?? console.log;
   const t0 = Date.now();

@@ -17,8 +17,9 @@ import { NextResponse } from "next/server";
  *
  *   `?mode=pneu`       — pneu.md: fotografia API-ului lor, anvelopele noi, apoi
  *   `?mode=pneuexpert`   prețul și stocul fișelor care le aparțin
- *                      (`tools/sync/surse-cron.mjs`). Pneuexpert durează ~90 de
- *                      minute — cronul de pe server așteaptă cu `--max-time`.
+ *   `?mode=autodoctor`   (`tools/sync/surse-cron.mjs`). Pneuexpert durează ~90 de
+ *                      minute — cronul de pe server așteaptă cu `--max-time`;
+ *                      autodoctor, ~5 minute de listări.
  *
  * Fiecare furnizor scrie doar pe fișele cu `primary_source` al lui, deci
  * rulările nu se calcă între ele.
@@ -50,7 +51,7 @@ export async function GET(request: Request) {
 
   const url = new URL(request.url);
   const cerut = url.searchParams.get("mode");
-  const mode = cerut === "refresh" || cerut === "pneu" || cerut === "pneuexpert" ? cerut : "new";
+  const mode = cerut === "refresh" || cerut === "pneu" || cerut === "pneuexpert" || cerut === "autodoctor" ? cerut : "new";
   const full = url.searchParams.get("full") === "1";
   /* `?dry=1` rulează fără să scrie — util ca să verifici ruta pe producție. */
   const apply = url.searchParams.get("dry") !== "1";
@@ -73,7 +74,7 @@ export async function GET(request: Request) {
   const { oreDeTacere } = await import("../../../../../tools/sync/pandashop/lock.mjs");
 
   try {
-    if (mode === "pneu" || mode === "pneuexpert") {
+    if (mode === "pneu" || mode === "pneuexpert" || mode === "autodoctor") {
       const { ruleazaSursa } = await import("../../../../../tools/sync/surse-cron.mjs");
       const r = await ruleazaSursa(mode, { apply, log });
       const schimbate: string[] = r.pret?.slugSchimbate ?? [];
@@ -276,7 +277,7 @@ export async function GET(request: Request) {
     const mesaj = e instanceof Error ? e.message : String(e);
     /* Întrerupătorul ajunge aici. Se oprește FĂRĂ să scrie și anunță. */
     await alerta(
-      `Sincronizare ${mode === "pneu" || mode === "pneuexpert" ? mode : `pandashop (${mode})`}: RULARE OPRITĂ`,
+      `Sincronizare ${mode === "pneu" || mode === "pneuexpert" || mode === "autodoctor" ? mode : `pandashop (${mode})`}: RULARE OPRITĂ`,
       `${mesaj}\n\nJurnalul rulării:\n${linii.join("\n")}`,
     ).catch(() => {});
     console.error("[sync] rulare eșuată:", mesaj);

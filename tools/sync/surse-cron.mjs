@@ -1,5 +1,5 @@
 /**
- * RULAREA PROGRAMATĂ PENTRU PNEU.MD ȘI PNEUEXPERT — lanțul întreg, în ordine:
+ * RULAREA PROGRAMATĂ PENTRU PNEU.MD, PNEUEXPERT ȘI AUTODOCTOR — lanțul întreg, în ordine:
  *
  *   1. fotografia lor, proaspătă (fără cache — altfel prețurile ar fi cele vechi)
  *   2. importul: dimensiunile apărute la ei de la ultima rulare intră în catalog
@@ -25,6 +25,9 @@ export async function ruleazaSursa(sursa, { apply = false, log = console.log } =
   } else if (sursa === 'pneuexpert') {
     const { faFotografia } = await import('./pneuexpert/snapshot.mjs');
     rezultat.fotografie = await faFotografia({ proaspat: true, log });
+  } else if (sursa === 'autodoctor') {
+    const { faFotografia } = await import('./autodoctor/snapshot.mjs');
+    rezultat.fotografie = await faFotografia({ proaspat: true, log });
   } else {
     throw new Error(`sursă necunoscută: ${sursa}`);
   }
@@ -32,7 +35,9 @@ export async function ruleazaSursa(sursa, { apply = false, log = console.log } =
   try {
     const { ruleaza } = sursa === 'pneu'
       ? await import('./pneu/import.mjs')
-      : await import('./pneuexpert/import.mjs');
+      : sursa === 'autodoctor'
+        ? await import('./autodoctor/import.mjs')
+        : await import('./pneuexpert/import.mjs');
     const r = await ruleaza({ apply, actor: `cron:${sursa}`, log });
     rezultat.noi = r.create ?? 0;
     rezultat.carantina = r.carantina?.length ?? 0;
