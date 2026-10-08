@@ -13,6 +13,8 @@ export type Dict = {
   services: string;
   contact: string;
   search: string;
+  /** Butonul panoului cât timp se încarcă rezultatele. */
+  searching: string;
   searchPlaceholder: string;
   home: string;
   // dimensiune
@@ -96,6 +98,7 @@ const ro: Dict = {
   services: "Servicii",
   contact: "Contact",
   search: "Caută",
+  searching: "Se caută…",
   searchPlaceholder: "Dimensiune, marcă sau model",
   home: "Acasă",
   sizeSelectorTitle: "Alege dimensiunea",
@@ -171,6 +174,7 @@ const ru: Dict = {
   services: "Услуги",
   contact: "Контакты",
   search: "Поиск",
+  searching: "Ищем…",
   searchPlaceholder: "Размер, марка или модель",
   home: "Главная",
   sizeSelectorTitle: "Выберите размер",

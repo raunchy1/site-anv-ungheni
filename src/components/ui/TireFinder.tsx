@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/cn";
 import { IconChevronDown, IconSearch, TyreSeasonMark } from "@/components/icons";
@@ -101,16 +101,39 @@ export function TireFinder({
   const [, avail] = countFor(width || null, aspect || null, diameter || null);
   const anything = Boolean(width || activeSeason || activeBrand);
 
+  const segments = [
+    width ? `latime_${width}` : null,
+    aspect ? `inaltime_${aspect}` : null,
+    diameter ? `diametru_${diameter.toLowerCase()}` : null,
+    activeSeason ? `sezon_${activeSeason === "all_season" ? "all-season" : activeSeason}` : null,
+    activeBrand ? `marca_${activeBrand}` : null,
+  ].filter(Boolean);
+  const root = locale === "ru" ? "/ru/katalog-shin" : "/catalog-anvelope";
+  const target = segments.length ? `${root}/${segments.join("/")}` : root;
+
+  /*
+   * „TREBUIE SĂ APĂS DE CÂTEVA ORI" (clienții, octombrie 2026).
+   *
+   * Butonul făcea `router.push` și atât. Next schimbă pagina abia după ce a
+   * primit-o întreagă — pe un telefon pe 4G, peste o secundă — iar în timpul
+   * ăsta butonul nu arăta nimic. Omul apăsa din nou, iar fiecare apăsare
+   * pornea navigarea de la capăt. Acum: pagina de rezultate se cere din
+   * timp, cât omul încă alege, apăsarea arată pe loc „Se caută…", iar
+   * apăsările următoare nu mai repornesc nimic.
+   */
+  const [pending, startTransition] = useTransition();
+
+  useEffect(() => {
+    if (!anything) return;
+    /* Pauza scurtă lasă omul să termine de ales: fără ea, fiecare listă
+       schimbată ar cere o pagină de catalog pe care n-o deschide nimeni. */
+    const id = setTimeout(() => router.prefetch(target), 250);
+    return () => clearTimeout(id);
+  }, [anything, router, target]);
+
   function search() {
-    const segments = [
-      width ? `latime_${width}` : null,
-      aspect ? `inaltime_${aspect}` : null,
-      diameter ? `diametru_${diameter.toLowerCase()}` : null,
-      activeSeason ? `sezon_${activeSeason === "all_season" ? "all-season" : activeSeason}` : null,
-      activeBrand ? `marca_${activeBrand}` : null,
-    ].filter(Boolean);
-    const root = locale === "ru" ? "/ru/katalog-shin" : "/catalog-anvelope";
-    router.push(segments.length ? `${root}/${segments.join("/")}` : root);
+    if (pending) return;
+    startTransition(() => router.push(target));
   }
 
   const catalogHref = locale === "ru" ? "/ru/katalog-shin" : "/catalog-anvelope";
@@ -171,17 +194,27 @@ export function TireFinder({
           <button
             type="button"
             onClick={search}
+            onPointerEnter={() => { if (anything) router.prefetch(target); }}
             disabled={!anything}
+            aria-busy={pending || undefined}
             className={cn(
               "inline-flex h-11 min-w-[9rem] items-center justify-center gap-[var(--sp-2)]",
               "rounded-[var(--radius-sm)] bg-[var(--accent)] px-[var(--sp-5)]",
               "text-300 font-semibold text-[var(--on-accent)]",
               "transition-colors duration-[var(--dur-1)] ease-[var(--ease-out)]",
               "hover:bg-[var(--accent-hover)] disabled:opacity-45",
+              "aria-busy:cursor-progress aria-busy:bg-[var(--accent-hover)]",
             )}
           >
-            <IconSearch size={17} />
-            {d.search}
+            {pending ? (
+              <span
+                aria-hidden="true"
+                className="size-[17px] rounded-full border-2 border-current border-r-transparent motion-safe:animate-spin"
+              />
+            ) : (
+              <IconSearch size={17} />
+            )}
+            {pending ? d.searching : d.search}
           </button>
         </div>
 
