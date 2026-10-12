@@ -55,6 +55,9 @@ export const config = {
       'rosava', 'centara', 'rotex', 'powertrac', 'charmhoo',
       /* A doua cerere, aceeași zi, după importul din pneuexpert. */
       'valleystone', 'zeta', 'greentrac',
+      /* A treia cerere, 13 octombrie 2026. `nordex` pentru furnizorii care scriu
+         marca cu un singur x. */
+      'nordexx', 'nordex',
       /* Linia de produse a Rosavei, pe care furnizorii o scriu și ca marcă de sine
          stătătoare. Fără ea, aceleași anvelope reintră din alt catalog sub alt nume. */
       'premiorri', 'premiorre',
