@@ -1,14 +1,23 @@
 # Fotografiile din secțiunea Servicii — sursă și licență
 
-Toate imaginile din `/public/servicii/` vin de pe Wikimedia Commons și sunt
-folosite în condițiile licenței lor. Nicio imagine nu e stoc cumpărat, generată
-sau preluată de pe agregatoare cu licențiere neclară.
+Din 19 octombrie 2026, catalogul folosește cele 10 fișiere `*-premium.webp`,
+generate cu instrumentul integrat `image_gen`. Sunt imagini ilustrative,
+nu fotografii ale atelierului. Fiecare este identificată astfel pe site,
+în română și rusă. Nu li se atribuie autorii sau licențele Wikimedia.
 
-Atribuirea apare **și pe site**, sub fiecare fotografie (`SectiuneServiciu.tsx`,
-`<figcaption>`), pentru că licențele CC BY și CC BY-SA o cer lângă imagine, nu
-într-o pagină de credite ascunsă. Fișierul de față e evidența, nu atribuirea.
+Fișierele generate sunt optimizate WebP, 1200×800 px, calitate 84.
+Prompturile și proveniența originalelor sunt în
+`docs/design/servicii-imagini.json`. Numele corespund celor din tabelul de
+mai jos, cu sufixul `-premium.webp` în locul extensiei `.jpg`.
 
-Prelucrare aplicată tuturor: decupare la raport 3:2 și redimensionare la
+Fotografiile JPEG anterioare sunt păstrate separat. Tabelul și notele de mai
+jos documentează exclusiv aceste originale de pe Wikimedia Commons.
+
+La reutilizarea fotografiilor Wikimedia, atribuirea se afișează și lângă
+imagine (`SectiuneServiciu.tsx`, `<figcaption>`). Fișierul de față păstrează
+evidența originalelor.
+
+Prelucrare aplicată originalelor JPEG: decupare la raport 3:2 și redimensionare la
 1200×800 px, recompresie JPEG. Nimic altceva — fără colaje, fără text adăugat,
 fără modificări care ar schimba sensul imaginii.
 

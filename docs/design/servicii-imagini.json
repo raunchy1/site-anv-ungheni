@@ -1,0 +1,72 @@
+{
+  "tool": "Built-in image_gen",
+  "integratedOn": "2026-10-19",
+  "format": {
+    "width": 1200,
+    "height": 800,
+    "type": "webp",
+    "quality": 84
+  },
+  "images": [
+    {
+      "id": "service-roti",
+      "file": "service-roti-premium.webp",
+      "prompt": "Use case: ads-marketing. Asset type: premium automotive service website photograph, landscape 3:2 composition. Create one photorealistic image, no collage. Cohesive series direction: high-end European automotive editorial photography, graphite charcoal workshop, restrained silver tones, subtle warm highlights, large soft directional key light, natural shadows, realistic materials, crisp focal subject, softly blurred believable background. Refined and trustworthy, adequately exposed, immediately legible at thumbnail size, centered composition safe for cropping. No text, no logos, no watermarks, no brand marks, no fake typography, no excessive orange teal grading, no floating parts or extra fingers. Illustrative scene, not a specific business. Subject: Close-up of a tire technician's black gloved hands guiding a fresh black low-profile tire onto a clean silver alloy wheel on a professional tire mounting machine. Technically plausible mounting head at rim edge, pristine modern automotive workshop.",
+      "original": "/home/cristian/.codex/generated_images/01a153a3-148e-7883-b453-786ecadf0425/exec-f1ac73c7-c200-4242-9393-6dd08823067a.png"
+    },
+    {
+      "id": "valve",
+      "file": "valve-premium.webp",
+      "prompt": "Use case: ads-marketing. Asset type: premium automotive service website photograph, landscape 3:2 composition. Create one photorealistic image, no collage. Cohesive series direction: high-end European automotive editorial photography, graphite charcoal workshop, restrained silver tones, subtle warm highlights, large soft directional key light, natural shadows, realistic materials, crisp focal subject, softly blurred believable background. Refined and trustworthy, adequately exposed, immediately legible at thumbnail size, centered composition safe for cropping. No text, no logos, no watermarks, no brand marks, no fake typography, no excessive orange teal grading, no floating parts or extra fingers. Illustrative scene, not a specific business. Subject: Elegant detailed macro photograph of a fresh black rubber snap-in tire valve installed correctly in the valve hole of a silver alloy rim, its brass threaded tip visible, one black dust cap and one replacement rubber valve on a clean dark workbench beside it. Main focus on tiny precision parts and their true-to-life scale.",
+      "original": "/home/cristian/.codex/generated_images/01a153a3-148e-7883-b453-786ecadf0425/exec-4560423f-83e6-4402-b349-08516b6fb826.png"
+    },
+    {
+      "id": "tpms",
+      "file": "tpms-premium.webp",
+      "prompt": "Use case: ads-marketing. Asset type: premium automotive service website photograph, landscape 3:2 composition. Create one photorealistic image, no collage. Cohesive series direction: high-end European automotive editorial photography, graphite charcoal workshop, restrained silver tones, subtle warm highlights, large soft directional key light, natural shadows, realistic materials, crisp focal subject, softly blurred believable background. Refined and trustworthy, adequately exposed, immediately legible at thumbnail size, centered composition safe for cropping. No text, no logos, no watermarks, no brand marks, no fake typography, no excessive orange teal grading, no floating parts or extra fingers. Illustrative scene, not a specific business. Subject: Detailed product and service photograph of a modern compact black TPMS pressure sensor correctly mounted inside a bare silver alloy rim, sensor body resting against the interior barrel with metal valve stem passing through the rim valve hole. Tire removed so sensor is clearly visible. A handheld TPMS diagnostic reader sits softly blurred on the nearby dark workbench. No screen text.",
+      "original": "/home/cristian/.codex/generated_images/01a153a3-148e-7883-b453-786ecadf0425/exec-96ee72bc-7bb9-4fa5-84ce-385d7f0741b3.png"
+    },
+    {
+      "id": "jante",
+      "file": "jante-premium.webp",
+      "prompt": "Use case: ads-marketing. Asset type: premium automotive service website photograph, landscape 3:2 composition. Create one photorealistic image, no collage. Cohesive series direction: high-end European automotive editorial photography, graphite charcoal workshop, restrained silver tones, subtle warm highlights, large soft directional key light, natural shadows, realistic materials, crisp focal subject, softly blurred believable background. Refined and trustworthy, adequately exposed, immediately legible at thumbnail size, centered composition safe for cropping. No text, no logos, no watermarks, no brand marks, no fake typography, no excessive orange teal grading, no floating parts or extra fingers. Illustrative scene, not a specific business. Subject: Close-up of a pristine silver multi-spoke alloy wheel without a tire on a wheel restoration workbench. A gloved technician examines the refinished outer lip with a small inspection light. Beautiful diamond-cut metal machining and smooth satin graphite spoke recesses; believable restoration workshop blurred behind.",
+      "original": "/home/cristian/.codex/generated_images/01a153a3-148e-7883-b453-786ecadf0425/exec-0df4bcd5-85ea-448d-a8be-625bcf623aa2.png"
+    },
+    {
+      "id": "clima",
+      "file": "clima-premium.webp",
+      "prompt": "Use case: ads-marketing. Asset type: premium automotive service website photograph, landscape 3:2 composition. Create one photorealistic image, no collage. Cohesive series direction: high-end European automotive editorial photography, graphite charcoal workshop, restrained silver tones, subtle warm highlights, large soft directional key light, natural shadows, realistic materials, crisp focal subject, softly blurred believable background. Refined and trustworthy, adequately exposed, immediately legible at thumbnail size, centered composition safe for cropping. No text, no logos, no watermarks, no brand marks, no fake typography, no excessive orange teal grading, no floating parts or extra fingers. Illustrative scene, not a specific business. Subject: Professional automotive air conditioning maintenance, open hood of a modern dark gray car with red and blue refrigerant service hoses correctly coupled to two different AC service ports in the engine bay, manifold gauge set in clear foreground and a professional recovery station softly behind. Black gloved hand checking a coupling. No vapor, smoke, ice, or magical effects.",
+      "original": "/home/cristian/.codex/generated_images/01a153a3-148e-7883-b453-786ecadf0425/exec-e2c6bbc6-654a-4f2e-baec-81fa3c83b69d.png"
+    },
+    {
+      "id": "frane",
+      "file": "frane-premium.webp",
+      "prompt": "Use case: ads-marketing. Asset type: premium automotive service website photograph, landscape 3:2 composition. Create one photorealistic image, no collage. Cohesive series direction: high-end European automotive editorial photography, graphite charcoal workshop, restrained silver tones, subtle warm highlights, large soft directional key light, natural shadows, realistic materials, crisp focal subject, softly blurred believable background. Refined and trustworthy, adequately exposed, immediately legible at thumbnail size, centered composition safe for cropping. No text, no logos, no watermarks, no brand marks, no fake typography, no excessive orange teal grading, no floating parts or extra fingers. Illustrative scene, not a specific business. Subject: Close-up of the exposed clean steel brake disc and dark caliper on a lifted modern car with wheel removed. Black gloved technician using a torque wrench correctly on a caliper bracket bolt; new brake pads neatly arranged on nearby workshop tray. Realistic concentric rotor machining, precise functional geometry.",
+      "original": "/home/cristian/.codex/generated_images/01a153a3-148e-7883-b453-786ecadf0425/exec-166a21d5-b2aa-44c3-95e6-39f533af1e89.png"
+    },
+    {
+      "id": "hotel-anvelope",
+      "file": "hotel-anvelope-premium.webp",
+      "prompt": "Use case: ads-marketing. Asset type: premium automotive service website photograph, landscape 3:2 composition. Create one photorealistic image, no collage. Cohesive series direction: high-end European automotive editorial photography, graphite charcoal workshop, restrained silver tones, subtle warm highlights, large soft directional key light, natural shadows, realistic materials, crisp focal subject, softly blurred believable background. Refined and trustworthy, adequately exposed, immediately legible at thumbnail size, centered composition safe for cropping. No text, no logos, no watermarks, no brand marks, no fake typography, no excessive orange teal grading, no floating parts or extra fingers. Illustrative scene, not a specific business. Subject: Wide premium tire storage interior, clean organized graphite steel racks with car tires without rims stored upright side-by-side on three levels, tidy neutral inventory tags with no readable writing. Beautiful aisle receding softly, realistic manageable warehouse scale, cool neutral ambient light with warm overhead strips, immaculate rubber tread details in foreground. No people.",
+      "original": "/home/cristian/.codex/generated_images/01a153a3-148e-7883-b453-786ecadf0425/exec-6a120fb9-bd12-499e-a02d-946db5741741.png"
+    },
+    {
+      "id": "vanzare",
+      "file": "vanzare-premium.webp",
+      "prompt": "Use case: ads-marketing. Asset type: premium automotive service website photograph, landscape 3:2 composition. Create one photorealistic image, no collage. Cohesive series direction: high-end European automotive editorial photography, graphite charcoal workshop, restrained silver tones, subtle warm highlights, large soft directional key light, natural shadows, realistic materials, crisp focal subject, softly blurred believable background. Refined and trustworthy, adequately exposed, immediately legible at thumbnail size, centered composition safe for cropping. No text, no logos, no watermarks, no brand marks, no fake typography, no excessive orange teal grading, no floating parts or extra fingers. Illustrative scene, not a specific business. Subject: Premium tire showroom product photograph, three pristine unbranded new black automotive tires standing upright together in a balanced foreground arrangement showing distinct summer, winter and all-season tread textures. Clean graphite showroom floor, silver display details and softly blurred shelves of new tires behind. Realistic rubber, no readable sidewall text, no wheels or rims in tires.",
+      "original": "/home/cristian/.codex/generated_images/01a153a3-148e-7883-b453-786ecadf0425/exec-c57bea82-ff5e-4d0a-8436-44527869baf2.png"
+    },
+    {
+      "id": "azot",
+      "file": "azot-premium.webp",
+      "prompt": "Use case: ads-marketing. Asset type: premium automotive service website photograph, landscape 3:2 composition. Create one photorealistic image, no collage. Cohesive series direction: high-end European automotive editorial photography, graphite charcoal workshop, restrained silver tones, subtle warm highlights, large soft directional key light, natural shadows, realistic materials, crisp focal subject, softly blurred believable background. Refined and trustworthy, adequately exposed, immediately legible at thumbnail size, centered composition safe for cropping. No text, no logos, no watermarks, no brand marks, no fake typography, no excessive orange teal grading, no floating parts or extra fingers. Illustrative scene, not a specific business. Subject: Black gloved technician hand holding a precise professional tire inflation gauge with its hose chuck correctly connected to the metal valve of a silver alloy wheel on a dark car; dedicated nitrogen inflation station and cylinder softly visible behind. Focus on valve connection, hose and gauge, not a generic compressor.",
+      "original": "/home/cristian/.codex/generated_images/01a15073-2ea2-7460-ac32-05da0d7f520a/exec-c534711a-3b6a-432c-bd1b-cfd6d1809336.png"
+    },
+    {
+      "id": "reparatii",
+      "file": "reparatii-premium.webp",
+      "prompt": "Use case: ads-marketing. Asset type: premium automotive service website photograph, landscape 3:2 composition. Create one photorealistic image, no collage. Cohesive series direction: high-end European automotive editorial photography, graphite charcoal workshop, restrained silver tones, subtle warm highlights, large soft directional key light, natural shadows, realistic materials, crisp focal subject, softly blurred believable background. Refined and trustworthy, adequately exposed, immediately legible at thumbnail size, centered composition safe for cropping. No text, no logos, no watermarks, no brand marks, no fake typography, no excessive orange teal grading, no floating parts or extra fingers. Illustrative scene, not a specific business. Subject: Close-up inside a demounted automotive tire spread open on a tire repair stand; black gloved technician using a small metal stitcher roller to press a round black vulcanizing patch onto the prepared inner tread surface. Focus on technically accurate internal puncture repair, tire inner liner texture.",
+      "original": "/home/cristian/.codex/generated_images/01a15073-2ea2-7460-ac32-05da0d7f520a/exec-b93048cd-8e99-459e-88ba-7771aae69ff8.png"
+    }
+  ]
+}

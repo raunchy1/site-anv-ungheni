@@ -59,13 +59,19 @@ export function SectiuneServiciu({
               className="object-cover"
             />
           </div>
-          {/* Atribuirea stă sub fotografie, nu într-o pagină de credite:
-              licențele CC BY și CC BY-SA o cer lângă imagine. */}
+          {/* Fotografiile externe păstrează atribuirea; ilustrațiile generate
+              sunt identificate fără a fi prezentate drept fotografii reale. */}
           <figcaption className="mt-[var(--sp-2)] text-[var(--fs-100)] text-[var(--ink-faint)]">
-            <a href={s.foto.pagina} target="_blank" rel="noopener nofollow" className="underline-offset-2 hover:underline">
-              {s.foto.sursa}
-            </a>
-            {s.foto.autor && s.foto.autor !== "—" ? ` · ${s.foto.autor}` : ""} · {s.foto.licenta}
+            {s.foto.sursa === "AI" ? (
+              locale === "ru" ? "Иллюстрация, созданная с помощью ИИ" : "Imagine ilustrativă generată cu AI"
+            ) : (
+              <>
+                <a href={s.foto.pagina} target="_blank" rel="noopener nofollow" className="underline-offset-2 hover:underline">
+                  {s.foto.sursa}
+                </a>
+                {s.foto.autor && s.foto.autor !== "—" ? ` · ${s.foto.autor}` : ""} · {s.foto.licenta}
+              </>
+            )}
           </figcaption>
         </figure>
 
