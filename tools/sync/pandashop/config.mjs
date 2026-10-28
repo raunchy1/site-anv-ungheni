@@ -58,6 +58,9 @@ export const config = {
       /* A treia cerere, 13 octombrie 2026. `nordex` pentru furnizorii care scriu
          marca cu un singur x. */
       'nordexx', 'nordex',
+      /* A patra cerere, 28 octombrie 2026. `kin forest` pentru furnizorii care
+         scriu marca în două cuvinte. */
+      'triangle', 'ovation', 'avon', 'ozka', 'nereus', 'duraturn', 'kinforest', 'kin forest',
       /* Linia de produse a Rosavei, pe care furnizorii o scriu și ca marcă de sine
          stătătoare. Fără ea, aceleași anvelope reintră din alt catalog sub alt nume. */
       'premiorri', 'premiorre',

@@ -15,7 +15,7 @@ import type { Locale, Settings } from "@/lib/types";
  *
  * REGULA: fiecare răspuns repetă o afirmație pe care site-ul o face deja în altă
  * parte — livrarea în 1–3 zile de pe fișa de produs, garanția din `settings`,
- * programul și adresa din subsol, creditul din insigna de pe card. Ce nu e
+ * programul și adresa din subsol. Creditarea în rate a fost scoasă pe 28 oct 2026. Ce nu e
  * scris nicăieri nu se inventează aici, oricât ar ajuta la căutare: costul
  * livrării și termenul de retur lipsesc deliberat și sunt trecute în
  * TODO-CRISTIAN.md, pentru că sunt promisiuni pe care nu le pot face eu.
@@ -74,15 +74,6 @@ export function intrebari(settings: Settings, locale: Locale): { q: string; a: s
           a: `${program}. Adresa: ${settings.address}. Telefon: ${settings.phone_display}.`,
         },
   ];
-
-  const credit = ru ? settings.credit_badge_ru : settings.credit_badge_ro;
-  if (credit) {
-    lista.push(
-      ru
-        ? { q: "Можно ли купить шины в рассрочку?", a: `Да: ${credit}. Условия уточняйте по телефону ${settings.phone_display}.` }
-        : { q: "Pot cumpăra anvelope în rate?", a: `Da: ${credit}. Condițiile se confirmă la telefon, la ${settings.phone_display}.` },
-    );
-  }
 
   return lista;
 }

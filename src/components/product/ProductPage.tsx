@@ -8,7 +8,6 @@ import { SpecTable, buildSpecRows } from "@/components/ui/SpecTable";
 import { StockIndicator } from "@/components/ui/StockIndicator";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { ProductCard } from "@/components/ui/ProductCard";
-import { Badge } from "@/components/ui/Badge";
 import { TreadRule, IconPin, IconPhone } from "@/components/icons";
 import { getAlternatives, getNearAlternatives, getRelated, getSettings } from "@/lib/db/queries";
 import { toUiProduct } from "@/lib/adapt";
@@ -139,9 +138,6 @@ export async function ProductPage({ product, locale }: { product: Product; local
           <div className="mt-[var(--sp-8)] border-t border-[var(--line)] pt-[var(--sp-5)]">
             <div className="mb-[var(--sp-4)] flex flex-wrap items-center gap-[var(--sp-3)]">
               <StockIndicator status={product.stock_status} locale={locale} />
-              {settings.credit_badge_ro && !unavailable && (
-                <Badge tone="neutral">{locale === "ru" ? settings.credit_badge_ru : settings.credit_badge_ro}</Badge>
-              )}
             </div>
 
             {unavailable ? (
