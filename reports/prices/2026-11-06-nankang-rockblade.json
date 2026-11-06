@@ -1,0 +1,108 @@
+{
+  "requested_at": "2026-11-06",
+  "applied_at": "2026-11-06T18:11:52.877Z",
+  "currency": "MDL",
+  "unit": "bucata",
+  "changes": [
+    {
+      "id": 33462,
+      "slug_ro": "nankang-ws-1-315-30-r21-105h-xl-rear",
+      "before": 3600,
+      "after": 5000
+    },
+    {
+      "id": 10327,
+      "slug_ro": "nankang-ws-1-275-35-r21-103h-xl",
+      "before": 3100,
+      "after": 3500
+    },
+    {
+      "id": 33534,
+      "slug_ro": "rockblade-icecruiser-i-235-50-r19-103v-xl",
+      "before": 1490,
+      "after": 1750
+    }
+  ],
+  "before": [
+    {
+      "id": 10327,
+      "slug_ro": "nankang-ws-1-275-35-r21-103h-xl",
+      "slug_ru": "nankang-ws-1-27535-r21-103h-xl",
+      "title_ro": "Nankang WS-1 275/35 R21 103H XL",
+      "price_mdl": 3100,
+      "old_price_mdl": null,
+      "price_locked": false,
+      "price_source": "api_sync",
+      "price_updated_at": "2026-09-24T20:56:45.022661+00:00",
+      "stock_status": "supplier",
+      "is_active": true
+    },
+    {
+      "id": 33462,
+      "slug_ro": "nankang-ws-1-315-30-r21-105h-xl-rear",
+      "slug_ru": "nankang-ws-1-31530-r21-105h-xl-rear",
+      "title_ro": "Nankang WS-1 315/30 R21 105H XL (rear)",
+      "price_mdl": 3600,
+      "old_price_mdl": null,
+      "price_locked": false,
+      "price_source": "api_sync",
+      "price_updated_at": "2026-09-05T23:10:59.968+00:00",
+      "stock_status": "supplier",
+      "is_active": true
+    },
+    {
+      "id": 33534,
+      "slug_ro": "rockblade-icecruiser-i-235-50-r19-103v-xl",
+      "slug_ru": "rockblade-icecruiser-i-23550-r19-103v-xl",
+      "title_ro": "Rockblade IceCruiser I 235/50 R19 103V XL",
+      "price_mdl": 1490,
+      "old_price_mdl": null,
+      "price_locked": false,
+      "price_source": "api_sync",
+      "price_updated_at": "2026-09-05T23:11:58.132+00:00",
+      "stock_status": "supplier",
+      "is_active": true
+    }
+  ],
+  "after": [
+    {
+      "id": 33462,
+      "slug_ro": "nankang-ws-1-315-30-r21-105h-xl-rear",
+      "slug_ru": "nankang-ws-1-31530-r21-105h-xl-rear",
+      "title_ro": "Nankang WS-1 315/30 R21 105H XL (rear)",
+      "price_mdl": 5000,
+      "old_price_mdl": null,
+      "price_locked": true,
+      "price_source": "admin_edit",
+      "price_updated_at": "2026-11-06T18:11:52.877+00:00",
+      "stock_status": "supplier",
+      "is_active": true
+    },
+    {
+      "id": 10327,
+      "slug_ro": "nankang-ws-1-275-35-r21-103h-xl",
+      "slug_ru": "nankang-ws-1-27535-r21-103h-xl",
+      "title_ro": "Nankang WS-1 275/35 R21 103H XL",
+      "price_mdl": 3500,
+      "old_price_mdl": null,
+      "price_locked": true,
+      "price_source": "admin_edit",
+      "price_updated_at": "2026-11-06T18:11:52.877+00:00",
+      "stock_status": "supplier",
+      "is_active": true
+    },
+    {
+      "id": 33534,
+      "slug_ro": "rockblade-icecruiser-i-235-50-r19-103v-xl",
+      "slug_ru": "rockblade-icecruiser-i-23550-r19-103v-xl",
+      "title_ro": "Rockblade IceCruiser I 235/50 R19 103V XL",
+      "price_mdl": 1750,
+      "old_price_mdl": null,
+      "price_locked": true,
+      "price_source": "admin_edit",
+      "price_updated_at": "2026-11-06T18:11:52.877+00:00",
+      "stock_status": "supplier",
+      "is_active": true
+    }
+  ]
+}
