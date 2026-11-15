@@ -1,0 +1,30 @@
+{
+  "requested_at": "2026-11-15",
+  "applied_at": "2026-11-15T20:01:38.197Z",
+  "currency": "MDL",
+  "unit": "bucata",
+  "reason": "aliniat la pneuexpert (2000 MDL), la cererea clientului",
+  "changes": [
+    {
+      "id": 33549,
+      "slug_ro": "rockblade-winter-stud-ii-235-50-r19-103t-xl",
+      "before": 1725,
+      "after": 2000
+    }
+  ],
+  "after": [
+    {
+      "id": 33549,
+      "slug_ro": "rockblade-winter-stud-ii-235-50-r19-103t-xl",
+      "slug_ru": "rockblade-winter-stud-ii-23550-r19-103t-xl",
+      "title_ro": "Rockblade Winter Stud II 235/50 R19 103T XL",
+      "price_mdl": 2000,
+      "old_price_mdl": null,
+      "price_locked": true,
+      "price_source": "admin_edit",
+      "price_updated_at": "2026-11-15T20:01:38.197+00:00",
+      "stock_status": "supplier",
+      "is_active": true
+    }
+  ]
+}
