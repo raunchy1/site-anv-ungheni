@@ -1,0 +1,30 @@
+{
+  "requested_at": "2026-11-15",
+  "applied_at": "2026-11-15T19:30:21.780Z",
+  "currency": "MDL",
+  "unit": "bucata",
+  "reason": "aliniat la pneuexpert (2000 MDL), la cererea clientului",
+  "changes": [
+    {
+      "id": 33534,
+      "slug_ro": "rockblade-icecruiser-i-235-50-r19-103v-xl",
+      "before": 1750,
+      "after": 2000
+    }
+  ],
+  "after": [
+    {
+      "id": 33534,
+      "slug_ro": "rockblade-icecruiser-i-235-50-r19-103v-xl",
+      "slug_ru": "rockblade-icecruiser-i-23550-r19-103v-xl",
+      "title_ro": "Rockblade IceCruiser I 235/50 R19 103V XL",
+      "price_mdl": 2000,
+      "old_price_mdl": null,
+      "price_locked": true,
+      "price_source": "admin_edit",
+      "price_updated_at": "2026-11-15T19:30:21.78+00:00",
+      "stock_status": "supplier",
+      "is_active": true
+    }
+  ]
+}
