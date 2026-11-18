@@ -1,0 +1,33 @@
+{
+  "requested_at": "2026-11-18",
+  "applied_at": "2026-11-18T10:11:53.084Z",
+  "currency": "MDL",
+  "unit": "bucata",
+  "reason": "pusa pe site la cererea clientului; pretul autodoctor.md (JOY-26545R21RX826), fisa trecuta pe primary_source=autodoctor",
+  "changes": [
+    {
+      "id": 7300,
+      "slug_ro": "joyroad-winter-rx826-265-45-r21-108h-xl",
+      "before": null,
+      "after": 2305,
+      "stock_before": "out_of_stock",
+      "stock_after": "supplier"
+    }
+  ],
+  "after": [
+    {
+      "id": 7300,
+      "slug_ro": "joyroad-winter-rx826-265-45-r21-108h-xl",
+      "slug_ru": "joyroad-winter-rx826-26545-r21-108h-xl",
+      "title_ro": "Joyroad Winter RX826 265/45 R21 108H XL",
+      "price_mdl": 2305,
+      "old_price_mdl": null,
+      "price_locked": false,
+      "price_source": "api_sync",
+      "price_updated_at": "2026-11-18T10:11:52.688008+00:00",
+      "stock_status": "supplier",
+      "is_active": true,
+      "primary_source": "autodoctor"
+    }
+  ]
+}
