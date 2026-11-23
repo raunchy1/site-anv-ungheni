@@ -1,0 +1,109 @@
+{
+  "requested_at": "2026-11-23",
+  "applied_at": "2026-11-23T21:01:35.851008+00:00",
+  "currency": "MDL",
+  "unit": "bucata",
+  "reason": "preturi noi comunicate de patron pe WhatsApp; Hankook W330 235/35 R19 la 3000 MDL cu pret vechi 4000 (pret redus)",
+  "changes": [
+    {
+      "id": 33414,
+      "slug_ro": "rockblade-icecruiser-ii-275-35-r19-100v-xl-rear",
+      "before": 1510,
+      "after": 1750.0
+    },
+    {
+      "id": 33423,
+      "slug_ro": "rockblade-winterplus-stud-ii-275-35-r19-100t-xl-rear",
+      "before": 1725,
+      "after": 2000.0
+    },
+    {
+      "id": 33404,
+      "slug_ro": "rockblade-icecruiser-ii-245-40-r19-98v-xl-front",
+      "before": 1390,
+      "after": 1550.0
+    },
+    {
+      "id": 33415,
+      "slug_ro": "rockblade-winterplus-stud-ii-245-40-r19-98t-xl-front",
+      "before": 1575,
+      "after": 1750.0
+    },
+    {
+      "id": 32219,
+      "slug_ro": "hankook-winter-i-cept-evo3-w330-235-35-r19-91w",
+      "before": null,
+      "after": 3000.0,
+      "old_price_after": 4000,
+      "stock_before": "out_of_stock",
+      "stock_after": "in_stock"
+    }
+  ],
+  "after": [
+    {
+      "id": 33414,
+      "slug_ro": "rockblade-icecruiser-ii-275-35-r19-100v-xl-rear",
+      "slug_ru": "rockblade-icecruiser-ii-27535-r19-100v-xl-rear",
+      "title_ro": "Rockblade IceCruiser II 275/35 R19 100V XL (rear)",
+      "price_mdl": 1750.0,
+      "old_price_mdl": null,
+      "price_locked": true,
+      "price_source": "admin_edit",
+      "price_updated_at": "2026-11-23T21:01:35.851008+00:00",
+      "stock_status": "supplier",
+      "is_active": true
+    },
+    {
+      "id": 33423,
+      "slug_ro": "rockblade-winterplus-stud-ii-275-35-r19-100t-xl-rear",
+      "slug_ru": "rockblade-winterplus-stud-ii-27535-r19-100t-xl-rear",
+      "title_ro": "Rockblade WinterPlus Stud II 275/35 R19 100T XL (rear)",
+      "price_mdl": 2000.0,
+      "old_price_mdl": null,
+      "price_locked": true,
+      "price_source": "admin_edit",
+      "price_updated_at": "2026-11-23T21:01:35.851008+00:00",
+      "stock_status": "supplier",
+      "is_active": true
+    },
+    {
+      "id": 33404,
+      "slug_ro": "rockblade-icecruiser-ii-245-40-r19-98v-xl-front",
+      "slug_ru": "rockblade-icecruiser-ii-24540-r19-98v-xl-front",
+      "title_ro": "Rockblade IceCruiser II 245/40 R19 98V XL (front)",
+      "price_mdl": 1550.0,
+      "old_price_mdl": null,
+      "price_locked": true,
+      "price_source": "admin_edit",
+      "price_updated_at": "2026-11-23T21:01:35.851008+00:00",
+      "stock_status": "supplier",
+      "is_active": true
+    },
+    {
+      "id": 33415,
+      "slug_ro": "rockblade-winterplus-stud-ii-245-40-r19-98t-xl-front",
+      "slug_ru": "rockblade-winterplus-stud-ii-24540-r19-98t-xl-front",
+      "title_ro": "Rockblade WinterPlus Stud II 245/40 R19 98T XL (front)",
+      "price_mdl": 1750.0,
+      "old_price_mdl": null,
+      "price_locked": true,
+      "price_source": "admin_edit",
+      "price_updated_at": "2026-11-23T21:01:35.851008+00:00",
+      "stock_status": "supplier",
+      "is_active": true
+    },
+    {
+      "id": 32219,
+      "slug_ro": "hankook-winter-i-cept-evo3-w330-235-35-r19-91w",
+      "slug_ru": "hankook-winter-i-cept-evo3-w330-23535-r19-91w",
+      "title_ro": "Hankook Winter I*Cept Evo3 W330 235/35 R19 91W",
+      "price_mdl": 3000.0,
+      "old_price_mdl": 4000.0,
+      "price_locked": true,
+      "price_source": "admin_edit",
+      "price_updated_at": "2026-11-23T21:01:35.851008+00:00",
+      "stock_status": "in_stock",
+      "is_active": true
+    }
+  ]
+}
